@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <!-- Include CSS here if needed -->
+</head>
+<body>
+    <h1>Welcome, {{ request.user.username }}!</h1>
+    
+    <h2>Your Profile:</h2>
+    <ul>
+        <li>Email: {{ request.user.reg.email }}</li>
+        <li>Address: {{ request.user.reg.address }}</li>
+        <li>Age: {{ request.user.reg.age }}</li>
+        <li>Interest: {{ request.user.reg.get_interest_display }}</li>
+        <li>Phone Number: {{ request.user.reg.phone_number }}</li>
+        {% if request.user.reg.photo %}
+            <li>Photo:<br><img src="{{ request.user.reg.photo.url }}" alt="Profile Photo" width="200"></li>
+        {% else %}
+            <li>Photo: Not uploaded.</li>
+        {% endif %}
+    </ul>
+    
+    <a href="{% url 'logout' %}">Logout</a>
+</body>
+</html>
