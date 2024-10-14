@@ -5,8 +5,152 @@
     font-family: Arial, sans-serif;
 }
 
-/* Navbar */
-header .navbar-bg{
-    background-color: #F4F4F4 ;
+body {
+    background-color: #444;
+    color: #fff;
 }
+
+
+.container {
+    width: 90%;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+/* Header Section */
+header {
+    background-color: #f3f3f3;
+    padding: 20px 0;
+    border-top: 4px solid purple;
+}
+
+.logo h1 {
+    color: #333;
+    font-size: 24px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.logo h1 span {
+    color: orange;
+}
+
+nav ul {
+    list-style: none;
+    float: right;
+    margin-top: -30px;
+}
+
+nav ul li {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+nav ul li a {
+    color: #333;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    color: purple;
+}
+
+/* Content Placeholder */
+.content {
+    
+    display: flex;
+    
+}
+
 /* Footer Section */
+footer {
+    background-color: #333;
+    padding: 40px 0;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; /* To ensure responsiveness */
+    max-width: 1440px;
+    margin: 0 auto;
+    align-items: flex-start; /* Align items at the top (headings stay on the same line) */
+}
+
+.footer-section {
+    flex: 1;
+    margin-right: 20px;
+    min-width: 200px;
+    color: #ccc;
+}
+
+footer h2, footer h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+footer h2 span {
+    color: orange;
+}
+
+/* Ensure all heading stay on the same line */
+.footer-container h3 {
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px; /* Adds space between content and list */
+}
+
+footer ul li {
+    margin-bottom: 5px;
+}
+
+footer ul li a {
+    color: #ccc;
+    text-decoration: none;
+}
+
+footer ul li a:hover {
+    color: #fff;
+}
+
+.social-icons {
+    margin-top: 10px;
+}
+
+.social-icons a {
+    color: #ccc;
+    margin-right: 10px;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.social-icons a:hover {
+    color: orange;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    border-top: 1px solid #555;
+    padding-top: 10px;
+    color: #aaa;
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-section {
+        margin-bottom: 40px;
+    }
+}
