@@ -8,7 +8,7 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
     path('home/', views.home, name='home'),
-    path('base/', views.base, name='base'),
-
+    path('forgot_password/', views.forgot_password, name='forgot_password'),
+    path('reset_password/', views.reset_password, name='reset_password'),
     # Add other URLs as needed
 ]
