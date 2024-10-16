@@ -40,5 +40,9 @@ def login_view(request):
 def home(request):
     return render(request, 'home.html')
 
-def base(request):
-    return render(request, 'base.html')
+def forgot_password(request):
+    return render(request, 'forgot_password.html')
+
+@login_required
+def reset_password(request):
+    return render(request, 'reset_password.html')
