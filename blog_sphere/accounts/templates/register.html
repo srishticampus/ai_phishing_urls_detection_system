@@ -1,81 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration</title>
-    <!-- You can include CSS here for better styling -->
-</head>
-<body>
-    <h1>Registration</h1>
-    
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+{% extends 'core/base.html' %}
+{% load static %}
 
-    <form method="post" enctype="multipart/form-data">  <!-- Added enctype for file upload -->
-        {% csrf_token %}
-        {{ form.non_field_errors }}
+{% block body %}
+<div class="registration-page">
+    <!-- Background Section with Image -->
+    <div class="registration-bg">
+        <img src="{% static 'css/images/2.png' %}" alt="Background Image">
+    </div>
+
+    <!-- Registration Form Section -->
+    <div class="registration-form-section">
+        <h1 class="registration-title">Register!</h1>
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         
-        <div>
-            {{ form.username.label_tag }}<br>
-            {{ form.username }}
-            {{ form.username.errors }}
+        <form method="post" enctype="multipart/form-data" class="registration-form">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            
+            <div class="form-group">
+                {{ form.username.label_tag }}<br>
+                {{ form.username }}
+                {{ form.username.errors }}
+            </div>
+
+            <div class="form-group">
+                {{ form.email.label_tag }}<br>
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+            
+            <div class="form-group">
+                {{ form.password.label_tag }}<br>
+                {{ form.password }}
+                {{ form.password.errors }}
+            </div>
+
+            <div class="form-group">
+                {{ form.password_confirm.label_tag }}<br>
+                {{ form.password_confirm }}
+                {{ form.password_confirm.errors }}
+            </div>
+
+            <button type="submit" class="registration-button">Register</button>
+        </form>
+
+        <!-- Login Link Section -->
+        <div class="login-link">
+            <p>Already have an account? <a href="{% url 'accounts:login' %}">Login</a></p>
         </div>
-        
-        <div>
-            {{ form.password.label_tag }}<br>
-            {{ form.password }}
-            {{ form.password.errors }}
-        </div>
-        
-        <div>
-            {{ form.password_confirm.label_tag }}<br>
-            {{ form.password_confirm }}
-            {{ form.password_confirm.errors }}
-        </div>
-        
-        <div>
-            {{ form.email.label_tag }}<br>
-            {{ form.email }}
-            {{ form.email.errors }}
-        </div>
-        
-        <div>
-            {{ form.address.label_tag }}<br>
-            {{ form.address }}
-            {{ form.address.errors }}
-        </div>
-        
-        <div>
-            {{ form.age.label_tag }}<br>
-            {{ form.age }}
-            {{ form.age.errors }}
-        </div>
-        
-        <div>
-            {{ form.interest.label_tag }}<br>
-            {{ form.interest }}
-            {{ form.interest.errors }}
-        </div>
-        
-        <div>
-            {{ form.photo.label_tag }}<br>
-            {{ form.photo }}
-            {{ form.photo.errors }}
-        </div>
-        
-        <div>
-            {{ form.phone_number.label_tag }}<br>
-            {{ form.phone_number }}
-            {{ form.phone_number.errors }}
-        </div>
-        
-        <button type="submit">Register</button>
-    </form>
-</body>
-</html>
+    </div>
+</div>
+{% endblock %}
