@@ -2,58 +2,43 @@
 {% load static %}
 
 {% block body %}
-<div class="registration-page">
-    <!-- Background Section with Image -->
-    <div class="registration-bg">
-        <img src="{% static 'css/images/2.png' %}" alt="Background Image">
-    </div>
+<div class="container-fluid min-vh-100 d-flex signup-page align-items-center justify-content-end">
+    <div class="row w-100" style="width: 25% !important; margin-right: 120px;">
+        <div class="login-form-section  p-5">
+            <h1 class="login-title">Sign Up!</h1>
+            <form method="post" enctype="multipart/form-data" class="registration-form">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                
+                <div class="form-group mb-3">
 
-    <!-- Registration Form Section -->
-    <div class="registration-form-section">
-        <h1 class="registration-title">Register!</h1>
+                    {{ form.username }}
+                    {{ form.username.errors }}
+                </div>
+    
+                <div class="form-group mb-3">
 
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-        
-        <form method="post" enctype="multipart/form-data" class="registration-form">
-            {% csrf_token %}
-            {{ form.non_field_errors }}
-            
-            <div class="form-group">
-                {{ form.username.label_tag }}<br>
-                {{ form.username }}
-                {{ form.username.errors }}
+                    {{ form.email }}
+                    {{ form.email.errors }}
+                </div>
+                
+                <div class="form-group mb-3">
+
+                    {{ form.password }}
+                    {{ form.password.errors }}
+                </div>
+    
+                <div class="form-group">
+
+                    {{ form.password_confirm }}
+                    {{ form.password_confirm.errors }}
+                </div>
+    
+                <button type="submit" class="registration-button">Sign Up</button>
+            </form>
+            <div class="signup mt-3">
+                Already have an account ?  <a href="{% url 'accounts:login' %}">Login</a>
             </div>
-
-            <div class="form-group">
-                {{ form.email.label_tag }}<br>
-                {{ form.email }}
-                {{ form.email.errors }}
-            </div>
-            
-            <div class="form-group">
-                {{ form.password.label_tag }}<br>
-                {{ form.password }}
-                {{ form.password.errors }}
-            </div>
-
-            <div class="form-group">
-                {{ form.password_confirm.label_tag }}<br>
-                {{ form.password_confirm }}
-                {{ form.password_confirm.errors }}
-            </div>
-
-            <button type="submit" class="registration-button">Register</button>
-        </form>
-
-        <!-- Login Link Section -->
-        <div class="login-link">
-            <p>Already have an account? <a href="{% url 'accounts:login' %}">Login</a></p>
         </div>
     </div>
 </div>
