@@ -37,7 +37,7 @@ header {
 footer {
     background-color: #333333;
     color: #FFFFFF;
-
+    margin-bottom: -15px;
 }
 
 .footer-container {
@@ -115,36 +115,49 @@ footer ul li a:hover {
     }
 }
 /* Layout for the login page */
+
 .login-page {
     display: flex;
     min-height: 100vh;
     align-items: center;
-    justify-content: flex-end; /* Align the login form to the right */
-    background-color: white;
-    background-image: url('/static/images/1.png');
-    background-position: left center;
+    justify-content: flex-end; 
+    background: linear-gradient(to left, rgba(255, 255, 255, 1) 35%, rgba(255, 255, 255, 0.7) 50%, rgba(0.1, 0.1, 0.1, 0.1)), 
+                url('/static/images/1.png');
+    background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
-    background-size: auto 100%;
+    padding-right: 60px;
 }
-/* Login Page styles */
-/* Login form container */
+
+.signup-page{
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: flex-end; 
+    background: linear-gradient(to left, rgba(255, 255, 255, 1) 36%, rgba(255, 255, 255, 0.7) 50%, rgba(0.1, 0.1, 0.1, 0.1)), 
+                url('/static/images/2.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding-right: 60px; 
+}
+
 .login-form-section {
-    flex: 1;
     max-width: 400px;
-    margin-right: 60px;
     background-color: white;
     border-radius: 8px;
     padding: 40px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
+/* Title styling */
 .login-title {
     color: #F18C00;
     margin-bottom: 20px;
     font-size: 24px;
 }
 
+/* Form field styling */
 .login-form .form-group {
     margin-bottom: 20px;
 }
@@ -191,15 +204,11 @@ footer ul li a:hover {
     text-decoration: underline;
 }
 
-/* Responsive Design */
+/* Responsive Design for Login Page */
 @media (max-width: 768px) {
     .login-page {
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .login-bg {
-        display: none; /* Hide background image on smaller screens */
+        padding: 20px;
+        background: none;
     }
 
     .login-form-section {
@@ -311,3 +320,6 @@ footer ul li a:hover {
         width: 90%;
     }
 }
+
+
+

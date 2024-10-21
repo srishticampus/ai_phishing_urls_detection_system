@@ -3,19 +3,56 @@ from django.contrib.auth.models import User
 from .models import Reg
 import re
 
+from django import forms
+from django.contrib.auth.models import User
+import re
+
 class RegistrationForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput, label="Password")
-    password_confirm = forms.CharField(widget=forms.PasswordInput, label="Confirm Password")
-    age = forms.IntegerField(required=False, min_value=0, label="Age")
-    interest = forms.ChoiceField(choices=Reg.INTEREST_CHOICES, label="Interest")
-    photo = forms.ImageField(required=False, label="Profile Photo")
-    phone_number = forms.CharField(max_length=15, label="Phone Number")
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': 'Password'}),
+        label="Password"
+    )
+    password_confirm = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}),
+        label="Confirm Password"
+    )
+    age = forms.IntegerField(
+        required=False,
+        min_value=0,
+        label="Age",
+        widget=forms.NumberInput(attrs={'placeholder': 'Enter your age (optional)'})
+    )
+    interest = forms.ChoiceField(
+        choices=Reg.INTEREST_CHOICES,
+        label="Interest",
+        widget=forms.Select(attrs={'placeholder': 'Select your interest'})
+    )
+    photo = forms.ImageField(
+        required=False,
+        label="Profile Photo"
+    )
+    phone_number = forms.CharField(
+        max_length=15,
+        label="Phone Number",
+        widget=forms.TextInput(attrs={'placeholder': 'Enter your phone number'})
+    )
 
     class Meta:
         model = Reg
         fields = ['username', 'email', 'address', 'age', 'interest', 'photo', 'phone_number']
 
-    username = forms.CharField(max_length=150, required=True, label="Username")
+    username = forms.CharField(
+        max_length=150,
+        required=True,
+        label="Username",
+        widget=forms.TextInput(attrs={'placeholder': 'Username'})
+    )
+    email = forms.EmailField(
+        required=True,
+        label="Email",
+        widget=forms.EmailInput(attrs={'placeholder': 'E-Mail'})
+    )
+   
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
