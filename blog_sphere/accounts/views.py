@@ -4,13 +4,15 @@ from django.contrib import messages
 from .forms import RegistrationForm, LoginForm
 from django.contrib.auth.decorators import login_required
 
+
+
 def reg(request):
     if request.method == 'POST':
-        form = RegistrationForm(request.POST, request.FILES)  # Include request.FILES for file uploads
+        form = RegistrationForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, "Registration successful. Please log in.")
-            return redirect('login')
+            return redirect('accounts:login')
         else:
             messages.error(request, "Please correct the errors below.")
     else:
