@@ -1,6 +1,98 @@
 {% extends 'core/base.html' %}
+{% load static %}
 
 {% block body %}
-<h1>Welcome to Blog Sphere</h1>
-<p>Your one-stop destination for amazing blog content. Landing page</p>
+
+
+<!-- Hero Section -->
+<div class="container-fluid p-0">
+    <div class="hero-section text-center">
+        <div class="hero-content">
+            <h1>Welcome to BLOG SPHERE!</h1>
+            <p>From Thoughts to Trends – Your Blogging Hub</p>
+            <a href="#" class="btn hero-button">Explore Now</a>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Blogs Section -->
+<div class="container recent-blogs-section">
+    <h2 class="text-center">Our Recent Blogs...</h2>
+    <div class="row">
+        <!-- Blog Card 1 -->
+        <div class="col-md-4">
+            <div class="blog-card">
+                <img src="{% static 'images/blog1.png' %}" class="card-img-top" alt="Blog 1">
+                <div class="card-body">
+                    <div class="blog-category">Food & Cooking</div>
+                    <h3 class="card-title">Budget Sacrificing Experience</h3>
+                    <p class="card-text">Aenean eleifend ante maecenas pulvinar montes lorem et pede dis dolor pretium...</p>
+                    <a href="#" class="read-more">Read More ></a>
+                </div>
+            </div>
+        </div>
+        <!-- Repeat for each card -->
+        <div class="col-md-4">
+            <div class="blog-card">
+                <img src="{% static 'images/blog2.jpg' %}" class="card-img-top" alt="Blog 2">
+                <div class="card-body">
+                    <div class="blog-category">Travel & Adventure</div>
+                    <h3 class="card-title">Integer Maecenas Eget Viverra</h3>
+                    <p class="card-text">Aenean eleifend ante maecenas pulvinar montes lorem et pede dis dolor pretium...</p>
+                    <a href="#" class="read-more">Read More ></a>
+                </div>
+            </div>
+        </div>
+        <!-- Blog Card 3 -->
+        <div class="col-md-4">
+            <div class="blog-card">
+                <img src="{% static 'images/4.png' %}" class="card-img-top" alt="Blog 3">
+                <div class="card-body">
+                    <div class="blog-category">Lifestyle</div>
+                    <h3 class="card-title">Create a Cozy and Stylish Space</h3>
+                    <p class="card-text">Aenean eleifend ante maecenas pulvinar montes lorem et pede dis dolor pretium...</p>
+                    <a href="#" class="read-more">Read More ></a>
+                </div>
+            </div>
+        </div>
+        <!-- Second row of cards -->
+        <div class="col-md-4">
+            <div class="blog-card">
+                <img src="{% static 'images/blog1.png' %}" class="card-img-top" alt="Blog 4">
+                <div class="card-body">
+                    <div class="blog-category">Travel & Adventure</div>
+                    <h3 class="card-title">Explore the Hidden Gems</h3>
+                    <p class="card-text">Aenean eleifend ante maecenas pulvinar montes lorem et pede dis dolor pretium...</p>
+                    <a href="#" class="read-more">Read More ></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="blog-card">
+                <img src="{% static 'images/blog2.jpg' %}" class="card-img-top" alt="Blog 5">
+                <div class="card-body">
+                    <div class="blog-category">Food & Cooking</div>
+                    <h3 class="card-title">Culinary Journey</h3>
+                    <p class="card-text">Aenean eleifend ante maecenas pulvinar montes lorem et pede dis dolor pretium...</p>
+                    <a href="#" class="read-more">Read More ></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="blog-card">
+                <img src="{% static 'images/4.png' %}" class="card-img-top" alt="Blog 6">
+                <div class="card-body">
+                    <div class="blog-category">Lifestyle</div>
+                    <h3 class="card-title">Finding Balance in Life</h3>
+                    <p class="card-text">Aenean eleifend ante maecenas pulvinar montes lorem et pede dis dolor pretium...</p>
+                    <a href="#" class="read-more">Read More ></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mt-4">
+        <button class="btn btn-outline-dark load-more">Load More</button>
+    </div>
+</div>
+
 {% endblock %}

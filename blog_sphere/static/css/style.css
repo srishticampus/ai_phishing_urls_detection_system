@@ -37,7 +37,7 @@ header {
 footer {
     background-color: #333333;
     color: #FFFFFF;
-
+    margin-bottom: -15px;
 }
 
 .footer-container {
@@ -115,36 +115,49 @@ footer ul li a:hover {
     }
 }
 /* Layout for the login page */
+
 .login-page {
     display: flex;
     min-height: 100vh;
     align-items: center;
-    justify-content: flex-end; /* Align the login form to the right */
-    background-color: white;
-    background-image: url('/static/images/1.png');
-    background-position: left center;
+    justify-content: flex-end; 
+    background: linear-gradient(to left, rgba(255, 255, 255, 1) 35%, rgba(255, 255, 255, 0.7) 50%, rgba(0.1, 0.1, 0.1, 0.1)), 
+                url('/static/images/1.png');
+    background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
-    background-size: auto 100%;
+    padding-right: 60px;
 }
-/* Login Page styles */
-/* Login form container */
+
+.signup-page{
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: flex-end; 
+    background: linear-gradient(to left, rgba(255, 255, 255, 1) 36%, rgba(255, 255, 255, 0.7) 50%, rgba(0.1, 0.1, 0.1, 0.1)), 
+                url('/static/images/2.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding-right: 60px; 
+}
+
 .login-form-section {
-    flex: 1;
     max-width: 400px;
-    margin-right: 60px;
     background-color: white;
     border-radius: 8px;
     padding: 40px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
+/* Title styling */
 .login-title {
     color: #F18C00;
     margin-bottom: 20px;
     font-size: 24px;
 }
 
+/* Form field styling */
 .login-form .form-group {
     margin-bottom: 20px;
 }
@@ -191,15 +204,11 @@ footer ul li a:hover {
     text-decoration: underline;
 }
 
-/* Responsive Design */
+/* Responsive Design for Login Page */
 @media (max-width: 768px) {
     .login-page {
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .login-bg {
-        display: none; /* Hide background image on smaller screens */
+        padding: 20px;
+        background: none;
     }
 
     .login-form-section {
@@ -310,4 +319,207 @@ footer ul li a:hover {
         padding: 20px;
         width: 90%;
     }
+}
+
+
+/* Layout for the forgot password page */
+.forgot-password-page {
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: flex-end; 
+    background: linear-gradient(to left, rgba(255, 255, 255, 1) 35%, rgba(255, 255, 255, 0.7) 50%, rgba(0.1, 0.1, 0.1, 0.1)),
+                url('/static/images/3.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding-right: 60px;
+}
+
+.forgot-password-form-section {
+    max-width: 400px;
+    background-color: white;
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+}
+
+/* Title styling */
+.forgot-password-title {
+    color: #F18C00;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.instructions {
+    margin-bottom: 20px;
+    color: #555;
+}
+
+/* Form field styling */
+.forgot-password-form .form-group {
+    margin-bottom: 20px;
+}
+
+.forgot-password-form input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+/* Button Styling */
+.forgot-password-button {
+    background-color: black;
+    color: white;
+    padding: 12px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.forgot-password-button:hover {
+    background-color: #333;
+}
+
+/* Back to Login link styling */
+.back-to-login-link p {
+    font-size: 14px;
+    color: #666;
+}
+
+.back-to-login-link a {
+    color: #F18C00;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.back-to-login-link a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .forgot-password-page {
+        padding: 20px;
+        background: none;
+    }
+
+    .forgot-password-form-section {
+        margin-right: 0;
+        padding: 20px;
+        width: 90%;
+    }
+}
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Hero Section */
+.hero-section {
+    background-image: url('/static/images/4.png'); /* Adjust the path to your image */
+    background-size: cover;
+    background-position: center;
+    height: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    position: relative;
+    width: 100%;
+}
+
+.hero-content {
+    max-width: 700px;
+    text-align: center;
+}
+
+.hero-content h1 {
+    font-size: 3em;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.hero-content p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.hero-button {
+    background-color: #F18C00;
+    color: white;
+    padding: 12px 30px;
+    font-size: 1.1em;
+}
+
+.hero-button:hover {
+    background-color: #e07b00;
+}
+
+/* Recent Blogs Section */
+.recent-blogs-section {
+    padding: 60px 0;
+    background-color: #f7f7f7;
+}
+
+.recent-blogs-section h2 {
+    font-size: 2.5em;
+    margin-bottom: 40px;
+}
+
+.blog-card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.blog-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.blog-category {
+    font-size: 0.9em;
+    color: #F18C00;
+}
+
+.card-title {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+.card-text {
+    color: #555;
+    font-size: 0.9em;
+}
+
+.read-more {
+    color: #F18C00;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.read-more:hover {
+    text-decoration: underline;
+}
+
+.load-more {
+    margin-top: 20px;
 }
