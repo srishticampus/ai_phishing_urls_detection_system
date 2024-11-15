@@ -1,0 +1,50 @@
+# Django project (in server folder)
+server/__pycache__/
+server/*.py[cod]
+server/*.pyo
+
+# Virtual environment directory (add your venv name if it's named differently)
+server/Pipfile
+server/ai_phishing
+
+# Django specific
+server/*.log
+server/*.pot
+server/*.pyc
+server/*.sqlite3
+
+# Environment variables file
+server/.env
+
+# Django migrations
+server/**/migrations/*
+
+# Database file (if using SQLite)
+server/db.sqlite3
+
+# IDE/editor-specific files
+server/.idea/
+server/.vscode/
+server/.DS_Store
+
+# Ignore compiled and distribution files
+server/build/
+server/dist/
+server/*.egg-info/
+
+# React app (in client folder)
+client/node_modules/
+client/build/
+client/coverage/
+client/.env
+client/.env.development
+client/.env.production
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*
+client/.parcel-cache/
+
+# IDE/editor-specific files
+client/.idea/
+client/.vscode/
+client/.DS_Store
