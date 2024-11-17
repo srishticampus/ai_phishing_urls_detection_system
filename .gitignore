@@ -24,6 +24,7 @@ migrations/*
 
 # Virtual environment
 venv/
+ai_phishing/
 *.env
 Pipfile
 Pipfile.lock
