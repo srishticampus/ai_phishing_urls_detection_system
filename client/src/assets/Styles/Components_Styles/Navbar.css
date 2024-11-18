@@ -1,0 +1,61 @@
+.navbar{
+    height: 80px;
+    position: sticky;   /* Make the navbar sticky */
+    top: 0;             /* Stick it to the top of the viewport */
+    width: 100%;        /* Ensure it spans full width */
+    z-index: 1000;      /* Keep it on top of other elements */
+    display: flex;      /* Flexbox for layout */
+    justify-content: space-between; /* Space out logo and navbar items */
+    align-items: center;  /* Vertically center items */
+    
+}
+
+.logo {
+    font-family: K2D;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    letter-spacing: 1.7px;
+    text-transform: uppercase;
+    margin-left: 50px;
+
+}
+
+.logo_color {
+    color: #F18c00;
+}
+.logo_Blog_Color{
+    color: white;
+}
+
+.navbar_list {
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.navbar_nav-item {
+    margin-right: 30px;
+}
+
+.navbar_links {
+    color: white;
+}
+
+.navbar_links:hover {
+    text-decoration: underline;
+    color: #F18c00;
+    
+}
+
+.navbar_login_button {
+    padding: 10px 30px;
+    border-radius: 25px;
+    color: #F18c00;
+    border-color: #F18c00;
+    margin-right: 50px;
+}
+.navbar_login_button:hover{
+    color: #F18c00;
+    border-color: #F18c00;
+}
