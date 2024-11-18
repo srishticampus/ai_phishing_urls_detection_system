@@ -1,12 +1,12 @@
 .navbar{
     height: 80px;
-    position: sticky;   /* Make the navbar sticky */
-    top: 0;             /* Stick it to the top of the viewport */
-    width: 100%;        /* Ensure it spans full width */
-    z-index: 1000;      /* Keep it on top of other elements */
-    display: flex;      /* Flexbox for layout */
-    justify-content: space-between; /* Space out logo and navbar items */
-    align-items: center;  /* Vertically center items */
+    position: sticky;   
+    top: 0;             
+    width: 100%;        
+    z-index: 1;      
+    display: flex;     
+    justify-content: space-between; 
+    align-items: center;  
     
 }
 
