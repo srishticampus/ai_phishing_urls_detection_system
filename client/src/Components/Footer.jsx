@@ -51,9 +51,9 @@ function Footer() {
           </div>
         </div>
 
-          <hr className='footer_bottom_line'></hr>
-          <p className='Footer_copyright'>Copy right &copy; 2024.All rights received</p>
-       
+        <hr className='footer_bottom_line'></hr>
+        <p className='Footer_copyright'>Copy right &copy; 2024.All rights received</p>
+
       </div>
 
     </>

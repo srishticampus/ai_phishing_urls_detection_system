@@ -1,0 +1,19 @@
+.Login_Left {
+    background: url(../../Images/Login_Background.png) no-repeat;
+    width: 897px;
+    height: 644px;
+}
+.Login_Page_Head{
+    color: #F18C00;
+text-align: center;
+font-family: Lato;
+font-size: 40px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+.Login_Right{
+ max-width: 600px;
+ margin-left: 5%;
+ margin-top: 10%;
+}

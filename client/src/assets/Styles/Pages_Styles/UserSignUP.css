@@ -1,6 +1,6 @@
 .Signup_LeftSide {
     /* background: linear-gradient(270deg, rgba(255, 255, 255, 0.00) 0%, rgba(255, 255, 255, 0.50) 66%, rgba(255, 255, 255, 0.90) 83%, #FFF 100%), url() lightgray -69px 0px / 107.692% 100% no-repeat; */
-    background: url(../../Images/SignUp_Page_Img.png);
+    background: url(../../Images/SignUp_Page_Img.png) no-repeat center center;
     width: 897px;
     height: 644px;
 }
@@ -15,16 +15,29 @@
     line-height: normal;
 }
 
-.Signup_RightSide{
+/* .Signup_RightSide {
     display: flex;
     flex-direction: column;
     align-items: center;
-gap: 50px;
+    gap: 50px;
+}  */
+
+.Signup_RightSide{
+    max-width: 600px;
+    margin-left: 5%;
+    margin-top: 10%;
 }
-@media  (max-width :600px) {
-    .Signup_LeftSide {
-        display: none;
+
+.form-control {
+    border-radius: 10px;
+    padding: 10px;
+}
+@media (max-width: 768px) {
+    .Signup_LeftSide, .Signup_RightSide {
+        height: auto;
     }
- 
-    
+
+    .Signup_RightSide {
+        margin-top: 20px;
+    }
 }
