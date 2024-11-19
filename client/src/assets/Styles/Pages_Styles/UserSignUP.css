@@ -1,0 +1,30 @@
+.Signup_LeftSide {
+    /* background: linear-gradient(270deg, rgba(255, 255, 255, 0.00) 0%, rgba(255, 255, 255, 0.50) 66%, rgba(255, 255, 255, 0.90) 83%, #FFF 100%), url() lightgray -69px 0px / 107.692% 100% no-repeat; */
+    background: url(../../Images/SignUp_Page_Img.png);
+    width: 897px;
+    height: 644px;
+}
+
+.Signup_RightSide_head {
+    color: #F18C00;
+    text-align: center;
+    font-family: Lato;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.Signup_RightSide{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+gap: 50px;
+}
+@media  (max-width :600px) {
+    .Signup_LeftSide {
+        display: none;
+    }
+ 
+    
+}

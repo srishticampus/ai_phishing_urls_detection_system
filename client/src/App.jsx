@@ -5,6 +5,8 @@ import LandingPage from './Pages/LandingPage'
 import Navbar from './Components/Navbar'
 import User_Navbar from './Components/User_Navbar'
 import User_SignUp from './Pages/User/User_SignUp'
+import Footer from './Components/Footer'
+
 
 function App() {
 
@@ -17,7 +19,7 @@ function App() {
         {/* Pages-Routes */}
         <Routes>
           <Route path='/' element={[<Navbar/>,<LandingPage/>]} ></Route>
-          <Route path='/SignUP' element={[<User_Navbar/>,<User_SignUp/>]}/>
+          <Route path='/SignUP' element={[<User_Navbar/>,<User_SignUp/>,<Footer/>]}/>
         </Routes>
       </div>
       </BrowserRouter>
