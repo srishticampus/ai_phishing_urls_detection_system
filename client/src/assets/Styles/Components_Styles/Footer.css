@@ -82,11 +82,11 @@ ul {
 }
 .footer_bottom_line{
     background:  #ffffff;
-    width: 80%;           /* Ensure it doesn't stretch the full width */
-    margin: 20px auto;    /* Centers the line horizontally with spacing above and below */
-    border: 0;            /* Removes the default border style */
-    height: 1px;          /* Sets the height of the line */
-    background-color: #fff; /* Sets the color of the line */
+    width: 80%;        
+    margin: 20px auto;    
+    border: 0;      
+    height: 1px;        
+    background-color: #fff; 
     opacity: 0.5; 
 }
 .Footer_copyright{
