@@ -1,3 +1,4 @@
+
 # **AI Phishing URL Detection System**  
 ### (React + Django)
 
@@ -161,6 +162,76 @@ Authenticates a user and generates JWT tokens.
 
 ---
 
+### **3. Forgot Password**  
+Sends a password reset email to the user.  
+
+- **URL**: `api/forgot-password/`  
+- **Method**: `POST`  
+- **Permission**: Public  
+
+#### **Request Body (JSON)**:  
+```json
+{
+  "email": "john@example.com"
+}
+```
+
+#### **Success Response**:  
+- **Code**: 200 OK  
+```json
+{
+  "message": "Password reset email sent successfully!"
+}
+```
+
+#### **Error Responses**:  
+- **Code**: 404 Not Found  
+```json
+{
+  "errors": {
+    "email": ["No user found with this email address."]
+  }
+}
+```
+
+---
+
+### **4. Reset Password**  
+Allows a user to reset their password using a token.  
+
+- **URL**: `api/reset-password/`  
+- **Method**: `POST`  
+- **Permission**: Public  
+
+#### **Request Body (JSON)**:  
+```json
+{
+  "token": "reset-token",
+  "new_password": "newpassword123"
+}
+```
+
+#### **Success Response**:  
+- **Code**: 200 OK  
+```json
+{
+  "message": "Password reset successfully!"
+}
+```
+
+#### **Error Responses**:  
+- **Code**: 400 Bad Request  
+```json
+{
+  "errors": {
+    "token": ["Invalid or expired token."],
+    "new_password": ["This field is required."]
+  }
+}
+```
+
+---
+
 ### **Authorization**  
 To access protected endpoints, include the Authorization header with the access token:  
 ```plaintext
@@ -195,5 +266,3 @@ Refresh the access token using the refresh token.
   "access": "new-jwt-access-token"
 }
 ```
-
-
