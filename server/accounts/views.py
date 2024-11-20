@@ -14,8 +14,9 @@ from rest_framework import permissions,generics,status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
-from accounts.models import User
-from .serializers import UserSerializer,CustomTokenObtainPairSerializer,ResetPasswordSerializer
+from accounts.models import User,Profile
+from .serializers import (UserSerializer,CustomTokenObtainPairSerializer,ResetPasswordSerializer,
+                          ProfileSerializer)
 
 
 #User Registration View
@@ -36,7 +37,7 @@ class UserRegistrationView(generics.CreateAPIView):
                 status=status.HTTP_201_CREATED,
             )
         return Response(
-            {"errors": serializer.errors}, 
+            {"errors": serializer.errors},
             status=status.HTTP_400_BAD_REQUEST
         )
 
@@ -56,7 +57,7 @@ class LoginView(TokenObtainPairView):
                 status=status.HTTP_200_OK,
             )
         return Response(
-            {"errors": serializer.errors}, 
+            {"errors": serializer.errors},
             status=status.HTTP_401_UNAUTHORIZED
         )
 
@@ -78,7 +79,7 @@ class ForgotPasswordView(APIView):
                             status=status.HTTP_400_BAD_REQUEST
             )
         try:
-            user = User.objects.get(email=email)   
+            user = User.objects.get(email=email)
         except User.DoesNotExist:
             return Response(
                 {"error":"No user found with this email"},
@@ -103,7 +104,7 @@ class ForgotPasswordView(APIView):
             {"message": "Password reset link sent to your email"},
             status=status.HTTP_200_OK)
 
-
+#Reset Password View
 class ResetPasswordView(APIView):
     """
     this is the view for the reset password 
@@ -118,4 +119,35 @@ class ResetPasswordView(APIView):
             serializer.save()
             return Response({"message": "Password reset successful"}, status=status.HTTP_200_OK)
 
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ProfileCreateView(APIView):
+    """
+    View for creating a profile for a user, including updating first_name and last_name.
+    """
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        """
+        Handles the POST request for profile creation.
+        """
+        # Check if the user already has a profile
+        if Profile.objects.filter(user=request.user).exists():
+            return Response(
+                {"error": "Profile already exists."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Convert request data to a mutable dictionary
+        data = request.data.copy()  # Ensures mutability
+
+        # Add the photo field if it exists in request.FILES
+        if 'photo' in request.FILES:
+            data['photo'] = request.FILES['photo']
+
+        # Pass data to serializer
+        serializer = ProfileSerializer(data=data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save(user=request.user)  # Ensure the user is associated with the profile
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
