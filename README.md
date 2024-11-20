@@ -232,7 +232,7 @@ Allows a user to reset their password using a token.
 
 ---
 
-### **Authorization**  
+### **5.Authorization**  
 To access protected endpoints, include the Authorization header with the access token:  
 ```plaintext
 Authorization: Bearer <jwt-access-token>
@@ -246,7 +246,7 @@ Authorization: Bearer <jwt-access-token>
 
 ---
 
-### **Refreshing Access Token**  
+### **6.Refreshing Access Token**  
 Refresh the access token using the refresh token.  
 
 - **URL**: `api/token/refresh/`  
@@ -266,3 +266,61 @@ Refresh the access token using the refresh token.
   "access": "new-jwt-access-token"
 }
 ```
+# **7.Profile Add API**:
+
+## Endpoint
+
+**POST** `/api/profile/add/`
+
+### Description
+This API allows an authenticated user to create a profile, which includes personal details like `first_name`, `last_name`, `phone_number`, `gender`, and `photo`. If the user already has an existing profile, the API will return an error message.
+
+### Permissions
+- **Authenticated Users Only**: The user must be logged in to create a profile.
+
+### Request Body
+
+The request body must be sent as `multipart/form-data` to support file upload for the `photo` field.
+
+| Field       | Type   | Description                          | Required |
+|-------------|--------|--------------------------------------|----------|
+| `first_name`| string | The user's first name                | Yes      |
+| `last_name` | string | The user's last name                 | Yes      |
+| `phone_number` | string | The user's phone number             | Yes      |
+| `gender`    | string | The user's gender (e.g., `M` for Male, `F` for Female) | Yes      |
+| `photo`     | file   | The user's profile photo             | No       |
+
+#### Example Request Body (Postman)
+
+In Postman, set the `Content-Type` to `multipart/form-data` and add the following form-data fields:
+
+| Key            | Value              |
+|----------------|--------------------|
+| `phone_number` | `9495211403`       |
+| `gender`       | `M`                |
+| `first_name`   | `Jithin`           |
+| `last_name`    | `Jose`             |
+| `photo`        | (Select a file)    |
+
+### Response
+
+#### Success (201 Created)
+
+If the profile is successfully created, the response will contain the user’s profile details, including the photo URL.
+
+{
+  "phone_number": "9495211403",
+  "gender": "M",
+  "first_name": "Jithin",
+  "last_name": "Jose",
+  "photo": "/media/photos/photo.jpg"  // or the appropriate media URL
+}
+### Error Codes
+
+| **Code** | **Description**                                       |
+|----------|-------------------------------------------------------|
+| 400      | **Bad Request**: The request is malformed or invalid. |
+| 401      | **Unauthorized**: The user is not authenticated.     |
+| 409      | **Conflict**: Profile already exists.                |
+| 415      | **Unsupported Media Type**: The media type of the request is not supported. |
+| 422      | **Unprocessable Entity**: The server understands the content type of the request entity, but the server is unable to process the contained instructions. |
