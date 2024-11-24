@@ -82,16 +82,27 @@ class ResetPasswordSerializer(serializers.Serializer):
     def update(self, instance, validated_data):
         raise NotImplementedError("Update method not implemented")
 
+class UserDetailsSerializer(serializers.ModelSerializer):
+    """
+    Serializer for user details, including first_name, last_name, and email.
+    """
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name']
+
 class ProfileSerializer(serializers.ModelSerializer):
     """
-    Serializer for profile details of a user, including first_name and last_name.
+    Serializer for profile details of a user, including first_name, last_name, and nested user 
+    details.
     """
     first_name = serializers.CharField(write_only=True)
     last_name = serializers.CharField(write_only=True)
     photo = serializers.ImageField(required=False)
+    user = UserDetailsSerializer(read_only=True)  # Nested user serializer
+
     class Meta:
         model = Profile
-        fields = ['phone_number', 'gender', 'photo', 'first_name', 'last_name']
+        fields = [ 'user','phone_number', 'gender', 'photo', 'first_name', 'last_name',]
 
     def create(self, validated_data):
         """
@@ -112,3 +123,21 @@ class ProfileSerializer(serializers.ModelSerializer):
         user.save()
 
         return super().create(validated_data)
+
+    def update(self, instance, validated_data):
+        """
+        Overriding update to ensure first_name and last_name are updated in the User model.
+        """
+        user = instance.user
+
+        # Update first_name and last_name if provided
+        first_name = validated_data.pop('first_name', None)
+        last_name = validated_data.pop('last_name', None)
+
+        if first_name:
+            user.first_name = first_name
+        if last_name:
+            user.last_name = last_name
+        user.save()
+
+        return super().update(instance, validated_data)

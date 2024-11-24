@@ -7,7 +7,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 from .views import (UserRegistrationView,LoginView,ForgotPasswordView,ResetPasswordView,
-                    ProfileCreateView)
+                    ProfileCreateView,ProfileRetrieveView,ProfileUpdateView)
 
 app_name = 'accounts'
 
@@ -18,4 +18,6 @@ urlpatterns = [
     path('forgot-password/', ForgotPasswordView.as_view(), name='forgot-password'),
     path('reset-password/', ResetPasswordView.as_view(), name='reset-password'),
     path('profile/add/', ProfileCreateView.as_view(), name='add-profile'),
+    path('profile/view/', ProfileRetrieveView.as_view(), name='profile-view'),
+    path('profile/edit/', ProfileUpdateView.as_view(), name='profile-edit'),
 ]
