@@ -151,3 +151,55 @@ class ProfileCreateView(APIView):
             serializer.save(user=request.user)  # Ensure the user is associated with the profile
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ProfileRetrieveView(APIView):
+    """
+    View for retrieving the profile of the logged-in user.
+    """
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        """
+        Handles GET request to fetch the profile of the authenticated user.
+        """
+        try:
+            profile = Profile.objects.get(user=request.user)
+            serializer = ProfileSerializer(profile, context={'request': request})
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Profile.DoesNotExist:
+            return Response(
+                {"error": "Profile does not exist."},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+class ProfileUpdateView(APIView):
+    """
+    View for updating the profile of the logged-in user.
+    """
+    permission_classes = [permissions.IsAuthenticated]
+
+    def put(self, request):
+        """
+        Handles PUT request to update the profile of the authenticated user.
+        """
+        try:
+            profile = Profile.objects.get(user=request.user)
+
+            # Convert request data to a mutable dictionary
+            data = request.data.copy()
+
+            # Add the photo field if it exists in request.FILES
+            if 'photo' in request.FILES:
+                data['photo'] = request.FILES['photo']
+
+            serializer = ProfileSerializer(profile, data=data, context={'request': request},
+                                           partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Profile.DoesNotExist:
+            return Response(
+                {"error": "Profile does not exist."},
+                status=status.HTTP_404_NOT_FOUND
+            )
