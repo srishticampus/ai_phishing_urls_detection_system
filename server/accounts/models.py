@@ -1,4 +1,12 @@
 # models.py accounts
+"""
+This module contains database models for the accounts app.
+
+It defines the User model extension, Profile model, Interest model, and UserInterest
+model. These models handle user data, profiles, interests, and the relationships
+between users and their interests, forming the foundation for user management in
+the system.
+"""
 
 import re
 from django.conf import settings

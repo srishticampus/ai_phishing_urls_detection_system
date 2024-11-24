@@ -1,43 +1,87 @@
-.Signup_LeftSide {
-    /* background: linear-gradient(270deg, rgba(255, 255, 255, 0.00) 0%, rgba(255, 255, 255, 0.50) 66%, rgba(255, 255, 255, 0.90) 83%, #FFF 100%), url() lightgray -69px 0px / 107.692% 100% no-repeat; */
-    background: url(../../Images/SignUp_Page_Img.png) no-repeat center center;
-    width: 897px;
-    height: 644px;
+/* General Layout Styles */
+.signup-container {
+    display: flex;
+    flex-direction: row; /* For larger screens */
+    height: 100vh; /* Full viewport height */
+}
+
+
+.SignUp_Page_Img{
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+}
+.error {
+    color: red;
+    font-size: 20px;
+    margin-top: 5px;
+    margin-left: 5px;
+  }
+
+.Signup_RightSide {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    width: 50%; 
+    height: 100%;
+    background: #FFF;
+
 }
 
 .Signup_RightSide_head {
     color: #F18C00;
     text-align: center;
     font-family: Lato;
-    font-size: 40px;
-    font-style: normal;
+    font-size: 48px;
     font-weight: 700;
-    line-height: normal;
-}
-
-/* .Signup_RightSide {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 50px;
-}  */
-
-.Signup_RightSide{
-    max-width: 600px;
-    margin-left: 5%;
-    margin-top: 10%;
+    margin-bottom: 20px;
 }
 
 .form-control {
+    width: 500px;
     border-radius: 10px;
     padding: 10px;
 }
+
+.Signup_Button{
+    display: flex;
+width: 175px;
+padding: 10px;
+justify-content: center;
+background: #333;
+color: white;
+margin: auto;
+}
+
+
 @media (max-width: 768px) {
-    .Signup_LeftSide, .Signup_RightSide {
-        height: auto;
+    /* Adjust the flex container for small screens */
+    .signup-container {
+        flex-direction: column; /* Stack vertically on small screens */
+    }
+
+    .Signup_LeftSide {
+        display: none; /* Hide the left side image */
     }
 
     .Signup_RightSide {
-        margin-top: 20px;
+        width: 100%;
+        height: 100vh;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .form-control {
+        width: 100%; /* Ensure input fields take full width */
+        min-width: 400px; /* Limit width for readability */
+        margin-bottom: 15px;
+    }
+
+    .Signup_Button[type="submit"] {
+        width: 100%;
+        max-width: 400px; /* Same width as the form fields */
+        padding: 10px;
     }
 }

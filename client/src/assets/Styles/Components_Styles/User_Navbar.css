@@ -25,13 +25,18 @@
     background: #F4F4F4;
 }
 
-.navbar-toggler-icon{
+.navbar-toggler-icon {
     background-color: #1C1C1C;
 }
 
-.user_navbar_links{
-    color:#1C1C1C;
+.user_navbar_links {
+    color: #1C1C1C;
 }
-.user_navbar_links:hover{
-    color:#1C1C1C;
+
+.user_navbar_links:hover {
+    color: #1C1C1C;
+}
+
+.Navlitems_Margin{
+    margin-right: 50px;
 }

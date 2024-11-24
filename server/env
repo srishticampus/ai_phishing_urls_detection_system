@@ -1,0 +1,30 @@
+#Settings file
+DJANGO_SETTINGS_MODULE=ai_phishing_urls_detection_system.settings
+# Secret key for Django
+SECRET_KEY=django-insecure-qopwd-)+%v861ab_))o*!d7i0s71r)3(a#_(m#sh6(90s+$%--
+
+# Debug mode
+DEBUG=True
+
+# Allowed hosts
+ALLOWED_HOSTS=localhost,127.0.0.1
+
+# CORS allowed origins
+CORS_ALLOWED_ORIGINS=http://localhost:5173,https://your-production-domain.com
+
+# Email credentials
+EMAIL_HOST_USER=jithinsmtpmail@gmail.com
+EMAIL_HOST_PASSWORD=xxrq dtmb mzkf wxza
+
+# Database (optional, if switching to PostgreSQL or other DBs)
+DB_ENGINE=django.db.backends.sqlite3
+DB_NAME=db.sqlite3
+DB_USER=
+DB_PASSWORD=
+DB_HOST=
+DB_PORT=
+
+FRONTEND_URL=http://localhost:5173
+
+#Development mode ON or OFF
+DEV=True

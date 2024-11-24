@@ -1,37 +1,42 @@
-import React from 'react'
-import '../assets/Styles/Components_Styles/User_Navbar.css'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import React from 'react';
+import '../assets/Styles/Components_Styles/User_Navbar.css'; // Your custom styles
+import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap CSS
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Bootstrap JS (this includes Popper.js which is necessary for the toggle)
+
 function User_Navbar() {
-    return (
-        <div>
-            <nav class="navbar navbar-expand-sm navbar-dark UserNavbar">
-                <div class="container-fluid">
-                    <a class="navbar-brand"><span className='UserNavbar_logo_Blog_Color'>BLOG</span>&nbsp;<span className='UserNavbar_logo_color'>SPHERE</span></a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="mynavbar">
-                        <ul class="navbar-nav ms-auto">
-                            <li class="nav-item navbar_nav-item">
-                              <button className='btn'><a class="nav-link user_navbar_links" >Home</a></button>
-                            </li>
-                            <li class="nav-item navbar_nav-item">
-                               <button className='btn'><a class="nav-link user_navbar_links" >About</a></button>
-                            </li>
-                            <li class="nav-item navbar_nav-item">
-                                <button className='btn'><a class="nav-link user_navbar_links" >Services</a></button>
-                            </li>
-                            <li class="nav-item navbar_nav-item">
-                                <button className='btn'><a class="nav-link user_navbar_links" >Contact</a></button>
-                            </li>
-                        </ul>
-  
-                    </div>
-                </div>
-            </nav>
+  return (
+    <div>
+      <nav className="navbar navbar-expand-md UserNavbar">
+        <div className="container-fluid">
+          <a className="navbar-brand">
+            <span className="UserNavbar_logo_Blog_Color">BLOG</span>&nbsp;
+            <span className="UserNavbar_logo_color">SPHERE</span>
+          </a>
+         
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon bg-light"></span>
+          </button>
+          
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav ms-auto ">
+              <li className="nav-item">
+                <a className="nav-link user_navbar_links Navlitems_Margin" href="#">Home</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link user_navbar_links Navlitems_Margin" href="#">About</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link user_navbar_links Navlitems_Margin" href="#">Services</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link user_navbar_links Navlitems_Margin" href="#">Contact</a>
+              </li>
+            </ul>
+          </div>
         </div>
-    )
+      </nav>
+    </div>
+  );
 }
 
-export default User_Navbar
+export default User_Navbar;
