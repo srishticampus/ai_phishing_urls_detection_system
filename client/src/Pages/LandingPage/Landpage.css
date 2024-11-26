@@ -1,0 +1,133 @@
+.LandingPage_Background {
+    background: rgba(0, 0, 0, 0.20) url(../../assets/Images/LandingPage_Bg.png);
+    height: 700px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+
+
+}
+
+
+.LandingPage_Background_content {
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.50);
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.LandingP_Sec_one_para_one {
+    color: var(--icon-color, #FFF);
+    text-align: center;
+    font-family: Lato;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-top: 30px;
+}
+
+.LandingP_BG_one_sphere {
+    color: var(--icon-color, #FFF);
+    font-family: Lato;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+}
+
+.exclamation {
+    color: var(--icon-color, #FFF);
+    font-family: Lato;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.LandingP_Sec_one_para_two {
+    color: var(--icon-color, #FFF);
+    text-align: center;
+    font-family: Lato;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.LandingP_Sec_one_para_three {
+    color: var(--icon-color, #FFF);
+    text-align: center;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.LandingPage_Background .exploreNow_Button {
+    color: #FFF;
+    border: 2px solid #FFF;
+    font-family: Lato;
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
+    line-height: normal;
+    padding: 10px 20px;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.LandingPage_Background .exploreNow_Button:hover {
+    background-color: #FFF;
+    color: #000;
+    border-color: #000;
+}
+
+.LandingPage_Section_two {
+    position: relative;
+    top: 650px;
+}
+
+.LandingP_Sec_two_para_one {
+    color: #333;
+    text-align: center;
+    font-family: Lato;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.LP_sec_two_card_one_body {
+    color: #333;
+    font-family: Lato;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28.125px;
+}
+
+.Card_profile_name {
+    color: #333;
+    font-family: Lato;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28.125px;
+}
+.card_profilepic{
+    width: 28.125px;
+    height: 28.125px;
+}
