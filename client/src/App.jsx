@@ -6,6 +6,9 @@ import UserNavbar from "./Components/UserNavbar/UserNavbar";
 import UserSignup from "./Pages/UserSignup/UserSignup";
 import Footer from "./Components/Footer/Footer";
 import UserLogin from "./Pages/UserLogin/UserLogin";
+import UserForgotPassword from "./Pages/UserForgetPassword/UserForgotPassword";
+
+
 
 function App() {
   return (
@@ -46,6 +49,18 @@ function App() {
             </>
           }
         />
+        {/* forgetpassword Route */}
+        <Route
+         path="/forgetpassword"
+         element={
+          <>
+          <UserNavbar/>
+         <UserForgotPassword/>
+          <Footer/>
+          </>
+         }
+        >
+        </Route>
       </Routes>
     </>
   );
