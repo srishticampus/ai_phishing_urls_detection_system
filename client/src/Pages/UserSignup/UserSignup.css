@@ -1,8 +1,8 @@
-/* General Layout Styles */
+
 .signup-container {
     display: flex;
-    flex-direction: row; /* For larger screens */
-    height: 100vh; /* Full viewport height */
+    flex-direction: row; 
+    height: 100vh; 
 }
 
 

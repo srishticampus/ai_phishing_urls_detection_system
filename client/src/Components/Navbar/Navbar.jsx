@@ -4,7 +4,7 @@ import "./Navbar.css";
 function Navbar() {
   return (
     <>
-      <nav className="navbar  navbar-expand-sm">
+       <nav className="navbar navbar-expand-sm">
         <div className="container-fluid">
           <Link className="navbar-brand logo" to="/">
             <span className="logo_Blog_Color">BLOG</span>&nbsp;
@@ -19,24 +19,24 @@ function Navbar() {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="mynavbar">
-            <ul className="navbar-nav navbar_list mx-auto ">
+            <ul className="navbar-nav navbar_list mx-auto">
               <li className="nav-item navbar_nav-item">
-                <Link className="nav-link navbar_links" to="">
+                <Link className="nav-link navbar_links" to="/">
                   Home
                 </Link>
               </li>
               <li className="nav-item navbar_nav-item">
-                <Link className="nav-link navbar_links" to="">
+                <Link className="nav-link navbar_links" to="/about">
                   About
                 </Link>
               </li>
               <li className="nav-item navbar_nav-item">
-                <Link className="nav-link navbar_links" to="">
+                <Link className="nav-link navbar_links" to="/services">
                   Services
                 </Link>
               </li>
               <li className="nav-item navbar_nav-item">
-                <Link className="nav-link navbar_links" to="">
+                <Link className="nav-link navbar_links" to="/contact">
                   Contact
                 </Link>
               </li>
@@ -44,8 +44,7 @@ function Navbar() {
             <form className="d-flex ms-auto">
               <button
                 className="btn btn-outline navbar_login_button"
-                type="button"
-              >
+                type="button">
                 Login
               </button>
             </form>

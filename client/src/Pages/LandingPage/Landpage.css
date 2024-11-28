@@ -1,45 +1,38 @@
-.LandingPage_Background {
-    background: rgba(0, 0, 0, 0.20) url(../../assets/Images/LandingPage_Bg.png);
+.landingpage-bgimg {
+    width: 100%;
     height: 700px;
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-shrink: 0;
     position: absolute;
     z-index: -1;
     top: 0;
     left: 0;
     right: 0;
-
-
 }
 
-
-.LandingPage_Background_content {
-    border-radius: 5px;
-    background: rgba(0, 0, 0, 0.50);
-    margin-top: 50px;
+.landingpage-bgimg-container {
     display: flex;
+    padding: 50px;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    padding: 20px;
+    gap: 35px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.30);
+    margin-top: 150px;
 }
 
-.LandingP_Sec_one_para_one {
-    color: var(--icon-color, #FFF);
+.landingpage-bgimg-headone {
+    color: #FFF;
     text-align: center;
     font-family: Lato;
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    margin-top: 30px;
 }
 
-.LandingP_BG_one_sphere {
-    color: var(--icon-color, #FFF);
+.landingpage-bgimg-headone-span {
+    color: #FFF;
+    text-align: center;
     font-family: Lato;
     font-size: 24px;
     font-style: normal;
@@ -47,17 +40,8 @@
     line-height: normal;
 }
 
-.exclamation {
-    color: var(--icon-color, #FFF);
-    font-family: Lato;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-}
-
-.LandingP_Sec_one_para_two {
-    color: var(--icon-color, #FFF);
+.landingpage-bgimg-headtwo {
+    color: #FFF;
     text-align: center;
     font-family: Lato;
     font-size: 40px;
@@ -66,8 +50,8 @@
     line-height: normal;
 }
 
-.LandingP_Sec_one_para_three {
-    color: var(--icon-color, #FFF);
+.landingpage-bgimg-para {
+    color: #FFF;
     text-align: center;
     font-family: Lato;
     font-size: 14px;
@@ -76,31 +60,25 @@
     line-height: normal;
 }
 
-.LandingPage_Background .exploreNow_Button {
-    color: #FFF;
+.landingpage-bgimg-button {
+    display: flex;
+    padding: 15px 40px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 5px;
     border: 2px solid #FFF;
+    background: rgba(0, 0, 0, 0.30);
+    color: #FFF;
+    text-align: center;
     font-family: Lato;
     font-size: 18px;
+    font-style: normal;
     font-weight: 500;
-    text-align: center;
     line-height: normal;
-    padding: 10px 20px;
-    background-color: transparent;
-    cursor: pointer;
 }
 
-.LandingPage_Background .exploreNow_Button:hover {
-    background-color: #FFF;
-    color: #000;
-    border-color: #000;
-}
-
-.LandingPage_Section_two {
-    position: relative;
-    top: 650px;
-}
-
-.LandingP_Sec_two_para_one {
+.landingpage-sectwo-head {
     color: #333;
     text-align: center;
     font-family: Lato;
@@ -110,7 +88,12 @@
     line-height: normal;
 }
 
-.LP_sec_two_card_one_body {
+.landingpage-cardone-body {
+    display: flex;
+    width: 315px;
+    height: 54.844px;
+    flex-direction: column;
+    justify-content: center;
     color: #333;
     font-family: Lato;
     font-size: 24px;
@@ -119,15 +102,171 @@
     line-height: 28.125px;
 }
 
-.Card_profile_name {
+.landingpage-cardsize {
+    position: relative;
+    width: 393.75px;
+    height: 295.312px;
+    flex-shrink: 0;
+    border: none;
+    height: auto;
+}
+
+.landingpage-cardone-para {
+    color: #7F7F7F;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 149.687%;
+    text-align: justify;
+}
+
+.landingpage-card-profilename {
     color: #333;
     font-family: Lato;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: 28.125px;
+    margin-left: 10px;
 }
-.card_profilepic{
-    width: 28.125px;
-    height: 28.125px;
+
+.landingpage-card-profile-img {
+    width: 30px;
+    height: 30px;
+
+}
+
+.landingpage-readmore-button {
+    color: #F18C00;
+    font-family: Lato;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -0.16px;
+    text-transform: capitalize;
+    width: 120px;
+
+}
+
+.greaterthan-symbol {
+    width: 18.143px;
+    height: 18.143px;
+    transform: rotate(90deg);
+    margin-left: 10px;
+}
+
+.landingpage-section-two {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.landingpage-section-two .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.landingpage-section-two .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.landingpage-section-two .landingpage-sectiontwo-button-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    width: 100%;
+}
+
+.cardone-header {
+    border-radius: 0;
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    background-color: rgba(0, 0, 0, .5);
+    color: #FFF;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    border-radius: 2.812px;
+    background: rgba(255, 255, 255, 0.20);
+    backdrop-filter: blur(4.218749046325684px);
+}
+
+.cardone-headerone {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    width: 29.531px;
+    height: 29.531px;
+    padding: 7.031px 7.031px 6.328px 6.328px;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 2.812px;
+    background: rgba(255, 255, 255, 0.20);
+    backdrop-filter: blur(4.218749046325684px);
+    border-radius: 25px;
+}
+
+
+.landingpage-sectiontwo-button {
+    color: #7F7F7F;
+    text-align: center;
+    font-family: Lato;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    padding: 10px 30px;
+    gap: 10px;
+    border-radius: 5px;
+    border: 2px solid #7F7F7F;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.landingpage-cardone-imgone {
+    height: 277.312px;
+}
+
+.profile-rectangle {
+    width: 25.312px;
+    height: 0.703px;
+    background: #7F7F7F;
+    margin-top: 15px;
+    margin-left: 10px;
+}
+
+.profile-textcolor {
+    color: #7F7F7F;
+    font-family: Lato;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28.125px;
+}
+
+.profile-textcolortwo {
+    width: 3px;
+    height: 3px;
+    fill: #7F7F7F;
+}
+.share-color{
+    color: #7F7F7F;
+font-family: Lato;
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: 28.125px; 
 }

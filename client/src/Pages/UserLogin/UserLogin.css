@@ -1,8 +1,8 @@
 
 .Login-container {
     display: flex;
-    flex-direction: row; /* For larger screens */
-    height: 100vh; /* Full viewport height */
+    flex-direction: row;
+    height: 100vh; 
 }
 
 
@@ -58,13 +58,13 @@ margin: auto;
 
 
 @media (max-width: 768px) {
-    /* Adjust the flex container for small screens */
+ 
     .Login-container {
-        flex-direction: column; /* Stack vertically on small screens */
+        flex-direction: column;
     }
 
     .Login_LeftSide {
-        display: none; /* Hide the left side image */
+        display: none; 
     }
 
     .Login_RightSide {
@@ -75,14 +75,14 @@ margin: auto;
     }
 
     .form-control {
-        width: 100%; /* Ensure input fields take full width */
-        min-width: 400px; /* Limit width for readability */
+        width: 100%; 
+        min-width: 400px;
         margin-bottom: 15px;
     }
 
     .Login_Button[type="submit"] {
         width: 100%;
-        max-width: 400px; /* Same width as the form fields */
+        max-width: 400px; 
         padding: 10px;
     }
 }
