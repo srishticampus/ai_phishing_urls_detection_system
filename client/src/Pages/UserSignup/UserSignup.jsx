@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import SignUp_Page_Img from "../../assets/Images/SignUp_Page_Img.png";
+import { userSignup } from "../../Services/apiService";
 import "./UserSignup.css";
 
 function UserSignup() {
@@ -10,6 +11,7 @@ function UserSignup() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [apiError, setApiError] = useState("");
   const navigate = useNavigate();
 
   // Handle form validation
@@ -36,6 +38,7 @@ function UserSignup() {
 
     // Reset errors if validation passed
     setErrors({});
+    setApiError("");
 
     // Prepare form data
     const formData = {
@@ -45,29 +48,31 @@ function UserSignup() {
     };
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await userSignup(formData);
 
-      if (response.ok) {
-        navigate("/Login");
+      if (response.success) {
+        // Redirect on successful signup
+        navigate("/login");
       } else {
-        const errorData = await response.json();
-        alert(errorData.message || "An error occurred");
+        // Parse and display specific field errors or generic API error
+        if (response.errors) {
+          setErrors(response.errors);
+        } else if (response.message) {
+          setApiError(response.message);
+        } else {
+          setApiError("An unexpected error occurred. Please try again.");
+        }
       }
     } catch (error) {
-      alert("An error occurred while signing up: ", error);
+      // Handle unexpected errors
+      setApiError("An unexpected error occurred. Please try again.", error);
     }
   };
 
   return (
     <div className="signup-container">
       <div className="Signup_LeftSide">
-        <img className="SignUp_Page_Img" src={SignUp_Page_Img} />
+        <img className="SignUp_Page_Img" src={SignUp_Page_Img} alt="Sign Up" />
       </div>
       <div className="Signup_RightSide">
         <p className="Signup_RightSide_head">Sign Up!</p>
@@ -82,7 +87,9 @@ function UserSignup() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
-            {errors.username && <div className="error">{errors.username}</div>}
+            {errors.username && (
+              <div className="error">{errors.username.join(", ")}</div>
+            )}
           </div>
           <div className="mb-5 mt-3">
             <input
@@ -94,7 +101,9 @@ function UserSignup() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            {errors.email && <div className="error">{errors.email}</div>}
+            {errors.email && (
+              <div className="error">{errors.email.join(", ")}</div>
+            )}
           </div>
           <div className="mb-5">
             <input
@@ -106,7 +115,9 @@ function UserSignup() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            {errors.password && <div className="error">{errors.password}</div>}
+            {errors.password && (
+              <div className="error">{errors.password.join(", ")}</div>
+            )}
           </div>
           <div className="mb-5">
             <input
@@ -122,6 +133,7 @@ function UserSignup() {
               <div className="error">{errors.confirmPassword}</div>
             )}
           </div>
+          {apiError && <div className="api-error">{apiError}</div>}
           <button type="submit" className="btn Signup_Button mb-5">
             Sign Up
           </button>

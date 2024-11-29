@@ -8,8 +8,6 @@ import Footer from "./Components/Footer/Footer";
 import UserLogin from "./Pages/UserLogin/UserLogin";
 import UserForgotPassword from "./Pages/UserForgetPassword/UserForgotPassword";
 
-
-
 function App() {
   return (
     <>
@@ -31,7 +29,7 @@ function App() {
           path="/signup"
           element={
             <>
-              <UserNavbar />
+              <Navbar />
               <UserSignup />
               <Footer />
             </>
@@ -43,7 +41,7 @@ function App() {
           path="/login"
           element={
             <>
-              <UserNavbar />
+              <Navbar />
               <UserLogin />
               <Footer />
             </>
@@ -51,16 +49,15 @@ function App() {
         />
         {/* forgetpassword Route */}
         <Route
-         path="/forgetpassword"
-         element={
-          <>
-          <UserNavbar/>
-         <UserForgotPassword/>
-          <Footer/>
-          </>
-         }
-        >
-        </Route>
+          path="/forgetpassword"
+          element={
+            <>
+              <Navbar />
+              <UserForgotPassword />
+              <Footer />
+            </>
+          }
+        ></Route>
       </Routes>
     </>
   );
