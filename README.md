@@ -17,13 +17,13 @@ This project is designed to detect phishing URLs using a Django backend and Reac
 ### **Development Environment**  
 Create a `.env.development` file in the root of your React project and add the following:  
 ```plaintext
-VITE_API_URL=http://127.0.0.1:8000/api
+VITE_API_URL=http://127.0.0.1:8000/
 ```
 
 ### **Production Environment**  
 Create a `.env.production` file in the root of your React project and add the following:  
 ```plaintext
-VITE_API_URL=https://your-production-domain.com/api
+VITE_API_URL=https://your-production-domain.com/
 ```
 
 ### **Using the API from `.env`**  
