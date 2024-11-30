@@ -1,0 +1,70 @@
+.services-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.services-box-left {
+    position: relative; 
+}
+
+.services-box-top-images,
+.services-box-bottom-images {
+    display: block; 
+}
+
+.services-imgone {
+    position: relative;
+    top: 35px;
+}
+
+.services-imgtwo {
+    position: relative;
+    left: 25px;
+}
+
+.services-imgthree {
+    position: relative;
+    top: 65px;
+}
+
+.services-imgfour {
+    position: relative;
+    top: 35px;
+    left: 25px;
+}
+
+.services-box-right {
+    margin-left: 50px;
+
+    flex: 1; 
+}
+
+.services-box-right-haedone {
+    color: #7F7F7F;
+    font-family: Lato;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.services-box-right-haedtwo {
+    color: #F18C00;
+    font-family: Lato;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.services-box-right-para {
+    color: #7F7F7F;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 25px;
+   text-align: justify;
+}

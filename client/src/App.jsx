@@ -7,7 +7,8 @@ import UserSignup from "./Pages/UserSignup/UserSignup";
 import Footer from "./Components/Footer/Footer";
 import UserLogin from "./Pages/UserLogin/UserLogin";
 import UserForgotPassword from "./Pages/UserForgetPassword/UserForgotPassword";
-
+import ContactUS from "./Pages/ContactUS/ContactUS";
+import Services from "./Pages/Services/services";
 
 
 function App() {
@@ -61,6 +62,26 @@ function App() {
          }
         >
         </Route>
+
+        <Route
+        path="/contactus"
+        element={
+          <>
+          <Navbar/>
+          <ContactUS/>
+      
+          </>
+        }
+        >
+        </Route>
+        <Route
+        path="/services"
+        element={
+          <>
+          <Navbar/>
+          <Services/>
+          </>
+        }></Route>
       </Routes>
     </>
   );
