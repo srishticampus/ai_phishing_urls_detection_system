@@ -92,9 +92,11 @@ Registers a new user.
 {
   "username": "john_doe",
   "email": "john@example.com",
-  "password": "password123"
+  "password": "password123",
+  "user_type": "user"
 }
 ```
+"user_type" can take values user,advertiser,
 
 #### **Success Response**:  
 - **Code**: 201 Created  
@@ -103,7 +105,8 @@ Registers a new user.
   "message": "User registered successfully!",
   "user": {
     "username": "john_doe",
-    "email": "john@example.com"
+    "email": "john@example.com",
+    "user_type": "user"
   }
 }
 ```
@@ -114,7 +117,8 @@ Registers a new user.
 {
   "errors": {
     "username": ["This field is required."],
-    "email": ["Enter a valid email address."]
+    "email": ["Enter a valid email address."],
+    "user_type": ["This field is required."],
   }
 }
 ```
@@ -132,7 +136,8 @@ Authenticates a user and generates JWT tokens.
 ```json
 {
   "username": "john_doe",
-  "password": "password123"
+  "password": "password123",
+  "user_type": "user"
 }
 ```
 
@@ -146,7 +151,8 @@ Authenticates a user and generates JWT tokens.
     "refresh": "jwt-refresh-token",
     "username": "john_doe",
     "email": "john@example.com"
-  }
+  },
+  "user_type": "user"
 }
 ```
 
@@ -235,7 +241,7 @@ Allows a user to reset their password using a token.
 ### **5. Profile Add**  
 Allows an authenticated user to create a profile.  
 
-- **URL**: `api/profile/add/`  
+- **URL**: `api/user-profile/add/`  
 - **Method**: `POST`  
 - **Permission**: Authenticated  
 
@@ -252,14 +258,16 @@ Allows an authenticated user to create a profile.
 - **Code**: 201 Created  
 ```json
 {
-  "message": "Profile created successfully!",
-  "profile": {
-    "first_name": "John",
-    "last_name": "Doe",
-    "phone_number": "1234567890",
+    "user": {
+        "username": "sample123",
+        "email": "sample@123gmail.com",
+        "first_name": "John",
+        "last_name": "Doe",
+        "user_type": "user"
+    },
+    "phone_number": "9495211413",
     "gender": "M",
-    "photo": "/media/photos/photo.jpg"
-  }
+    "photo": "http://127.0.0.1:8000/media/profile_photos/94605_6FYifMb.jpg"
 }
 ```
 
@@ -278,7 +286,7 @@ Allows an authenticated user to create a profile.
 ### **6. Profile View**  
 Retrieves the profile of the authenticated user.  
 
-- **URL**: `api/profile/view/`  
+- **URL**: `api/user-profile/view/`  
 - **Method**: `GET`  
 - **Permission**: Authenticated  
 
@@ -286,13 +294,16 @@ Retrieves the profile of the authenticated user.
 - **Code**: 200 OK  
 ```json
 {
-  "profile": {
-    "first_name": "John",
-    "last_name": "Doe",
-    "phone_number": "1234567890",
+    "user": {
+        "username": "sample123",
+        "email": "sample@123gmail.com",
+        "first_name": "John",
+        "last_name": "Doe",
+        "user_type": "user"
+    },
+    "phone_number": "9495211413",
     "gender": "M",
-    "photo": "/media/photos/photo.jpg"
-  }
+    "photo": "http://127.0.0.1:8000/media/profile_photos/94605_6FYifMb.jpg"
 }
 ```
 
@@ -311,7 +322,7 @@ Retrieves the profile of the authenticated user.
 ### **7. Profile Update**  
 Updates the profile of the authenticated user.  
 
-- **URL**: `api/profile/update/`  
+- **URL**: `api/user-profile/update/`  
 - **Method**: `PATCH`  
 - **Permission**: Authenticated  
 
@@ -328,14 +339,16 @@ Updates the profile of the authenticated user.
 - **Code**: 200 OK  
 ```json
 {
-  "message": "Profile updated successfully!",
-  "profile": {
-    "first_name": "John",
-    "last_name": "Doe",
-    "phone_number": "9876543210",
+    "user": {
+        "username": "sample123",
+        "email": "sample@123gmail.com",
+        "first_name": "John",
+        "last_name": "Doe",
+        "user_type": "user"
+    },
+    "phone_number": "9495211443",
     "gender": "M",
-    "photo": "/media/photos/photo_updated.jpg"
-  }
+    "photo": "http://127.0.0.1:8000/media/profile_photos/94605_6FYifMb.jpg"
 }
 ```
 
