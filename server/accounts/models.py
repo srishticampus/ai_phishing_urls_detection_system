@@ -19,6 +19,15 @@ class User(AbstractUser):
     """
     Custom user model inheriting from AbstractUser.
     """
+    USER_TYPE_CHOICES = (
+        ('user', 'Normal User'),
+        ('advertiser', 'Advertiser'),
+        ('admin', 'Admin'),
+    )
+    user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES, default='user')
+
+    def __str__(self):
+        return f"{self.username} ({self.get_user_type_display()})"
 
 def validate_phone_number(value):
     """
@@ -27,9 +36,9 @@ def validate_phone_number(value):
     if not re.match(r'^\d{10}$', value):
         raise ValidationError("Phone number must be in a valid format (e.g., '1234567890').")
 
-class Profile(models.Model):
+class UserProfile(models.Model):
     """
-    model class to extend profile details to the User class    
+    Model class to extend profile details to the User class.
     """
     GENDER_CHOICES = [
         ('M', 'Male'),
@@ -37,13 +46,13 @@ class Profile(models.Model):
         ('O', 'Other'),
     ]
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
-                                related_name="profile")
-    phone_number = models.CharField(max_length=10, blank=True)
+                                related_name="user_profile")
+    phone_number = models.CharField(max_length=10, blank=True, validators=[validate_phone_number])
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True)
     photo = models.ImageField(upload_to='profile_photos/', blank=True, null=True)
 
     def __str__(self):
-        return f"{self.user.username}'s Profile"
+        return f"{self.user.username}'s UserProfile"
 
 class Interest(models.Model):
     """
@@ -57,15 +66,32 @@ class Interest(models.Model):
 
 class UserInterest(models.Model):
     """
-    model class to add all the interests each user like  
+    Model class to add all the interests each user likes.
     """
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="user_interests")
-    interest = models.ForeignKey(Interest, on_delete=models.CASCADE, related_name="interested_users"
-    )
+    user_profile = models.ForeignKey(UserProfile,
+                                     on_delete=models.CASCADE, related_name="user_interests")
+    interest = models.ForeignKey(Interest,
+                                  on_delete=models.CASCADE, related_name="interested_users")
     added_on = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ('profile', 'interest')
+        unique_together = ('user_profile', 'interest')
 
     def __str__(self):
-        return f"{self.profile.user.username}'s interest in {self.interest.name}"
+        return f"{self.user_profile.user.username}'s interest in {self.interest.name}"
+
+class AdvertiserProfile(models.Model):
+    """
+    Model class to extend profile details for advertisers.
+    """
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, 
+                                on_delete=models.CASCADE, related_name="advertiser_profile")
+    business_name = models.CharField(max_length=255)
+    business_type = models.ForeignKey(Interest, 
+                                      on_delete=models.PROTECT, related_name="advertiser_profiles")
+    contact_number = models.CharField(max_length=10, validators=[validate_phone_number])
+    address = models.TextField()
+    profile_image = models.ImageField(upload_to='advertiser_profile_photos/', blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.business_name} ({self.user.username})"
