@@ -14,9 +14,9 @@ from rest_framework import permissions,generics,status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
-from accounts.models import User,Profile
+from accounts.models import User,UserProfile
 from .serializers import (UserSerializer,CustomTokenObtainPairSerializer,ResetPasswordSerializer,
-                          ProfileSerializer)
+                          UserProfileSerializer)
 
 
 #User Registration View
@@ -52,8 +52,14 @@ class LoginView(TokenObtainPairView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
+            user = serializer.user
+            # Return the appropriate response
             return Response(
-                {"message": "Login successful!", "token": serializer.validated_data},
+                {
+                    "message": "Login successful!",
+                    "token": serializer.validated_data,
+                    "user_type": user.user_type,
+                },
                 status=status.HTTP_200_OK,
             )
         return Response(
@@ -121,7 +127,7 @@ class ResetPasswordView(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class ProfileCreateView(APIView):
+class UserProfileCreateView(APIView):
     """
     View for creating a profile for a user, including updating first_name and last_name.
     """
@@ -132,7 +138,7 @@ class ProfileCreateView(APIView):
         Handles the POST request for profile creation.
         """
         # Check if the user already has a profile
-        if Profile.objects.filter(user=request.user).exists():
+        if UserProfile.objects.filter(user=request.user).exists():
             return Response(
                 {"error": "Profile already exists."},
                 status=status.HTTP_400_BAD_REQUEST
@@ -146,13 +152,13 @@ class ProfileCreateView(APIView):
             data['photo'] = request.FILES['photo']
 
         # Pass data to serializer
-        serializer = ProfileSerializer(data=data, context={'request': request})
+        serializer = UserProfileSerializer(data=data, context={'request': request})
         if serializer.is_valid():
             serializer.save(user=request.user)  # Ensure the user is associated with the profile
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class ProfileRetrieveView(APIView):
+class UserProfileRetrieveView(APIView):
     """
     View for retrieving the profile of the logged-in user.
     """
@@ -163,16 +169,16 @@ class ProfileRetrieveView(APIView):
         Handles GET request to fetch the profile of the authenticated user.
         """
         try:
-            profile = Profile.objects.get(user=request.user)
-            serializer = ProfileSerializer(profile, context={'request': request})
+            profile = UserProfile.objects.get(user=request.user)
+            serializer = UserProfileSerializer(profile, context={'request': request})
             return Response(serializer.data, status=status.HTTP_200_OK)
-        except Profile.DoesNotExist:
+        except UserProfile.DoesNotExist:
             return Response(
                 {"error": "Profile does not exist."},
                 status=status.HTTP_404_NOT_FOUND
             )
 
-class ProfileUpdateView(APIView):
+class UserProfileUpdateView(APIView):
     """
     View for updating the profile of the logged-in user.
     """
@@ -183,7 +189,7 @@ class ProfileUpdateView(APIView):
         Handles PUT request to update the profile of the authenticated user.
         """
         try:
-            profile = Profile.objects.get(user=request.user)
+            profile = UserProfile.objects.get(user=request.user)
 
             # Convert request data to a mutable dictionary
             data = request.data.copy()
@@ -192,13 +198,13 @@ class ProfileUpdateView(APIView):
             if 'photo' in request.FILES:
                 data['photo'] = request.FILES['photo']
 
-            serializer = ProfileSerializer(profile, data=data, context={'request': request},
+            serializer = UserProfileSerializer(profile, data=data, context={'request': request},
                                            partial=True)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        except Profile.DoesNotExist:
+        except UserProfile.DoesNotExist:
             return Response(
                 {"error": "Profile does not exist."},
                 status=status.HTTP_404_NOT_FOUND
