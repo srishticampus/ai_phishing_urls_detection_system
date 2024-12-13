@@ -45,6 +45,7 @@ function UserSignup() {
       username,
       email,
       password,
+      user_type: "user",
     };
 
     try {

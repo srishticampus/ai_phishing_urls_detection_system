@@ -12,7 +12,7 @@ from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
-from .models import User,Profile
+from .models import User,UserProfile,Interest,UserInterest,AdvertiserProfile
 #Serializer for the User Model
 class UserSerializer(serializers.ModelSerializer):
     """
@@ -20,18 +20,19 @@ class UserSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = User
-        fields = ['username','email','password']
+        fields = ['username','email','password','user_type']
         extra_kwargs = {
             'username': {'required': True},
             'email': {'required': True},
             'password': {'required': True,'write_only':True},
+            'user_type':{'required':True},
         }
     def create(self, validated_data):
     # Ensures the password is hashed before saving
         user = User.objects.create_user(
             username=validated_data['username'],
             email=validated_data['email'],
-            password=validated_data['password']
+            password=validated_data['password'],
         )
         return user
 # Custom JWT Token Serializer
@@ -43,7 +44,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         data = super().validate(attrs)
         data['username'] = self.user.username
         data['email'] = self.user.email
-        return data    
+        return data
     def create(self, validated_data):
         raise NotImplementedError("Create method not implemented")
 
@@ -88,9 +89,9 @@ class UserDetailsSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = User
-        fields = ['username', 'email', 'first_name', 'last_name']
+        fields = ['username', 'email', 'first_name', 'last_name','user_type']
 
-class ProfileSerializer(serializers.ModelSerializer):
+class UserProfileSerializer(serializers.ModelSerializer):
     """
     Serializer for profile details of a user, including first_name, last_name, and nested user 
     details.
@@ -101,7 +102,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     user = UserDetailsSerializer(read_only=True)  # Nested user serializer
 
     class Meta:
-        model = Profile
+        model = UserProfile
         fields = [ 'user','phone_number', 'gender', 'photo', 'first_name', 'last_name',]
 
     def create(self, validated_data):
@@ -141,3 +142,63 @@ class ProfileSerializer(serializers.ModelSerializer):
         user.save()
 
         return super().update(instance, validated_data)
+class InterestSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the Interest model.
+    """
+    class Meta:
+        model = Interest
+        fields = ['id', 'name', 'icon']
+
+
+class UserInterestSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the UserInterest model.
+    """
+    interest = InterestSerializer(read_only=True)  # Nested Interest serializer
+    interest_id = serializers.PrimaryKeyRelatedField(
+        queryset=Interest.objects.all(), source='interest', write_only=True
+    )
+
+    class Meta:
+        model = UserInterest
+        fields = ['id', 'user_profile', 'interest', 'interest_id', 'added_on']
+        read_only_fields = ['added_on']
+
+    def create(self, validated_data):
+        """
+        Overriding create to link the UserInterest with the correct UserProfile.
+        """
+        user_profile = self.context['request'].user.user_profile
+        validated_data['user_profile'] = user_profile
+        return super().create(validated_data)
+
+
+class AdvertiserProfileSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the AdvertiserProfile model.
+    """
+    business_type = InterestSerializer(read_only=True)
+    business_type_id = serializers.PrimaryKeyRelatedField(
+        queryset=Interest.objects.all(), source='business_type', write_only=True
+    )
+
+    class Meta:
+        model = AdvertiserProfile
+        fields = ['id', 'user', 'business_name', 'business_type', 'business_type_id', 
+                  'contact_number', 'address', 'profile_image']
+        read_only_fields = ['user']
+
+    def create(self, validated_data):
+        """
+        Overriding create to link the AdvertiserProfile with the authenticated user.
+        """
+        user = self.context['request'].user
+        validated_data['user'] = user
+        return super().create(validated_data)
+
+    def update(self, instance, validated_data):
+        """
+        Custom update to allow partial updates for AdvertiserProfile.
+        """
+        raise NotImplementedError("Update method not implemented");
