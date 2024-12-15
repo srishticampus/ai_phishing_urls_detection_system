@@ -1,8 +1,9 @@
 import { Routes, Route } from "react-router";
+import { ToastContainer,Bounce} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./App.css";
 import Navbar from "./Components/Navbar/Navbar";
 import LandingPage from "./Pages/LandingPage/LandingPage";
-import UserNavbar from "./Components/UserNavbar/UserNavbar";
 import UserSignup from "./Pages/UserSignup/UserSignup";
 import Footer from "./Components/Footer/Footer";
 import UserLogin from "./Pages/UserLogin/UserLogin";
@@ -11,6 +12,10 @@ import UserForgotPassword from "./Pages/UserForgetPassword/UserForgotPassword";
 function App() {
   return (
     <>
+    <ToastContainer
+    position="top-right"
+    transition={Bounce}
+     />
       <Routes>
         {/* Landing Page Route */}
         <Route
