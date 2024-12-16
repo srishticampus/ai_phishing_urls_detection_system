@@ -25,7 +25,7 @@ class User(AbstractUser):
         ('admin', 'Admin'),
     )
     user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES, default='user')
-
+    email = models.EmailField(unique=True)
     def __str__(self):
         return f"{self.username} ({self.get_user_type_display()})"
 
