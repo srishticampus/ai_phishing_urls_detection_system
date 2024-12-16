@@ -42,11 +42,12 @@ function Navbar() {
               </li>
             </ul>
             <form className="d-flex ms-auto">
-              <button
+
+              <Link
                 className="btn btn-outline navbar_login_button"
-                type="button">
+                to="/login">
                 Login
-              </button>
+              </Link>
             </form>
           </div>
         </div>
