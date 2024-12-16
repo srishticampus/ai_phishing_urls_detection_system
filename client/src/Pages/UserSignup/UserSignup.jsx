@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { toast, ToastContainer } from "react-toastify";
 import SignUp_Page_Img from "../../assets/Images/SignUp_Page_Img.png";
 import { userSignup } from "../../Services/apiService";
 import "./UserSignup.css";
@@ -53,6 +54,7 @@ function UserSignup() {
 
       if (response.success) {
         // Redirect on successful signup
+        toast.success(response.data);
         navigate("/login");
       } else {
         // Parse and display specific field errors or generic API error
@@ -63,6 +65,7 @@ function UserSignup() {
         } else {
           setApiError("An unexpected error occurred. Please try again.");
         }
+        toast.warn(response.errors);
       }
     } catch (error) {
       // Handle unexpected errors
@@ -72,6 +75,7 @@ function UserSignup() {
 
   return (
     <div className="signup-container">
+      <ToastContainer />
       <div className="Signup_LeftSide">
         <img className="SignUp_Page_Img" src={SignUp_Page_Img} alt="Sign Up" />
       </div>
