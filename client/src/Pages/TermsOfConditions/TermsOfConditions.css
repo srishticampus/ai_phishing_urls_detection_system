@@ -1,0 +1,34 @@
+.terms-and-condition-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;     
+    max-width: 1200px;
+    height: 50vh;
+    margin: 0 auto;          
+    padding: 0 20px;        
+}
+
+.terms-and-conditions-para {
+    color: #7F7F7F;
+    text-align: center;
+    font-family: Lato;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-align: justify;
+}
+.terms-of-condition-footer{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+.terms-and-conditions-head{
+    color: #F18C00;
+font-family: Lato;
+font-size: 40px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}

@@ -1,0 +1,13 @@
+h1{
+    color: #F18C00;
+    font-family: Lato;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: normal;
+}
+.center-h1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}

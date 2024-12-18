@@ -4,6 +4,7 @@ import insta from "../../assets/Images/insta.png";
 import pinterest from "../../assets/Images/pinterest.png";
 import twitter from "../../assets/Images/twitter.png";
 import ytb from "../../assets/Images/ytb.png";
+import { Link } from "react-router";
 
 function Footer() {
   return (
@@ -27,19 +28,19 @@ function Footer() {
           <div className="footer_sec_two">
             <p className="footer_QuickLinks">Quick Links</p>
             <ul>
-              <li className="footerList">Home</li>
-              <li className="footerList">About</li>
-              <li className="footerList">Contact</li>
-              <li className="footerList">Login</li>
+              <li><Link className="footerList" to="/">Home</Link></li>
+              <li><Link className="footerList" to="/about" >About</Link></li>
+              <li><Link className="footerList" to="/contact">Contact</Link></li>
+              <li><Link className="footerList" to="/login">Login</Link></li>
             </ul>
           </div>
 
           <div className="footer_sec_three">
             <p className="footer_terms_and_polices">Terms & Polices</p>
             <ul>
-              <li className="footerList">Terms of conditions</li>
-              <li className="footerList">F&Q</li>
-              <li className="footerList">Privacy Policy</li>
+              <li ><Link className="footerList" to="/terms-of-conditions">Terms of Conditions</Link></li>
+              <li ><Link className="footerList" to="/f&q">F&Q</Link></li>
+              <li ><Link className="footerList" to="/privacy-policy">Privacy Policy</Link></li>
             </ul>
           </div>
 

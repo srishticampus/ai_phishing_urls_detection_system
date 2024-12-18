@@ -1,19 +1,30 @@
 import { Routes, Route } from "react-router";
+import { ToastContainer, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./App.css";
 import Navbar from "./Components/Navbar/Navbar";
 import LandingPage from "./Pages/LandingPage/LandingPage";
-import UserNavbar from "./Components/UserNavbar/UserNavbar";
 import UserSignup from "./Pages/UserSignup/UserSignup";
 import Footer from "./Components/Footer/Footer";
 import UserLogin from "./Pages/UserLogin/UserLogin";
 import UserForgotPassword from "./Pages/UserForgetPassword/UserForgotPassword";
 import ContactUS from "./Pages/ContactUS/ContactUS";
 import Services from "./Pages/Services/services";
+import TermsOfConditions from "./Pages/TermsOfConditions/TermsOfConditions";
+import PrivacyandPolicy from "./Pages/PrivacyPolicy/PrivacyandPolicy";
+import FandQ from "./Pages/FandQ/FandQ";
+import About from "./Pages/AboutUS/About";
+import UserProfile from "./Pages/UserProfile/UserProfile";
+import ForgetPassword from "./Pages/ForgetPassword/ForgetPassword";
 
 
 function App() {
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        transition={Bounce}
+      />
       <Routes>
         {/* Landing Page Route */}
         <Route
@@ -61,26 +72,101 @@ function App() {
             </>
           }
         ></Route>
-
+        {/* contactus Route */}
         <Route
-        path="/contactus"
+          path="/contact"
+          element={
+            <>
+              <Navbar />
+              <ContactUS />
+
+            </>
+          }
+        >
+        </Route>
+        {/* servcies Route */}
+        <Route
+          path="/services"
+          element={
+            <>
+              <Navbar />
+              <Services />
+            </>
+          }></Route>
+     {/* Terms of conditions */}
+        <Route
+          path="/terms-of-conditions"
+          element={
+            <>
+              <Navbar />
+              <TermsOfConditions />
+
+            </>
+          }
+        >
+        </Route>
+     {/* privacy policy */}
+        <Route
+          path="/privacy-policy"
+          element={
+            <>
+              <Navbar />
+              <PrivacyandPolicy/>
+            </>
+          }
+        >
+        </Route>
+
+     {/* F&Q */}
+        <Route
+        path="/f&q"
         element={
           <>
           <Navbar/>
-          <ContactUS/>
-      
+          <FandQ/>
+          <Footer/>
           </>
         }
         >
+
         </Route>
-        <Route
-        path="/services"
-        element={
-          <>
-          <Navbar/>
-          <Services/>
-          </>
-        }></Route>
+
+             {/* about*/}
+
+             <Route
+             path="/about"
+             element={
+             <>
+             <Navbar/>
+             <About/>
+            
+             </>
+             }
+             >
+             </Route>
+ <Route
+ path="/user-profile"
+ element={
+  <>
+  <Navbar/>
+  <UserProfile/>
+  </>
+ }
+ >
+
+ </Route>
+
+ <Route
+ path="/forget-password"
+ element={ 
+  <>
+  <Navbar/>
+  <ForgetPassword/>
+  </>
+  }
+ >
+
+ </Route>
       </Routes>
     </>
   );
