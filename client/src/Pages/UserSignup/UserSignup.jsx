@@ -4,6 +4,7 @@ import { toast, ToastContainer } from "react-toastify";
 import SignUp_Page_Img from "../../assets/Images/SignUp_Page_Img.png";
 import { userSignup } from "../../Services/apiService";
 import "./UserSignup.css";
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 function UserSignup() {
   // States for form fields and validation errors
@@ -14,13 +15,37 @@ function UserSignup() {
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState("");
   const navigate = useNavigate();
-
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false); // State for password visibility
+  const [isPassVisible, setIsPassVisible] = useState(false);
   // Handle form validation
   const validateForm = () => {
     const newErrors = {};
-    if (!username) newErrors.username = "Username is required";
-    if (!email) newErrors.email = "Email is required";
-    if (!password) newErrors.password = "Password is required";
+    const usernameMaxLength = 15;  // Set the max length for username
+    const passwordMaxLength = 20;  // Set the max length for password
+    if (!username) {
+      newErrors.username = "Username is required";
+    } else if (username.length > usernameMaxLength) {
+      newErrors.username = `Username cannot exceed ${usernameMaxLength} characters`;
+    }
+    if (!email) {
+      newErrors.email = "Email is required";
+    } else {
+      // Regular expression for a valid email format
+      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+      if (!emailRegex.test(email)) {
+        newErrors.email = "Please enter a valid email address";
+      }
+    }
+    if (!password) {
+      newErrors.password = "Password is required";
+    } else {
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
+      if (!passwordRegex.test(password)) {
+        newErrors.password = "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one special character.";
+      } else if (password.length > passwordMaxLength) {
+        newErrors.password = `Password cannot exceed ${passwordMaxLength} characters`;
+      }
+    }
     if (password !== confirmPassword)
       newErrors.confirmPassword = "Passwords do not match";
     return newErrors;
@@ -70,8 +95,17 @@ function UserSignup() {
     } catch (error) {
       // Handle unexpected errors
       setApiError("An unexpected error occurred. Please try again.", error);
+      toast.error("An unexpected error occurred. Please try again.");
     }
   };
+  // Toggle password visibility
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible(prevState => !prevState);
+  };
+
+  const toggleConfimPassVisibility = () => {
+    setIsPassVisible(prevState => !prevState);
+  }
 
   return (
     <div className="signup-container">
@@ -82,7 +116,7 @@ function UserSignup() {
       <div className="Signup_RightSide">
         <p className="Signup_RightSide_head">Sign Up!</p>
         <form onSubmit={handleSubmit}>
-          <div className="mb-5 mt-3">
+          <div className="mb-3 mt-3">
             <input
               type="text"
               className="form-control"
@@ -96,7 +130,7 @@ function UserSignup() {
               <div className="error">{errors.username.join(", ")}</div>
             )}
           </div>
-          <div className="mb-5 mt-3">
+          <div className="mb-3 mt-3">
             <input
               type="email"
               className="form-control"
@@ -110,9 +144,9 @@ function UserSignup() {
               <div className="error">{errors.email.join(", ")}</div>
             )}
           </div>
-          <div className="mb-5">
+          <div className="mb-3  signup-password-relative">
             <input
-              type="password"
+              type={isPasswordVisible ? "text" : "password"}
               className="form-control"
               id="password"
               placeholder="Password"
@@ -120,13 +154,19 @@ function UserSignup() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <span
+              className="password-eye-icon"
+              onClick={togglePasswordVisibility}
+            >
+              {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+            </span>
             {errors.password && (
               <div className="error">{errors.password.join(", ")}</div>
             )}
           </div>
-          <div className="mb-5">
+          <div className="mb-3 signup-confirm-relative">
             <input
-              type="password"
+              type={isPassVisible ? "text" : "password"}
               className="form-control"
               id="confirmPassword"
               placeholder="Confirm Password"
@@ -134,6 +174,12 @@ function UserSignup() {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
+            <span
+              className="password-eye-icon"
+              onClick={toggleConfimPassVisibility}
+            >
+              {isPassVisible ? <FaEyeSlash /> : <FaEye />}
+            </span>
             {errors.confirmPassword && (
               <div className="error">{errors.confirmPassword}</div>
             )}
@@ -144,7 +190,7 @@ function UserSignup() {
           </button>
         </form>
         <p>
-          Already have an account? <a href="/Login">Login</a>
+          Already have an account? <a className="user-signup-login" href="/Login">Login</a>
         </p>
       </div>
     </div>
