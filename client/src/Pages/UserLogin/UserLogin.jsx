@@ -1,8 +1,11 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router"
+import { useNavigate, Link } from "react-router";
 import "./UserLogin.css";
 import Login_Background from "../../assets/Images/Login_Background.png";
 import { userLogin } from "../../Services/apiService";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import eye icons
 
 function UserLogin() {
   const navigate = useNavigate(); // Initialize navigate
@@ -10,6 +13,7 @@ function UserLogin() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({}); // State for validation errors
   const [apiError, setApiError] = useState(""); // State for API error messages
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false); // State for password visibility
 
   // Handle input changes
   const handleUsernameChange = (e) => setUsername(e.target.value);
@@ -38,8 +42,11 @@ function UserLogin() {
     const formData = { username, password };
 
     const response = await userLogin(formData);
+    // console.log(response);
 
     if (response.success) {
+      console.log(response.data.message) 
+      toast.success(response.data.message);
       navigate("/"); // Navigate to home page after successful login
     } else {
       // Display API error messages
@@ -50,19 +57,21 @@ function UserLogin() {
     }
   };
 
+  // Toggle password visibility
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible(prevState => !prevState);
+  };
+
   return (
     <div className="Login-container">
+      <ToastContainer />
       <div className="Login_LeftSide">
-        <img
-          className="Login_Page_Img"
-          src={Login_Background}
-          alt="Background"
-        />
+        <img className="Login_Page_Img" src={Login_Background} alt="Background" />
       </div>
       <div className="Login_RightSide">
-        <p className="Login_RightSide_head">Login</p>
+        <p className="Login_RightSide_head">Login!</p>
         <form onSubmit={handleLogin}>
-          <div className="mb-5 mt-3">
+          <div className="mb-4 mt-3">
             <input
               type="text"
               className="form-control"
@@ -72,13 +81,12 @@ function UserLogin() {
               value={username}
               onChange={handleUsernameChange}
             />
-            {errors.username && <div className="error">{errors.username}</div>}{" "}
-            {/* Show username error */}
+            {errors.username && <div className="error">{errors.username}</div>}
           </div>
 
-          <div className="mb-5">
+          <div className="mb-4 position-relative">
             <input
-              type="password"
+              type={isPasswordVisible ? "text" : "password"} // Toggle between text and password type
               className="form-control"
               id="password"
               placeholder="Password"
@@ -86,19 +94,27 @@ function UserLogin() {
               value={password}
               onChange={handlePasswordChange}
             />
-            {errors.password && <div className="error">{errors.password}</div>}{" "}
-            {/* Show password error */}
+            <span
+              className="password-eye-icon"
+              onClick={togglePasswordVisibility}
+            >
+              {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+            </span>
+            {errors.password && <div className="error">{errors.password}</div>}
           </div>
 
-          {apiError && <div className="error">{apiError}</div>}{" "}
-          {/* Show API error */}
+          <div className="d-flex justify-content-end mb-3">
+            <Link to="/forget-password" className="login-forgetpass">Forget Password?</Link>
+          </div>
+
+          {apiError && <div className="error">{apiError}</div>}
 
           <button type="submit" className="btn Login_Button mb-5">
             Login
           </button>
         </form>
         <p>
-          Don&apos;t have an account? <Link to="/signup">Sign Up</Link>
+          Don&apos;t have an account? <Link className="signup-decoration" to="/signup"><span className="dont-have-an-account-signup">Sign Up</span></Link>
         </p>
       </div>
     </div>

@@ -1,0 +1,13 @@
+p{
+    color: #F18C00;
+    font-family: Lato;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: normal;
+}
+.center-p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
