@@ -370,3 +370,38 @@ Updates the profile of the authenticated user.
   }
 }
 ```
+### **8. Get Interests**  
+Retrieves a list of available interests. 
+
+- **URL**: `api/interests/`  
+- **Method**: `GET`  
+- **Permission**: Public  
+
+#### **Success Response**:  
+- **Code**: 200 OK  
+```json
+[
+    {
+        "id": 1,
+        "name": "Personal Development",
+        "icon": "/media/interest_icons/12.png"
+    },
+    {
+        "id": 2,
+        "name": "Technology",
+        "icon": "/media/interest_icons/14.png"
+    }
+]
+```
+
+#### **Error Responses**:  
+- **Code**: 500 Internal Server Error 
+```json
+{
+  "errors": {
+    "detail": "An unexpected error occurred."
+  }
+}
+```
+
+---

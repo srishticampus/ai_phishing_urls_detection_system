@@ -14,9 +14,9 @@ from rest_framework import permissions,generics,status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
-from accounts.models import User,UserProfile
+from accounts.models import User,UserProfile,Interest
 from .serializers import (UserSerializer,CustomTokenObtainPairSerializer,ResetPasswordSerializer,
-                          UserProfileSerializer)
+                          UserProfileSerializer,InterestSerializer)
 
 
 #User Registration View
@@ -209,3 +209,16 @@ class UserProfileUpdateView(APIView):
                 {"error": "Profile does not exist."},
                 status=status.HTTP_404_NOT_FOUND
             )
+
+class InterestListView(APIView):
+    """
+    API view to get all interests.
+    """
+    permission_classes = [permissions.AllowAny]
+    def get(self, request):
+        '''
+        get method to view all interests
+        '''
+        interests = Interest.objects.all()
+        serializer = InterestSerializer(interests, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
