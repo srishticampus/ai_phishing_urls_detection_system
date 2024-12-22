@@ -8,8 +8,8 @@ function ContactUS() {
     return (
         <div>
             <div className="contactus-container">
-                <p className="contactus-header">Contact Us</p>
-                <p className="contactus-para" >We’re here to help! Whether you have a question, feedback, or are interested in collaboration, we’d love to hear from you. Reach out to us via email, phone, or<br /> social media, and we’ll get back to you as soon as possible. Our team is available Monday to Friday from 9 AM to 6 PM. Feel free to share your thoughts—your<br /> input helps us grow and improve!</p>
+                <p className="contactus-header mt-5">Contact Us</p>
+                <p className="contactus-para" >We&apos;re here to help! Whether you have a question, feedback, or are interested in collaboration, we’d love to hear from you. Reach out to us via email, phone, or<br /> social media, and we’ll get back to you as soon as possible. Our team is available Monday to Friday from 9 AM to 6 PM. Feel free to share your thoughts—your<br /> input helps us grow and improve!</p>
                 <div className="contactus-jumbotron">
                     <div className="row">
                         <div className="col-sm-6">

@@ -91,9 +91,10 @@ function App() {
             <>
               <Navbar />
               <Services />
+              <Footer/>
             </>
           }></Route>
-     {/* Terms of conditions */}
+        {/* Terms of conditions */}
         <Route
           path="/terms-of-conditions"
           element={
@@ -105,68 +106,68 @@ function App() {
           }
         >
         </Route>
-     {/* privacy policy */}
+        {/* privacy policy */}
         <Route
           path="/privacy-policy"
           element={
             <>
               <Navbar />
-              <PrivacyandPolicy/>
+              <PrivacyandPolicy />
             </>
           }
         >
         </Route>
 
-     {/* F&Q */}
+        {/* F&Q */}
         <Route
-        path="/f&q"
-        element={
-          <>
-          <Navbar/>
-          <FandQ/>
-          <Footer/>
-          </>
-        }
+          path="/f&q"
+          element={
+            <>
+              <Navbar />
+              <FandQ />
+              <Footer />
+            </>
+          }
         >
 
         </Route>
 
-             {/* about*/}
+        {/* about*/}
 
-             <Route
-             path="/about"
-             element={
-             <>
-             <Navbar/>
-             <About/>
-            
-             </>
-             }
-             >
-             </Route>
- <Route
- path="/user-profile"
- element={
-  <>
-  <Navbar/>
-  <UserProfile/>
-  </>
- }
- >
+        <Route
+          path="/about"
+          element={
+            <>
+              <Navbar />
+              <About />
+              <Footer />
+            </>
+          }
+        >
+        </Route>
+        <Route
+          path="/user-profile"
+          element={
+            <>
+              <Navbar />
+              <UserProfile />
+            </>
+          }
+        >
 
- </Route>
+        </Route>
 
- <Route
- path="/forget-password"
- element={ 
-  <>
-  <Navbar/>
-  <ForgetPassword/>
-  </>
-  }
- >
+        <Route
+          path="/forget-password"
+          element={
+            <>
+              <Navbar />
+              <ForgetPassword />
+            </>
+          }
+        >
 
- </Route>
+        </Route>
       </Routes>
     </>
   );
