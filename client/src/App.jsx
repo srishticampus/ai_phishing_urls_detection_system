@@ -85,6 +85,7 @@ function App() {
             <>
               <Navbar />
               <Services />
+              <Footer/>
             </>
           }
         ></Route>
