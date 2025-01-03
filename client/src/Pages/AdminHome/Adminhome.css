@@ -1,0 +1,164 @@
+.admin-home-container {
+    margin-top: 70px;
+    margin-left: 250px;
+
+}
+
+.admin-home-container-head {
+    color: #F18C00;
+    font-family: Lato;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: -0.24px;
+    text-transform: capitalize;
+}
+
+.admin-home-table-container {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 25px;
+    overflow: hidden;
+    border: 2px solid #ddd;
+}
+
+.admin-home-table-th,
+.admin-home-table-td {
+    padding: 12px 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.admin-home-table-th {
+    background-color: #9A9A9A;
+    color: white;
+}
+
+.admin-home-table-td {
+    background-color: #f9f9f9;
+}
+
+.admin-home-table-tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.admin-home-table-button {
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    height: 33px;
+    width: 33px;
+    border-radius: 50%;
+}
+
+.admin-home-table-button img {
+    width: 20px;
+    height: 20px;
+}
+
+
+
+.admin-home-table-color {
+    background-color: #9A9A9A;
+}
+
+.admin-home-container-viewall {
+    color: #F18C00;
+    font-family: Lato;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -0.16px;
+    text-transform: capitalize;
+}
+.admin-home-card{
+    min-width: 333px;
+}
+.admin-home-card-body-head{
+    color: #333;
+font-family: Lato;
+font-size: 20px;
+font-style: normal;
+font-weight: 600;
+line-height: 25px; 
+}
+
+.admin-home-cardsize {
+    position: relative;
+    width: 393.75px;
+    height: 295.312px;
+    flex-shrink: 0;
+    border: none;
+    height: auto;
+}
+.admin-home-cardone-imgone {
+    height: 277.312px;
+}
+
+.admin-home-cardone-header {
+    border-radius: 0;
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    background-color: rgba(0, 0, 0, .5);
+    color: #FFF;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    border-radius: 2.812px;
+    background: rgba(255, 255, 255, 0.20);
+    backdrop-filter: blur(4.218749046325684px);
+}
+.admin-home-cardone-headerone{
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    width: 29.531px;
+    height: 29.531px;
+    padding: 7.031px 7.031px 6.328px 6.328px;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 2.812px;
+    background: rgba(255, 255, 255, 0.20);
+    backdrop-filter: blur(4.218749046325684px);
+    border-radius: 25px;
+}
+.admin-home-cardone-body {
+    display: flex;
+    width: 315px;
+    height: 54.844px;
+    flex-direction: column;
+    justify-content: center;
+    color: #333;
+    font-family: Lato;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28.125px;
+}
+.admin-view-blog-cardone-para {
+    color: #7F7F7F;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 149.687%;
+    text-align: justify;
+}
+.admin-home-readmore-button{
+    color: #F18C00;
+    font-family: Lato;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -0.16px;
+    text-transform: capitalize;
+    width: 120px;
+}

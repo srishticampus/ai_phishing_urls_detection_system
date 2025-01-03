@@ -1,0 +1,149 @@
+.admin-detailed-view-container {
+    margin-left: 250px;
+    margin-top: 70px;
+ 
+
+}
+.admin-detailed-img-container{
+    position: relative;
+}
+
+.admin-detailed-view-head {
+    color: #F18C00;
+    font-family: Lato;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-left: 70px;
+}
+
+.admin-detailed-view-image {
+    height: 525px;
+    width: 90%;
+    position: relative;
+}
+
+.admin-detailed-view-paragraph-head {
+    color: #333;
+    font-family: Lato;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 55px;
+
+}
+
+.admin-detailed-view-paragraph-head-container {
+    margin-left: 60px;
+}
+
+.admin-detailed-view-para {
+    color: #7F7F7F;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 35px;
+}
+
+.admin-detailed-view-para-container {
+    max-width: 1090px;
+    margin-left: 60px;
+    text-align: justify;
+}
+
+.admin-detailed-view-nutrition-essential {
+    color: #333;
+    font-family: Lato;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 35px;
+}
+
+.admin-detailed-view-balanced-diet {
+    color: #333;
+    font-family: Lato;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 40px;
+}
+
+.admin-detailed-view-balanced-diet-para {
+    color: #7F7F7F;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 35px;
+}
+
+.admin-detailed-view-ul {
+    list-style-type: disc;
+    padding-left: 30px;
+    color: #7F7F7F;
+}
+
+.admin-detailed-view-edit-delete-button {
+    width: 175px;
+}
+
+.admin-detailed-blog-text-inside-img {
+    position: absolute;
+    bottom: 350px;
+    left: 40%;
+    transform: translateX(-45%);
+    text-align: center;
+
+    z-index: 1;
+
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+
+
+.admin-detailed-blog-text-inside-img-head {
+    color: #FFF;
+    font-family: Lato;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.admin-detailed-blog-text-inside-img-para {
+    color: #FFF;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.admin-detailed-blog-text-inside-img {
+    position: absolute;
+    bottom: 0px;
+    left: 580px;
+    margin-left: 0px;
+}
+
+.admin-detailed-blog-text-inside-img-head {
+    color: #FFF;
+    font-family: Lato;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.admin-detailed-blog-text-inside-img-para {
+    color: #FFF;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}

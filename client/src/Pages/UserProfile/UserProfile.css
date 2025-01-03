@@ -1,13 +1,101 @@
-p{
+.user-profile-section-one {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-profile-head {
     color: #F18C00;
     font-family: Lato;
     font-size: 40px;
+    font-style: normal;
     font-weight: 700;
     line-height: normal;
+    margin-top: 50px;
 }
-.center-p{
+
+.user_empty_profile {
+    height: 150px;
+    width: 150px;
+}
+
+.user-profile-gender {
+    color: #5F5F5F;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.user-profile-gender-male {
+    color: #4D4D4D;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.user-profile-gender-female {
+    color: #4D4D4D;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.user-profile-section-two{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    margin-top: 50px;
+
 }
+.user-profile-section-name{
+    margin-right: 50px;
+    margin-bottom: 30px;
+}
+
+
+.user-profile-section-two .row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: wrap; /* Allow columns to wrap on smaller screens */
+}
+
+.user-profile-section-two .col-sm-5 {
+    margin-right: 20px;
+    min-width: 376px; /* Set the minimum width for each column */
+  
+}
+
+.user-profile-next-button{
+    width: 175px;
+    margin-bottom: 30px;
+}
+
+
+
+
+
+
+@media(max-width:768px){
+    .user-profile-section-name{
+        margin-right: 0px;
+        margin-bottom: 0px;
+        margin-left: 10px;
+    }
+    .user-profile-section-gender{
+        margin-left: 10px;
+    }
+    .user-profile-section-phonenumber{
+        margin-left: 10px;
+    }
+    .user-profile-section-email{
+        margin-left: 10px;
+    }
+}
+

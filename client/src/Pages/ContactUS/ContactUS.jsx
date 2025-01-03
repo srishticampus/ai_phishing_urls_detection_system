@@ -4,6 +4,7 @@ import mail from "../../assets/Images/mail_icon.png"
 import location from "../../assets/Images/location_icon.png"
 import map from "../../assets/Images/map.png"
 import Footer from "../../Components/Footer/Footer"
+
 function ContactUS() {
     return (
         <div>

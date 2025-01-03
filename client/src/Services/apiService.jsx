@@ -3,7 +3,7 @@ import axios from "axios";
 // Create Axios instance
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL, // Set the base URL from environment variables
-  timeout: 1000, // Set a timeout for requests
+  timeout: 5000, // Set a timeout for requests
   headers: {
     "Content-Type": "application/json", // Default headers
   },
@@ -12,13 +12,30 @@ const apiClient = axios.create({
 // Axios Interceptor to add JWT token to headers
 apiClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("accessToken"); // Retrieve token from localStorage
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    if(config.authRequired !== false){
+      const token = localStorage.getItem("accessToken"); 
+      console.log("token"+token)
+
+      if(token) {
+        config.headers["Authorization"] = `Bearer ${token}`;
+      }
     }
     return config;
   },
-  (error) => Promise.reject(error) // Handle request errors
+  (error) => Promise.reject(error)
+
+
+  
+  // (config) => {
+  //   const token = localStorage.getItem("accessToken"); // Retrieve token from localStorage
+  // console.log("token"+token)
+  
+  //   if (token) {
+  //     config.headers.Authorization = `Bearer ${token}`;
+  //   }
+  //   return config;
+  // },
+  // (error) => Promise.reject(error)
 );
 
 // Function to handle API responses and errors
@@ -78,8 +95,30 @@ export const refreshAccessToken = async () => {
   return response;
 };
 
+
+
+
 // Logout Function
 export const userLogout = () => {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
+};
+
+
+//user-profile-view
+
+export const userProfile = async (data) => {
+  const response = await handleResponse(apiClient.get("/api/user-profile/view/", { ...data,authRequired:true}));
+  if (response.success) {
+    return {
+      success: true,
+      data: response.data,
+    };
+  } else {
+    return {
+      success: false,
+      errors: response.errors || { message: "Failed to fetch user profile data" },
+  };
+}
+  
 };

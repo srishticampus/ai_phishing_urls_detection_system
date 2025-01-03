@@ -16,6 +16,19 @@ import FandQ from "./Pages/FandQ/FandQ";
 import About from "./Pages/AboutUS/About";
 import UserProfile from "./Pages/UserProfile/UserProfile";
 import ForgetPassword from "./Pages/ForgetPassword/ForgetPassword";
+import UserEditProfile from "./Pages/UserEditProfile/UserEditProfile";
+import UserNavbar from "./Components/UserNavbar/UserNavbar";
+import HomePageNavbar from "./Components/HomePageNavbar/HomePageNavbar";
+import UserViewProfile from "./Pages/UserViewProfile/UserViewProfile";
+import AdminSidebar from "./Pages/AdminSidebar/AdminSidebar";
+import AdminHome from "./Pages/AdminHome/AdminHome";
+import AdminViewSidebar from "./Components/AdminViewSidebar/AdminViewSidebar";
+import AdminAddBlog from "./Pages/AdminAddBlog/AdminAddBlog";
+import AdminViewBlog from "./Pages/AdminViewBlog/AdminViewBlog";
+import AdminDetailedView from "./Pages/AdminDetailedViewBlog/AdminDetailedView";
+import AdminEditBlog from "./Pages/AdminEditBlog/AdminEditBlog";
+
+
 
 
 function App() {
@@ -43,7 +56,7 @@ function App() {
           path="/signup"
           element={
             <>
-              <Navbar />
+              <UserNavbar />
               <UserSignup />
               <Footer />
             </>
@@ -55,7 +68,7 @@ function App() {
           path="/login"
           element={
             <>
-              <Navbar />
+              <UserNavbar />
               <UserLogin />
               <Footer />
             </>
@@ -91,7 +104,7 @@ function App() {
             <>
               <Navbar />
               <Services />
-              <Footer/>
+              <Footer />
             </>
           }></Route>
         {/* Terms of conditions */}
@@ -151,6 +164,7 @@ function App() {
             <>
               <Navbar />
               <UserProfile />
+              <Footer />
             </>
           }
         >
@@ -166,8 +180,114 @@ function App() {
             </>
           }
         >
+        </Route>
+
+        <Route
+          path="/user-edit-profile"
+          element={
+            <>
+              <HomePageNavbar />
+              <UserEditProfile />
+            </>
+          }
+        >
 
         </Route>
+
+        <Route
+          path="/user-home-page"
+          element={
+            <>
+              <HomePageNavbar />
+            </>
+          }
+        >
+
+        </Route>
+
+        <Route
+          path="/user-view-profile"
+          element={
+            <>
+              <HomePageNavbar />
+              <UserViewProfile />
+            </>
+          }
+        >
+
+        </Route>
+
+        <Route
+          path="/dashboard"
+          element={
+            <>
+              <AdminSidebar />
+            </>
+          }
+        >
+
+        </Route>
+
+        <Route
+          path="/admin-dashboard"
+          element={
+            <>
+              <AdminHome />
+              <AdminViewSidebar />
+            </>
+          }
+        />
+
+        <Route
+          path="/admin-add-blog"
+          element={
+            <>
+              <AdminAddBlog />
+              <AdminViewSidebar />
+            </>
+          }
+        >
+        </Route>
+
+        <Route
+        path="/admin-view-blog"
+        element={
+          <>
+          <AdminViewBlog/>
+          <AdminViewSidebar/>
+          </>
+        }
+        >
+
+        </Route>
+  
+        <Route
+        
+        path="/admin-detailed-view-blog"
+        element={
+          <>
+          <AdminDetailedView/>
+          <AdminViewSidebar/>
+          </>
+        }
+        >
+
+        </Route>
+
+        <Route
+        path="/admin-edit-blog"
+        element={
+          <>
+          <AdminEditBlog/>
+          <AdminViewSidebar/>
+          </>
+        }
+        >
+        </Route>
+
+
+
+
       </Routes>
     </>
   );
