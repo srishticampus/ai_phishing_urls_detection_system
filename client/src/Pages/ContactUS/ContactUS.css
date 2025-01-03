@@ -6,6 +6,7 @@
     justify-content: center;
     align-items: center;
     height: 20vh;
+    margin-bottom: 200px;
   
 }
 
@@ -40,9 +41,9 @@
 .location-details{
     margin-left: 30px;
 }
-.contactus-footer{
+/* .contactus-footer{
     position: fixed;
-    bottom: 0;
+    bottom: 0px;
     left: 0;
     right: 0;
-}
+} */

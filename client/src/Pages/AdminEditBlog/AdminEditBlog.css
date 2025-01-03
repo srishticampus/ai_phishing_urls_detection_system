@@ -1,0 +1,51 @@
+.admin-edit-blog-container {
+    margin-left: 250px;
+    margin-top: 70px;
+}
+
+.admin-edit-blog-head {
+    color: #F18C00;
+    font-family: Lato;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-align: center;
+}
+.admin-edit-blog-card {
+    width: 1400px;
+    border-radius: 25px;
+}
+.admin-edit-blog-dropdown-button {
+    width: 367px;
+}
+
+.admin-edit-blog-dropdown-button:hover {
+    width: 367px;
+    background: #FDFDFD;
+    color: black;
+}
+.admin-edit-blog-card-body-img{
+  height: 545px;
+}
+.admin-edit-blog-text-inside-img{
+   position: absolute;
+   bottom: 50px;
+   margin-left: 150px;
+}
+.admin-edit-blog-text-inside-img-head{
+    color: #FFF;
+    font-family: Lato;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+.admin-edit-blog-text-inside-img-para{
+    color: #FFF;
+font-family: Lato;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}

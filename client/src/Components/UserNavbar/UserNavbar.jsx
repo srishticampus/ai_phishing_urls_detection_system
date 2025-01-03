@@ -28,7 +28,7 @@ function UserNavbar() {
               <li className="nav-item">
                 <Link
                   className="nav-link user_navbar_links Navlitems_Margin"
-                  to="#"
+                  to="/"
                 >
                   Home
                 </Link>
@@ -36,7 +36,7 @@ function UserNavbar() {
               <li className="nav-item">
                 <Link
                   className="nav-link user_navbar_links Navlitems_Margin"
-                  to="#"
+                  to="/about"
                 >
                   About
                 </Link>
@@ -44,7 +44,7 @@ function UserNavbar() {
               <li className="nav-item">
                 <Link
                   className="nav-link user_navbar_links Navlitems_Margin"
-                  to="#"
+                  to="/services"
                 >
                   Services
                 </Link>
@@ -52,9 +52,17 @@ function UserNavbar() {
               <li className="nav-item">
                 <Link
                   className="nav-link user_navbar_links Navlitems_Margin"
-                  to="#"
+                  to="/contact"
                 >
                   Contact
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  className="nav-link user_navbar_links Navlitems_Margin"
+                  to="/login"
+                >
+                  Login
                 </Link>
               </li>
             </ul>

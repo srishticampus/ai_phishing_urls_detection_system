@@ -1,0 +1,139 @@
+.user-edit-profile-section-one{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.user_empty_profile {
+    height: 150px;
+    width: 150px;
+}
+
+.user-profile-gender {
+    color: #5F5F5F;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.user-profile-gender-male {
+    color: #4D4D4D;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.user-profile-gender-female {
+    color: #4D4D4D;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.user-edit-profile-section-two{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+
+}
+.user-edit-profile-section-name{
+    margin-right: 50px;
+    margin-bottom: 30px;
+}
+
+
+.user-edit-profile-section-two .row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: wrap; 
+}
+
+.user-edit-profile-section-two .col-sm-5 {
+    margin-right: 20px;
+    min-width: 376px; 
+  
+}
+
+.user-edit-profile-cancel-button{
+    width: 175px;
+    margin-bottom: 30px;
+    color: rgb(0, 0, 0);
+
+    border: 1px solid black;
+}
+.user-view-profile-color{
+    color: #1C1C1C;
+font-family: Lato;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+text-decoration: none;
+}
+/* .user-edit-profile-cancel-button:hover{
+    color: rgba(255, 255, 255, 0.297);
+} */
+
+.user-profile-done-button{
+    width: 175px;
+    margin-bottom: 30px;
+    color: white;
+}
+
+.homepage-navbar-modal-logout{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);  /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.homepage-navbar-modal-content{
+    width: 500px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+.homepage-modal-logout-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.homepage-modal-logout-footer{
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 10px;
+}
+
+
+
+@media(max-width:768px){
+    .user-profile-section-name{
+        margin-right: 0px;
+        margin-bottom: 0px;
+        margin-left: 10px;
+    }
+    .user-profile-section-gender{
+        margin-left: 10px;
+    }
+    .user-profile-section-phonenumber{
+        margin-left: 10px;
+    }
+    .user-profile-section-email{
+        margin-left: 10px;
+    }
+}
+
