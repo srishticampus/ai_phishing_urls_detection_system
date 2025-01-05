@@ -1,0 +1,44 @@
+.admin-login-section-left {
+    width: 50%;
+}
+
+.admin-login-section-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+
+.admin-login-right-head {
+    color: #F18C00;
+    text-align: center;
+    font-family: Lato;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.admin-login-button {
+    margin-top: 20px;
+    display: flex;
+    width: 175px;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.password-field-container {
+    position: relative;
+}
+
+.password-toggle-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 20px; 
+}
