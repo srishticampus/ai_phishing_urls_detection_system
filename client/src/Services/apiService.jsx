@@ -12,11 +12,10 @@ const apiClient = axios.create({
 // Axios Interceptor to add JWT token to headers
 apiClient.interceptors.request.use(
   (config) => {
-    if(config.authRequired !== false){
-      const token = localStorage.getItem("accessToken"); 
-      console.log("token"+token)
-
-      if(token) {
+    if (config.authRequired !== false) {
+      const token = localStorage.getItem("accessToken");
+      console.log("token" + token);
+      if (token) {
         config.headers["Authorization"] = `Bearer ${token}`;
       }
     }
@@ -24,12 +23,10 @@ apiClient.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 
-
-  
   // (config) => {
   //   const token = localStorage.getItem("accessToken"); // Retrieve token from localStorage
   // console.log("token"+token)
-  
+
   //   if (token) {
   //     config.headers.Authorization = `Bearer ${token}`;
   //   }
@@ -62,7 +59,9 @@ const handleResponse = async (apiCall) => {
 
 // User Registration Function
 export const userSignup = async (data) => {
-  return handleResponse(apiClient.post("/api/register/", data));
+  return handleResponse(
+    apiClient.post("/api/register/", data, { authRequired: false })
+  );
 };
 
 // User Login Function
@@ -76,7 +75,7 @@ export const userLogin = async (data) => {
   return response;
 };
 
-// Token Refresh 
+// Token Refresh
 export const refreshAccessToken = async () => {
   const refreshToken = localStorage.getItem("refreshToken");
   if (!refreshToken) {
@@ -95,20 +94,31 @@ export const refreshAccessToken = async () => {
   return response;
 };
 
-
-
-
 // Logout Function
 export const userLogout = () => {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
 };
 
+export const addUserProfile = async (formData) => {
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data", // Required for file uploads
+    },
+    authRequired: true, // Ensures the Authorization header is added
+  };
+
+  return handleResponse(
+    apiClient.post("/api/user-profile/add/", formData, config)
+  );
+};
 
 //user-profile-view
 
 export const userProfile = async (data) => {
-  const response = await handleResponse(apiClient.get("/api/user-profile/view/", { ...data,authRequired:true}));
+  const response = await handleResponse(
+    apiClient.get("/api/user-profile/view/", { ...data, authRequired: true })
+  );
   if (response.success) {
     return {
       success: true,
@@ -117,8 +127,25 @@ export const userProfile = async (data) => {
   } else {
     return {
       success: false,
-      errors: response.errors || { message: "Failed to fetch user profile data" },
-  };
-}
-  
+      errors: response.errors || {
+        message: "Failed to fetch user profile data",
+      },
+    };
+  }
 };
+
+// Update User Profile
+
+export const updateUserProfile = async (formData) => {
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data", // Required for file uploads
+    },
+    authRequired: true, // Ensures the Authorization header is added
+  };
+
+  return handleResponse(
+    apiClient.patch("/api/user-profile/update/", formData, config)
+  );
+};
+ 
