@@ -12,7 +12,7 @@ from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
-from .models import User,UserProfile,Interest,UserInterest,AdvertiserProfile
+from .models import User,UserProfile,Interest,UserInterest,AdvertiserProfile,Blog
 #Serializer for the User Model
 class UserSerializer(serializers.ModelSerializer):
     """
@@ -201,4 +201,18 @@ class AdvertiserProfileSerializer(serializers.ModelSerializer):
         """
         Custom update to allow partial updates for AdvertiserProfile.
         """
-        raise NotImplementedError("Update method not implemented");
+        raise NotImplementedError("Update method not implemented")
+#Serializer for the Blog Model
+class BlogSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the Blog model
+    """
+    class Meta:
+        model = Blog
+        fields = ['id', 'title', 'content', 'image', 'interests', 'created_at', 'updated_at']
+        read_only_fields = ['author', 'created_at', 'updated_at']
+
+    def create(self, validated_data):
+        # Automatically set the author to the logged-in user
+        validated_data['author'] = self.context['request'].user
+        return super().create(validated_data)

@@ -14,10 +14,10 @@ from rest_framework import permissions,generics,status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
-from accounts.models import User,UserProfile,Interest
+from accounts.models import User,UserProfile,Interest,Blog
 from .serializers import (UserSerializer,CustomTokenObtainPairSerializer,ResetPasswordSerializer,
-                          UserProfileSerializer,InterestSerializer)
-
+                          UserProfileSerializer,InterestSerializer,BlogSerializer)
+from .permissions import IsAdminorReadOnly
 
 #User Registration View
 class UserRegistrationView(generics.CreateAPIView):
@@ -222,3 +222,70 @@ class InterestListView(APIView):
         interests = Interest.objects.all()
         serializer = InterestSerializer(interests, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+class BlogListCreateView(APIView):
+    """
+    API view to get all blogs, get a detailed view of a single blog, 
+    create a new blog, update a blog, and delete a blog.
+    """
+    permission_classes = [IsAdminorReadOnly]
+
+    def get(self, request, blog_id=None):
+        """
+        GET method to view all blogs or a single blog if 'id' is provided.
+        """
+        if blog_id:
+            try:
+                blog = Blog.objects.get(id=blog_id)
+                serializer = BlogSerializer(blog)
+                return Response(serializer.data,status=status.HTTP_200_OK)
+            except blog.DoesNotExist:
+                return Response({"error":"Blog does not exist"},status=status.HTTP_404_NOT_FOUND)   
+        else:
+            blogs = Blog.objects.all()
+            serializer = BlogSerializer(blogs,many=True)
+            if(not serializer.data):
+                return Response({"message":"No blogs "},status=status.HTTP_204_NO_CONTENT)
+            return Response(serializer.data,status=status.HTTP_200_OK)
+ 
+    def post(self,request):
+        """ 
+        post method to create a new blog
+        """
+        serializer = BlogSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self,request,blog_id=None):
+        """
+        put method to update a blog
+        """
+        if blog_id:
+            try:
+                blog = Blog.objects.get(id=blog_id)
+                serializer = BlogSerializer(blog,data=request.data)
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(serializer.data,status=status.HTTP_200_OK)
+                return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+            except blog.DoesNotExist:
+                return Response({"error": "Blog does not exist."},status=status.HTTP_404_NOT_FOUND)
+        return Response({"error":"Please provide an id,for it is required for updating blog"},
+                        status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, blog_id=None):
+        """
+        delete method to delete a blog
+        """
+        if blog_id:
+            try:
+                blog = Blog.objects.get(id=blog_id)
+                blog.delete()
+                return Response({"message": "Blog deleted successfully"}, status=status.HTTP_200_OK)
+            except Blog.DoesNotExist:
+                return Response({"error": "Blog does not exist"}, status=status.HTTP_404_NOT_FOUND)
+        return Response({"error": "Please provide an id, for it is required for deleting blog"},
+                        status=status.HTTP_400_BAD_REQUEST)
+     

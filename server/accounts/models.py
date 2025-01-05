@@ -87,7 +87,7 @@ class AdvertiserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, 
                                 on_delete=models.CASCADE, related_name="advertiser_profile")
     business_name = models.CharField(max_length=255)
-    business_type = models.ForeignKey(Interest, 
+    business_type = models.ForeignKey(Interest,
                                       on_delete=models.PROTECT, related_name="advertiser_profiles")
     contact_number = models.CharField(max_length=10, validators=[validate_phone_number])
     address = models.TextField()
@@ -117,4 +117,4 @@ class Blog(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.title
+        return str(self.title)
