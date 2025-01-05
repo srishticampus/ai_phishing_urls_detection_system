@@ -8,11 +8,12 @@ from rest_framework_simplejwt.views import (
 )
 from .views import (UserRegistrationView,LoginView,ForgotPasswordView,ResetPasswordView,
                     UserProfileCreateView,UserProfileRetrieveView,UserProfileUpdateView,
-                    InterestListView)
+                    InterestListView,BlogListCreateView)
 
 app_name = 'accounts'
 
 urlpatterns = [
+    # User-related URLs
     path('register/', UserRegistrationView.as_view(), name='register'),
     path('login/', LoginView.as_view(), name='login'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
@@ -22,4 +23,8 @@ urlpatterns = [
     path('user-profile/view/', UserProfileRetrieveView.as_view(), name='profile-view'),
     path('user-profile/edit/', UserProfileUpdateView.as_view(), name='profile-edit'),
     path('interests/', InterestListView.as_view(), name='interest-list'),
+
+    # Blog related URLs
+    path('blogs/', BlogListCreateView.as_view(), name='blog-list-create'),
+    path('blogs/<int:id>/', BlogListCreateView.as_view(), name='blog-detail'),
 ]
