@@ -370,3 +370,174 @@ Updates the profile of the authenticated user.
   }
 }
 ```
+### **8. Get Interests**  
+Retrieves a list of available interests. 
+
+- **URL**: `api/interests/`  
+- **Method**: `GET`  
+- **Permission**: Public  
+
+#### **Success Response**:  
+- **Code**: 200 OK  
+```json
+[
+    {
+        "id": 1,
+        "name": "Personal Development",
+        "icon": "/media/interest_icons/12.png"
+    },
+    {
+        "id": 2,
+        "name": "Technology",
+        "icon": "/media/interest_icons/14.png"
+    }
+]
+```
+
+#### **Error Responses**:  
+- **Code**: 500 Internal Server Error 
+```json
+{
+  "errors": {
+    "detail": "An unexpected error occurred."
+  }
+}
+```
+### 9. Get All Blogs or a Single Blog
+
+**URL:** `/api/blogs/`  
+**Method:** `GET`  
+**Description:** Retrieves a list of all blogs or a single blog if an `id` is provided.  
+
+#### Parameters
+- **id** (optional, integer): The ID of the blog to retrieve.
+
+#### Responses
+- **200 OK:**  
+  ```json
+  [
+      {
+          "id": 1,
+          "title": "Sample Blog",
+          "content": "This is a sample blog content.",
+          "author": "Author Name",
+          "created_at": "2023-12-30T12:00:00Z"
+      }
+  ]
+  ```
+- **404 Not Found:**  
+  ```json
+  {
+      "error": "Blog does not exist"
+  }
+  ```
+
+---
+
+### 2. Create a New Blog
+
+**URL:** `/api/blogs/`  
+**Method:** `POST`  
+**Description:** Creates a new blog.  
+
+#### Request Body
+- **title** (string): Title of the blog.  
+- **content** (string): Content of the blog.  
+- **author** (string): Name of the author.  
+
+#### Responses
+- **201 Created:**  
+  ```json
+  {
+      "id": 1,
+      "title": "Sample Blog",
+      "content": "This is a sample blog content.",
+      "author": "Author Name",
+      "created_at": "2023-12-30T12:00:00Z"
+  }
+  ```
+- **400 Bad Request:**  
+  ```json
+  {
+      "title": ["This field is required."]
+  }
+  ```
+
+---
+
+### 3. Update a Blog
+
+**URL:** `/api/blogs/<id>/`  
+**Method:** `PUT`  
+**Description:** Updates an existing blog by ID.  
+
+#### Parameters
+- **id** (required, integer): The ID of the blog to update.
+
+#### Request Body
+- **title** (string): Updated title of the blog.  
+- **content** (string): Updated content of the blog.  
+- **author** (string): Updated name of the author.  
+
+#### Responses
+- **200 OK:**  
+  ```json
+  {
+      "id": 1,
+      "title": "Updated Blog Title",
+      "content": "Updated blog content.",
+      "author": "Updated Author Name",
+      "created_at": "2023-12-30T12:00:00Z"
+  }
+  ```
+- **400 Bad Request:**  
+  ```json
+  {
+      "title": ["This field is required."]
+  }
+  ```
+- **404 Not Found:**  
+  ```json
+  {
+      "error": "Blog does not exist."
+  }
+  ```
+
+---
+
+### 4. Delete a Blog
+
+**URL:** `/api/blogs/<id>/`  
+**Method:** `DELETE`  
+**Description:** Deletes an existing blog by ID.  
+
+#### Parameters
+- **id** (required, integer): The ID of the blog to delete.
+
+#### Responses
+- **200 OK:**  
+  ```json
+  {
+      "message": "Blog deleted successfully"
+  }
+  ```
+- **404 Not Found:**  
+  ```json
+  {
+      "error": "Blog does not exist."
+  }
+  ```
+- **400 Bad Request:**  
+  ```json
+  {
+      "error": "Please provide an id, for it is required for deleting blog."
+  }
+  ```
+
+---
+
+## Authentication
+- **Required Permissions:** Admin access for `POST`, `PUT`, and `DELETE` methods.
+- **Public Access:** `GET` method for viewing blogs.
+
+---

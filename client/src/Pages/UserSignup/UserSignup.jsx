@@ -127,7 +127,7 @@ function UserSignup() {
               onChange={(e) => setUsername(e.target.value)}
             />
             {errors.username && (
-              <div className="error">{errors.username.join(", ")}</div>
+              <div className="error">{errors.username}</div>
             )}
           </div>
           <div className="mb-3 mt-3">
@@ -141,7 +141,7 @@ function UserSignup() {
               onChange={(e) => setEmail(e.target.value)}
             />
             {errors.email && (
-              <div className="error">{errors.email.join(", ")}</div>
+              <div className="error">{errors.email}</div>
             )}
           </div>
           <div className="mb-3  signup-password-relative">
@@ -161,7 +161,7 @@ function UserSignup() {
               {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
             </span>
             {errors.password && (
-              <div className="error">{errors.password.join(", ")}</div>
+              <div className="error">{errors.password}</div>
             )}
           </div>
           <div className="mb-3 signup-confirm-relative">

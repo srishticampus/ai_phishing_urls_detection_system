@@ -8,7 +8,7 @@ and filtering options to enhance admin usability.
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import UserProfile, Interest, UserInterest, User, AdvertiserProfile
+from .models import UserProfile, Interest, UserInterest, User, AdvertiserProfile,Blog
 
 # Register the custom User model
 @admin.register(User)
@@ -86,3 +86,12 @@ class AdvertiserProfileAdmin(admin.ModelAdmin):
         """
         return obj.user.email
     user_email.short_description = 'Email'
+
+@admin.register(Blog)
+class BlogAdmin(admin.ModelAdmin):
+    '''
+    Admin interface for viewing blogs
+    '''
+    list_display = ('title', 'author', 'created_at')
+    list_filter = ('created_at', 'interests')
+    search_fields = ('title', 'content')
