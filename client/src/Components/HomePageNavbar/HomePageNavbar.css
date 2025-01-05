@@ -1,0 +1,92 @@
+.homepage-navbar-searchfield-size {
+    width: 300px;
+    border-radius: 25px;
+    position: relative;
+}
+
+.homepage-navbar-background-color {
+    background-color: #FFECD1;
+}
+
+.logo-blog-color-homepage {
+    color: #333;
+    font-family: K2D;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    letter-spacing: 1.7px;
+    text-transform: uppercase;
+}
+
+.logo-sphere-color-homepage {
+    color: #F18C00;
+    font-family: K2D;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    letter-spacing: 1.7px;
+    text-transform: uppercase;
+}
+
+.navbar-links-homepage {
+    color: #1C1C1C;
+    font-family: Lato;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.navbar-toggler-background-color {
+    background-color: white;
+}
+
+.searchbar-grp {
+    position: relative;
+}
+
+.search-input-field {
+    padding-left: 30px;
+    width: 100%;
+    border-radius: 25px;
+    border: none;
+}
+
+.searchbar-input-button {
+    background-color: white;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+.homepage-modal-body,
+.homepage-modal-header {
+    text-align: center;
+}
+
+.homepage-navbar-modal {
+    display: block;
+    position: fixed;
+    top: 50px;
+
+
+}
+
+#modal-dialog-right {
+    float: right;
+    margin-right: 20px;
+}
+.homepage-navbar-safe{
+    color: #80BA28;
+font-family: Lato;
+font-size: 13px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+margin-left: 5px;
+}
+
+.homepage-navbar-background-color-disabled {
+    background-color: #F4F4F4;  
+}

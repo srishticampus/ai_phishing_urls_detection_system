@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router";
-import { ToastContainer, Bounce } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Navbar from "./Components/Navbar/Navbar";
 import LandingPage from "./Pages/LandingPage/LandingPage";
@@ -9,22 +9,32 @@ import Footer from "./Components/Footer/Footer";
 import UserLogin from "./Pages/UserLogin/UserLogin";
 import UserForgotPassword from "./Pages/UserForgetPassword/UserForgotPassword";
 import ContactUS from "./Pages/ContactUS/ContactUS";
-import Services from "./Pages/Services/services";
+import Services from "./Pages/Services/Services";
 import TermsOfConditions from "./Pages/TermsOfConditions/TermsOfConditions";
 import PrivacyandPolicy from "./Pages/PrivacyPolicy/PrivacyandPolicy";
 import FandQ from "./Pages/FandQ/FandQ";
 import About from "./Pages/AboutUS/About";
 import UserProfile from "./Pages/UserProfile/UserProfile";
 import ForgetPassword from "./Pages/ForgetPassword/ForgetPassword";
+import UserEditProfile from "./Pages/UserEditProfile/UserEditProfile";
+import UserNavbar from "./Components/UserNavbar/UserNavbar";
+import HomePageNavbar from "./Components/HomePageNavbar/HomePageNavbar";
+import UserViewProfile from "./Pages/UserViewProfile/UserViewProfile";
+import AdminSidebar from "./Pages/AdminSidebar/AdminSidebar";
+import AdminHome from "./Pages/AdminHome/AdminHome";
+import AdminViewSidebar from "./Components/AdminViewSidebar/AdminViewSidebar";
+import AdminAddBlog from "./Pages/AdminAddBlog/AdminAddBlog";
+import AdminViewBlog from "./Pages/AdminViewBlog/AdminViewBlog";
+import AdminDetailedView from "./Pages/AdminDetailedViewBlog/AdminDetailedView";
+import AdminEditBlog from "./Pages/AdminEditBlog/AdminEditBlog";
+
+
 
 
 function App() {
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        transition={Bounce}
-      />
+      <ToastContainer position="top-right" transition={Bounce} />
       <Routes>
         {/* Landing Page Route */}
         <Route
@@ -43,7 +53,7 @@ function App() {
           path="/signup"
           element={
             <>
-              <Navbar />
+              <UserNavbar />
               <UserSignup />
               <Footer />
             </>
@@ -55,7 +65,7 @@ function App() {
           path="/login"
           element={
             <>
-              <Navbar />
+              <UserNavbar />
               <UserLogin />
               <Footer />
             </>
@@ -79,11 +89,9 @@ function App() {
             <>
               <Navbar />
               <ContactUS />
-
             </>
           }
-        >
-        </Route>
+        ></Route>
         {/* servcies Route */}
         <Route
           path="/services"
@@ -91,82 +99,182 @@ function App() {
             <>
               <Navbar />
               <Services />
+              <Footer />
             </>
-          }></Route>
-     {/* Terms of conditions */}
+          }
+        ></Route>
+        {/* Terms of conditions */}
         <Route
           path="/terms-of-conditions"
           element={
             <>
               <Navbar />
               <TermsOfConditions />
-
             </>
           }
-        >
-        </Route>
-     {/* privacy policy */}
+        ></Route>
+        {/* privacy policy */}
         <Route
           path="/privacy-policy"
           element={
             <>
               <Navbar />
-              <PrivacyandPolicy/>
+              <PrivacyandPolicy />
+            </>
+          }
+        ></Route>
+
+        {/* F&Q */}
+        <Route
+          path="/f&q"
+          element={
+            <>
+              <Navbar />
+              <FandQ />
+              <Footer />
+            </>
+          }
+        ></Route>
+
+        {/* about*/}
+
+        <Route
+          path="/about"
+          element={
+            <>
+              <Navbar />
+              <About />
+            </>
+          }
+        ></Route>
+        <Route
+          path="/user-profile"
+          element={
+            <>
+              <Navbar />
+              <UserProfile />
+              <Footer />
+            </>
+          }
+        ></Route>
+
+        <Route
+          path="/forget-password"
+          element={
+            <>
+              <Navbar />
+              <ForgetPassword />
             </>
           }
         >
         </Route>
 
-     {/* F&Q */}
         <Route
-        path="/f&q"
+          path="/user-edit-profile"
+          element={
+            <>
+              <HomePageNavbar />
+              <UserEditProfile />
+            </>
+          }
+        >
+
+        </Route>
+
+        <Route
+          path="/user-home-page"
+          element={
+            <>
+              <HomePageNavbar />
+            </>
+          }
+        >
+
+        </Route>
+
+        <Route
+          path="/user-view-profile"
+          element={
+            <>
+              <HomePageNavbar />
+              <UserViewProfile />
+            </>
+          }
+        >
+
+        </Route>
+
+        <Route
+          path="/dashboard"
+          element={
+            <>
+              <AdminSidebar />
+            </>
+          }
+        >
+
+        </Route>
+
+        <Route
+          path="/admin-dashboard"
+          element={
+            <>
+              <AdminHome />
+              <AdminViewSidebar />
+            </>
+          }
+        />
+
+        <Route
+          path="/admin-add-blog"
+          element={
+            <>
+              <AdminAddBlog />
+              <AdminViewSidebar />
+            </>
+          }
+        >
+        </Route>
+
+        <Route
+        path="/admin-view-blog"
         element={
           <>
-          <Navbar/>
-          <FandQ/>
-          <Footer/>
+          <AdminViewBlog/>
+          <AdminViewSidebar/>
+          </>
+        }
+        >
+
+        </Route>
+  
+        <Route
+        
+        path="/admin-detailed-view-blog"
+        element={
+          <>
+          <AdminDetailedView/>
+          <AdminViewSidebar/>
           </>
         }
         >
 
         </Route>
 
-             {/* about*/}
+        <Route
+        path="/admin-edit-blog"
+        element={
+          <>
+          <AdminEditBlog/>
+          <AdminViewSidebar/>
+          </>
+        }
+        >
+        </Route>
 
-             <Route
-             path="/about"
-             element={
-             <>
-             <Navbar/>
-             <About/>
-            
-             </>
-             }
-             >
-             </Route>
- <Route
- path="/user-profile"
- element={
-  <>
-  <Navbar/>
-  <UserProfile/>
-  </>
- }
- >
 
- </Route>
 
- <Route
- path="/forget-password"
- element={ 
-  <>
-  <Navbar/>
-  <ForgetPassword/>
-  </>
-  }
- >
 
- </Route>
       </Routes>
     </>
   );

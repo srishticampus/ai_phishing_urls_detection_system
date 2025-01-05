@@ -87,7 +87,7 @@ class AdvertiserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, 
                                 on_delete=models.CASCADE, related_name="advertiser_profile")
     business_name = models.CharField(max_length=255)
-    business_type = models.ForeignKey(Interest, 
+    business_type = models.ForeignKey(Interest,
                                       on_delete=models.PROTECT, related_name="advertiser_profiles")
     contact_number = models.CharField(max_length=10, validators=[validate_phone_number])
     address = models.TextField()
@@ -95,3 +95,26 @@ class AdvertiserProfile(models.Model):
 
     def __str__(self):
         return f"{self.business_name} ({self.user.username})"
+
+class Blog(models.Model):
+    """
+    Model class to represent a blog post.
+    """
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="blogs"
+    )
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+    image = models.ImageField(upload_to='blog_images/', blank=True, null=True)
+    interests = models.ManyToManyField(
+        'Interest', 
+        related_name="blogs",
+        blank=True
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.title)
