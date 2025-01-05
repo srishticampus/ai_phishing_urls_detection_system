@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router";
-import { ToastContainer, Bounce } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Navbar from "./Components/Navbar/Navbar";
 import LandingPage from "./Pages/LandingPage/LandingPage";
@@ -9,7 +9,7 @@ import Footer from "./Components/Footer/Footer";
 import UserLogin from "./Pages/UserLogin/UserLogin";
 import UserForgotPassword from "./Pages/UserForgetPassword/UserForgotPassword";
 import ContactUS from "./Pages/ContactUS/ContactUS";
-import Services from "./Pages/Services/services";
+import Services from "./Pages/Services/Services";
 import TermsOfConditions from "./Pages/TermsOfConditions/TermsOfConditions";
 import PrivacyandPolicy from "./Pages/PrivacyPolicy/PrivacyandPolicy";
 import FandQ from "./Pages/FandQ/FandQ";
@@ -34,10 +34,7 @@ import AdminLogin from "./Pages/AdminLogin/AdminLogin";
 function App() {
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        transition={Bounce}
-      />
+      <ToastContainer position="top-right" transition={Bounce} />
       <Routes>
         {/* Landing Page Route */}
         <Route
@@ -92,11 +89,9 @@ function App() {
             <>
               <Navbar />
               <ContactUS />
-
             </>
           }
-        >
-        </Route>
+        ></Route>
         {/* servcies Route */}
         <Route
           path="/services"
@@ -106,7 +101,8 @@ function App() {
               <Services />
               <Footer />
             </>
-          }></Route>
+          }
+        ></Route>
         {/* Terms of conditions */}
         <Route
           path="/terms-of-conditions"
@@ -114,11 +110,9 @@ function App() {
             <>
               <Navbar />
               <TermsOfConditions />
-
             </>
           }
-        >
-        </Route>
+        ></Route>
         {/* privacy policy */}
         <Route
           path="/privacy-policy"
@@ -128,8 +122,7 @@ function App() {
               <PrivacyandPolicy />
             </>
           }
-        >
-        </Route>
+        ></Route>
 
         {/* F&Q */}
         <Route
@@ -141,9 +134,7 @@ function App() {
               <Footer />
             </>
           }
-        >
-
-        </Route>
+        ></Route>
 
         {/* about*/}
 
@@ -153,11 +144,9 @@ function App() {
             <>
               <Navbar />
               <About />
-              <Footer />
             </>
           }
-        >
-        </Route>
+        ></Route>
         <Route
           path="/user-profile"
           element={
@@ -167,9 +156,7 @@ function App() {
               <Footer />
             </>
           }
-        >
-
-        </Route>
+        ></Route>
 
         <Route
           path="/forget-password"
