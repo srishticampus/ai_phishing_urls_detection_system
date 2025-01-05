@@ -5,19 +5,17 @@ function AdminDetailedView() {
         <div className="admin-detailed-view-container">
             <p className="admin-detailed-view-head">View Blog Details</p>
             <div className="admin-detailed-img-container">
-    <div className="d-flex justify-content-center">
-        <img className="admin-detailed-view-image" src={img} alt="image" />
-    </div>
-    <div className="admin-detailed-blog-text-inside-img">
-        <p className="admin-detailed-blog-text-inside-img-head">Cook with Passion, Eat with Joy</p>
-        <p className="admin-detailed-blog-text-inside-img-para">
-            Explore a diverse range of content that enlightens, entertains, and inspires with every read.
-            Uncover fresh ideas, new perspectives, and engaging content with every visit.
-        </p>
-    </div>
-</div>
-
-
+                <div className="d-flex justify-content-center">
+                    <img className="admin-detailed-view-image" src={img} alt="image" />
+                </div>
+                <div className="admin-detailed-blog-text-inside-img">
+                    <p className="admin-detailed-blog-text-inside-img-head">Cook with Passion, Eat with Joy</p>
+                    <p className="admin-detailed-blog-text-inside-img-para">
+                        Explore a diverse range of content that enlightens, entertains, and inspires with every read.
+                        Uncover fresh ideas, new perspectives, and engaging content with every visit.
+                    </p>
+                </div>
+            </div>
 
             <div className="d-flex justify-content-start admin-detailed-view-paragraph-head-container">
                 <p className="admin-detailed-view-paragraph-head mt-5">Achieving Optimal Health and Fitness: Your <br></br> Ultimate Guide</p>
@@ -30,7 +28,7 @@ function AdminDetailedView() {
                 <p className="admin-detailed-view-balanced-diet">1. Balanced Diet Basics</p>
                 <ul className="admin-detailed-view-ul">
                     <li>
-                        <p className="admin-detailed-view-balanced-diet-para">Balanced Diet Basics A balanced diet includes essential nutrients such as proteins, carbohydrates, fats, vitamins, and minerals. Each plays a crucial role in maintaining overall health and supporting bodily functions.</p>
+                        <p className="admin-detailed-view-balanced-diet-para"> A balanced diet includes essential nutrients such as proteins, carbohydrates, fats, vitamins, and minerals. Each plays a crucial role in maintaining overall health and supporting bodily functions.</p>
                     </li>
                 </ul>
                 <p className="admin-detailed-view-balanced-diet">2.Importance of Hydration</p>
