@@ -1,7 +1,7 @@
 .admin-detailed-view-container {
     margin-left: 250px;
     margin-top: 70px;
- 
+   position: relative;
 
 }
 .admin-detailed-img-container{
@@ -91,16 +91,17 @@
 }
 
 .admin-detailed-blog-text-inside-img {
+
+
     position: absolute;
-    bottom: 350px;
-    left: 40%;
-    transform: translateX(-45%);
-    text-align: center;
+    bottom: 0;  /* Align the text box to the bottom of the image */
+    left: 110px;    /* Align the text box to the left side of the image */
+    text-align: left;  /* Align text to the left */
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.5);  /* Semi-transparent background */
+    width: 70%;  /* Ensure it stretches across the bottom */
+    max-width: 600px;  /* Max-width to avoid being too wide */
 
-    z-index: 1;
-
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.5);
 }
 
 
@@ -123,12 +124,7 @@
     line-height: normal;
 }
 
-.admin-detailed-blog-text-inside-img {
-    position: absolute;
-    bottom: 0px;
-    left: 580px;
-    margin-left: 0px;
-}
+
 
 .admin-detailed-blog-text-inside-img-head {
     color: #FFF;
