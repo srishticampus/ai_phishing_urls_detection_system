@@ -144,6 +144,7 @@ function App() {
             <>
               <Navbar />
               <About />
+              <Footer />
             </>
           }
         ></Route>
@@ -158,7 +159,7 @@ function App() {
           }
         ></Route>
 
-        <Route
+        {/* <Route
           path="/forget-password"
           element={
             <>
@@ -167,7 +168,7 @@ function App() {
             </>
           }
         >
-        </Route>
+        </Route> */}
 
         <Route
           path="/user-edit-profile"

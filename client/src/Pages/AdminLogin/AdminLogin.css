@@ -42,3 +42,10 @@
     cursor: pointer;
     font-size: 20px; 
 }
+/* .admin-login-container{
+    height: 100vh;
+} */
+
+.admin-login-image{
+    height: 100vh;
+}
