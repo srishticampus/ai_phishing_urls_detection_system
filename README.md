@@ -414,17 +414,51 @@ Retrieves a list of available interests.
 
 #### Responses
 - **200 OK:**  
+  if fetching all blogs.
+```json
+ [
+    {
+        "id": 1,
+        "title": "Sample Blog",
+        "content": "This is a sample blog content.",
+        "image": "http://127.0.0.1:8000/media/blog_images/sample.png",
+        "interests": [
+            {
+                "id": 3,
+                "name": "Technology",
+                "icon": "http://127.0.0.1:8000/media/interest_icons/tech.png"
+            }
+        ],
+        "created_at": "2023-12-30T12:00:00Z",
+        "updated_at": "2023-12-30T14:00:00Z"
+    }
+ ]
+```
+  If fetching a single blog:
+```json
+ {
+    "id": 1,
+    "title": "Sample Blog",
+    "content": "This is a sample blog content.",
+    "image": "http://127.0.0.1:8000/media/blog_images/sample.png",
+    "interests": [
+        {
+            "id": 3,
+            "name": "Technology",
+            "icon": "http://127.0.0.1:8000/media/interest_icons/tech.png"
+        }
+    ],
+    "created_at": "2023-12-30T12:00:00Z",
+    "updated_at": "2023-12-30T14:00:00Z"
+}
+```
+- **204 No Content:**  
   ```json
-  [
-      {
-          "id": 1,
-          "title": "Sample Blog",
-          "content": "This is a sample blog content.",
-          "author": "Author Name",
-          "created_at": "2023-12-30T12:00:00Z"
-      }
-  ]
+  {
+      "message": "No blogs"
+  }
   ```
+
 - **404 Not Found:**  
   ```json
   {
@@ -443,17 +477,26 @@ Retrieves a list of available interests.
 #### Request Body
 - **title** (string): Title of the blog.  
 - **content** (string): Content of the blog.  
-- **author** (string): Name of the author.  
+- **image**  (file, optional): Image file for the blog. 
+- **interest_id**  (string): Interest id. 
 
 #### Responses
 - **201 Created:**  
   ```json
   {
-      "id": 1,
-      "title": "Sample Blog",
-      "content": "This is a sample blog content.",
-      "author": "Author Name",
-      "created_at": "2023-12-30T12:00:00Z"
+    "id": 1,
+    "title": "Sample Blog",
+    "content": "This is a sample blog content.",
+    "image": "http://127.0.0.1:8000/media/blog_images/sample.png",
+    "interests": [
+       {
+            "id": 3,
+            "name": "Technology",
+            "icon": "http://127.0.0.1:8000/media/interest_icons/tech.png"
+        }
+    ],
+    "created_at": "2023-12-30T12:00:00Z",
+    "updated_at": "2023-12-30T12:00:00Z"
   }
   ```
 - **400 Bad Request:**  
@@ -477,17 +520,23 @@ Retrieves a list of available interests.
 #### Request Body
 - **title** (string): Updated title of the blog.  
 - **content** (string): Updated content of the blog.  
-- **author** (string): Updated name of the author.  
+- **image**  (file, optional): Image file for the blog. 
 
 #### Responses
 - **200 OK:**  
   ```json
   {
-      "id": 1,
-      "title": "Updated Blog Title",
-      "content": "Updated blog content.",
-      "author": "Updated Author Name",
-      "created_at": "2023-12-30T12:00:00Z"
+    "id": 2,
+    "title": "Reactjs",
+    "content": "djasldkalskdl",
+    "image": "http://127.0.0.1:8000/media/blog_images/12_Y0ew5D5.png",
+    "interests": {
+        "id": 3,
+        "name": "Health & Wellness",
+        "icon": "http://127.0.0.1:8000/media/interest_icons/Frame_427319158_s38yLhr.png"
+    },
+    "created_at": "2025-01-08T08:32:07.893220Z",
+    "updated_at": "2025-01-08T08:32:07.893243Z"
   }
   ```
 - **400 Bad Request:**  

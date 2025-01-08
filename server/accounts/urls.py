@@ -26,5 +26,5 @@ urlpatterns = [
 
     # Blog related URLs
     path('blogs/', BlogListCreateView.as_view(), name='blog-list-create'),
-    path('blogs/<int:id>/', BlogListCreateView.as_view(), name='blog-detail'),
+    path('blogs/<int:blog_id>/', BlogListCreateView.as_view(), name='blog-detail'),
 ]

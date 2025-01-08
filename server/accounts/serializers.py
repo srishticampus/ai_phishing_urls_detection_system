@@ -207,12 +207,32 @@ class BlogSerializer(serializers.ModelSerializer):
     """
     Serializer for the Blog model
     """
+    interests = InterestSerializer(read_only=True)  # Nested Interest serializer
+    interest_id = serializers.PrimaryKeyRelatedField(queryset=Interest.objects.all(),
+                                                      write_only=True, source='interests')
+
     class Meta:
         model = Blog
-        fields = ['id', 'title', 'content', 'image', 'interests', 'created_at', 'updated_at']
+        fields = ['id', 'title', 'content', 'image', 'interests', 'interest_id','created_at', 'updated_at']
         read_only_fields = ['author', 'created_at', 'updated_at']
+
+    def validate(self, attrs):
+        """
+        Prevent modifiying the interests during update
+        """
+        if self.instance and 'interest' in attrs:
+            raise serializers.ValidationError({"interest":
+                                               "Interest cannot be modified after creation."})
+        return attrs
 
     def create(self, validated_data):
         # Automatically set the author to the logged-in user
         validated_data['author'] = self.context['request'].user
         return super().create(validated_data)
+
+    def update(self,instance,validated_data):
+        """
+        Handle updates, ensuring `interests` is not modified
+        """
+        validated_data.pop('interests', None)
+        return super().update(instance, validated_data)

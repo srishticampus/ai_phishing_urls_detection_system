@@ -252,7 +252,11 @@ class BlogListCreateView(APIView):
         """ 
         post method to create a new blog
         """
-        serializer = BlogSerializer(data=request.data)
+        data = request.data.copy()
+        if 'image' in request.FILES:
+            data['image'] = request.FILES['image']
+
+        serializer = BlogSerializer(data=data,context={'request':request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data,status=status.HTTP_201_CREATED)
@@ -262,10 +266,17 @@ class BlogListCreateView(APIView):
         """
         put method to update a blog
         """
-        if blog_id:
+        if blog_id or request.query_params.get('id'):
             try:
+                if not blog_id:
+                    blog_id = request.query_params.get('id')
                 blog = Blog.objects.get(id=blog_id)
-                serializer = BlogSerializer(blog,data=request.data)
+                data = request.data.copy()
+                if 'image' in request.FILES:
+                    data['image'] = request.FILES['image']
+                if 'interest_id' in data:
+                    data.pop('interest_id')
+                serializer = BlogSerializer(blog,data=data,context={'request':request},partial=True)
                 if serializer.is_valid():
                     serializer.save()
                     return Response(serializer.data,status=status.HTTP_200_OK)
@@ -279,8 +290,9 @@ class BlogListCreateView(APIView):
         """
         delete method to delete a blog
         """
-        if blog_id:
+        if blog_id or request.query_params.get('id'):
             try:
+                blog_id = request.query_params.get('id')
                 blog = Blog.objects.get(id=blog_id)
                 blog.delete()
                 return Response({"message": "Blog deleted successfully"}, status=status.HTTP_200_OK)
@@ -288,4 +300,3 @@ class BlogListCreateView(APIView):
                 return Response({"error": "Blog does not exist"}, status=status.HTTP_404_NOT_FOUND)
         return Response({"error": "Please provide an id, for it is required for deleting blog"},
                         status=status.HTTP_400_BAD_REQUEST)
-     
