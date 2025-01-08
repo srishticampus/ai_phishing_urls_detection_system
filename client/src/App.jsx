@@ -27,7 +27,7 @@ import AdminAddBlog from "./Pages/AdminAddBlog/AdminAddBlog";
 import AdminViewBlog from "./Pages/AdminViewBlog/AdminViewBlog";
 import AdminDetailedView from "./Pages/AdminDetailedViewBlog/AdminDetailedView";
 import AdminEditBlog from "./Pages/AdminEditBlog/AdminEditBlog";
-
+import AdminLogin from "./Pages/AdminLogin/AdminLogin";
 
 
 
@@ -144,6 +144,7 @@ function App() {
             <>
               <Navbar />
               <About />
+              <Footer />
             </>
           }
         ></Route>
@@ -158,7 +159,7 @@ function App() {
           }
         ></Route>
 
-        <Route
+        {/* <Route
           path="/forget-password"
           element={
             <>
@@ -167,7 +168,7 @@ function App() {
             </>
           }
         >
-        </Route>
+        </Route> */}
 
         <Route
           path="/user-edit-profile"
@@ -270,6 +271,20 @@ function App() {
           </>
         }
         >
+        </Route>
+
+
+        <Route
+        path="/admin-login"
+        element={
+          <>
+           <UserNavbar />
+          <AdminLogin/>
+          <Footer/>
+          </>
+        }
+        >
+
         </Route>
 
 

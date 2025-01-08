@@ -108,10 +108,10 @@ class Blog(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
     image = models.ImageField(upload_to='blog_images/', blank=True, null=True)
-    interests = models.ManyToManyField(
-        'Interest', 
+    interests = models.ForeignKey(
+        'Interest',
+        on_delete=models.CASCADE,
         related_name="blogs",
-        blank=True
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
