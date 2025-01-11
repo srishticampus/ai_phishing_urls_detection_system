@@ -15,7 +15,7 @@ import PrivacyandPolicy from "./Pages/PrivacyPolicy/PrivacyandPolicy";
 import FandQ from "./Pages/FandQ/FandQ";
 import About from "./Pages/AboutUS/About";
 import UserProfile from "./Pages/UserProfile/UserProfile";
-import ForgetPassword from "./Pages/ForgetPassword/ForgetPassword";
+// import ForgetPassword from "./Pages/ForgetPassword/ForgetPassword";
 import UserEditProfile from "./Pages/UserEditProfile/UserEditProfile";
 import UserNavbar from "./Components/UserNavbar/UserNavbar";
 import HomePageNavbar from "./Components/HomePageNavbar/HomePageNavbar";
@@ -28,6 +28,17 @@ import AdminViewBlog from "./Pages/AdminViewBlog/AdminViewBlog";
 import AdminDetailedView from "./Pages/AdminDetailedViewBlog/AdminDetailedView";
 import AdminEditBlog from "./Pages/AdminEditBlog/AdminEditBlog";
 import AdminLogin from "./Pages/AdminLogin/AdminLogin";
+import AdminViewUsers from "./Pages/AdminViewUsers/AdminViewUsers";
+import AdminViewAdvertisers from "./Pages/AdminViewAdvertisers/AdminViewAdvertisers"
+import AdminViewDetails from "./Pages/AdminViewDetails/AdminViewDetails";
+import AdminViewAdvertisement from "./Pages/AdminViewAdvertisement/AdminViewAdvertisement";
+import AdminViewAdvertisementDetail from "./Pages/AdminViewAdvertisementDetail/AdminViewAdvertisementDetail";
+import AdvertisersLogin from "./Pages/AdvertisersLogin/AdvertisersLogin";
+import AdvertisersForgetPassword from "./Pages/AdvertisersForgetPassword/AdvertisersForgetPassword";
+import AdvertisersResetPassword from "./Pages/AdvertisersResetPassword/AdvertisersResetPassword";
+import AdvertisersSignup from "./Pages/AdvertisersSignup/AdvertisersSignup";
+import AdvertiserSidebar from "./Pages/AdvertiserSidebar/AdvertiserSidebar";
+import AdvertiserViewSidebar from "./Components/AdvertiserViewSidebar/AdvertiserViewSidebar";
 
 
 
@@ -46,7 +57,7 @@ function App() {
               <Footer />
             </>
           }
-        />
+        /> 
 
         {/* Sign Up Route */}
         <Route
@@ -213,7 +224,6 @@ function App() {
             </>
           }
         >
-
         </Route>
 
         <Route
@@ -284,8 +294,133 @@ function App() {
           </>
         }
         >
+        </Route>
+
+        <Route
+        path="/admin-view-users"
+        element={
+          <>
+          <AdminViewSidebar/>
+          <AdminViewUsers/>
+          </>
+        }
+        >
+        </Route>
+
+        <Route
+        path="/admin-view-advertisers"
+        element={
+          <>
+          <AdminViewSidebar/>
+          <AdminViewAdvertisers/>
+          </>
+        }
+        >
+        </Route>
+
+        <Route
+        path="/admin-view-details"
+        element={
+          <>
+          <AdminViewSidebar/>
+          <AdminViewDetails/>
+          </>
+        }
+        >
+        </Route>
+
+        <Route
+        path="/admin-view-advertisement"
+        element={
+          <>
+          <AdminViewSidebar/>
+          <AdminViewAdvertisement/>
+          </>
+        }
+        >
+        </Route>
+
+        <Route
+        path="/admin-view-advertisement-detail"
+        element={
+          <>
+          <AdminViewSidebar/>
+          <AdminViewAdvertisementDetail/>
+          </>
+        }
+        >
 
         </Route>
+
+        <Route
+        path="/advertiser-login"
+        element={
+          <>
+          <UserNavbar/>
+          <AdvertisersLogin/>
+          <Footer/>
+          </>
+        }
+        >
+        </Route>
+
+        <Route
+        path="/advertisers-forget-password"
+        element={
+          <>
+          <UserNavbar/>
+          <AdvertisersForgetPassword/>
+          <Footer/>
+          </>
+        }
+        >
+        </Route>
+
+        <Route
+        path="/advertisers-reset-password"
+        element={
+          <>
+          <UserNavbar/>
+          <AdvertisersResetPassword/>
+          <Footer/>
+          </>
+        }
+        >
+        </Route>
+
+        <Route
+        path="/advertisers-signup"
+        element={
+          <>
+          <UserNavbar/>
+          <AdvertisersSignup/>
+          <Footer/>
+          </>
+        }
+        >
+        </Route>
+
+        <Route
+        path="/advertiser-dashboard"
+        element={
+          <>
+         <AdvertiserSidebar/>
+          </>
+        }
+        >
+        </Route>
+
+        <Route
+        path="/advertiser-view-sidebar"
+        element={
+          <>
+          <AdvertiserViewSidebar/>
+          </>
+        }
+        >
+
+        </Route>
+      
 
 
 

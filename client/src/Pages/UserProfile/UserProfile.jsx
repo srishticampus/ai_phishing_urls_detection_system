@@ -12,7 +12,14 @@ function UserProfile() {
     image: "",
   });
 
-  const [error, setError] = useState(null);
+  const [errors, setErrors] = useState({
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    gender: "",
+    image: "",
+    form: "", 
+  });
   const [loading, setLoading] = useState(false); // For tracking loading state
 
   // Fetch the user profile on component mount
@@ -29,14 +36,19 @@ function UserProfile() {
             gender: response.data.gender || "",
             image: response.data.photo || user_empty_profile, // Fallback to empty profile if no image
           });
-          // console.log(response.data.lastName)
-          // console.log(response.data.phone_number)
+
    
         } else {
-          setError(response.errors.message || "Failed to load profile data");
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            form: response.errors.message || "Failed to load profile data",errors,
+          }));
         }
-      } catch (error) {
-        setError("Error fetching profile data",error);
+      } catch (errors) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          form: "Error fetching profile data",errors,
+        }));
       }
     };
     fetchUserProfile();
@@ -48,6 +60,11 @@ function UserProfile() {
     setProfileData((prevState) => ({
       ...prevState,
       [name]: value,
+      
+    }));
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: "",
     }));
   };
 
@@ -88,11 +105,11 @@ function UserProfile() {
       
         setLoading(false);
       } else {
-        setError(response.errors.message || "Failed to update profile");
+        setErrors(response.errors.message || "Failed to update profile");
         setLoading(false);
       }
     } catch (error) {
-      setError("An error occurred while submitting the form.",error);
+      setErrors("An error occurred while submitting the form.",error);
       setLoading(false);
     }
   };
