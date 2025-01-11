@@ -13,3 +13,13 @@ class IsAdminorReadOnly(permissions.BasePermission):
             return True
         #Allow only admin users to edit the data
         return request.user.is_authenticated and request.user.user_type == 'admin'
+
+class IsAdmin(permissions.BasePermission):
+    """
+    Custom permission to allow only authenticated admin users to access the APIs.
+    """
+    def has_permission(self,request,view):
+        """
+            Grant permission only if the user is authenticated and is an admin.
+        """
+        return request.user.is_authenticated and request.user.user_type == 'admin'

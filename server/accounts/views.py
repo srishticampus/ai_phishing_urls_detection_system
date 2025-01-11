@@ -10,14 +10,16 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
+from django.db import DatabaseError
 from rest_framework import permissions,generics,status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.exceptions import APIException
 from rest_framework_simplejwt.views import TokenObtainPairView
 from accounts.models import User,UserProfile,Interest,Blog
 from .serializers import (UserSerializer,CustomTokenObtainPairSerializer,ResetPasswordSerializer,
                           UserProfileSerializer,InterestSerializer,BlogSerializer)
-from .permissions import IsAdminorReadOnly
+from .permissions import IsAdminorReadOnly,IsAdmin
 
 #User Registration View
 class UserRegistrationView(generics.CreateAPIView):
@@ -300,3 +302,68 @@ class BlogListCreateView(APIView):
                 return Response({"error": "Blog does not exist"}, status=status.HTTP_404_NOT_FOUND)
         return Response({"error": "Please provide an id, for it is required for deleting blog"},
                         status=status.HTTP_400_BAD_REQUEST)
+
+class AdminUserListView(APIView):
+    """
+    API view to get details of all users, including their profiles.
+    """
+    permission_classes = [IsAdmin]
+
+    def get(self, request):
+        """
+        GET method to fetch details of all users, including their profiles.
+        """
+        try:
+            # Fetch all UserProfile objects
+            user_profiles = UserProfile.objects.all()
+            profile_serializer = UserProfileSerializer(user_profiles, many=True)
+
+            # If UserProfile data is empty, fetch all User objects
+            if not profile_serializer.data:
+                users = User.objects.filter(user_type='user')
+                user_serializer = UserSerializer(users, many=True)
+                if not user_serializer.data:
+                    return Response({"message": "No users found"}, 
+                                    status=status.HTTP_204_NO_CONTENT)
+                return Response(user_serializer.data, status=status.HTTP_200_OK)
+
+            # Combine UserProfile data with User data for users without profiles
+            all_users = User.objects.filter(user_type='user')
+            users_with_profiles = {profile['user']['username'] 
+                                   for profile in profile_serializer.data}
+            users_without_profiles = [
+                user for user in all_users if user.username not in users_with_profiles
+            ]
+
+            # Serialize users without profiles
+            users_without_profiles_serializer = UserSerializer(users_without_profiles, many=True)
+
+            # Combine both datasets
+            combined_data = profile_serializer.data + users_without_profiles_serializer.data
+
+            return Response(combined_data, status=status.HTTP_200_OK)
+
+        except DatabaseError as db_err:
+            # Handle database-related errors
+            return Response(
+                {"error": "Database error occurred.", "details": str(db_err)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+        except APIException as api_err:
+            # Handle API-related errors
+            return Response(
+                {"error": "API error occurred.", "details": str(api_err)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+        except ValueError as val_err:
+            # Handle value-related errors
+            return Response(
+                {"error": "Invalid data encountered.", "details": str(val_err)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        except Exception as e:
+            # Catch-all for any other unexpected errors
+            return Response(
+                {"error": "An unexpected error occurred.", "details": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
