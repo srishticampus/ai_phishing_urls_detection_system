@@ -8,7 +8,7 @@ from rest_framework_simplejwt.views import (
 )
 from .views import (UserRegistrationView,LoginView,ForgotPasswordView,ResetPasswordView,
                     UserProfileCreateView,UserProfileRetrieveView,UserProfileUpdateView,
-                    InterestListView,BlogListCreateView)
+                    InterestListView,BlogListCreateView,AdminUserListView)
 
 app_name = 'accounts'
 
@@ -27,4 +27,7 @@ urlpatterns = [
     # Blog related URLs
     path('blogs/', BlogListCreateView.as_view(), name='blog-list-create'),
     path('blogs/<int:blog_id>/', BlogListCreateView.as_view(), name='blog-detail'),
+
+    # Admin related URLs
+    path('admin-view-users/',AdminUserListView.as_view(),name='admin-view-users'),
 ]
