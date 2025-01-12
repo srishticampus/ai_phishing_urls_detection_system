@@ -156,6 +156,7 @@ function App() {
               <Navbar />
               <About />
               <Footer />
+              <Footer />
             </>
           }
         ></Route>
@@ -171,6 +172,7 @@ function App() {
         ></Route>
 
         {/* <Route
+        {/* <Route
           path="/forget-password"
           element={
             <>
@@ -179,6 +181,7 @@ function App() {
             </>
           }
         >
+        </Route> */}
         </Route> */}
 
         <Route
