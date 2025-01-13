@@ -468,7 +468,7 @@ Retrieves a list of available interests.
 
 ---
 
-### 2. Create a New Blog
+### 10. Create a New Blog
 
 **URL:** `/api/blogs/`  
 **Method:** `POST`  
@@ -508,7 +508,7 @@ Retrieves a list of available interests.
 
 ---
 
-### 3. Update a Blog
+### 11. Update a Blog
 
 **URL:** `/api/blogs/<id>/`  
 **Method:** `PUT`  
@@ -554,7 +554,7 @@ Retrieves a list of available interests.
 
 ---
 
-### 4. Delete a Blog
+### 12. Delete a Blog
 
 **URL:** `/api/blogs/<id>/`  
 **Method:** `DELETE`  
@@ -589,4 +589,80 @@ Retrieves a list of available interests.
 - **Required Permissions:** Admin access for `POST`, `PUT`, and `DELETE` methods.
 - **Public Access:** `GET` method for viewing blogs.
 
+### **13. Admin View Users**
+
+**URL:** `/api/admin-view-users/`  
+**Method:** `GET`  
+**Description:** Retrieves details of all users with `user_type='user'`, including their profiles if available. Users without profiles are also included.
+
 ---
+
+#### **Success Responses**  
+
+- **Code:** 200 OK  
+  If users with profiles are found:
+  ```json
+  [
+      {
+          "user": {
+              "username": "john_doe",
+              "email": "john.doe@example.com",
+              "first_name": "John",
+              "last_name": "Doe",
+              "user_type": "user"
+          },
+          "phone_number": "1234567890",
+          "gender": "M",
+          "photo": "/media/profile_photos/john_doe.jpg"
+      },
+      {
+          "username": "jane_doe",
+          "email": "jane.doe@example.com",
+          "user_type": "user"
+      }
+  ]
+
+### **13. AdminToggleUserActivation API**
+## Overview
+This API allows an admin to toggle the activation status of a user. When called, it activates a deactivated user or deactivates an active user.
+
+---
+
+## Endpoint
+**URL**: `/api/toggle-user-activation/<int:user_id>/`
+
+**Method**: `PATCH`
+
+**Permission**: Admin-only (requires `IsAdmin` permission)
+
+---
+
+## Request Parameters
+
+| Parameter    | Type   | Description                     |
+|--------------|--------|---------------------------------|
+| `user_id`    | `int`  | The ID of the user to toggle.   |
+
+---
+
+## Headers
+
+| Header            | Value                  | Required |
+|--------------------|------------------------|----------|
+| `Authorization`    | `Bearer <token>`       | Yes      |
+
+---
+
+## Response
+
+### Success (200 OK)
+The API returns a success message indicating whether the user was activated or deactivated.
+
+#### Example Response:
+```json
+{
+    "message": "User '007jithinjose' has been activated."
+}
+```
+---
+
