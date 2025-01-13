@@ -20,7 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = User
-        fields = ['username','email','password','user_type']
+        fields = ['id','username','email','password','is_active','user_type']
         extra_kwargs = {
             'username': {'required': True},
             'email': {'required': True},
@@ -89,7 +89,7 @@ class UserDetailsSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = User
-        fields = ['username', 'email', 'first_name', 'last_name','user_type']
+        fields = ['id','username', 'email', 'first_name', 'last_name','is_active','user_type']
 
 class UserProfileSerializer(serializers.ModelSerializer):
     """
