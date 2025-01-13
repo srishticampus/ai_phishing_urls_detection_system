@@ -6,11 +6,12 @@ It defines the API views for token authentication, permissions, and other
 related features, using Django REST Framework and Simple JWT for token handling.
 """
 import os
+import logging
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
-from django.db import DatabaseError
+from django.db import DatabaseError,transaction
 from rest_framework import permissions,generics,status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -20,6 +21,8 @@ from accounts.models import User,UserProfile,Interest,Blog
 from .serializers import (UserSerializer,CustomTokenObtainPairSerializer,ResetPasswordSerializer,
                           UserProfileSerializer,InterestSerializer,BlogSerializer)
 from .permissions import IsAdminorReadOnly,IsAdmin
+
+logger = logging.getLogger(__name__)
 
 #User Registration View
 class UserRegistrationView(generics.CreateAPIView):
@@ -363,6 +366,44 @@ class AdminUserListView(APIView):
             )
         except Exception as e:
             # Catch-all for any other unexpected errors
+            return Response(
+                {"error": "An unexpected error occurred.", "details": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+class AdminToggleUserActivationView(APIView):
+    """
+    API view to activate or deactivate a user.
+    """
+    permission_classes = [IsAdmin]
+
+    @transaction.atomic
+    def patch(self, request,user_id):
+        """
+        PATCH method to toggle a user's active status.
+        """
+        try:
+            # Fetch the user by id
+            user = User.objects.get(id=user_id)
+            # Toggle the is_active field
+            user.is_active = not user.is_active
+            user.save()
+
+            # Prepare the response message
+            status_message = "activated" if user.is_active else "deactivated"
+            logger.info("Admin %s toggled activation for user %s.",
+                            request.user.username, user.username)
+            return Response(
+                {"message": f"User '{user.username}' has been {status_message}."},
+                status=status.HTTP_200_OK
+            )
+
+        except User.DoesNotExist:
+            return Response(
+                {"error": "Invalid user ID."},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Exception as e:
             return Response(
                 {"error": "An unexpected error occurred.", "details": str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
