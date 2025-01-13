@@ -622,5 +622,47 @@ Retrieves a list of available interests.
       }
   ]
 
+### **13. AdminToggleUserActivation API**
+## Overview
+This API allows an admin to toggle the activation status of a user. When called, it activates a deactivated user or deactivates an active user.
+
+---
+
+## Endpoint
+**URL**: `/api/toggle-user-activation/<int:user_id>/`
+
+**Method**: `PATCH`
+
+**Permission**: Admin-only (requires `IsAdmin` permission)
+
+---
+
+## Request Parameters
+
+| Parameter    | Type   | Description                     |
+|--------------|--------|---------------------------------|
+| `user_id`    | `int`  | The ID of the user to toggle.   |
+
+---
+
+## Headers
+
+| Header            | Value                  | Required |
+|--------------------|------------------------|----------|
+| `Authorization`    | `Bearer <token>`       | Yes      |
+
+---
+
+## Response
+
+### Success (200 OK)
+The API returns a success message indicating whether the user was activated or deactivated.
+
+#### Example Response:
+```json
+{
+    "message": "User '007jithinjose' has been activated."
+}
+```
 ---
 
