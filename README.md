@@ -664,5 +664,68 @@ The API returns a success message indicating whether the user was activated or d
     "message": "User '007jithinjose' has been activated."
 }
 ```
+### **14. Advertiser Registration**  
+Registers a new advertiser along with their profile.
+
+- **URL**: `api/advertiser/register/`  
+- **Method**: `POST`  
+- **Permission**: Public  
+
+#### **Request Body (JSON)**:  
+| Field            | Type    | Required | Description                                   |
+|------------------|---------|----------|-----------------------------------------------|
+| username         | string  | Yes      | Unique username for the advertiser            |
+| email            | string  | Yes      | Email address of the advertiser               |
+| password         | string  | Yes      | Password for the advertiser's account         |
+| user_type        | string  | Yes      | Type of user (`advertiser`)                   |
+| business_name    | string  | Yes      | Name of the advertiser's business             |
+| business_type_id | integer | Yes      | ID of the business type                       |
+| contact_number   | string  | Yes      | Contact number of the advertiser              |
+| address          | string  | Yes      | Address of the advertiser's business          |
+| profile_image    | file    | No       | Profile image of the advertiser (image file)  |
+
+#### **Success Response**:  
+- **Code**: 201 Created  
+```json
+{
+    "message": "Advertiser registered successfully.",
+    "data": {
+        "user": {
+            "username": "advertiser123",
+            "email": "advertiser@example.com",
+            "user_type": "advertiser"
+        },
+        "advertiser_profile": {
+            "id": 1,
+            "business_name": "Sample Business",
+            "business_type": {
+                "id": 3,
+                "name": "Retail"
+            },
+            "contact_number": "1234567890",
+            "address": "123 Sample Street",
+            "profile_image": "http://127.0.0.1:8000/media/advertiser_profiles/sample_image.jpg"
+        }
+    }
+}
+```
+- **400 Bad Request:**  
+  ```json
+  {
+  "errors": {
+    "username": ["This field is required."],
+    "email": ["Enter a valid email address."]
+  }
+  }
+  ```
+- **Code: 500 Internal Server Error**  
+  ```json
+  {
+  "error": "An unexpected error occurred.",
+  "details": "Error message describing the issue."
+  }
+
+  ```
+
 ---
 
