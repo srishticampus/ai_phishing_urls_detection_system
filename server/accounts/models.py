@@ -84,7 +84,7 @@ class AdvertiserProfile(models.Model):
     """
     Model class to extend profile details for advertisers.
     """
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, 
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,
                                 on_delete=models.CASCADE, related_name="advertiser_profile")
     business_name = models.CharField(max_length=255)
     business_type = models.ForeignKey(Interest,
