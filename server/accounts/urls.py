@@ -8,7 +8,8 @@ from rest_framework_simplejwt.views import (
 )
 from .views import (UserRegistrationView,LoginView,ForgotPasswordView,ResetPasswordView,
                     UserProfileCreateView,UserProfileRetrieveView,UserProfileUpdateView,
-                    InterestListView,BlogListCreateView,AdminUserListView,AdminToggleUserActivationView)
+                    InterestListView,BlogListCreateView,AdminUserListView,AdminToggleUserActivationView,
+                    RegisterAdvertiserView)
 
 app_name = 'accounts'
 
@@ -30,5 +31,7 @@ urlpatterns = [
 
     # Admin related URLs
     path('admin-view-users/',AdminUserListView.as_view(),name='admin-view-users'),
-    path('toggle-user-activation/<int:user_id>/', AdminToggleUserActivationView.as_view(), name='toggle-user-activation'),
+    path('toggle-user-activation/<int:user_id>/', AdminToggleUserActivationView.as_view(), 
+         name='toggle-user-activation'),
+    path('register-advertiser/', RegisterAdvertiserView.as_view(), name='register-advertiser'),
 ]

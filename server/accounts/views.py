@@ -19,7 +19,8 @@ from rest_framework.exceptions import APIException
 from rest_framework_simplejwt.views import TokenObtainPairView
 from accounts.models import User,UserProfile,Interest,Blog
 from .serializers import (UserSerializer,CustomTokenObtainPairSerializer,ResetPasswordSerializer,
-                          UserProfileSerializer,InterestSerializer,BlogSerializer)
+                          UserProfileSerializer,InterestSerializer,BlogSerializer,
+                          UserAdvertiserProfileSerializer)
 from .permissions import IsAdminorReadOnly,IsAdmin
 
 logger = logging.getLogger(__name__)
@@ -403,6 +404,34 @@ class AdminToggleUserActivationView(APIView):
                 {"error": "Invalid user ID."},
                 status=status.HTTP_404_NOT_FOUND
             )
+        except Exception as e:
+            return Response(
+                {"error": "An unexpected error occurred.", "details": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+class RegisterAdvertiserView(APIView):
+    """
+    API view to handle registration of a User and their AdvertiserProfile.
+    """
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        """
+        POST method to register a new advertiser.
+        """
+        try:
+            data = request.data.copy()
+            if 'profile_image' in request.FILES:
+                data['profile_image'] = request.FILES['profile_image']
+            serializer = UserAdvertiserProfileSerializer(data=data)
+            if serializer.is_valid():
+                data = serializer.save()
+                return Response(
+                    {"message": "Advertiser registered successfully.", "data": data},
+                    status=status.HTTP_201_CREATED
+                    )
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response(
                 {"error": "An unexpected error occurred.", "details": str(e)},
