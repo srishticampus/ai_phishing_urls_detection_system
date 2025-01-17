@@ -18,7 +18,6 @@
     align-items: center;
     width: 50%;
     background: #FFF;
-
 }
 
 .Login_RightSide_head {
@@ -83,15 +82,12 @@
     position: absolute;
     top: 50%;
     right: 10px;
-    /* Adjust this value to fit your design */
     transform: translateY(-50%);
     cursor: pointer;
     font-size: 20px;
     color: #4D4D4D;
     z-index: 1;
-    /* Ensure it's above the input text */
 }
-
 
 
 @media (max-width: 768px) {

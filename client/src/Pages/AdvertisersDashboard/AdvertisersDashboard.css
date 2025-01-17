@@ -1,0 +1,46 @@
+.advertisers-dashboard-container {
+    margin-left: 250px;
+    margin-top: 70px;
+}
+
+.advertisers-dashboard-head {
+    color: #F18C00;
+    font-family: Lato;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.advertisers-dashboard-row-container{
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 120px;
+}
+.advertisers-dashboard-row-card {
+    width: 330px;
+    height: 500px; 
+    border: 0;
+}
+.advertiser-dashboard-view-all-card{
+    color: #F18C00;
+font-family: Lato;
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: -0.16px;
+text-transform: capitalize;
+}
+
+.advertiser-dashboard-view-all-table{
+    color: #F18C00;
+font-family: Lato;
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: -0.16px;
+text-transform: capitalize;
+}

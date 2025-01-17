@@ -13,10 +13,7 @@ function AdvertiserViewSidebar({children}){
     </div>
   )
 }
-
 AdvertiserViewSidebar.propTypes={
     children: PropTypes.node.isRequired, 
   };
-
-
 export default AdvertiserViewSidebar

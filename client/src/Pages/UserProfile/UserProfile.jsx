@@ -1,19 +1,13 @@
 import "../../Pages/UserProfile/UserProfile.css";
 import user_empty_profile from "../../assets/Images/user_empty_profile.png";
 import { userProfile, addUserProfile } from "../../Services/apiService";
-import { userProfile, addUserProfile } from "../../Services/apiService";
 import { useState, useEffect } from "react";
 
 function UserProfile() {
   const [profileData, setProfileData] = useState({
     firstName: "",
     lastName: "",
-  const [profileData, setProfileData] = useState({
-    firstName: "",
-    lastName: "",
     phoneNumber: "",
-    gender: "",
-    image: "",
     gender: "",
     image: "",
   });
@@ -26,13 +20,13 @@ function UserProfile() {
     image: "",
     form: "", 
   });
-  const [loading, setLoading] = useState(false); // For tracking loading state
+  const [loading, setLoading] = useState(false);
 
-  // Fetch the user profile on component mount
+
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await userProfile(); // Fetching user profile data
+        const response = await userProfile();
         if (response.success) {
             console.log(response.data)
           setProfileData({
@@ -59,10 +53,7 @@ function UserProfile() {
     };
     fetchUserProfile();
   }, []);
-  }, []);
 
-  // Handle input change for form fields
-  // Handle input change for form fields
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setProfileData((prevState) => ({
@@ -82,7 +73,7 @@ function UserProfile() {
     if (files && files[0]) {
       setProfileData((prevState) => ({
         ...prevState,
-        image: URL.createObjectURL(files[0]), // Temporarily display the selected image
+        image: URL.createObjectURL(files[0]), 
       }));
     }
   };
@@ -123,27 +114,22 @@ function UserProfile() {
   };
 
   return (
-    <div className="user-addprofile-container">
-      {/* {error && <p className="error-message">{error}</p>} Display the error message here */}
+
 
     <div className="user-addprofile-container">
-      {/* {error && <p className="error-message">{error}</p>} Display the error message here */}
+
+      
 
       <div className="user-profile-section-one">
         <p className="user-profile-head">Profile</p>
-        <img className="user_empty_profile mt-3" src={profileData.image} alt="profileImage" />
-        <button className="btn mt-3">
-          <input type="file" name="image" onChange={handleImageChange} />
-          + Add Image
-        </button>
+      
         <img className="user_empty_profile mt-3" src={profileData.image} alt="profileImage" />
         <button className="btn mt-3">
           <input type="file" name="image" onChange={handleImageChange} />
           + Add Image
         </button>
       </div>
-      {/* {error && <p className="error-message">{error}</p>} */}
-      {/* {error && <p className="error-message">{error}</p>} */}
+
       <div className="user-profile-section-two">
         <form onSubmit={handleSubmit}>
           <div className="row mb-5">
@@ -166,36 +152,12 @@ function UserProfile() {
                 value={profileData.lastName}
                 onChange={handleInputChange}
               />
-        <form onSubmit={handleSubmit}>
-          <div className="row mb-5">
-            <div className="col-sm-5 user-profile-section-firstname">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="First Name"
-                name="firstName"
-                value={profileData.firstName}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className="col-sm-5 user-profile-section-lastname">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Last Name"
-                name="lastName"
-                value={profileData.lastName}
-                onChange={handleInputChange}
-              />
             </div>
           </div>
-          <div className="row">
-          </div>
+          
           <div className="row">
             <div className="col-sm-5 user-profile-section-phonenumber">
-              <input
-                type="text"
-                className="form-control"
+           
               <input
                 type="text"
                 className="form-control"
@@ -204,10 +166,8 @@ function UserProfile() {
                 value={profileData.phoneNumber}
                 onChange={handleInputChange}
               />
-              />
+         
             </div>
-   
-            <div className="col-sm-5 user-profile-section-gender ">
    
             <div className="col-sm-5 user-profile-section-gender ">
               <div className="mt-3">
@@ -221,14 +181,7 @@ function UserProfile() {
                   checked={profileData.gender === "M"}
                   onChange={handleInputChange}
                 />
-                <input
-                  className="me-5"
-                  type="radio"
-                  name="gender"
-                  value="Male"
-                  checked={profileData.gender === "M"}
-                  onChange={handleInputChange}
-                />
+             
                 <label className="me-1 user-profile-gender-female">Female</label>
                 <input
                   type="radio"
@@ -237,13 +190,7 @@ function UserProfile() {
                   checked={profileData.gender === "F"}
                   onChange={handleInputChange}
                 />
-                <input
-                  type="radio"
-                  name="gender"
-                  value="Female"
-                  checked={profileData.gender === "F"}
-                  onChange={handleInputChange}
-                />
+     
               </div>
             </div>
           </div>
@@ -252,13 +199,8 @@ function UserProfile() {
               {loading ? "Submitting..." : "Next"}
             </button>
           </div>
-        </form>
-          <div className="d-flex justify-content-center">
-            <button type="submit" className="btn btn-dark mt-5 user-profile-next-button" disabled={loading}>
-              {loading ? "Submitting..." : "Next"}
-            </button>
-          </div>
-        </form>
+          </form>
+
       </div>
     </div>
   );

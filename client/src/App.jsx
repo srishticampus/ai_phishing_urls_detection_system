@@ -39,6 +39,10 @@ import AdvertisersResetPassword from "./Pages/AdvertisersResetPassword/Advertise
 import AdvertisersSignup from "./Pages/AdvertisersSignup/AdvertisersSignup";
 import AdvertiserSidebar from "./Pages/AdvertiserSidebar/AdvertiserSidebar";
 import AdvertiserViewSidebar from "./Components/AdvertiserViewSidebar/AdvertiserViewSidebar";
+import AdvertisersDashboard from "./Pages/AdvertisersDashboard/AdvertisersDashboard";
+import AdvertiserViewProfile from "./Pages/AdvertiserViewProfile/AdvertiserViewProfile";
+import AdvertiserEditProfile from "./Pages/AdvertiserEditProfile/AdvertiserEditProfile";
+import AdvertisersViewUsers from "./Pages/AdvertisersViewUsers/AdvertisersViewUsers";
 
 
 
@@ -57,7 +61,7 @@ function App() {
               <Footer />
             </>
           }
-        /> 
+        />
 
         {/* Sign Up Route */}
         <Route
@@ -156,7 +160,6 @@ function App() {
               <Navbar />
               <About />
               <Footer />
-              <Footer />
             </>
           }
         ></Route>
@@ -182,7 +185,7 @@ function App() {
           }
         >
         </Route> */}
-        </Route> */}
+        {/* </Route> */}
 
         <Route
           path="/user-edit-profile"
@@ -193,7 +196,6 @@ function App() {
             </>
           }
         >
-
         </Route>
 
         <Route
@@ -251,181 +253,220 @@ function App() {
         </Route>
 
         <Route
-        path="/admin-view-blog"
-        element={
-          <>
-          <AdminViewBlog/>
-          <AdminViewSidebar/>
-          </>
-        }
-        >
-
-        </Route>
-  
-        <Route
-        
-        path="/admin-detailed-view-blog"
-        element={
-          <>
-          <AdminDetailedView/>
-          <AdminViewSidebar/>
-          </>
-        }
+          path="/admin-view-blog"
+          element={
+            <>
+              <AdminViewBlog />
+              <AdminViewSidebar />
+            </>
+          }
         >
 
         </Route>
 
         <Route
-        path="/admin-edit-blog"
-        element={
-          <>
-          <AdminEditBlog/>
-          <AdminViewSidebar/>
-          </>
-        }
-        >
-        </Route>
 
-
-        <Route
-        path="/admin-login"
-        element={
-          <>
-           <UserNavbar />
-          <AdminLogin/>
-          <Footer/>
-          </>
-        }
-        >
-        </Route>
-
-        <Route
-        path="/admin-view-users"
-        element={
-          <>
-          <AdminViewSidebar/>
-          <AdminViewUsers/>
-          </>
-        }
-        >
-        </Route>
-
-        <Route
-        path="/admin-view-advertisers"
-        element={
-          <>
-          <AdminViewSidebar/>
-          <AdminViewAdvertisers/>
-          </>
-        }
-        >
-        </Route>
-
-        <Route
-        path="/admin-view-details"
-        element={
-          <>
-          <AdminViewSidebar/>
-          <AdminViewDetails/>
-          </>
-        }
-        >
-        </Route>
-
-        <Route
-        path="/admin-view-advertisement"
-        element={
-          <>
-          <AdminViewSidebar/>
-          <AdminViewAdvertisement/>
-          </>
-        }
-        >
-        </Route>
-
-        <Route
-        path="/admin-view-advertisement-detail"
-        element={
-          <>
-          <AdminViewSidebar/>
-          <AdminViewAdvertisementDetail/>
-          </>
-        }
+          path="/admin-detailed-view-blog"
+          element={
+            <>
+              <AdminDetailedView />
+              <AdminViewSidebar />
+            </>
+          }
         >
 
         </Route>
 
         <Route
-        path="/advertiser-login"
-        element={
-          <>
-          <UserNavbar/>
-          <AdvertisersLogin/>
-          <Footer/>
-          </>
-        }
+          path="/admin-edit-blog"
+          element={
+            <>
+              <AdminEditBlog />
+              <AdminViewSidebar />
+            </>
+          }
+        >
+        </Route>
+
+
+        <Route
+          path="/admin-login"
+          element={
+            <>
+              <UserNavbar />
+              <AdminLogin />
+              <Footer />
+            </>
+          }
         >
         </Route>
 
         <Route
-        path="/advertisers-forget-password"
-        element={
-          <>
-          <UserNavbar/>
-          <AdvertisersForgetPassword/>
-          <Footer/>
-          </>
-        }
+          path="/admin-view-users"
+          element={
+            <>
+              <AdminViewSidebar />
+              <AdminViewUsers />
+            </>
+          }
         >
         </Route>
 
         <Route
-        path="/advertisers-reset-password"
-        element={
-          <>
-          <UserNavbar/>
-          <AdvertisersResetPassword/>
-          <Footer/>
-          </>
-        }
+          path="/admin-view-advertisers"
+          element={
+            <>
+              <AdminViewSidebar />
+              <AdminViewAdvertisers />
+            </>
+          }
         >
         </Route>
 
         <Route
-        path="/advertisers-signup"
-        element={
-          <>
-          <UserNavbar/>
-          <AdvertisersSignup/>
-          <Footer/>
-          </>
-        }
+          path="/admin-view-details"
+          element={
+            <>
+              <AdminViewSidebar />
+              <AdminViewDetails />
+            </>
+          }
         >
         </Route>
 
         <Route
-        path="/advertiser-dashboard"
-        element={
-          <>
-         <AdvertiserSidebar/>
-          </>
-        }
+          path="/admin-view-advertisement"
+          element={
+            <>
+              <AdminViewSidebar />
+              <AdminViewAdvertisement />
+            </>
+          }
         >
         </Route>
 
         <Route
-        path="/advertiser-view-sidebar"
+          path="/admin-view-advertisement-detail"
+          element={
+            <>
+              <AdminViewSidebar />
+              <AdminViewAdvertisementDetail />
+            </>
+          }
+        >
+
+        </Route>
+
+        <Route
+          path="/advertiser-login"
+          element={
+            <>
+              <UserNavbar />
+              <AdvertisersLogin />
+              <Footer />
+            </>
+          }
+        >
+        </Route>
+
+        <Route
+          path="/advertisers-forget-password"
+          element={
+            <>
+              <UserNavbar />
+              <AdvertisersForgetPassword />
+              <Footer />
+            </>
+          }
+        >
+        </Route>
+
+        <Route
+          path="/advertisers-reset-password"
+          element={
+            <>
+              <UserNavbar />
+              <AdvertisersResetPassword />
+              <Footer />
+            </>
+          }
+        >
+        </Route>
+
+        <Route
+          path="/advertisers-signup"
+          element={
+            <>
+              <UserNavbar />
+              <AdvertisersSignup />
+              <Footer />
+            </>
+          }
+        >
+        </Route>
+
+        <Route
+          path="/advertiser-dashboard"
+          element={
+            <>
+              <AdvertiserSidebar />
+            </>
+          }
+        >
+        </Route>
+
+        <Route
+          path="/advertiser-view-sidebar"
+          element={
+            <>
+              <AdvertiserViewSidebar />
+            </>
+          }
+        >
+        </Route>
+
+        <Route
+          path="/advertisers-dashboard"
+          element={
+            <>
+              <AdvertiserViewSidebar />
+              <AdvertisersDashboard />
+            </>
+          }
+        >
+        </Route>
+
+        <Route
+          path="/advertiser-view-profile"
+          element={
+            <>
+              <AdvertiserViewProfile />
+            </>
+          }
+        >
+        </Route>
+
+        <Route
+          path="/advertiser-edit-profile"
+          element={
+            <>
+              <AdvertiserEditProfile />
+            </>
+          }
+        >
+        </Route>
+
+        <Route
+        path="/advertiser-view-user"
         element={
           <>
-          <AdvertiserViewSidebar/>
+          <AdvertiserViewSidebar />
+         <AdvertisersViewUsers />
           </>
         }
         >
 
         </Route>
-      
-
-
 
 
       </Routes>
