@@ -6,18 +6,24 @@ It defines the API views for token authentication, permissions, and other
 related features, using Django REST Framework and Simple JWT for token handling.
 """
 import os
+import logging
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
+from django.db import DatabaseError,transaction
 from rest_framework import permissions,generics,status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.exceptions import APIException
 from rest_framework_simplejwt.views import TokenObtainPairView
 from accounts.models import User,UserProfile,Interest,Blog
 from .serializers import (UserSerializer,CustomTokenObtainPairSerializer,ResetPasswordSerializer,
-                          UserProfileSerializer,InterestSerializer,BlogSerializer)
-from .permissions import IsAdminorReadOnly
+                          UserProfileSerializer,InterestSerializer,BlogSerializer,
+                          UserAdvertiserProfileSerializer)
+from .permissions import IsAdminorReadOnly,IsAdmin
+
+logger = logging.getLogger(__name__)
 
 #User Registration View
 class UserRegistrationView(generics.CreateAPIView):
@@ -300,3 +306,134 @@ class BlogListCreateView(APIView):
                 return Response({"error": "Blog does not exist"}, status=status.HTTP_404_NOT_FOUND)
         return Response({"error": "Please provide an id, for it is required for deleting blog"},
                         status=status.HTTP_400_BAD_REQUEST)
+
+class AdminUserListView(APIView):
+    """
+    API view to get details of all users, including their profiles.
+    """
+    permission_classes = [IsAdmin]
+
+    def get(self, request):
+        """
+        GET method to fetch details of all users, including their profiles.
+        """
+        try:
+            # Fetch all UserProfile objects
+            user_profiles = UserProfile.objects.all()
+            profile_serializer = UserProfileSerializer(user_profiles, many=True)
+
+            # If UserProfile data is empty, fetch all User objects
+            if not profile_serializer.data:
+                users = User.objects.filter(user_type='user')
+                user_serializer = UserSerializer(users, many=True)
+                if not user_serializer.data:
+                    return Response({"message": "No users found"}, 
+                                    status=status.HTTP_204_NO_CONTENT)
+                return Response(user_serializer.data, status=status.HTTP_200_OK)
+
+            # Combine UserProfile data with User data for users without profiles
+            all_users = User.objects.filter(user_type='user')
+            users_with_profiles = {profile['user']['username'] 
+                                   for profile in profile_serializer.data}
+            users_without_profiles = [
+                user for user in all_users if user.username not in users_with_profiles
+            ]
+
+            # Serialize users without profiles
+            users_without_profiles_serializer = UserSerializer(users_without_profiles, many=True)
+
+            # Combine both datasets
+            combined_data = profile_serializer.data + users_without_profiles_serializer.data
+
+            return Response(combined_data, status=status.HTTP_200_OK)
+
+        except DatabaseError as db_err:
+            # Handle database-related errors
+            return Response(
+                {"error": "Database error occurred.", "details": str(db_err)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+        except APIException as api_err:
+            # Handle API-related errors
+            return Response(
+                {"error": "API error occurred.", "details": str(api_err)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+        except ValueError as val_err:
+            # Handle value-related errors
+            return Response(
+                {"error": "Invalid data encountered.", "details": str(val_err)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        except Exception as e:
+            # Catch-all for any other unexpected errors
+            return Response(
+                {"error": "An unexpected error occurred.", "details": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+class AdminToggleUserActivationView(APIView):
+    """
+    API view to activate or deactivate a user.
+    """
+    permission_classes = [IsAdmin]
+
+    @transaction.atomic
+    def patch(self, request,user_id):
+        """
+        PATCH method to toggle a user's active status.
+        """
+        try:
+            # Fetch the user by id
+            user = User.objects.get(id=user_id)
+            # Toggle the is_active field
+            user.is_active = not user.is_active
+            user.save()
+
+            # Prepare the response message
+            status_message = "activated" if user.is_active else "deactivated"
+            logger.info("Admin %s toggled activation for user %s.",
+                            request.user.username, user.username)
+            return Response(
+                {"message": f"User '{user.username}' has been {status_message}."},
+                status=status.HTTP_200_OK
+            )
+
+        except User.DoesNotExist:
+            return Response(
+                {"error": "Invalid user ID."},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Exception as e:
+            return Response(
+                {"error": "An unexpected error occurred.", "details": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+class RegisterAdvertiserView(APIView):
+    """
+    API view to handle registration of a User and their AdvertiserProfile.
+    """
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        """
+        POST method to register a new advertiser.
+        """
+        try:
+            data = request.data.copy()
+            if 'profile_image' in request.FILES:
+                data['profile_image'] = request.FILES['profile_image']
+            serializer = UserAdvertiserProfileSerializer(data=data)
+            if serializer.is_valid():
+                data = serializer.save()
+                return Response(
+                    {"message": "Advertiser registered successfully.", "data": data},
+                    status=status.HTTP_201_CREATED
+                    )
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response(
+                {"error": "An unexpected error occurred.", "details": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
