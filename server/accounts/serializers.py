@@ -12,7 +12,10 @@ from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
-from .models import User,UserProfile,Interest,UserInterest,AdvertiserProfile,Blog
+from django.db import transaction
+from .models import (User,UserProfile,Interest,UserInterest,AdvertiserProfile,Blog,
+                     validate_phone_number)
+
 #Serializer for the User Model
 class UserSerializer(serializers.ModelSerializer):
     """
@@ -20,7 +23,7 @@ class UserSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = User
-        fields = ['username','email','password','user_type']
+        fields = ['id','username','email','password','is_active','user_type']
         extra_kwargs = {
             'username': {'required': True},
             'email': {'required': True},
@@ -33,6 +36,7 @@ class UserSerializer(serializers.ModelSerializer):
             username=validated_data['username'],
             email=validated_data['email'],
             password=validated_data['password'],
+            user_type=validated_data['user_type'],
         )
         return user
 # Custom JWT Token Serializer
@@ -89,7 +93,7 @@ class UserDetailsSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = User
-        fields = ['username', 'email', 'first_name', 'last_name','user_type']
+        fields = ['id','username', 'email', 'first_name', 'last_name','is_active','user_type']
 
 class UserProfileSerializer(serializers.ModelSerializer):
     """
@@ -179,13 +183,11 @@ class AdvertiserProfileSerializer(serializers.ModelSerializer):
     Serializer for the AdvertiserProfile model.
     """
     business_type = InterestSerializer(read_only=True)
-    business_type_id = serializers.PrimaryKeyRelatedField(
-        queryset=Interest.objects.all(), source='business_type', write_only=True
-    )
+    business_type_id = serializers.IntegerField(write_only=True)
 
     class Meta:
         model = AdvertiserProfile
-        fields = ['id', 'user', 'business_name', 'business_type', 'business_type_id', 
+        fields = ['id', 'user', 'business_name', 'business_type', 'business_type_id',
                   'contact_number', 'address', 'profile_image']
         read_only_fields = ['user']
 
@@ -202,6 +204,60 @@ class AdvertiserProfileSerializer(serializers.ModelSerializer):
         Custom update to allow partial updates for AdvertiserProfile.
         """
         raise NotImplementedError("Update method not implemented")
+  
+class UserAdvertiserProfileSerializer(serializers.Serializer):
+    """
+    Combined serializer to create a User and their associated AdvertiserProfile.
+    """
+    # User-related fields
+    username = serializers.CharField(max_length=150)
+    email = serializers.EmailField()
+    password = serializers.CharField(write_only=True)
+    user_type = serializers.ChoiceField(choices=User.USER_TYPE_CHOICES)
+
+    # AdvertiserProfile-related fields
+    business_name = serializers.CharField(max_length=255)
+    business_type_id = serializers.IntegerField(write_only=True)
+    contact_number = serializers.CharField(max_length=10, validators=[validate_phone_number])
+    address = serializers.CharField()
+    profile_image = serializers.ImageField(required=False)
+
+    @transaction.atomic
+    def create(self, validated_data):
+        """
+        Creates both the User and the AdvertiserProfile.
+        """
+        # Extract user-related data
+        user_data = {
+            'username': validated_data.pop('username'),
+            'email': validated_data.pop('email'),
+            'password': validated_data.pop('password'),
+            'user_type': validated_data.pop('user_type'),
+        }
+
+        # Create the User
+        user_serializer = UserSerializer(data=user_data)
+        user_serializer.is_valid(raise_exception=True)
+        user = user_serializer.save()
+
+        # Create the AdvertiserProfile
+        advertiser_profile_data = validated_data
+        advertiser_profile_data['user'] = user
+        advertiser_profile_data['business_type_id'] = validated_data.pop('business_type_id')
+        advertiser_profile = AdvertiserProfile.objects.create(**advertiser_profile_data)
+
+        return {
+            'user': user_serializer.data,
+            'advertiser_profile': AdvertiserProfileSerializer(advertiser_profile).data
+        }
+
+    @transaction.atomic
+    def update(self, instance, validated_data):
+        """
+        Custom update to allow partial updates for AdvertiserProfile.
+        """
+        raise NotImplementedError("Update method not implemented")
+
 #Serializer for the Blog Model
 class BlogSerializer(serializers.ModelSerializer):
     """
