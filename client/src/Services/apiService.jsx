@@ -65,7 +65,7 @@ export const userSignup = async (data) => {
 };
 
 // User Login Function
-export const userLogin = async (data) => {
+export const login = async (data) => {
   const response = await handleResponse(apiClient.post("/api/login/", data));
   if (response.success) {
     // Save tokens to localStorage if login is successful
@@ -95,7 +95,7 @@ export const refreshAccessToken = async () => {
 };
 
 // Logout Function
-export const userLogout = () => {
+export const logout = () => {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
 };
@@ -148,4 +148,67 @@ export const updateUserProfile = async (formData) => {
     apiClient.patch("/api/user-profile/update/", formData, config)
   );
 };
- 
+
+// Admin Add Blogs
+
+export const addBlog = async (formData) => {
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data", // Required for file uploads
+    },
+    authRequired: true, // Ensures the Authorization header is added
+  };
+
+  return handleResponse(apiClient.post("/api/blogs/", formData, config)); 
+}
+
+// Admin & User View Blogs
+
+export const viewBlogs = async (id = null) => {
+
+  const endpoint = id ? `/api/blogs/${id}/` : "/api/blogs/";
+  return handleResponse(apiClient.get(endpoint, { authRequired: true }));
+}
+
+// Admin Update Blogs
+
+export const updateBlog = async (id, formData) => {
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data", // Required for file uploads
+    },
+    authRequired: true, // Ensures the Authorization header is added
+  };
+
+  return handleResponse(apiClient.put(`/api/blogs/${id}/`, formData, config));
+}
+
+// Admin Delete Blogs
+
+export const deleteBlog = async (id) => {
+  return handleResponse(apiClient.delete(`/api/blogs/${id}/`, { authRequired: true }));
+}
+
+// Admin View All Users
+
+export const viewUsers = async () => {
+  return handleResponse(apiClient.get("/api/admin-view-users/", { authRequired: true }));
+}
+
+// Admin Activate/Deactivate Users
+
+export const toggleUserStatus = async (id) => {
+  return handleResponse(apiClient.patch(`/api/toggle-user-activation/${id}/`, null, { authRequired: true }));
+}
+
+//Advertiser Registration
+
+export const advertiserSignup = async (formData) => {
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data", // Required for file uploads
+    },
+    authRequired: false, // Ensures the Authorization header is not added
+  };
+ return handleResponse(apiClient.post("/api/register-advertiser/", formData, config));
+}  
