@@ -66,7 +66,7 @@ fetchData();
    pip install -r requirements.txt
    ```
 
-4. **Apply migrations**:  
+4. **Apply migrations**:
    ```bash
    python manage.py migrate
    ```
@@ -667,7 +667,7 @@ The API returns a success message indicating whether the user was activated or d
 ### **14. Advertiser Registration**  
 Registers a new advertiser along with their profile.
 
-- **URL**: `api/advertiser/register/`  
+- **URL**: `api/register-advertiser/`  
 - **Method**: `POST`  
 - **Permission**: Public  
 
