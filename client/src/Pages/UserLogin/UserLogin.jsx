@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router";
 import "./UserLogin.css";
 import Login_Background from "../../assets/Images/Login_Background.png";
-import { userLogin } from "../../Services/apiService";
+import { login } from "../../Services/apiService";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import eye icons
@@ -41,7 +41,7 @@ function UserLogin() {
 
     const formData = { username, password };
 
-    const response = await userLogin(formData);
+    const response = await login(formData);
     // console.log(response);
 
     if (response.success) {
