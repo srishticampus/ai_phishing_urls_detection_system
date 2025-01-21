@@ -1,10 +1,22 @@
-import { Link } from "react-router";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router";
 import "./Navbar.css";
+import { logout, checkLoginStatus } from "../../Services/apiService";
 
 function Navbar() {
+  const [isLoggedIn, setIsLoggedIn] = useState(checkLoginStatus());
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    logout();
+    setIsLoggedIn(false);
+    navigate("/");
+  };
+  useEffect(() => {
+    setIsLoggedIn(checkLoginStatus());
+  }, []);
   return (
     <>
-       <nav className="navbar navbar-expand-sm">
+      <nav className="navbar navbar-expand-sm">
         <div className="container-fluid">
           <Link className="navbar-brand logo" to="/">
             <span className="logo_Blog_Color">BLOG</span>&nbsp;
@@ -42,12 +54,22 @@ function Navbar() {
               </li>
             </ul>
             <form className="d-flex ms-auto">
-
-              <Link
-                className="btn btn-outline navbar_login_button"
-                to="/login">
-                Login
-              </Link>
+              {checkLoginStatus() ? (
+                <Link
+                  className="btn btn-outline navbar_login_button"
+                  to="/"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </Link>
+              ) : (
+                <Link
+                  className="btn btn-outline navbar_login_button"
+                  to="/login"
+                >
+                  Login
+                </Link>
+              )}
             </form>
           </div>
         </div>
