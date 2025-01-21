@@ -205,9 +205,7 @@ function App() {
               <HomePageNavbar />
             </>
           }
-        >
-
-        </Route>
+        ></Route>
 
         <Route
           path="/user-view-profile"
@@ -217,9 +215,7 @@ function App() {
               <UserViewProfile />
             </>
           }
-        >
-
-        </Route>
+        ></Route>
 
         <Route
           path="/dashboard"
@@ -249,8 +245,7 @@ function App() {
               <AdminViewSidebar />
             </>
           }
-        >
-        </Route>
+        ></Route>
 
         <Route
           path="/admin-view-blog"

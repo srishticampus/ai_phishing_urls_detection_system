@@ -322,8 +322,8 @@ Retrieves the profile of the authenticated user.
 ### **7. Profile Update**  
 Updates the profile of the authenticated user.  
 
-- **URL**: `api/user-profile/update/`  
-- **Method**: `PATCH`  
+- **URL**: `api/user-profile/edit/`  
+- **Method**: `PUT`  
 - **Permission**: Authenticated  
 
 #### **Request Body (JSON)**:  
