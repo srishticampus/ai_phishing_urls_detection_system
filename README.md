@@ -726,6 +726,97 @@ Registers a new advertiser along with their profile.
   }
 
   ```
+### **15. Admin View All Advertisers**  
+Retrieve a list of all advertisers, including their profiles if available.
 
+- **URL**: `api/admin-view-advertisers/`  
+- **Method**: `GET`  
+- **Permission**: Admin-only: Requires the user to have admin privileges.
+
+#### **Success Response**:  
+- **Code**: 200 OK 
+```json
+[
+    {
+        "id": 7,
+        "user": 11,
+        "business_name": "Tech Solutions",
+        "business_type": {
+            "id": 1,
+            "name": "Personal Development",
+            "icon": "/media/interest_icons/Frame_427319157_ieJrjHP.png"
+        },
+        "contact_number": "1234567890",
+        "address": "123 Business Street, City, Country",
+        "profile_image": "/media/advertiser_profile_photos/14_onn45xS.png"
+    },
+    {
+        "id": 11,
+        "username": "advertiser001",
+        "email": "advertiser001@example.com",
+        "is_active": true,
+        "user_type": "advertiser"
+    }
+]
+
+```
+- **Code: 500 Internal Server Error**  
+  ```json
+  {
+  "error": "An unexpected error occurred.",
+  "details": "Error message describing the issue."
+  }
+
+  ```
+### **16. Admin View New Advertisers**  
+Retrieve a list of all new advertisers whose accounts are inactive (is_active=false).
+
+- **URL**: `api/admin-view-new-advertisers/`  
+- **Method**: `GET`  
+- **Permission**: Admin-only: Requires the user to have admin privileges.
+
+#### **Success Response**:  
+- **Code**: 200 OK 
+```json
+[
+    {
+        "id": 7,
+        "user": 11,
+        "business_name": "Tech Solutions",
+        "business_type": {
+            "id": 1,
+            "name": "Personal Development",
+            "icon": "/media/interest_icons/Frame_427319157_ieJrjHP.png"
+        },
+        "contact_number": "1234567890",
+        "address": "123 Business Street, City, Country",
+        "profile_image": "/media/advertiser_profile_photos/14_onn45xS.png"
+    },
+    {
+        "id": 11,
+        "username": "advertiser001",
+        "email": "advertiser001@example.com",
+        "is_active": true,
+        "user_type": "advertiser"
+    }
+]
+
+```
+- **Code: 204 No Content**  
+  ```json
+  {
+  "error": "An unexpected error occurred.",
+  "details": "Error message describing the issue."
+  }
+
+  ```
+- **Code: 500 Internal Server Error**  
+  ```json
+  {
+  "error": "An unexpected error occurred.",
+  "details": "Error message describing the issue."
+  }
+
+  ```
 ---
 
