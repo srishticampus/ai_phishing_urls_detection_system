@@ -206,6 +206,7 @@ function App() {
             </>
           }
         ></Route>
+        ></Route>
 
         <Route
           path="/user-view-profile"
@@ -215,6 +216,7 @@ function App() {
               <UserViewProfile />
             </>
           }
+        ></Route>
         ></Route>
 
         <Route
@@ -245,6 +247,7 @@ function App() {
               <AdminViewSidebar />
             </>
           }
+        ></Route>
         ></Route>
 
         <Route
