@@ -1,0 +1,57 @@
+.advertiser-dashboard {
+    display: flex;
+    width: 250px;
+    padding: 40px 18px 643px 18px;
+    flex-direction: column;
+    align-items: center;
+    background-color: #333;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+}
+
+.advertiser-dashboard-head {
+    color: #FFF;
+    text-align: center;
+    font-family: Lato;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -0.16px;
+    text-transform: capitalize;
+}
+
+.adv-navbar-component {
+    height: 70px;
+    background: #F4F4F4;
+    position: fixed;
+    top: 0px;
+    left: 250px;
+    width: calc(100% - 250px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.adv-dashboard-navbar-head-color {
+    color: #333;
+    font-family: K2D;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    letter-spacing: 1.7px;
+    text-transform: uppercase;
+}
+
+.adv-dashboard-navbar-span-color {
+    color: #F18C00;
+    font-family: K2D;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    letter-spacing: 1.7px;
+    text-transform: uppercase;
+}

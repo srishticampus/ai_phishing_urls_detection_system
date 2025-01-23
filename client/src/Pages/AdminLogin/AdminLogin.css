@@ -49,3 +49,13 @@
 .admin-login-image{
     height: 100vh;
 }
+
+@media(max-width:600px){
+    .admin-login-section-left{
+        display: none;
+    }
+    .admin-login-section-right{
+        width: 100%;
+        height: 100vh;
+    }
+}
