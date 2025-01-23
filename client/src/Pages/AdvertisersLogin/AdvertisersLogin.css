@@ -1,0 +1,121 @@
+.advertiser-login-container {
+    width: 100%;
+}
+
+.advertiser-login-left {
+    width: 50%;
+   
+}
+.advertiser-login-image{
+    height: 100vh;
+}
+
+.advertiser-login-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+
+.advertiser-login-head {
+    color: #F18C00;
+    text-align: center;
+    font-family: Lato;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.advertiser-login-username {
+    display: flex;
+    width: 360px;
+    height: 40px;
+    padding: 10px 15px;
+    align-items: center;
+    gap: 10px;
+}
+
+.advertiser-login-password {
+    display: flex;
+    width: 360px;
+    height: 40px;
+    padding: 10px 15px;
+    align-items: center;
+    gap: 10px;
+
+}
+
+.advertiser-login-forgotpassword {
+    color: #4D4D4D;
+    text-align: right;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.advertiser-login-button {
+    display: flex;
+    width: 175px;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 5px;
+    background: #333;
+    color: #FFF;
+    font-family: Lato;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-transform: capitalize;
+}
+
+.advertiser-login-dont-have-account {
+    color: #4D4D4D;
+    text-align: center;
+    text-shadow: 0px 0.553px 0.553px rgba(0, 0, 0, 0.25);
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.advertiser-login-dont-have-account-atag {
+    color: #4D4D4D;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-skip-ink: none;
+    text-decoration-thickness: auto;
+    text-underline-offset: auto;
+    text-underline-position: from-font;
+}
+
+@media(max-width:600px) {
+    .advertiser-login-left {
+        display: none;
+    }
+
+    .advertiser-login-right {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100vh;
+
+
+    }
+}

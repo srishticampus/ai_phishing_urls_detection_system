@@ -1,0 +1,50 @@
+.admin-view-advertisement-detail-container{
+    margin-left: 250px;
+    margin-top: 70px;
+}
+.admin-view-advertisement-detail-head{
+    color: #F18C00;
+font-family: Lato;
+font-size: 24px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
+
+.admin-view-advertisement-detail-image-card{
+    width: 401.25px;
+height: 600px;
+}
+
+.admin-view-advertisement-detail-button{
+
+    width: 175px;
+    padding: 10px;
+    margin-top: 20px;
+
+}
+.admin-view-advertisement-detail-paraone{
+    color: #333;
+    font-family: Lato;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 55px; /* 229.167% */
+}
+.admin-view-advertisement-detail-paratwo{
+    color: #7F7F7F;
+font-family: Lato;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 35px; /* 250% */
+}
+
+.admin-view-advertisement-detail-parathree{
+    color: #7F7F7F;
+font-family: Lato;
+font-size: 13px;
+font-style: normal;
+font-weight: 400;
+line-height: 28.125px; /* 216.346% */
+}

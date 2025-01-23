@@ -1,0 +1,27 @@
+.admin-view-advertisement-container {
+    margin-left: 250px;
+    margin-top: 70px;
+
+}
+
+.admin-view-advretisement-center-row{
+    display: grid;
+    place-items: center;
+}
+
+
+.admin-view-advertisement-card-size {
+    border: 0;
+    background: transparent;
+    width: 330px;
+    height: 500px;
+}
+.admin-view-advertisement{
+    color: #F18C00;
+font-family: Lato;
+font-size: 24px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+
+}

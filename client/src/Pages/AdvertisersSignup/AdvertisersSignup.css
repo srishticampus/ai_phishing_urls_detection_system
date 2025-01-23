@@ -1,0 +1,83 @@
+.advertisers-signup-head {
+    color: #F18C00;
+    text-align: center;
+    font-family: Lato;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.advertisers-signup-img-div {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 150px;
+    width: 150px;
+    margin: auto;
+    margin-top: 50px;
+}
+
+.advertisers-signup-name-row {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.advertisers-signup-sec-row {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.advertisers-signup-third-row {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.advertisers-signup-fourth-row {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.advertisers-signup-button {
+    display: flex;
+    width: 175px;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 5px;
+    background: #333;
+}
+
+.advertisers-signup-button-div {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+}
+
+.advertisers-signup-already-have-account {
+    color: #4D4D4D;
+    text-align: center;
+    text-shadow: 0px 0.553px 0.553px rgba(0, 0, 0, 0.25);
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.advertisers-signup-login {
+    color: #4D4D4D;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-decoration-line: none;
+}

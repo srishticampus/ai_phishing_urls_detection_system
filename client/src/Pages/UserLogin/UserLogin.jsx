@@ -46,7 +46,16 @@ function UserLogin() {
 
     if (response.success) {
       console.log(response.data.message) 
-      toast.success(response.data.message);
+      // toast.success(response.data.message);
+      toast.success(response.data.message, {
+        position: "top-right",  // Adjust position as needed
+        autoClose: 5000,         // Toast duration (in milliseconds)
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       navigate("/"); // Navigate to home page after successful login
     } else {
       // Display API error messages

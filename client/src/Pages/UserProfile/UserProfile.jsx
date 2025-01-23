@@ -12,14 +12,21 @@ function UserProfile() {
     image: "",
   });
 
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false); // For tracking loading state
+  const [errors, setErrors] = useState({
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    gender: "",
+    image: "",
+    form: "", 
+  });
+  const [loading, setLoading] = useState(false);
 
-  // Fetch the user profile on component mount
+
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await userProfile(); // Fetching user profile data
+        const response = await userProfile();
         if (response.success) {
             console.log(response.data)
           setProfileData({
@@ -29,25 +36,34 @@ function UserProfile() {
             gender: response.data.gender || "",
             image: response.data.photo || user_empty_profile, // Fallback to empty profile if no image
           });
-          // console.log(response.data.lastName)
-          // console.log(response.data.phone_number)
+
    
         } else {
-          setError(response.errors.message || "Failed to load profile data");
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            form: response.errors.message || "Failed to load profile data",errors,
+          }));
         }
-      } catch (error) {
-        setError("Error fetching profile data",error);
+      } catch (errors) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          form: "Error fetching profile data",errors,
+        }));
       }
     };
     fetchUserProfile();
   }, []);
 
-  // Handle input change for form fields
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setProfileData((prevState) => ({
       ...prevState,
       [name]: value,
+      
+    }));
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: "",
     }));
   };
 
@@ -57,7 +73,7 @@ function UserProfile() {
     if (files && files[0]) {
       setProfileData((prevState) => ({
         ...prevState,
-        image: URL.createObjectURL(files[0]), // Temporarily display the selected image
+        image: URL.createObjectURL(files[0]), 
       }));
     }
   };
@@ -88,28 +104,32 @@ function UserProfile() {
       
         setLoading(false);
       } else {
-        setError(response.errors.message || "Failed to update profile");
+        setErrors(response.errors.message || "Failed to update profile");
         setLoading(false);
       }
     } catch (error) {
-      setError("An error occurred while submitting the form.",error);
+      setErrors("An error occurred while submitting the form.",error);
       setLoading(false);
     }
   };
 
   return (
+
+
     <div className="user-addprofile-container">
-      {/* {error && <p className="error-message">{error}</p>} Display the error message here */}
+
+      
 
       <div className="user-profile-section-one">
         <p className="user-profile-head">Profile</p>
+      
         <img className="user_empty_profile mt-3" src={profileData.image} alt="profileImage" />
         <button className="btn mt-3">
           <input type="file" name="image" onChange={handleImageChange} />
           + Add Image
         </button>
       </div>
-      {/* {error && <p className="error-message">{error}</p>} */}
+
       <div className="user-profile-section-two">
         <form onSubmit={handleSubmit}>
           <div className="row mb-5">
@@ -134,8 +154,10 @@ function UserProfile() {
               />
             </div>
           </div>
+          
           <div className="row">
             <div className="col-sm-5 user-profile-section-phonenumber">
+           
               <input
                 type="text"
                 className="form-control"
@@ -144,6 +166,7 @@ function UserProfile() {
                 value={profileData.phoneNumber}
                 onChange={handleInputChange}
               />
+         
             </div>
    
             <div className="col-sm-5 user-profile-section-gender ">
@@ -158,6 +181,7 @@ function UserProfile() {
                   checked={profileData.gender === "M"}
                   onChange={handleInputChange}
                 />
+             
                 <label className="me-1 user-profile-gender-female">Female</label>
                 <input
                   type="radio"
@@ -166,6 +190,7 @@ function UserProfile() {
                   checked={profileData.gender === "F"}
                   onChange={handleInputChange}
                 />
+     
               </div>
             </div>
           </div>
@@ -174,7 +199,8 @@ function UserProfile() {
               {loading ? "Submitting..." : "Next"}
             </button>
           </div>
-        </form>
+          </form>
+
       </div>
     </div>
   );
