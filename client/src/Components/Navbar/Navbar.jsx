@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import "./Navbar.css";
 import { logout, checkLoginStatus } from "../../Services/apiService";
+import { logout, checkLoginStatus } from "../../Services/apiService";
 
 function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(checkLoginStatus());
