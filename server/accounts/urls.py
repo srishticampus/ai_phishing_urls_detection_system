@@ -9,7 +9,7 @@ from rest_framework_simplejwt.views import (
 from .views import (UserRegistrationView,LoginView,ForgotPasswordView,ResetPasswordView,
                     UserProfileCreateView,UserProfileRetrieveView,UserProfileUpdateView,
                     InterestListView,BlogListCreateView,AdminUserListView,AdminToggleUserActivationView,
-                    RegisterAdvertiserView)
+                    RegisterAdvertiserView,AdminAdvertiserListView,AdminNewAdvertiserListView)
 
 app_name = 'accounts'
 
@@ -34,4 +34,8 @@ urlpatterns = [
     path('toggle-user-activation/<int:user_id>/', AdminToggleUserActivationView.as_view(), 
          name='toggle-user-activation'),
     path('register-advertiser/', RegisterAdvertiserView.as_view(), name='register-advertiser'),
+    path('admin-view-advertisers/', AdminAdvertiserListView.as_view(),
+          name='admin-view-advertisers'),
+    path('admin-view-new-advertisers/', AdminNewAdvertiserListView.as_view(), 
+         name='admin-view-new-advertisers'),
 ]
