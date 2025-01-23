@@ -29,8 +29,6 @@ import AdminDetailedView from "./Pages/AdminDetailedViewBlog/AdminDetailedView";
 import AdminEditBlog from "./Pages/AdminEditBlog/AdminEditBlog";
 import AdminLogin from "./Pages/AdminLogin/AdminLogin";
 
-
-
 function App() {
   return (
     <>
@@ -178,9 +176,7 @@ function App() {
               <UserEditProfile />
             </>
           }
-        >
-
-        </Route>
+        ></Route>
 
         <Route
           path="/user-home-page"
@@ -189,9 +185,7 @@ function App() {
               <HomePageNavbar />
             </>
           }
-        >
-
-        </Route>
+        ></Route>
 
         <Route
           path="/user-view-profile"
@@ -201,9 +195,7 @@ function App() {
               <UserViewProfile />
             </>
           }
-        >
-
-        </Route>
+        ></Route>
 
         <Route
           path="/dashboard"
@@ -212,9 +204,7 @@ function App() {
               <AdminSidebar />
             </>
           }
-        >
-
-        </Route>
+        ></Route>
 
         <Route
           path="/admin-dashboard"
@@ -234,62 +224,48 @@ function App() {
               <AdminViewSidebar />
             </>
           }
-        >
-        </Route>
+        ></Route>
 
         <Route
-        path="/admin-view-blog"
-        element={
-          <>
-          <AdminViewBlog/>
-          <AdminViewSidebar/>
-          </>
-        }
-        >
-
-        </Route>
-  
-        <Route
-        
-        path="/admin-detailed-view-blog"
-        element={
-          <>
-          <AdminDetailedView/>
-          <AdminViewSidebar/>
-          </>
-        }
-        >
-
-        </Route>
+          path="/admin-view-blog"
+          element={
+            <>
+              <AdminViewBlog />
+              <AdminViewSidebar />
+            </>
+          }
+        ></Route>
 
         <Route
-        path="/admin-edit-blog"
-        element={
-          <>
-          <AdminEditBlog/>
-          <AdminViewSidebar/>
-          </>
-        }
-        >
-        </Route>
-
+          path="/admin-detailed-view-blog"
+          element={
+            <>
+              <AdminDetailedView />
+              <AdminViewSidebar />
+            </>
+          }
+        ></Route>
 
         <Route
-        path="/admin-login"
-        element={
-          <>
-           <UserNavbar />
-          <AdminLogin/>
-          <Footer/>
-          </>
-        }
-        >
+          path="/admin-edit-blog"
+          element={
+            <>
+              <AdminEditBlog />
+              <AdminViewSidebar />
+            </>
+          }
+        ></Route>
 
-        </Route>
-
-
-
-
+        <Route
+          path="/admin-login"
+          element={
+            <>
+              <UserNavbar />
+              <AdminLogin />
+              <Footer />
+            </>
+          }
+        ></Route>
       </Routes>
     </>
   );
