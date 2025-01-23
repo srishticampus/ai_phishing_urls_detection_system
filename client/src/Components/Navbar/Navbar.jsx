@@ -5,15 +5,28 @@ import { logout, checkLoginStatus } from "../../Services/apiService";
 
 function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(checkLoginStatus());
+  const [isLogoutConfirmOpen, setIsLogoutConfirmOpen] = useState(false);
   const navigate = useNavigate();
-  const handleLogout = () => {
+
+  const handleLogoutClick = () => {
+    setIsLogoutConfirmOpen(true); // Open the confirmation modal
+  };
+
+  const confirmLogout = () => {
     logout();
     setIsLoggedIn(false);
-    navigate("/");
+    setIsLogoutConfirmOpen(false);
+    navigate("/"); // Navigate to home after logout
   };
+
+  const cancelLogout = () => {
+    setIsLogoutConfirmOpen(false); // Close the confirmation modal
+  };
+
   useEffect(() => {
     setIsLoggedIn(checkLoginStatus());
   }, []);
+
   return (
     <>
       <nav className="navbar navbar-expand-sm">
@@ -54,14 +67,14 @@ function Navbar() {
               </li>
             </ul>
             <form className="d-flex ms-auto">
-              {checkLoginStatus() ? (
-                <Link
+              {isLoggedIn ? (
+                <button
+                  type="button"
                   className="btn btn-outline navbar_login_button"
-                  to="/"
-                  onClick={handleLogout}
+                  onClick={handleLogoutClick}
                 >
                   Logout
-                </Link>
+                </button>
               ) : (
                 <Link
                   className="btn btn-outline navbar_login_button"
@@ -74,6 +87,32 @@ function Navbar() {
           </div>
         </div>
       </nav>
+
+      {/* Logout Confirmation Modal */}
+      {isLogoutConfirmOpen && (
+        <div className="modal homepage-navbar-modal-logout">
+          <div className="modal-dialog">
+            <div className="modal-content homepage-navbar-modal-content ">
+              <div className="modal-header homepage-modal-logout-header">
+                <h5 className="modal-title">
+                  Are you sure you want to Logout?
+                </h5>
+              </div>
+              <div className="modal-footer homepage-modal-logout-footer">
+                <button className="btn btn-danger w-25" onClick={confirmLogout}>
+                  Yes
+                </button>
+                <button
+                  className="btn btn-secondary w-25"
+                  onClick={cancelLogout}
+                >
+                  No
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

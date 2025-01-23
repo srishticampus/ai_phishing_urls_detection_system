@@ -10,8 +10,10 @@ authenticated users.
 
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework.exceptions import ValidationError
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth import authenticate
 from django.db import transaction
 from .models import (User,UserProfile,Interest,UserInterest,AdvertiserProfile,Blog,
                      validate_phone_number)
@@ -42,19 +44,36 @@ class UserSerializer(serializers.ModelSerializer):
 # Custom JWT Token Serializer
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     """
-        serializer for the token generation
+    Serializer for the token generation with custom validations.
     """
     def validate(self, attrs):
+        # Fetch the user directly by username or email
+        try:
+            user = User.objects.get(username=attrs['username'])
+        except User.DoesNotExist as exc:
+            raise ValidationError({"error": "Invalid username or password."}) from exc
+
+        # Check if the user is active
+        if not user.is_active:
+            raise ValidationError({"error": "This account is not active. Please contact the ADMIN."})
+
+        # Authenticate the user
+        user = authenticate(username=attrs['username'], password=attrs['password'])
+        if user is None:
+            raise ValidationError({"error": "Invalid username or password."})
+
+        # Perform the default validation and add custom fields
         data = super().validate(attrs)
-        data['username'] = self.user.username
-        data['email'] = self.user.email
+        data['username'] = user.username
+        data['email'] = user.email
         return data
+
     def create(self, validated_data):
         raise NotImplementedError("Create method not implemented")
 
     def update(self, instance, validated_data):
         raise NotImplementedError("Update method not implemented")
-
+    
 class ResetPasswordSerializer(serializers.Serializer):
     """
     this is the serializer for the reset password it takes in the fields uid, token and the new 
@@ -191,6 +210,14 @@ class AdvertiserProfileSerializer(serializers.ModelSerializer):
                   'contact_number', 'address', 'profile_image']
         read_only_fields = ['user']
 
+    def validate_business_type_id(self, value):
+        """
+        Custom validation to ensure the business type ID is valid.
+        """
+        if not Interest.objects.filter(id=value).exists():
+            raise serializers.ValidationError("Invalid business type ID.")
+        return value
+
     def create(self, validated_data):
         """
         Overriding create to link the AdvertiserProfile with the authenticated user.
@@ -203,8 +230,11 @@ class AdvertiserProfileSerializer(serializers.ModelSerializer):
         """
         Custom update to allow partial updates for AdvertiserProfile.
         """
-        raise NotImplementedError("Update method not implemented")
-  
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+        return instance
+
 class UserAdvertiserProfileSerializer(serializers.Serializer):
     """
     Combined serializer to create a User and their associated AdvertiserProfile.
@@ -239,6 +269,10 @@ class UserAdvertiserProfileSerializer(serializers.Serializer):
         user_serializer = UserSerializer(data=user_data)
         user_serializer.is_valid(raise_exception=True)
         user = user_serializer.save()
+
+        # Explicitly set is_active to False
+        user.is_active = False
+        user.save()
 
         # Create the AdvertiserProfile
         advertiser_profile_data = validated_data
