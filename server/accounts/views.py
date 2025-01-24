@@ -17,10 +17,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.exceptions import APIException
 from rest_framework_simplejwt.views import TokenObtainPairView
-from accounts.models import User,UserProfile,Interest,Blog,AdvertiserProfile
+from accounts.models import User,UserProfile,Interest,Blog,AdvertiserProfile,Advertisement
 from .serializers import (UserSerializer,CustomTokenObtainPairSerializer,ResetPasswordSerializer,
                           UserProfileSerializer,InterestSerializer,BlogSerializer,
-                          UserAdvertiserProfileSerializer,AdvertiserProfileSerializer)
+                          UserAdvertiserProfileSerializer,AdvertiserProfileSerializer,AdvertisementSerializer)
 from .permissions import IsAdminorReadOnly,IsAdmin
 
 logger = logging.getLogger(__name__)
@@ -520,6 +520,58 @@ class AdminNewAdvertiserListView(APIView):
 
             return Response(combined_data, status=status.HTTP_200_OK)
 
+        except Exception as e:
+            return Response(
+                {"error": "An unexpected error occurred.", "details": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+class AddAdvertisementView(APIView):
+    """
+    API view to allow advertisers to add advertisements.
+    """
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        """
+        POST method to create a new advertisement for the logged-in advertiser.
+        """
+        try:
+            # Ensure the logged-in user is an advertiser
+            if request.user.user_type != 'advertiser':
+                return Response(
+                    {"error": "Only advertisers can add advertisements."},
+                    status=status.HTTP_403_FORBIDDEN,
+                )
+
+            # Serialize and validate the data
+            serializer = AdvertisementSerializer(data=request.data, context={'request': request})
+            if serializer.is_valid():
+                serializer.save()  # This will call the `create` method
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response(
+                {"error": "An unexpected error occurred.", "details": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
+class AdvertiserAdvertisementsView(APIView):
+    """
+    API view to fetch all advertisements added by the currently logged-in advertiser.
+    """
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        """
+        GET method to retrieve advertisements for the logged-in advertiser.
+        """
+        try:
+            # Fetch advertisements linked to the logged-in advertiser
+            advertisements = Advertisement.objects.filter(advertiser=request.user)
+            serializer = AdvertisementSerializer(advertisements, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as e:
             return Response(
                 {"error": "An unexpected error occurred.", "details": str(e)},
