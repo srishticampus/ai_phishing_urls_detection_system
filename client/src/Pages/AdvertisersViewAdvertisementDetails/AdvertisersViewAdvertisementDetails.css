@@ -1,0 +1,32 @@
+.advertisers-view-advertisement-details-container{
+    margin-left: 250px;
+    margin-top: 70px;
+}
+.advertisers-view-advertisement-details-head{
+    color: #F18C00;
+font-family: Lato;
+font-size: 24px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
+.advertisers-view-advertisement-details-cards{
+    border: 0;
+    background: none;
+}
+.advertisers-view-advertisement-details-parahead{
+    color: #333;
+font-family: Lato;
+font-size: 24px;
+font-style: normal;
+font-weight: 400;
+line-height: 55px; /* 229.167% */
+}
+.advertisers-view-advertisement-details-para{
+    color: #7F7F7F;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 35px; /* 250% */ 
+}
