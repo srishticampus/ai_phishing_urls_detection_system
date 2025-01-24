@@ -1,3 +1,4 @@
+//apiService.jsx
 import axios from "axios";
 
 // Create Axios instance
@@ -22,18 +23,15 @@ apiClient.interceptors.request.use(
     return config;
   },
   (error) => Promise.reject(error)
-
-  // (config) => {
-  //   const token = localStorage.getItem("accessToken"); // Retrieve token from localStorage
-  // console.log("token"+token)
-
-  //   if (token) {
-  //     config.headers.Authorization = `Bearer ${token}`;
-  //   }
-  //   return config;
-  // },
-  // (error) => Promise.reject(error)
 );
+
+// Utility to generate headers dynamically
+const generateConfig = (isFormData = false, authRequired = true) => ({
+  headers: {
+    "Content-Type": isFormData ? "multipart/form-data" : "application/json",
+  },
+  authRequired,
+});
 
 // Function to handle API responses and errors
 const handleResponse = async (apiCall) => {
@@ -65,7 +63,7 @@ export const userSignup = async (data) => {
 };
 
 // User Login Function
-export const userLogin = async (data) => {
+export const login = async (data) => {
   const response = await handleResponse(apiClient.post("/api/login/", data));
   if (response.success) {
     // Save tokens to localStorage if login is successful
@@ -93,59 +91,93 @@ export const refreshAccessToken = async () => {
   }
   return response;
 };
-
+//Check Login Status
+export const checkLoginStatus = () => {
+  return !!localStorage.getItem("accessToken");
+};
 // Logout Function
-export const userLogout = () => {
+export const logout = () => {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
 };
 
 export const addUserProfile = async (formData) => {
-  const config = {
-    headers: {
-      "Content-Type": "multipart/form-data", // Required for file uploads
-    },
-    authRequired: true, // Ensures the Authorization header is added
-  };
-
   return handleResponse(
-    apiClient.post("/api/user-profile/add/", formData, config)
+    apiClient.post("/api/user-profile/add/", formData, generateConfig(true))
   );
 };
 
 //user-profile-view
 
-export const userProfile = async (data) => {
-  const response = await handleResponse(
-    apiClient.get("/api/user-profile/view/", { ...data, authRequired: true })
+export const userProfile = async () => {
+  return handleResponse(
+    apiClient.get("/api/user-profile-view/", generateConfig())
   );
-  if (response.success) {
-    return {
-      success: true,
-      data: response.data,
-    };
-  } else {
-    return {
-      success: false,
-      errors: response.errors || {
-        message: "Failed to fetch user profile data",
-      },
-    };
-  }
 };
 
 // Update User Profile
 
 export const updateUserProfile = async (formData) => {
-  const config = {
-    headers: {
-      "Content-Type": "multipart/form-data", // Required for file uploads
-    },
-    authRequired: true, // Ensures the Authorization header is added
-  };
-
   return handleResponse(
-    apiClient.patch("/api/user-profile/update/", formData, config)
+    apiClient.put("/api/user-profile/edit/", formData, generateConfig(true))
   );
 };
- 
+
+// Admin Add Blogs
+
+export const addBlog = async (formData) => {
+  return handleResponse(
+    apiClient.post("/api/blogs/", formData, generateConfig(true))
+  );
+};
+
+// Admin & User View Blogs
+
+export const viewBlogs = async (id = null) => {
+  const endpoint = id ? `/api/blogs/${id}/` : "/api/blogs/";
+  return handleResponse(apiClient.get(endpoint, generateConfig()));
+};
+
+// Admin Update Blogs
+
+export const updateBlog = async (id, formData) => {
+  return handleResponse(
+    apiClient.put(`/api/blogs/${id}/`, formData, generateConfig(true))
+  );
+};
+
+// Admin Delete Blogs
+
+export const deleteBlog = async (id) => {
+  return handleResponse(
+    apiClient.delete(`/api/blogs/${id}/`, generateConfig())
+  );
+};
+
+// Admin View All Users
+
+export const viewUsers = async () => {
+  return handleResponse(
+    apiClient.get("/api/admin-view-users/", generateConfig())
+  );
+};
+
+// Admin Activate/Deactivate Users
+
+export const toggleUserStatus = async (id) => {
+  return handleResponse(
+    apiClient.patch(
+      `/api/toggle-user-activation/${id}/`,
+      null,
+      generateConfig()
+    )
+  );
+};
+
+//Advertiser Registration
+
+export const advertiserSignup = async (formData) => {
+  return handleResponse(
+    apiClient.post("/api/register-advertiser/", formData, generateConfig(true))
+  );
+};

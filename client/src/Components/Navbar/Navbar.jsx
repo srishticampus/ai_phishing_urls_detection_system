@@ -1,7 +1,32 @@
-import { Link } from "react-router";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router";
 import "./Navbar.css";
+import { logout, checkLoginStatus } from "../../Services/apiService";
 
 function Navbar() {
+  const [isLoggedIn, setIsLoggedIn] = useState(checkLoginStatus());
+  const [isLogoutConfirmOpen, setIsLogoutConfirmOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogoutClick = () => {
+    setIsLogoutConfirmOpen(true); // Open the confirmation modal
+  };
+
+  const confirmLogout = () => {
+    logout();
+    setIsLoggedIn(false);
+    setIsLogoutConfirmOpen(false);
+    navigate("/"); // Navigate to home after logout
+  };
+
+  const cancelLogout = () => {
+    setIsLogoutConfirmOpen(false); // Close the confirmation modal
+  };
+
+  useEffect(() => {
+    setIsLoggedIn(checkLoginStatus());
+  }, []);
+
   return (
     <>
        <nav className="navbar navbar-expand-sm ">
@@ -42,16 +67,52 @@ function Navbar() {
               </li>
             </ul>
             <form className="d-flex ms-auto">
-
-              <Link
-                className="btn btn-outline navbar_login_button "
-                to="/login">
-                Login
-              </Link>
+              {isLoggedIn ? (
+                <button
+                  type="button"
+                  className="btn btn-outline navbar_login_button"
+                  onClick={handleLogoutClick}
+                >
+                  Logout
+                </button>
+              ) : (
+                <Link
+                  className="btn btn-outline navbar_login_button "
+                  to="/login"
+                >
+                  Login
+                </Link>
+              )}
             </form>
           </div>
         </div>
       </nav>
+
+      {/* Logout Confirmation Modal */}
+      {isLogoutConfirmOpen && (
+        <div className="modal homepage-navbar-modal-logout">
+          <div className="modal-dialog">
+            <div className="modal-content homepage-navbar-modal-content ">
+              <div className="modal-header homepage-modal-logout-header">
+                <h5 className="modal-title">
+                  Are you sure you want to Logout?
+                </h5>
+              </div>
+              <div className="modal-footer homepage-modal-logout-footer">
+                <button className="btn btn-danger w-25" onClick={confirmLogout}>
+                  Yes
+                </button>
+                <button
+                  className="btn btn-secondary w-25"
+                  onClick={cancelLogout}
+                >
+                  No
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
