@@ -1,0 +1,43 @@
+.advertisers-add-advertisement-container{
+    margin-left: 250px;
+    margin-top: 70px;
+}
+.advertisers-add-advertisement-head{
+    color: #F18C00;
+font-family: Lato;
+font-size: 24px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+text-align: center;
+}
+
+.adv-add-up-img-button{
+    display: flex;
+width: 360px;
+height: 40px;
+padding: 10px 15px;
+justify-content: space-between;
+
+}
+
+.adv-add-dropdown-button{
+    display: flex;
+    width: 360px;
+    height: 40px;
+    padding: 10px 15px;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 50px;
+}
+
+.advertisers-add-advertisement-card-container{
+    display: flex;
+    justify-content: center;
+
+}
+.advertisers-add-advertisement-card{
+    margin-top: 50px;
+    height: 80vh;
+
+}
