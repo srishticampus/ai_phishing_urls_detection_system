@@ -7,16 +7,16 @@ serialization and deserialization for API requests and responses. This includes
 handling custom fields and business logic, such as linking user profiles with
 authenticated users.
 """
-
+from datetime import datetime
 from rest_framework import serializers
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework.exceptions import ValidationError
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth import authenticate
 from django.db import transaction
 from .models import (User,UserProfile,Interest,UserInterest,AdvertiserProfile,Blog,
-                     validate_phone_number)
+                     Advertisement,validate_phone_number)
 
 #Serializer for the User Model
 class UserSerializer(serializers.ModelSerializer):
@@ -326,3 +326,28 @@ class BlogSerializer(serializers.ModelSerializer):
         """
         validated_data.pop('interests', None)
         return super().update(instance, validated_data)
+
+class AdvertisementSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the Advertisement model.
+    """
+    class Meta:
+        model = Advertisement
+        fields = ['id', 'ad_image', 'title', 'link', 'start_date', 'end_date', 'created_at', 'updated_at']
+
+    def to_internal_value(self, data):
+        # Parse start_date and end_date from DD-MM-YYYY to YYYY-MM-DD
+        for date_field in ['start_date', 'end_date']:
+            if date_field in data and data[date_field]:
+                try:
+                    data[date_field] = datetime.strptime(data[date_field], "%d-%m-%Y").date()
+                except ValueError as exc:
+                    raise serializers.ValidationError({date_field: "Date must be in DD-MM-YYYY format."}) from exc
+        return super().to_internal_value(data)
+    def create(self, validated_data):
+        # Get the advertiser from the context
+        advertiser = self.context['request'].user
+
+        # Create the Advertisement instance with the advertiser
+        advertisement = Advertisement.objects.create(advertiser=advertiser, **validated_data)
+        return advertisement    
