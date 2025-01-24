@@ -118,3 +118,52 @@ class Blog(models.Model):
 
     def __str__(self):
         return str(self.title)
+
+class Advertisement(models.Model):
+    """
+    Model class to represent an advertisement.
+    """
+    advertiser = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="advertisements"
+    )
+    ad_image = models.ImageField(
+        upload_to="advertisements/",
+        verbose_name=("Advertisement Image"),
+        help_text=("Upload the image for the advertisement.")
+    )
+    title = models.CharField(
+        max_length=255,
+        verbose_name=("Title"),
+        help_text=("Enter the title of the advertisement.")
+    )
+    link = models.URLField(
+        max_length=500,
+        verbose_name=("Link or URL"),
+        help_text=("Enter the URL or link associated with the advertisement.")
+    )
+    start_date = models.DateField(
+        verbose_name=("Start Date"),
+        help_text=("Select the start date for the advertisement.")
+    )
+    end_date = models.DateField(
+        verbose_name=("End Date"),
+        help_text=("Select the end date for the advertisement.")
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name=("Created At")
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        verbose_name=("Updated At")
+    )
+
+    def __str__(self):
+        return f"{self.title} by {self.advertiser.username}"
+
+    class Meta:
+        verbose_name = ("Advertisement")
+        verbose_name_plural = ("Advertisements")
+        ordering = ["-created_at"]
