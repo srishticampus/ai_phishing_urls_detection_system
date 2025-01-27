@@ -46,7 +46,9 @@ import AdvertisersViewUsers from "./Pages/AdvertisersViewUsers/AdvertisersViewUs
 import AdvertisersAddAdvertisements from "./Pages/AdvertisersAddAdvertisements/AdvertisersAddAdvertisements";
 import AdvertisersViewAdvertisements from "./Pages/AdvertisersViewAdvertisements/AdvertisersViewAdvertisements";
 import AdvertisersViewAdvertisementDetails from "./Pages/AdvertisersViewAdvertisementDetails/AdvertisersViewAdvertisementDetails";
-
+import AdvertisersEditAdvertisements from "./Pages/AdvertisersEditAdvertisements/AdvertisersEditAdvertisements";
+import UserHomePage from "./Pages/UserHomePage/UserHomePage";
+import UserViewDetails from "./Pages/UserViewDetails/UserViewDetails";
 
 
 
@@ -501,6 +503,44 @@ function App() {
         >
 
         </Route>
+
+        <Route
+        path="/advertisers-edit-advertisement"
+        element={
+          <>
+          <AdvertiserViewSidebar />
+          <AdvertisersEditAdvertisements/>
+          </>
+        }
+        >
+        </Route>
+
+
+        <Route
+        path="/user-homepage"
+        element={
+          <>
+            <HomePageNavbar />
+          <UserHomePage/>
+          <Footer/>
+          </>
+        }
+        >
+        </Route>
+
+        <Route
+        path="/user-view-details"
+        element={
+          <>
+          <HomePageNavbar />
+          <UserViewDetails/>
+          <Footer/>
+          </>
+        }
+        >
+        </Route>
+
+      
 
 
       </Routes>

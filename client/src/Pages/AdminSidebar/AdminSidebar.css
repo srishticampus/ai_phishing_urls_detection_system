@@ -25,20 +25,14 @@
     color: #FFFFFF;
     width: 90%;
 }
-
-.admin-dashboard-listdecor {
-    list-style: none;
-    text-decoration: none;
+.admin-dashboard-btn:hover {
+    border-radius: 32px;
+    background-color: #F18C00;
     color: #FFFFFF;
-    font-family: Lato;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    letter-spacing: -0.16px;
-    text-transform: capitalize;
-
+    width: 90%;
 }
+
+
 
 .navbar-component {
     height: 70px;
@@ -72,4 +66,26 @@
     line-height: normal;
     letter-spacing: 1.7px;
     text-transform: uppercase;
+}
+.admin-dashboard-btn-color{
+    border-radius: 32px;
+    background-color: #F18C00;
+    color: #FFFFFF;
+    min-width: 90%;
+
+}
+.admin-dashboard-btn-color:hover{
+    background-color: #F18C00;
+}
+.admin-dashboard-listdecor {
+    list-style: none;
+    text-decoration: none;
+    color: #FFFFFF;
+    font-family: Lato;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -0.16px;
+    text-transform: capitalize;
 }

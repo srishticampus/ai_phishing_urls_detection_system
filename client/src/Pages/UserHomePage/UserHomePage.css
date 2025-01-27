@@ -1,0 +1,313 @@
+.user-homepage-div1{
+    max-width: 890px;
+    height: 483px;
+    border-radius: 32px;
+background: linear-gradient(180deg, #FFF 0%, #FCDDB3 100%);
+}
+.user-homepage-div1-carousel{
+    max-width: 890px;
+    height: 483px;
+    border-radius: 32px;
+    background: #FEF7EC;
+}
+.user-homoepage-div1-carousel3{
+    max-width: 890px;
+    height: 483px;
+    border-radius: 32px;
+    overflow: hidden;
+    position: relative;
+}
+.user-homoepage-div1-carousel3::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+.overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2; 
+    text-align: center;
+
+}
+
+.user-homepage-card-size{
+    height: 475px;
+    border: none;
+}
+.homepage-card-img-size{
+    height: 475px;
+}
+.user-homepage-container{
+    margin-top: 50px;
+}
+.user-homepage-div1-head{
+    color: #333;
+font-family: Lato;
+font-size: 40px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+.user-homepage-div1-para{
+    color: #333;
+font-family: Lato;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
+.user-homepage-div1-bar{
+    display: flex;
+padding: 20px 40px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+border-radius: 20px;
+background: #F18C00;
+color: white;
+width: 600px;
+}
+.user-homepage-div2-head{
+color: #333;
+font-family: Lato;
+font-size: 32px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+margin-top: 20px;
+}
+.user-homepage-cardsize{
+    position: relative;
+    width: 330px;
+    height: 295.312px;
+    flex-shrink: 0;
+    border: none;
+    height: auto;
+}
+.user-homepage-cardone-header{
+    border-radius: 0;
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    background-color: rgba(0, 0, 0, .5);
+    color: #FFF;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    border-radius: 2.812px;
+    background: rgba(255, 255, 255, 0.20);
+    backdrop-filter: blur(4.218749046325684px);
+}
+.user-homepage-cardone-headerone{
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    width: 29.531px;
+    height: 29.531px;
+    padding: 7.031px 7.031px 6.328px 6.328px;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 2.812px;
+    background: rgba(255, 255, 255, 0.20);
+    backdrop-filter: blur(4.218749046325684px);
+    border-radius: 25px;
+}
+.user-homepage-cardone-body{
+    display: flex;
+    width: 315px;
+    height: 54.844px;
+    flex-direction: column;
+    justify-content: center;
+    color: #333;
+    font-family: Lato;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28.125px;
+}
+
+.user-homepage-card-profile-img{
+    width: 30px;
+    height: 30px;
+}
+.user-homepage-card-profilename{
+
+    color: #333;
+    font-family: Lato;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28.125px;
+    margin-left: 10px;
+}
+.user-homepage-profile-rectangle{
+    width: 25.312px;
+    height: 0.703px;
+    background: #7F7F7F;
+    margin-top: 15px;
+    margin-left: 10px;
+}
+.user-homepage-profile-textcolor{
+    color: #7F7F7F;
+    font-family: Lato;
+    font-size: 2px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28.125px;
+}
+.user-homepage-profile-textcolortwo{
+    width: 3px;
+    height: 3px;
+    fill: #7F7F7F;
+}
+.user-homepage-share-color{
+    color: #7F7F7F;
+font-family: Lato;
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: 28.125px; 
+}
+.user-homepage-cardone-para{
+    color: #7F7F7F;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 149.687%;
+    text-align: justify;
+}
+.user-homepage-readmore-button{
+    color: #F18C00;
+    font-family: Lato;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -0.16px;
+    text-transform: capitalize;
+    width: 120px;
+}
+
+.user-homepage-div1-carousel-para{
+    color: #333;
+font-family: Lato;
+font-size: 50px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+.user-homepage-div1-carousel-personlap{
+    position: relative;
+right: 150px;
+bottom: 50px;
+height: 400px;
+}
+.user-homepage-carousel3-img-img-size{
+    width: 300px;
+    height: 240px;
+    
+}
+.user-homepage-img-border-radius-top-left{
+border-top-left-radius: 32px;
+}
+.user-homepage-img-border-radius-top-right{
+    border-top-right-radius: 32px;
+}
+.user-homepage-img-border-radius-bottom-left{
+    border-bottom-left-radius: 32px;
+}
+.user-homepage-img-border-radius-bottom-right{
+    border-bottom-right-radius: 32px;
+}
+
+.user-homepage-overlay-text-head{
+    color: #FFF;
+    font-family: Lato;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+.user-homepage-overlay-text-para{
+    color: #FFF;
+    text-align: center;
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+    font-family: Lato;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.user-homepage-div3-head{
+    color: #333;
+text-align: left;
+font-family: Lato;
+font-size: 24px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+.user-homepage-div3-right-img{
+    height: 100px;
+}
+.user-homepage-div3-right-img-sub{
+    color: #333;
+font-family: Lato;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 21.36px; /* 133.503% */
+}
+.user-homepage-div3-right-img-sub-two{
+    color: #7F7F7F;
+font-family: Lato;
+font-size: 13px;
+font-style: normal;
+font-weight: 400;
+line-height: 17.383px; /* 133.714% */
+letter-spacing: 0.261px;
+}
+.user-homepage-div3-sub-1{
+    color: #7F7F7F;
+    font-family: Lato;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal; 
+}
+.user-homepage-div3-sub-2{
+    color: #333;
+    font-family: Lato;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.user-homepage-div3-sub-3{
+    color: #7F7F7F;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18.252px; /* 130.371% */
+}
+.user-home-page-div-3-sub-container{
+    position: relative;
+    bottom: 190px;
+}
+.user-homepage-above-footer-card{
+    height:600px ;
+    margin-bottom: 50px;
+}
