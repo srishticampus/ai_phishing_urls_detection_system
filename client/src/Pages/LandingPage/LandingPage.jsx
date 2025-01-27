@@ -29,7 +29,7 @@ function LandingPage() {
               </div>
             </div>
 
-            {/* Carousel Item 2 (optional) */}
+            {/* Carousel Item 2 */}
             <div className="carousel-item">
               <img className="d-block w-100 landingpage-bgimg" src={LandingP_Bg_two} alt="Landing Page Background" />
               {/* Add your second background content here if needed */}
@@ -41,7 +41,7 @@ function LandingPage() {
               </div>
             </div>
 
-            {/* Carousel Item 3 (optional) */}
+            {/* Carousel Item 3*/}
             <div className="carousel-item">
               <img className="d-block w-100 landingpage-bgimg" src={LandingP_Bg_three} alt="Landing Page Background" />
               {/* Add your third background content here if needed */}

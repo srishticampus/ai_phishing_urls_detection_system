@@ -1,0 +1,68 @@
+.advertisers-edit-advertisements-container{
+    margin-left: 250px;
+    margin-top: 100px;
+}
+.advertisers-edit-advertisements-head{
+    color: #F18C00;
+font-family: Lato;
+font-size: 24px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+text-align: center;
+}
+.adv-edit-dropdown-button{
+    display: flex;
+    width: 360px;
+    height: 40px;
+    padding: 10px 15px;
+    justify-content: space-between;
+    align-items: center;
+}
+.adv-edit-up-img-button{
+    display: flex;
+    width: 360px;
+    height: 40px;
+    padding: 10px 15px;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.advertisers-edit-advertisements-card-container{
+ 
+    margin: auto;
+    max-width: 1100px;
+}
+
+.advertisers-edit-advertisement-link{
+    color: #0978D9;
+font-family: Lato;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+text-decoration-line: underline;
+text-decoration-style: solid;
+text-decoration-skip-ink: none;
+text-decoration-thickness: auto;
+text-underline-offset: auto;
+text-underline-position: from-font;
+}
+.advertisers-edit-advertisement-para{
+    color: #5F5F5F;
+font-family: Lato;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+.advertisers-edit-advertisement-sec-card{
+    margin: auto;
+    width: 1000px;
+    height: 500px;
+    padding: 10px;
+}
+.advertisers-edit-advertisement-btn{
+    width: 175px;
+}

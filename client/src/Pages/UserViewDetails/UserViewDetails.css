@@ -1,0 +1,176 @@
+.user-view-details-div1-img {
+    display: flex;
+    width: 990px;
+    height: 583px;
+    padding: 50px;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    gap: 35px;
+    flex-shrink: 0;
+}
+
+.user-view-details-card-ads {
+    height: 483px;
+    border: none;
+    margin-top: 50px;
+
+}
+
+.user-view-details-card-ads-size {
+    height: 483px;
+    width: 330px;
+}
+
+.user-view-details-head {
+    color: #333;
+    font-family: Lato;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 55px;
+    /* 137.5% */
+}
+
+.user-view-details-para {
+    color: #7F7F7F;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 35px;
+}
+
+.user-view-details-card-ads-height {
+    height: 483px;
+    border: none;
+}
+
+.user-view-details-subhead {
+    color: #333;
+    font-family: Lato;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 35px;
+}
+
+.user-view-details-subhead-sub {
+    color: #333;
+    font-family: Lato;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 50px;
+}
+
+.user-veiw-details-para {
+    color: #7F7F7F;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 35px;
+}
+
+.user-view-details-sec-head {
+    color: #333;
+    font-family: Lato;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+.user-view-details-cardsize{
+    position: relative;
+    width: 330px;
+    height: 295.312px;
+    flex-shrink: 0;
+    border: none;
+    height: auto;
+}
+.user-view-details-cardone-imgone{
+
+}
+.user-view-details-cardone-header{
+    border-radius: 0;
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    background-color: rgba(0, 0, 0, .5);
+    color: #FFF;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    border-radius: 2.812px;
+    background: rgba(255, 255, 255, 0.20);
+    backdrop-filter: blur(4.218749046325684px);
+}
+.user-view-details-cardone-body{
+    display: flex;
+    width: 315px;
+    height: 54.844px;
+    flex-direction: column;
+    justify-content: center;
+    color: #333;
+    font-family: Lato;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28.125px;
+}
+.user-view-details-card-profile-info{
+
+}
+.user-view-details-card-profile-img{
+    width: 30px;
+    height: 30px;
+}
+.user-view-details-card-profilename{
+    color: #333;
+    font-family: Lato;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28.125px;
+    margin-left: 10px;
+}
+.user-view-details-profile-rectangle{
+    width: 25.312px;
+    height: 0.703px;
+    background: #7F7F7F;
+    margin-top: 15px;
+    margin-left: 10px;
+}
+.user-view-details-profile-textcolor{
+    color: #7F7F7F;
+    font-family: Lato;
+    font-size: 2px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28.125px;
+}
+.user-view-details-profile-textcolortwo{
+    width: 3px;
+    height: 3px;
+    fill: #7F7F7F;
+}
+.user-view-details-share-color{
+    color: #7F7F7F;
+font-family: Lato;
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: 28.125px; 
+}
+.user-view-details-cardone-para{
+    color: #7F7F7F;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 149.687%;
+    text-align: justify;
+}
