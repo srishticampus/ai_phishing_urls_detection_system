@@ -818,5 +818,113 @@ Retrieve a list of all new advertisers whose accounts are inactive (is_active=fa
   }
 
   ```
+### **17. Advertiser Add Advertisements**  
+Retrieve a list of all new advertisers whose accounts are inactive (is_active=false).
+
+- **URL**: `api/add-advertisement/`  
+- **Method**: `POST`  
+- **Permission**: Allows an authenticated advertiser to add a new advertisement.
+
+#### **Request Body (JSON)**:  
+| Field            | Type               | Required |Description                                    |
+|------------------|--------------------|----------|-----------------------------------------------|
+| ad_image         | File               | Yes      | The image file for the advertisement.         |
+| title            | string             | Yes      | The title of the advertisement.               |
+| link             | URL                | Yes      | The URL associated with the advertisement.    |
+| start_date       | Date (DD-MM-YYYY)  | Yes      | The start date of the advertisement campaign. |
+| end_date         | Date (DD-MM-YYYY)  | Yes      | The end date of the advertisement campaign    |
+
+#### **Success Response**:  
+- **Code**: 201 Created 
+```json
+{
+    "id": 1,
+    "ad_image": "https://example.com/media/advertisements/ad_image.jpg",
+    "title": "Winter Sale",
+    "link": "https://example.com/winter-sale",
+    "start_date": "2024-01-01",
+    "end_date": "2024-01-31",
+    "created_at": "2024-12-30T10:00:00Z",
+    "updated_at": "2024-12-30T10:00:00Z"
+}
+
+```
+- **Code: 400 Bad Request**  
+  ```json
+  {
+    "ad_image": ["This field is required."],
+    "title": ["This field is required."]
+  }
+  ```
+  - **Code: 403 Forbidden**  
+  ```json
+  {
+    "error": "Only advertisers can add advertisements."
+  }
+  ```
+- **Code: 500 Internal Server Error**  
+  ```json
+  {
+  "error": "An unexpected error occurred.",
+  "details": "Error message describing the issue."
+  }
+
+  ```
+### **18. Advertiser View My Advertisements**  
+Retrieves all advertisements created by the currently logged-in advertiser.
+
+- **URL**: `api/my-advertisements/`  
+- **Method**: `GET`  
+- **Permission**: Admin-only: Requires the user to have admin privileges.
+
+#### **Success Response**:  
+- **Code**: 200 OK 
+```json
+[
+    {
+        "id": 1,
+        "ad_image": "https://example.com/media/advertisements/ad_image1.jpg",
+        "title": "Winter Sale",
+        "link": "https://example.com/winter-sale",
+        "start_date": "2024-01-01",
+        "end_date": "2024-01-31",
+        "created_at": "2024-12-30T10:00:00Z",
+        "updated_at": "2024-12-30T10:00:00Z"
+    },
+    {
+        "id": 2,
+        "ad_image": "https://example.com/media/advertisements/ad_image2.jpg",
+        "title": "Summer Bonanza",
+        "link": "https://example.com/summer-bonanza",
+        "start_date": "2024-06-01",
+        "end_date": "2024-06-30",
+        "created_at": "2024-06-01T08:00:00Z",
+        "updated_at": "2024-06-01T08:00:00Z"
+    }
+]
+
+```
+- **Code: 204 No Content**  
+  ```json
+  {
+    "message": "No advertisements found."
+  }
+
+  ```
+  - **Code: 403 Forbidden**  
+  ```json
+  {
+    "error": "Only advertisers can view their advertisements."
+  }
+
+  ```
+- **Code: 500 Internal Server Error**  
+  ```json
+  {
+  "error": "An unexpected error occurred.",
+  "details": "Error message describing the issue."
+  }
+
+  ```
 ---
 
