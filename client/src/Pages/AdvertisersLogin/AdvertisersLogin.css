@@ -119,3 +119,26 @@
 
     }
 }
+
+/* Styling for the eye icon */
+.password-container {
+    position: relative;
+    width: 360px;
+  }
+  
+  .password-toggle-icon {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  
+  /* Error message styling */
+  .error-message {
+    color: red;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 15px;
+  }
+  

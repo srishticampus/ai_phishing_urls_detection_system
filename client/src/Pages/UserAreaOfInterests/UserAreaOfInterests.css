@@ -1,0 +1,60 @@
+.user-area-of-interests-head {
+    color: #F18C00;
+    text-align: center;
+    font-family: Lato;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin-top: 50px;
+}
+
+.user-area-of-interests-card-size {
+    height: 200px;
+    height: 200px;
+    width: 190px;
+    border: 2px solid #D7D7D7;
+    border-radius: 20px;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.user-area-of-interests-content {
+    display: flex;
+    flex-direction: column; /* Ensures img and p tag are in column */
+    justify-content: space-between;
+    align-items: center; /* Center the content horizontally */
+    height: 100%;
+}
+.user-area-of-interests-img-size {
+    margin-top: 30px;
+    height: 90px;
+    width: 90px;
+}
+
+.user-area-of-interests-footer {
+    background-color: white;
+    border: 2px solid #D7D7D7;
+    border-top: 0;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+
+}
+
+.user-area-of-interests-footer-content {
+    color: #7F7F7F;
+    text-align: center;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+}
+.user-area-of-interest-center-row{
+    display: grid;
+    place-content: center;
+    grid-auto-flow: column;
+}
+.user-area-of-interests-btn{
+    width: 175px;
+}

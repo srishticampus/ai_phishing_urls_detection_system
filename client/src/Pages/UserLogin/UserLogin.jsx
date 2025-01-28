@@ -113,7 +113,7 @@ function UserLogin() {
           </div>
 
           <div className="d-flex justify-content-end mb-3">
-            <Link to="/forget-password" className="login-forgetpass">Forget Password?</Link>
+            <Link to="/forgetpassword" className="login-forgetpass">Forget Password?</Link>
           </div>
 
           {apiError && <div className="error">{apiError}</div>}
