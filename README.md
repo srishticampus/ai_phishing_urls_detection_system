@@ -818,10 +818,90 @@ Retrieve a list of all new advertisers whose accounts are inactive (is_active=fa
   }
 
   ```
-### **17. Advertiser Add Advertisements**  
-Retrieve a list of all new advertisers whose accounts are inactive (is_active=false).
+### **17. Advertiser View, Create, Update, or Delete Advertisements**  
+Retrieves all advertisements created by the currently logged-in advertiser.
+- **URL**: `api/advertisements/`  
+- **Method**: `GET`  
+- **Permission**: Allows an authenticated advertiser to add a new advertisement.
 
-- **URL**: `api/add-advertisement/`  
+#### **Success Response**:  
+- **Code**: 200 OK 
+```json
+{
+    "id": 1,
+    "ad_image": "https://example.com/media/advertisements/ad_image.jpg",
+    "title": "Winter Sale",
+    "link": "https://example.com/winter-sale",
+    "start_date": "2024-01-01",
+    "end_date": "2024-01-31",
+    "created_at": "2024-12-30T10:00:00Z",
+    "updated_at": "2024-12-30T10:00:00Z"
+}
+
+```
+- **Code:204 No Content**  
+  ```json
+  {
+    "message": "No advertisements found."
+  }
+
+  ```
+  - **Code: 403 Forbidden**  
+  ```json
+  {
+    "error": "Only advertisers can view advertisements."
+  }
+  ```
+- **Code: 500 Internal Server Error**  
+  ```json
+  {
+  "error": "An unexpected error occurred.",
+  "details": "Error message describing the issue."
+  }
+  ```
+## ** View Single Advertisement**  
+Retrieve details of a specific advertisement by its ID.
+- **URL**: `api/advertisements/<int:advertisement_id>/`  
+- **Method**: `GET`  
+- **Permission**: Allows an authenticated advertiser to view a  advertisement.
+
+#### **Success Response**:  
+- **Code**: 200 OK 
+```json
+{
+    "id": 1,
+    "ad_image": "https://example.com/media/advertisements/ad_image.jpg",
+    "title": "Winter Sale",
+    "link": "https://example.com/winter-sale",
+    "start_date": "2024-01-01",
+    "end_date": "2024-01-31",
+    "created_at": "2024-12-30T10:00:00Z",
+    "updated_at": "2024-12-30T10:00:00Z"
+}
+
+```
+- **Code:204 No Content**  
+  ```json
+  {
+    "message": "Advertisement not found or you do not have permission to access it.."
+  }
+
+  ```
+  - **Code: 403 Forbidden**  
+  ```json
+  {
+    "error": "Only advertisers can view advertisements."
+  }
+  ```
+- **Code: 500 Internal Server Error**  
+  ```json
+  {
+  "error": "An unexpected error occurred.",
+  "details": "Error message describing the issue."
+  }
+  ```
+ ## **Create Advertisement
+- **URL**: `api/advertisements/`  
 - **Method**: `POST`  
 - **Permission**: Allows an authenticated advertiser to add a new advertisement.
 
@@ -870,14 +950,14 @@ Retrieve a list of all new advertisers whose accounts are inactive (is_active=fa
   }
 
   ```
-### **18. Advertiser View My Advertisements**  
-Retrieves all advertisements created by the currently logged-in advertiser.
+### **18. Admin View All Advertisements**  
+Allows an admin to view all advertisements in the system.
 
-- **URL**: `api/my-advertisements/`  
+- **URL**: `api/admin/advertisements/`  
 - **Method**: `GET`  
-- **Permission**: Admin-only: Requires the user to have admin privileges.
+- **Permission**: Requires authentication and admin privileges.
 
-#### **Success Response**:  
+#### **Success Response**:
 - **Code**: 200 OK 
 ```json
 [
@@ -914,7 +994,7 @@ Retrieves all advertisements created by the currently logged-in advertiser.
   - **Code: 403 Forbidden**  
   ```json
   {
-    "error": "Only advertisers can view their advertisements."
+    "error": "Only admins - authenticated can access it"
   }
 
   ```

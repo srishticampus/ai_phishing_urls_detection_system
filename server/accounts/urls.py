@@ -10,7 +10,7 @@ from .views import (UserRegistrationView,LoginView,ForgotPasswordView,ResetPassw
                     UserProfileCreateView,UserProfileRetrieveView,UserProfileUpdateView,
                     InterestListView,BlogListCreateView,AdminUserListView,AdminToggleUserActivationView,
                     RegisterAdvertiserView,AdminAdvertiserListView,AdminNewAdvertiserListView,
-                    AdvertiserAdvertisementsView,AddAdvertisementView)
+                    AdminAdvertisementsView,AdvertisementDetailView)
 
 app_name = 'accounts'
 
@@ -39,6 +39,7 @@ urlpatterns = [
           name='admin-view-advertisers'),
     path('admin-view-new-advertisers/', AdminNewAdvertiserListView.as_view(), 
          name='admin-view-new-advertisers'),
-    path('my-advertisements/', AdvertiserAdvertisementsView.as_view(), name='my-advertisements'),
-    path('add-advertisement/', AddAdvertisementView.as_view(), name='add-advertisement'),
+    path('admin/advertisements/', AdminAdvertisementsView.as_view(), name='admin-advertisements'),
+    path('advertisements/<int:advertisement_id>/', AdvertisementDetailView.as_view(), name='advertisement-detail'),
+    path('advertisements/', AdvertisementDetailView.as_view(), name='advertisement-create'),
 ]
