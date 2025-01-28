@@ -1,47 +1,12 @@
-/* .f-and-q-div{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;     
-    max-width: 1200px;
-    height: 30vh;
-    margin: 0 auto;          
-    padding: 0 20px;   
-}
-.f-and-q-head{
-    color: #F18C00;
-    font-family: Lato;
-    font-size: 40px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-}
-.f-and-q-para{
-    margin-top: 250px;
-    height: 400px;
-    color: #7F7F7F;
-    text-align: center;
-    font-family: Lato;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    text-align: justify;
-}
-.f-and-q-footer{
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-} */
 
-/* Ensures that the entire page takes at least the full viewport height */
 .f-and-q-page {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+
+
   }
   
-  /* Centers the FAQ section and ensures it takes up a reasonable amount of space */
+
   .f-and-q-div {
     display: flex;
     flex-direction: column;
@@ -71,6 +36,7 @@
     font-size: 24px;
     font-weight: 500;
     line-height: normal;
+    height: 100vh;
   }
   
   

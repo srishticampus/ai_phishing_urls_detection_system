@@ -5,7 +5,8 @@
 }
 
 .admin-add-blog-card {
-    width: 1400px;
+ width: 1100px;
+   
     border-radius: 25px;
 }
 
@@ -21,7 +22,7 @@
 }
 
 .admin-add-blog-dropdown-button {
-    width: 367px;
+    width: 347px;
 }
 
 .admin-add-blog-dropdown-button:hover {
@@ -31,7 +32,7 @@
 }
 
 .admin-add-blog-cardtwo-content {
-    min-height: 500px;
+    min-height: 300px;
 }
 
 .admin-add-blog-card-header {

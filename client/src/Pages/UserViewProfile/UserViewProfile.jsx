@@ -20,7 +20,7 @@ function UserViewProfile() {
                     </div>
                 </div>
             </div>
-            <div className="d-flex justify-content-center mt-3">
+            <div className="d-flex justify-content-center mt-3 mb-5">
                 <div className="user-view-profile-editbutton">
                     <button className="btn user-view-profile-btn-color"><Link className="user-edit-profile-button-text" to="/user-edit-profile">Edit Profile</Link></button>
                 </div>

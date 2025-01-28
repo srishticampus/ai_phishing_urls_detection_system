@@ -34,7 +34,7 @@ function UserProfile() {
             lastName: response.data.user.last_name|| "",
             phoneNumber: response.data.phone_number || "",
             gender: response.data.gender || "",
-            image: response.data.photo || user_empty_profile, // Fallback to empty profile if no image
+            image: response.data.photo || user_empty_profile,
           });
 
    
@@ -67,7 +67,7 @@ function UserProfile() {
     }));
   };
 
-  // Handle image selection
+ 
   const handleImageChange = (e) => {
     const { files } = e.target;
     if (files && files[0]) {
