@@ -525,12 +525,71 @@ class AdminNewAdvertiserListView(APIView):
                 {"error": "An unexpected error occurred.", "details": str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
-
-class AddAdvertisementView(APIView):
+  
+class AdminAdvertisementsView(APIView):
     """
-    API view to allow advertisers to add advertisements.
+    API view for the admin to view all advertisements in the system.
+    """
+    permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
+
+    def get(self, request):
+        """
+        GET method to retrieve all advertisements in the system.
+        """
+        try:
+            # Fetch all advertisements
+            advertisements = Advertisement.objects.all()
+            serializer = AdvertisementSerializer(advertisements, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response(
+                {"error": "An unexpected error occurred.", "details": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
+class AdvertisementDetailView(APIView):
+    """
+    API view to retrieve, update, or delete a single advertisement by its ID.
     """
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self, advertisement_id, user):
+        """
+        Helper method to get the advertisement object for the logged-in advertiser.
+        """
+        try:
+            return Advertisement.objects.get(id=advertisement_id, advertiser=user)
+        except Advertisement.DoesNotExist:
+            return None
+
+    def get(self, request, advertisement_id=None):
+        """
+        GET method to view all advertisements or a single advertisement if 'advertisement_id' is provided.
+        """
+        try:
+            if advertisement_id:
+                # Fetch the specific advertisement
+                advertisement = self.get_object(advertisement_id, request.user)
+                if advertisement:
+                    serializer = AdvertisementSerializer(advertisement)
+                    return Response(serializer.data, status=status.HTTP_200_OK)
+                else:
+                    return Response(
+                        {"error": "Advertisement not found or you do not have permission to access it."},
+                        status=status.HTTP_404_NOT_FOUND,
+                    )
+            else:
+                # Fetch all advertisements by the advertiser
+                advertisements = Advertisement.objects.filter(advertiser=request.user)
+                serializer = AdvertisementSerializer(advertisements, many=True)
+                if not serializer.data:
+                    return Response({"message": "No advertisements found."}, status=status.HTTP_204_NO_CONTENT)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response(
+                {"error": "An unexpected error occurred.", "details": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
 
     def post(self, request):
         """
@@ -544,10 +603,16 @@ class AddAdvertisementView(APIView):
                     status=status.HTTP_403_FORBIDDEN,
                 )
 
+            # Create a mutable copy of the request data
+            data = request.data.copy()
+
+            # Add the logged-in user as the advertiser
+            data['advertiser'] = request.user.id
+
             # Serialize and validate the data
-            serializer = AdvertisementSerializer(data=request.data, context={'request': request})
+            serializer = AdvertisementSerializer(data=data, context={'request': request})
             if serializer.is_valid():
-                serializer.save()  # This will call the `create` method
+                serializer.save()  # This will call the `create` method in the serializer
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
 
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -557,23 +622,46 @@ class AddAdvertisementView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 
-class AdvertiserAdvertisementsView(APIView):
-    """
-    API view to fetch all advertisements added by the currently logged-in advertiser.
-    """
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get(self, request):
+    def put(self, request, advertisement_id):
         """
-        GET method to retrieve advertisements for the logged-in advertiser.
+        PUT method to update a single advertisement.
         """
         try:
-            # Fetch advertisements linked to the logged-in advertiser
-            advertisements = Advertisement.objects.filter(advertiser=request.user)
-            serializer = AdvertisementSerializer(advertisements, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            advertisement = self.get_object(advertisement_id, request.user)
+            if advertisement is None:
+                return Response(
+                    {"error": "Advertisement not found or you do not have permission to update it."},
+                    status=status.HTTP_404_NOT_FOUND,
+                )
+
+            serializer = AdvertisementSerializer(advertisement, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response(
                 {"error": "An unexpected error occurred.", "details": str(e)},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
+    def delete(self, request, advertisement_id):
+        """
+        DELETE method to remove a single advertisement.
+        """
+        try:
+            advertisement = self.get_object(advertisement_id, request.user)
+            if advertisement is None:
+                return Response(
+                    {"error": "Advertisement not found or you do not have permission to delete it."},
+                    status=status.HTTP_404_NOT_FOUND,
+                )
+
+            advertisement.delete()
+            return Response({"message": "Advertisement deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
+        except Exception as e:
+            return Response(
+                {"error": "An unexpected error occurred.", "details": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
