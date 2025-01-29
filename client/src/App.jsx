@@ -43,7 +43,15 @@ import AdvertisersDashboard from "./Pages/AdvertisersDashboard/AdvertisersDashbo
 import AdvertiserViewProfile from "./Pages/AdvertiserViewProfile/AdvertiserViewProfile";
 import AdvertiserEditProfile from "./Pages/AdvertiserEditProfile/AdvertiserEditProfile";
 import AdvertisersViewUsers from "./Pages/AdvertisersViewUsers/AdvertisersViewUsers";
-
+import AdvertisersAddAdvertisements from "./Pages/AdvertisersAddAdvertisements/AdvertisersAddAdvertisements";
+import AdvertisersViewAdvertisements from "./Pages/AdvertisersViewAdvertisements/AdvertisersViewAdvertisements";
+import AdvertisersViewAdvertisementDetails from "./Pages/AdvertisersViewAdvertisementDetails/AdvertisersViewAdvertisementDetails";
+import AdvertisersEditAdvertisements from "./Pages/AdvertisersEditAdvertisements/AdvertisersEditAdvertisements";
+import UserHomePage from "./Pages/UserHomePage/UserHomePage";
+import UserViewDetails from "./Pages/UserViewDetails/UserViewDetails";
+import UserResetPassword from "./Pages/UserResetPassword/UserResetPassword";
+import UserAreaOfInterests from "./Pages/UserAreaOfInterests/UserAreaOfInterests";
+import UserViewAdvertisementDetails from "./Pages/UserViewAdvertisementDetails/UserViewAdvertisementDetails";
 
 
 function App() {
@@ -97,6 +105,23 @@ function App() {
             </>
           }
         ></Route>
+
+        <Route
+        path="user-reset-password"
+        element={
+          <>
+          <Navbar />
+          <UserResetPassword/>
+          <Footer/>
+          </>
+        }
+        >
+        </Route>
+
+
+
+
+
         {/* contactus Route */}
         <Route
           path="/contact"
@@ -125,6 +150,7 @@ function App() {
             <>
               <Navbar />
               <TermsOfConditions />
+              <Footer/>
             </>
           }
         ></Route>
@@ -135,6 +161,7 @@ function App() {
             <>
               <Navbar />
               <PrivacyandPolicy />
+              <Footer/>
             </>
           }
         ></Route>
@@ -174,6 +201,19 @@ function App() {
           }
         ></Route>
 
+        <Route
+        path="/user-area-of-interest"
+        element={
+          <>
+          <Navbar/>
+          <UserAreaOfInterests />
+          <Footer/>
+          </>
+        }
+        >
+
+        </Route>
+
         {/* <Route
         {/* <Route
           path="/forget-password"
@@ -193,6 +233,7 @@ function App() {
             <>
               <HomePageNavbar />
               <UserEditProfile />
+              <Footer/>
             </>
           }
         >
@@ -213,9 +254,22 @@ function App() {
             <>
               <HomePageNavbar />
               <UserViewProfile />
+              <Footer/>
             </>
           }
         ></Route>
+
+        <Route
+        path="/user-view-advertisement-details"
+        element={
+          <>
+          <Navbar/>
+          <UserViewAdvertisementDetails/>
+          <Footer/>
+          </>
+        }>
+      
+        </Route>
 
         <Route
           path="/dashboard"
@@ -462,6 +516,79 @@ function App() {
         >
 
         </Route>
+
+        <Route
+        path="/advertisers-add-advertisements"
+        element={
+          <>
+          <AdvertiserViewSidebar />
+          <AdvertisersAddAdvertisements/>
+          </>
+        }
+        >
+
+        </Route>
+
+        <Route
+        path="/advertisers-view-advertisements"
+        element={
+          <>
+           <AdvertiserViewSidebar />
+          <AdvertisersViewAdvertisements/>
+          </>
+        }
+        >
+        </Route>
+
+        <Route
+        path="/advertisers-view-advertisement-details"
+        element={
+          <>
+          <AdvertiserViewSidebar />
+          <AdvertisersViewAdvertisementDetails/>
+          </>
+        }
+        >
+
+        </Route>
+
+        <Route
+        path="/advertisers-edit-advertisement"
+        element={
+          <>
+          <AdvertiserViewSidebar />
+          <AdvertisersEditAdvertisements/>
+          </>
+        }
+        >
+        </Route>
+
+
+        <Route
+        path="/user-homepage"
+        element={
+          <>
+            <HomePageNavbar />
+          <UserHomePage/>
+          <Footer/>
+          </>
+        }
+        >
+        </Route>
+
+        <Route
+        path="/user-view-details"
+        element={
+          <>
+          <HomePageNavbar />
+          <UserViewDetails/>
+          <Footer/>
+          </>
+        }
+        >
+        </Route>
+
+      
 
 
       </Routes>
