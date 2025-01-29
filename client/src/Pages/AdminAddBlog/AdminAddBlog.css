@@ -37,9 +37,17 @@
 
 .admin-add-blog-card-header {
     background-color: transparent;
-    
-
+    display: flex;
 }
+
+.admin-add-blog-card-title-field{
+   margin-left: 100px;
+}
+.admin-add-blog-card-content-field{
+    margin-left: 100px;
+    width: 700px;
+}
+
 
 .admin-add-blog-edit-button {
     width: 200px;

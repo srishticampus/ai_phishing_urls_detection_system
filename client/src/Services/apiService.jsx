@@ -91,10 +91,12 @@ export const refreshAccessToken = async () => {
   }
   return response;
 };
+
 //Check Login Status
 export const checkLoginStatus = () => {
   return !!localStorage.getItem("accessToken");
 };
+
 // Logout Function
 export const logout = () => {
   localStorage.removeItem("accessToken");
@@ -111,7 +113,7 @@ export const addUserProfile = async (formData) => {
 
 export const userProfile = async () => {
   return handleResponse(
-    apiClient.get("/api/user-profile-view/", generateConfig())
+    apiClient.get("/api/user-profile/view/", generateConfig())
   );
 };
 
