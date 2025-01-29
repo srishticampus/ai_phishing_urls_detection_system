@@ -245,7 +245,7 @@ class BlogListCreateView(APIView):
                 blog = Blog.objects.get(id=blog_id)
                 serializer = BlogSerializer(blog)
                 return Response(serializer.data,status=status.HTTP_200_OK)
-            except blog.DoesNotExist:
+            except Blog.DoesNotExist:
                 return Response({"error":"Blog does not exist"},status=status.HTTP_404_NOT_FOUND)   
         else:
             blogs = Blog.objects.all()
