@@ -1,40 +1,40 @@
-.admin-view-user-container{
+.admin-view-user-container {
   margin-left: 250px;
-    margin-top: 70px;
+  margin-top: 70px;
 }
 
 .admin-view-user-user-details-head {
-    color: #F18C00;
-margin-left: 10px;
-    font-family: Lato;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    letter-spacing: -0.24px;
-    text-transform: capitalize;
+  color: #F18C00;
+  margin-left: 10px;
+  font-family: Lato;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -0.24px;
+  text-transform: capitalize;
 }
- .admin-view-user-table-head{
-    background: #9A9A9A;
+
+.admin-view-user-table-head {
+  background: #9A9A9A;
 }
 
 .admin-view-user.dropdown-container {
-    display: flex;
-    align-items: center;
-    gap: 10px; }
-  
-  .admin-view-user.dropdown {
-    display: inline-block;
-  }
-  
-  .admin-view-user button {
-    display: inline-block;
-    background-color: #F18C00;
-    border: 0;
-  }
-  
-  .admin-view-user p {
-    margin: 0;
-  }
-  
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
+.admin-view-user.dropdown {
+  display: inline-block;
+}
+
+.admin-view-user button {
+  display: inline-block;
+  background-color: #F18C00;
+  border: 0;
+}
+
+.admin-view-user p {
+  margin: 0;
+}

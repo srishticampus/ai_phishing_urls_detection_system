@@ -32,7 +32,6 @@ function AdminViewBlog() {
         return <div>Loading...</div>; 
     }
 
-
     return (
         <div>
             <div className="admin-view-blog-container">
