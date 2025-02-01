@@ -49,6 +49,11 @@
 .admin-login-image{
     height: 100vh;
 }
+.error-text {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
 
 @media(max-width:600px){
     .admin-login-section-left{

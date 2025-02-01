@@ -13,19 +13,3 @@
     letter-spacing: -0.24px;
     text-transform: capitalize;
 }
-.tabl{
-    border: 1px solid black;
-    border-collapse: collapse;
-    
-}
-.tabl th {
-    border: 1px solid #000000; /* Border for header cells */
-    padding: 8px;
-    text-align: left;
-  }
-  .tabl tbody tr {
-    border: 1px solid #000000; 
-
-    padding: 8px;
-    text-align: left;
-  }

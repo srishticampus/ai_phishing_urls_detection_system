@@ -69,3 +69,6 @@ htmlcov/
 .cache
 .nox/
 pytestdebug.log
+
+#pickle files
+*.pkl
