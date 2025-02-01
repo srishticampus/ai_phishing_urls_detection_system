@@ -1,7 +1,8 @@
-import "../../Pages/AdminLogin/AdminLogin.css"
-import backgroundimg from "../../assets/Images/Login_Background.png"
+import "../../Pages/AdminLogin/AdminLogin.css";
+import backgroundimg from "../../assets/Images/Login_Background.png";
 import { useState } from "react";
 import 'font-awesome/css/font-awesome.min.css';
+import { login } from "../../Services/apiService";
 
 function AdminLogin() {
     const [showPassword, setShowPassword] = useState(false);
@@ -16,7 +17,7 @@ function AdminLogin() {
         setShowPassword(!showPassword);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         let formValid = true;
@@ -37,8 +38,20 @@ function AdminLogin() {
         setErrors(newErrors);
 
         if (formValid) {
-            // Proceed with form submission or login logic
-            console.log('Form submitted');
+            try {
+                // Include user_type in the request payload
+                const response = await login({ username, password, user_type: "admin" });
+                console.log('Login response:', response); 
+                if (response.success) {
+                    console.log('Login successful', response.data);
+                    // Handle successful login (e.g., redirect to admin dashboard)
+                } else {
+                    setErrors({ ...errors, password: 'Invalid username or password.' });
+                }
+            } catch (error) {
+                console.error('Login failed', error);
+                setErrors({ ...errors, password: 'An error occurred. Please try again.' });
+            }
         }
     };
 
@@ -79,7 +92,7 @@ function AdminLogin() {
                 </form>
             </div>
         </div>
-    )
+    );
 }
 
 export default AdminLogin;
