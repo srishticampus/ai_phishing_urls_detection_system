@@ -22,6 +22,7 @@ from django.urls import path,include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/',include('accounts.urls')),
+    path('ml/',include('ML.urls')),
 ]
 
 if settings.DEBUG and settings.DEV:
