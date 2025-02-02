@@ -10,7 +10,7 @@ from .views import (UserRegistrationView,LoginView,ForgotPasswordView,ResetPassw
                     UserProfileCreateView,UserProfileRetrieveView,UserProfileUpdateView,
                     InterestListView,BlogListCreateView,AdminUserListView,AdminToggleUserActivationView,
                     RegisterAdvertiserView,AdminAdvertiserListView,AdminNewAdvertiserListView,
-                    AdminAdvertisementsView,AdvertisementDetailView)
+                    AdminAdvertisementsView,AdvertisementDetailView,UserInterestAdvertisementsView,AddUserInterestsView)
 
 app_name = 'accounts'
 
@@ -24,6 +24,7 @@ urlpatterns = [
     path('user-profile/add/', UserProfileCreateView.as_view(), name='add-profile'),
     path('user-profile/view/', UserProfileRetrieveView.as_view(), name='profile-view'),
     path('user-profile/edit/', UserProfileUpdateView.as_view(), name='profile-edit'),
+     path('add-user-interests/', AddUserInterestsView.as_view(), name='add-user-interests'),
     path('interests/', InterestListView.as_view(), name='interest-list'),
 
     # Blog related URLs
@@ -40,6 +41,10 @@ urlpatterns = [
     path('admin-view-new-advertisers/', AdminNewAdvertiserListView.as_view(), 
          name='admin-view-new-advertisers'),
     path('admin/advertisements/', AdminAdvertisementsView.as_view(), name='admin-advertisements'),
-    path('advertisements/<int:advertisement_id>/', AdvertisementDetailView.as_view(), name='advertisement-detail'),
+    path('advertisements/<int:advertisement_id>/', AdvertisementDetailView.as_view(), 
+         name='advertisement-detail'),
     path('advertisements/', AdvertisementDetailView.as_view(), name='advertisement-create'),
+    path('advertisements/matching-interests/', UserInterestAdvertisementsView.as_view(), 
+         name='user-interest-advertisements'),
+
 ]

@@ -915,7 +915,7 @@ Retrieve details of a specific advertisement by its ID.
 | end_date         | Date (DD-MM-YYYY)  | Yes      | The end date of the advertisement campaign    |
 
 #### **Success Response**:  
-- **Code**: 201 Created 
+- **Code: 201 Created**  
 ```json
 {
     "id": 1,
@@ -1006,5 +1006,100 @@ Allows an admin to view all advertisements in the system.
   }
 
   ```
+### **19. Add User Interests**  
+Allows a user to add multiple interests to their profile.
+- **URL**: `api/add-user-interests/`  
+- **Method**: `POST`  
+- **Permission**: Requires authentication.
+
+#### **Request Body (JSON)**: 
+```json
+ {
+  "interest_ids": [1, 2, 3]
+ }
+```
+#### **Success Response**:
+- **Code**: 200 OK 
+```json
+{
+  "message": "Interests added successfully."
+}
+```
+- **Code: 400 Bad Request**  
+  ```json
+  {
+  "errors": {
+    "interest_ids": ["One or more interest IDs are invalid."]
+  }
+  }
+
+  ```
+  - **Code: 404 Not Found**  
+  ```json
+  {
+  "error": "User profile does not exist."
+  }
+
+  ```
+- **Code: 500 Internal Server Error**  
+  ```json
+  {
+  "error": "An unexpected error occurred.",
+  "details": "Error message describing the issue."
+  }
+
+  ```
+### **21. User Interest Advertisements**
+Retrieves advertisements that match the user's selected interests.
+
+- **URL**: `api/advertisements/matching-interests/` 
+- **Method**: `GET` 
+- **Permission**: Requires authentication.
+#### **Success Response**:
+- **Code**: 200 OK 
+```json
+[
+  {
+    "id": 1,
+    "ad_image": "http://example.com/media/advertisements/ad1.jpg",
+    "title": "Tech Gadgets Sale",
+    "link": "http://example.com/tech-sale",
+    "start_date": "2024-01-01",
+    "end_date": "2024-01-31",
+    "created_at": "2024-12-30T10:00:00Z",
+    "updated_at": "2024-12-30T10:00:00Z"
+  },
+  {
+    "id": 2,
+    "ad_image": "http://example.com/media/advertisements/ad2.jpg",
+    "title": "Sports Gear Discount",
+    "link": "http://example.com/sports-discount",
+    "start_date": "2024-02-01",
+    "end_date": "2024-02-28",
+    "created_at": "2024-12-30T10:00:00Z",
+    "updated_at": "2024-12-30T10:00:00Z"
+  }
+]
+```
+#### **Error Response**:
+- **Code: 204 No Content**  
+```json
+{
+  "message": "No advertisements found matching your interests."
+}
+```
+- **Code: 404 Not Found:**  
+```json
+{
+  "error": "User profile does not exist."
+}
+```
+- **Code: 500 Internal Server Error:** 
+```json
+{
+  "error": "An unexpected error occurred.",
+  "details": "Error message describing the issue."
+}
+```
 ---
 
