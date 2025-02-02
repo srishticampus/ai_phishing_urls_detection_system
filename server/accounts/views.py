@@ -17,7 +17,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.exceptions import APIException
 from rest_framework_simplejwt.views import TokenObtainPairView
-from accounts.models import User,UserProfile,Interest,Blog,AdvertiserProfile,Advertisement
+from accounts.models import User,UserProfile,Interest,Blog,AdvertiserProfile,Advertisement,UserInterest
 from .serializers import (UserSerializer,CustomTokenObtainPairSerializer,ResetPasswordSerializer,
                           UserProfileSerializer,InterestSerializer,BlogSerializer,
                           UserAdvertiserProfileSerializer,AdvertiserProfileSerializer,AdvertisementSerializer,AddUserInterestsSerializer)
@@ -719,7 +719,7 @@ class UserInterestAdvertisementsView(APIView):
             user_profile = UserProfile.objects.get(user=user)
 
             # Fetch the user's selected interests
-            user_interests = Interest.objects.filter(user_profile=user_profile)
+            user_interests = UserInterest.objects.filter(user_profile=user_profile)
             interest_ids = user_interests.values_list('interest_id', flat=True)
 
             # Find advertisers whose business_type matches the user's interests

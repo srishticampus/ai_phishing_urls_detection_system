@@ -8,6 +8,7 @@ from rest_framework import status
 from accounts.models import User, Advertisement  # Import from accounts app
 from accounts.permissions import IsAdmin  # Import custom permission class
 from ML.models import AdvertisementAnalysis  # Import from ML app
+from .utils import analyze_url  # Import the analyze_url function
 
 
 class CheckAdvertiserMaliciousLinksView(APIView):
@@ -75,3 +76,42 @@ class CheckAdvertiserMaliciousLinksView(APIView):
                 {"error": "An unexpected error occurred.", "details": str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
+
+class AdvertisementSafetyCheck(APIView):
+    """
+    API endpoint to check the safety prediction of an advertisement's link.
+    """
+    def get(self, request, ad_id, format=None):
+        """
+        GET request to check the safety prediction of an advertisement's link.
+        """
+        try:
+            # Get the advertisement by ID
+            ad = Advertisement.objects.get(id=ad_id)
+        except Advertisement.DoesNotExist:
+            return Response(
+                {'error': 'Advertisement not found'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        # Check if the link has already been analyzed
+        try:
+            analysis = ad.analysis
+        except AdvertisementAnalysis.DoesNotExist:
+            # If not analyzed, analyze the link and save the result
+            prediction = analyze_url(ad.link)
+            analysis = AdvertisementAnalysis.objects.create(
+                advertisement=ad,
+                prediction=prediction
+            )
+
+        # Map the prediction to a boolean "is_safe" value
+        is_safe = analysis.prediction.lower() == "benign"
+
+        # Return the prediction result
+        return Response({
+            'advertisement_id': ad_id,
+            'prediction': analysis.prediction,
+            'is_safe': is_safe,
+            'analyzed_at': analysis.analyzed_at
+        })
