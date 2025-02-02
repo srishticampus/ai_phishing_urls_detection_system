@@ -20,7 +20,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from accounts.models import User,UserProfile,Interest,Blog,AdvertiserProfile,Advertisement
 from .serializers import (UserSerializer,CustomTokenObtainPairSerializer,ResetPasswordSerializer,
                           UserProfileSerializer,InterestSerializer,BlogSerializer,
-                          UserAdvertiserProfileSerializer,AdvertiserProfileSerializer,AdvertisementSerializer)
+                          UserAdvertiserProfileSerializer,AdvertiserProfileSerializer,AdvertisementSerializer,AddUserInterestsSerializer)
 from .permissions import IsAdminorReadOnly,IsAdmin
 
 logger = logging.getLogger(__name__)
@@ -228,6 +228,41 @@ class InterestListView(APIView):
         interests = Interest.objects.all()
         serializer = InterestSerializer(interests, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+class AddUserInterestsView(APIView):
+    """
+    API view to add multiple interests to a user's profile.
+    """
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        """
+        POST method to add multiple interests to the user's profile.
+        """
+        try:
+            # Get the logged-in user's profile
+            user_profile = UserProfile.objects.get(user=request.user)
+
+            # Pass the user profile to the serializer context
+            serializer = AddUserInterestsSerializer(data=request.data, context={'user_profile': user_profile})
+            if serializer.is_valid():
+                serializer.save()
+                return Response(
+                    {"message": "Interests added successfully."},
+                    status=status.HTTP_200_OK
+                )
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        except UserProfile.DoesNotExist:
+            return Response(
+                {"error": "User profile does not exist."},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Exception as e:
+            return Response(
+                {"error": "An unexpected error occurred.", "details": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
 class BlogListCreateView(APIView):
     """
@@ -664,4 +699,54 @@ class AdvertisementDetailView(APIView):
             return Response(
                 {"error": "An unexpected error occurred.", "details": str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
+class UserInterestAdvertisementsView(APIView):
+    """
+    API view for a user to view all advertisements matching their selected interests.
+    """
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        """
+        GET method to fetch advertisements matching the user's interests.
+        """
+        try:
+            # Get the logged-in user
+            user = request.user
+
+            # Fetch the user's profile
+            user_profile = UserProfile.objects.get(user=user)
+
+            # Fetch the user's selected interests
+            user_interests = Interest.objects.filter(user_profile=user_profile)
+            interest_ids = user_interests.values_list('interest_id', flat=True)
+
+            # Find advertisers whose business_type matches the user's interests
+            matching_advertisers = AdvertiserProfile.objects.filter(business_type__id__in=interest_ids)
+            advertiser_ids = matching_advertisers.values_list('user_id', flat=True)
+
+            # Fetch advertisements from those advertisers
+            advertisements = Advertisement.objects.filter(advertiser__id__in=advertiser_ids)
+
+            # Serialize the advertisements
+            serializer = AdvertisementSerializer(advertisements, many=True)
+
+            # Return the response
+            if not serializer.data:
+                return Response(
+                    {"message": "No advertisements found matching your interests."},
+                    status=status.HTTP_204_NO_CONTENT
+                )
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        except UserProfile.DoesNotExist:
+            return Response(
+                {"error": "User profile does not exist."},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Exception as e:
+            return Response(
+                {"error": "An unexpected error occurred.", "details": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )

@@ -174,27 +174,36 @@ class InterestSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'icon']
 
 
-class UserInterestSerializer(serializers.ModelSerializer):
+class AddUserInterestsSerializer(serializers.Serializer):
     """
-    Serializer for the UserInterest model.
+    Serializer for adding multiple interests to a user.
     """
-    interest = InterestSerializer(read_only=True)  # Nested Interest serializer
-    interest_id = serializers.PrimaryKeyRelatedField(
-        queryset=Interest.objects.all(), source='interest', write_only=True
+    interest_ids = serializers.ListField(
+        child=serializers.IntegerField(),
+        write_only=True,
+        help_text="List of interest IDs to add to the user."
     )
 
-    class Meta:
-        model = UserInterest
-        fields = ['id', 'user_profile', 'interest', 'interest_id', 'added_on']
-        read_only_fields = ['added_on']
+    def validate_interest_ids(self, value):
+        """
+        Validate that the interest IDs exist in the database.
+        """
+        valid_interests = Interest.objects.filter(id__in=value)
+        if len(valid_interests) != len(value):
+            raise serializers.ValidationError("One or more interest IDs are invalid.")
+        return value
 
-    def create(self, validated_data):
+    def save(self, **kwargs):
         """
-        Overriding create to link the UserInterest with the correct UserProfile.
+        Save the interests to the user's profile.
         """
-        user_profile = self.context['request'].user.user_profile
-        validated_data['user_profile'] = user_profile
-        return super().create(validated_data)
+        user_profile = self.context['user_profile']
+        interest_ids = self.validated_data['interest_ids']
+
+        # Add interests to the user's profile
+        for interest_id in interest_ids:
+            interest = Interest.objects.get(id=interest_id)
+            UserInterest.objects.get_or_create(user_profile=user_profile, interest=interest)
 
 
 class AdvertiserProfileSerializer(serializers.ModelSerializer):
