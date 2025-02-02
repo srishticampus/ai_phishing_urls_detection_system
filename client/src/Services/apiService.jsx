@@ -125,6 +125,11 @@ export const updateUserProfile = async (formData) => {
   );
 };
 
+//Get Interests
+export const getInterests = async () => {
+  return handleResponse(apiClient.get("/api/interests/"),generateConfig());
+};
+
 // Admin Add Blogs
 
 export const addBlog = async (formData) => {
