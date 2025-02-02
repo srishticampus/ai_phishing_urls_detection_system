@@ -55,3 +55,10 @@
     letter-spacing: 1.7px;
     text-transform: uppercase;
 }
+.advertiser-logout-modal-title{
+    color: #FFF;
+}
+
+.advertiser-logout-login-button{
+    text-align: start;
+}

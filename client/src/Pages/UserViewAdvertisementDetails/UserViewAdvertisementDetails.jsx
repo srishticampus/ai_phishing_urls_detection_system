@@ -1,4 +1,4 @@
-import "../../Pages/UserViewAdvertisementDetails/UserViewAdvertisementDetails.css"
+import './USerViewAdvertisementDetails.css';
 import adv from "../../assets/Images/advertisement.png"
 
 

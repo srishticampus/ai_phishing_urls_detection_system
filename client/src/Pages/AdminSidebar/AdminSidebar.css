@@ -89,3 +89,11 @@
     letter-spacing: -0.16px;
     text-transform: capitalize;
 }
+.admin-logout-modal{
+    width: 250px;
+    position: fixed;
+    top: 600px;
+}
+.admin-logout-modal-title{
+    color: #F4F4F4;
+}

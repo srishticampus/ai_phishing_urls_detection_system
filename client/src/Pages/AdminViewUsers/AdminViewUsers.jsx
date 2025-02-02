@@ -99,6 +99,8 @@ function AdminViewUsers() {
                       unCheckedChildren="Inactive"
                       onChange={(checked) => handleSwitchChange(checked)}  // Update isActive state on toggle
                       style={{ backgroundColor: user.is_active ? "#F18C00" : "#BFBFBF" }}
+                   
+                    
                     />
                   </td>
                 </tr>

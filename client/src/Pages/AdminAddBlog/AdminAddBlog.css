@@ -26,7 +26,7 @@
 }
 
 .admin-add-blog-dropdown-button:hover {
-    width: 367px;
+
     background: #FDFDFD;
     color: black;
 }
@@ -41,11 +41,12 @@
 }
 
 .admin-add-blog-card-title-field{
-   margin-left: 100px;
+border: none;
 }
 .admin-add-blog-card-content-field{
-    margin-left: 100px;
+ 
     width: 700px;
+    border: none;
 }
 
 

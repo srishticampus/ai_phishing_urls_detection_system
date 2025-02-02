@@ -112,9 +112,29 @@ export const addUserProfile = async (formData) => {
 //user-profile-view
 
 export const userProfile = async () => {
-  return handleResponse(
-    apiClient.get("/api/user-profile/view/", generateConfig())
-  );
+  try {
+    const response = await apiClient.get("/api/user-profile/view/", generateConfig());
+    return { success: true, data: response.data };
+  } catch (error) {
+    if (error.response && error.response.status === 404) {
+      // Return an empty profile object if the profile does not exist
+      return {
+        success: true,
+        data: {
+          user: { first_name: "", last_name: "" },
+          phone_number: "",
+          gender: "",
+          photo: "",
+        },
+      };
+    } else {
+      // Handle other errors
+      return {
+        success: false,
+        errors: error.response ? error.response.data : { message: error.message },
+      };
+    }
+  }
 };
 
 // Update User Profile
@@ -123,6 +143,11 @@ export const updateUserProfile = async (formData) => {
   return handleResponse(
     apiClient.put("/api/user-profile/edit/", formData, generateConfig(true))
   );
+};
+
+//Get Interests
+export const getInterests = async () => {
+  return handleResponse(apiClient.get("/api/interests/"),generateConfig());
 };
 
 // Admin Add Blogs
