@@ -7,9 +7,8 @@ function AdminAddBlog() {
     const [content, setContent] = useState("");
     const [category, setCategory] = useState("LifeStyle");
     const [image, setImage] = useState(null);
-    const [interests, setInterests] = useState([]); // State to store interests
+    const [interests, setInterests] = useState([]); 
 
-    // Fetch the interests when the component mounts
     useEffect(() => {
         const fetchInterests = async () => {
             try {
@@ -82,7 +81,7 @@ function AdminAddBlog() {
                                                 {category}
                                             </button>
                                             <ul className="dropdown-menu">
-                                                {/* Map over interests to populate dropdown */}
+                                                
                                                 {interests.length > 0 ? (
                                                     interests.map((interest) => (
                                                         <li key={interest.id}>
