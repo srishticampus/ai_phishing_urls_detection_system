@@ -35,15 +35,18 @@ function AdminAddBlog() {
         formData.append("category", category);
         if (image) formData.append("image", image);
 
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
+        }
+
         try {
             await addBlog(formData);
-            alert("Blog added successfully!");
             setTitle("");
             setContent("");
             setCategory("LifeStyle");
             setImage(null);
         } catch (error) {
-            alert("Error adding blog!");
+            alert("Error adding blog!",error);
             console.error(error);
         }
     };

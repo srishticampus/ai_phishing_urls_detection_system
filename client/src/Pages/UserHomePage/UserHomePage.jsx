@@ -354,7 +354,7 @@ function UserHomePage() {
                 </div>
                 <div className="col-sm-3">
                     <div className="card user-homepage-card-size">
-                        <img className="homepage-card-img-size" src={adv} alt="Advertisement" />
+                        <img className="homepage-card-img-size mb-5" src={adv} alt="Advertisement" />
                     </div>
                     <div className="card user-homepage-card-size">
                         <img className="homepage-card-img-size" src={ads1} alt="Advertisement" />

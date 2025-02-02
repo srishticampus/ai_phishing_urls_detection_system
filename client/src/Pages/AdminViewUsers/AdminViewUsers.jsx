@@ -70,7 +70,7 @@ function AdminViewUsers() {
         <p className="admin-view-user-user-details-head">User Details</p>
         <div className="container-fluid">
           <table className="table table-responsive table-bordered">
-            <thead className="admin-view-user-table-head">
+            <thead className="admin-view-user-table-head table-secondary">
               <tr>
                 <th>S No</th>
                 <th>Profile</th>
@@ -87,17 +87,17 @@ function AdminViewUsers() {
                 <tr key={index}>
                   <td>{(currentPage - 1) * rowsPerPage + index + 1}</td>
                   <td><img src={profileface} alt="profile" /></td>
-                  <td>{user.user.first_name} {user.user.last_name}</td> {/* Accessing first_name and last_name from the 'user' object */}
+                  <td>{user.user.first_name} {user.user.last_name}</td> 
                   <td>{user.phone_number}</td>
-                  <td>{user.user.email}</td> {/* Accessing email from the 'user' object */}
+                  <td>{user.user.email}</td> 
                   <td>{user.gender}</td>
-                  <td>{user.interest || "N/A"}</td> {/* Assuming 'interest' might not be available */}
+                  <td>{user.interest || "N/A"}</td> 
                   <td>
                     <Switch
-                      checked={user.is_active}  // Bind the is_active state directly here
+                      checked={user.is_active}  
                       checkedChildren="Active"
                       unCheckedChildren="Inactive"
-                      onChange={(checked) => handleSwitchChange(checked)}  // Update isActive state on toggle
+                      onChange={(checked) => handleSwitchChange(checked)}  
                       style={{ backgroundColor: user.is_active ? "#F18C00" : "#BFBFBF" }}
                    
                     

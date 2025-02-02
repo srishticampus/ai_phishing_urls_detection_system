@@ -1,79 +1,109 @@
-.admin-view-advertisers-container{
-    margin-left: 250px;
-    margin-top: 70px;
+.admin-view-advertisers-container {
+  margin-left: 250px;
+  margin-top: 70px;
 }
-.admin-view-advertisers-view-request-button{
-    display: flex;
-width: 214px;
-padding: 10px 20px;
-justify-content: center;
-align-items: center;
-gap: 15px;
-border-radius: 32px;
-background: #F18C00;
-color: #FFF;
-text-align: center;
-font-family: Lato;
-font-size: 16px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
-letter-spacing: -0.16px;
-text-transform: capitalize;
-}
-.admin-view-advertisers-view-details-button{
-    display: flex;
-width: 214px;
-padding: 10px 20px;
-justify-content: center;
-align-items: center;
-gap: 15px;
-border-radius: 32px;
-border: 1px solid #F18C00;
-color: #F18C00;
-text-align: center;
-font-family: Lato;
-font-size: 16px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
-letter-spacing: -0.16px;
-text-transform: capitalize;
-}
-.admin-view-advertisers-button-container{
-    margin-top: 120px;
-}
-.admin-view-advertisers-head{
-    color: #F18C00;
 
-font-family: Lato;
-font-size: 24px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
-letter-spacing: -0.24px;
-text-transform: capitalize;
+.admin-view-advertisers-view-request-button {
+  display: flex;
+  width: 214px;
+  padding: 10px 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  border-radius: 32px;
+  background: #F18C00;
+  color: #FFF;
+  text-align: center;
+  font-family: Lato;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.16px;
+  text-transform: capitalize;
 }
-.admin-view-advertisers-button-rounded{
-    border-radius: 25px;
+
+.admin-view-advertisers-view-details-button {
+  display: flex;
+  width: 214px;
+  padding: 10px 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  border-radius: 32px;
+  border: 1px solid #F18C00;
+  color: #F18C00;
+  text-align: center;
+  font-family: Lato;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.16px;
+  text-transform: capitalize;
+}
+
+.admin-view-advertisers-button-container {
+  margin-top: 120px;
+}
+
+.admin-view-advertisers-head {
+  color: #F18C00;
+
+  font-family: Lato;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -0.24px;
+  text-transform: capitalize;
+}
+
+.admin-view-advertisers-button-rounded {
+  border-radius: 25px;
 }
 
 .admin-view-advertiser.dropdown-container {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Add some space between elements */
-  }
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* Add some space between elements */
+}
+
+.admin-view-advertiser.dropdown {
+  display: inline-block;
+  /* Ensures dropdown is aligned inline with the rest of the elements */
+}
+
+.admin-view-advertiser button {
+  display: inline-block;
+  background-color: #F18C00;
+  border: 0;
+}
+
+.admin-view-advertiser p {
+  margin: 0;
+}
+
+/* .admin-view-adv-table-head {
+  border-bottom: 1px solid #EAEAEA;
+
+  background: #9A9A9A;
+} */
+
+.admin-view-adv-details-button-color{
+  color: #F18C00; 
+  text-decoration: none;
+}
+.admin-view-adv-req{
+  color: #FFF;
+  text-decoration: none;
+}
+.admin-view-adv-req:hover{
+  color: #F18C00;
+  text-decoration: none;
+}
+.admin-view-details-req{
+  color: #FFF;
   
-  .admin-view-advertiser.dropdown {
-    display: inline-block; /* Ensures dropdown is aligned inline with the rest of the elements */
-  }
-  
-  .admin-view-advertiser button {
-    display: inline-block;
-    background-color: #F18C00;
-    border: 0;
-  }
-  
-  .admin-view-advertiser p {
-    margin: 0;
-  }
+}

@@ -1,6 +1,7 @@
 import "../../Pages/AdminViewDetails/AdminViewDetails.css"
 import { Switch } from "antd";
 import { useState } from "react";
+import { Link } from "react-router";
 
 
 function AdminViewDetails() {
@@ -24,8 +25,8 @@ function AdminViewDetails() {
     return (
         <div className="admin-view-details-container">
             <div className="d-flex justify-content-center admin-view-details-button-container">
-                <button className="btn admin-view-details-view-request-button">View Request</button>
-                <button className="btn admin-view-details-view-details-button">View Details</button>
+                <button className="btn admin-view-details-view-request-button"><Link className="admin-view-details-req" to="/admin-view-advertisers">View Request</Link></button>
+                <button className="btn admin-view-details-view-details-button"><Link className="admin-view-details-details" to="/admin-view-details">View Details</Link></button>
             </div>
             <div>
                 <p className="admin-view-details-head">View Details</p>
