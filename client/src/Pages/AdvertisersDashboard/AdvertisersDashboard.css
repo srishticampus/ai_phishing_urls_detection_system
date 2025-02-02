@@ -1,6 +1,8 @@
 .advertisers-dashboard-container {
     margin-left: 250px;
     margin-top: 70px;
+    position: absolute;
+    z-index: -10;
 }
 
 .advertisers-dashboard-head {

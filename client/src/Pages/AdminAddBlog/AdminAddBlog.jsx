@@ -1,45 +1,44 @@
-import { useState } from "react";
-import { addBlog } from "../../Services/apiService"; // Import addBlog from your apiService
+import { useState, useEffect } from "react";
+import { addBlog, getInterests } from "../../Services/apiService"; 
 import "../../Pages/AdminAddBlog/AdminAddBlog.css";
 
 function AdminAddBlog() {
-    // Define state for the form fields
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [category, setCategory] = useState("LifeStyle");
     const [image, setImage] = useState(null);
+    const [interests, setInterests] = useState([]); // State to store interests
 
-    // Handle the title input change
-    const handleTitleChange = (event) => {
-        setTitle(event.target.value);
-    };
+    // Fetch the interests when the component mounts
+    useEffect(() => {
+        const fetchInterests = async () => {
+            try {
+                const response = await getInterests();
+                console.log("API: Response",response)
+                setInterests(response.data);
+            } catch (error) {
+                console.error("Error fetching interests:", error);
+            }
+        };
 
-    // Handle the content input change
-    const handleContentChange = (event) => {
-        setContent(event.target.value);
-    };
+        fetchInterests();
+    }, []);
 
-    // Handle file input change
-    const handleImageChange = (event) => {
-        setImage(event.target.files[0]);
-    };
+    const handleTitleChange = (event) => setTitle(event.target.value);
+    const handleContentChange = (event) => setContent(event.target.value);
+    const handleImageChange = (event) => setImage(event.target.files[0]);
 
-    // Handle form submission
     const handleSubmit = async (event) => {
         event.preventDefault();
-
-        // Prepare the form data to send
         const formData = new FormData();
         formData.append("title", title);
         formData.append("content", content);
         formData.append("category", category);
-        if (image) formData.append("image", image); // Only append if there's an image selected
+        if (image) formData.append("image", image);
 
         try {
-            // Call the addBlog function with the form data
             await addBlog(formData);
             alert("Blog added successfully!");
-            // Optionally, reset the form after submission
             setTitle("");
             setContent("");
             setCategory("LifeStyle");
@@ -83,33 +82,22 @@ function AdminAddBlog() {
                                                 {category}
                                             </button>
                                             <ul className="dropdown-menu">
-                                                <li>
-                                                    <a
-                                                        className="dropdown-item"
-                                                        href="#"
-                                                        onClick={() => setCategory("LifeStyle")}
-                                                    >
-                                                        LifeStyle
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        className="dropdown-item"
-                                                        href="#"
-                                                        onClick={() => setCategory("Health")}
-                                                    >
-                                                        Health
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        className="dropdown-item"
-                                                        href="#"
-                                                        onClick={() => setCategory("Technology")}
-                                                    >
-                                                        Technology
-                                                    </a>
-                                                </li>
+                                                {/* Map over interests to populate dropdown */}
+                                                {interests.length > 0 ? (
+                                                    interests.map((interest) => (
+                                                        <li key={interest.id}>
+                                                            <a
+                                                                className="dropdown-item"
+                                                                href="#"
+                                                                onClick={() => setCategory(interest.name)}
+                                                            >
+                                                                {interest.name}
+                                                            </a>
+                                                        </li>
+                                                    ))
+                                                ) : (
+                                                    <li>No interests available</li>
+                                                )}
                                             </ul>
                                         </div>
                                     </div>
@@ -119,18 +107,17 @@ function AdminAddBlog() {
                                     <div className="col-sm-12">
                                         <div className="card">
                                             <div className="card-header admin-add-blog-card-header">
-                                                <label>Title:</label>
+                                                <label className="mt-3">Title:</label>
                                                 <div>
-                                                <input
-                                                    type="text"
-                                                    className="form-control admin-add-blog-card-title-field"
-                                                    value={title}
-                                                    onChange={handleTitleChange}
-                                                    required
-                                                />
+                                                    <input
+                                                        type="text"
+                                                        className="form-control admin-add-blog-card-title-field"
+                                                        value={title}
+                                                        onChange={handleTitleChange}
+                                                        required
+                                                    />
                                                 </div>
                                             </div>
-                                         
                                         </div>
                                     </div>
                                 </div>
@@ -139,7 +126,7 @@ function AdminAddBlog() {
                                     <div className="col-sm-12">
                                         <div className="card">
                                             <div className="card-header admin-add-blog-card-header">
-                                       <div>         <label>Content:</label></div>
+                                                <label className="mt-2">Content:</label>
                                                 <div>
                                                     <textarea
                                                         className="form-control admin-add-blog-card-content-field"
@@ -150,7 +137,6 @@ function AdminAddBlog() {
                                                     ></textarea>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>

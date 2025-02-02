@@ -3,6 +3,7 @@ import backgroundimg from "../../assets/Images/Login_Background.png";
 import { useState } from "react";
 import 'font-awesome/css/font-awesome.min.css';
 import { login } from "../../Services/apiService";
+import { useNavigate } from "react-router";
 
 function AdminLogin() {
     const [showPassword, setShowPassword] = useState(false);
@@ -12,6 +13,8 @@ function AdminLogin() {
         username: '',
         password: ''
     });
+
+const navigate = useNavigate();
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -44,6 +47,7 @@ function AdminLogin() {
                 console.log('Login response:', response); 
                 if (response.success) {
                     console.log('Login successful', response.data);
+                    navigate('/admin-dashboard');
                     // Handle successful login (e.g., redirect to admin dashboard)
                 } else {
                     setErrors({ ...errors, password: 'Invalid username or password.' });
