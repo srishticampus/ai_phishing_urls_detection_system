@@ -36,7 +36,7 @@ function AdvertisersForgetPassword() {
         <div className="d-flex justify-content-center mt-4">
           <button
             className="btn btn-dark advertisers-forget-password-btn"
-            disabled={!isEmailValid} // Disable button if email is not valid
+            disabled={!isEmailValid} 
           >
             <Link className="adv-forget-pass-next" to="/advertisers-reset-password">Next</Link>
           </button>
