@@ -19,7 +19,7 @@ from rest_framework.exceptions import APIException
 from rest_framework_simplejwt.views import TokenObtainPairView
 from accounts.models import User,UserProfile,Interest,Blog,AdvertiserProfile,Advertisement,UserInterest
 from .serializers import (UserSerializer,CustomTokenObtainPairSerializer,ResetPasswordSerializer,
-                          UserProfileSerializer,InterestSerializer,BlogSerializer,
+                          UserProfileSerializer,InterestSerializer,BlogSerializer,UserDetailsSerializer,
                           UserAdvertiserProfileSerializer,AdvertiserProfileSerializer,AdvertisementSerializer,AddUserInterestsSerializer)
 from .permissions import IsAdminorReadOnly,IsAdmin
 
@@ -360,7 +360,7 @@ class AdminUserListView(APIView):
             # If UserProfile data is empty, fetch all User objects
             if not profile_serializer.data:
                 users = User.objects.filter(user_type='user')
-                user_serializer = UserSerializer(users, many=True)
+                user_serializer = UserDetailsSerializer(users, many=True)
                 if not user_serializer.data:
                     return Response({"message": "No users found"}, 
                                     status=status.HTTP_204_NO_CONTENT)
@@ -375,7 +375,7 @@ class AdminUserListView(APIView):
             ]
 
             # Serialize users without profiles
-            users_without_profiles_serializer = UserSerializer(users_without_profiles, many=True)
+            users_without_profiles_serializer = UserDetailsSerializer(users_without_profiles, many=True)
 
             # Combine both datasets
             combined_data = profile_serializer.data + users_without_profiles_serializer.data

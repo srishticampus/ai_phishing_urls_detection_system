@@ -15,25 +15,27 @@ from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth import authenticate
 from django.db import transaction
-from .models import (User,UserProfile,Interest,UserInterest,AdvertiserProfile,Blog,
-                     Advertisement,validate_phone_number)
+from .models import (User, UserProfile, Interest, UserInterest, AdvertiserProfile, Blog,
+                     Advertisement, validate_phone_number)
 
-#Serializer for the User Model
+
+# Serializer for the User Model
 class UserSerializer(serializers.ModelSerializer):
     """
-        serializer for the django user model
+    Serializer for the Django User model.
     """
     class Meta:
         model = User
-        fields = ['id','username','email','password','is_active','user_type']
+        fields = ['id', 'username', 'email', 'password', 'is_active', 'user_type']
         extra_kwargs = {
             'username': {'required': True},
             'email': {'required': True},
-            'password': {'required': True,'write_only':True},
-            'user_type':{'required':True},
+            'password': {'required': True, 'write_only': True},
+            'user_type': {'required': True},
         }
+
     def create(self, validated_data):
-    # Ensures the password is hashed before saving
+        # Ensures the password is hashed before saving
         user = User.objects.create_user(
             username=validated_data['username'],
             email=validated_data['email'],
@@ -41,6 +43,8 @@ class UserSerializer(serializers.ModelSerializer):
             user_type=validated_data['user_type'],
         )
         return user
+
+
 # Custom JWT Token Serializer
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     """
@@ -69,15 +73,15 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         return data
 
     def create(self, validated_data):
-        raise NotImplementedError("Create method not implemented")
+        raise NotImplementedError("This method is not implemented.")
 
     def update(self, instance, validated_data):
-        raise NotImplementedError("Update method not implemented")
-    
+        raise NotImplementedError("This method is not implemented.")
+
+
 class ResetPasswordSerializer(serializers.Serializer):
     """
-    this is the serializer for the reset password it takes in the fields uid, token and the new 
-    password
+    Serializer for resetting the password.
     """
     uid = serializers.CharField()
     token = serializers.CharField()
@@ -100,11 +104,12 @@ class ResetPasswordSerializer(serializers.Serializer):
         user = User.objects.get(pk=uid)
         user.set_password(self.validated_data['new_password'])
         user.save()
+
     def create(self, validated_data):
-        raise NotImplementedError("Create method not implemented")
+        raise NotImplementedError("This method is not implemented.")
 
     def update(self, instance, validated_data):
-        raise NotImplementedError("Update method not implemented")
+        raise NotImplementedError("This method is not implemented.")
 
 class UserDetailsSerializer(serializers.ModelSerializer):
     """
@@ -112,7 +117,26 @@ class UserDetailsSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = User
-        fields = ['id','username', 'email', 'first_name', 'last_name','is_active','user_type']
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'is_active', 'user_type']
+
+class InterestSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the Interest model.
+    """
+    class Meta:
+        model = Interest
+        fields = ['id', 'name', 'icon']
+
+class UserInterestSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the UserInterest model.
+    """
+    interest = InterestSerializer()
+
+    class Meta:
+        model = UserInterest
+        fields = ['interest', 'added_on']
+
 
 class UserProfileSerializer(serializers.ModelSerializer):
     """
@@ -123,14 +147,16 @@ class UserProfileSerializer(serializers.ModelSerializer):
     last_name = serializers.CharField(write_only=True)
     photo = serializers.ImageField(required=False)
     user = UserDetailsSerializer(read_only=True)  # Nested user serializer
+    interests = UserInterestSerializer(source='user_interests', 
+                                       many=True, read_only=True)  # Nested interests serializer
 
     class Meta:
         model = UserProfile
-        fields = [ 'user','phone_number', 'gender', 'photo', 'first_name', 'last_name',]
+        fields = ['user', 'phone_number', 'gender', 'photo', 'first_name', 'last_name', 'interests']
 
     def create(self, validated_data):
         """
-        Overriding create to ensure first_name and last_name are updated in the User model
+        Overriding create to ensure first_name and last_name are updated in the User model.
         """
         user = self.context['request'].user
         validated_data['user'] = user
@@ -165,13 +191,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
         user.save()
 
         return super().update(instance, validated_data)
-class InterestSerializer(serializers.ModelSerializer):
-    """
-    Serializer for the Interest model.
-    """
-    class Meta:
-        model = Interest
-        fields = ['id', 'name', 'icon']
 
 
 class AddUserInterestsSerializer(serializers.Serializer):
@@ -205,6 +224,11 @@ class AddUserInterestsSerializer(serializers.Serializer):
             interest = Interest.objects.get(id=interest_id)
             UserInterest.objects.get_or_create(user_profile=user_profile, interest=interest)
 
+    def create(self, validated_data):
+        raise NotImplementedError("This method is not implemented.")
+
+    def update(self, instance, validated_data):
+        raise NotImplementedError("This method is not implemented.")
 
 class AdvertiserProfileSerializer(serializers.ModelSerializer):
     """
@@ -243,6 +267,7 @@ class AdvertiserProfileSerializer(serializers.ModelSerializer):
             setattr(instance, attr, value)
         instance.save()
         return instance
+
 
 class UserAdvertiserProfileSerializer(serializers.Serializer):
     """
@@ -293,34 +318,29 @@ class UserAdvertiserProfileSerializer(serializers.Serializer):
             'user': user_serializer.data,
             'advertiser_profile': AdvertiserProfileSerializer(advertiser_profile).data
         }
-
-    @transaction.atomic
     def update(self, instance, validated_data):
-        """
-        Custom update to allow partial updates for AdvertiserProfile.
-        """
-        raise NotImplementedError("Update method not implemented")
+        raise NotImplementedError("This method is not implemented.")
 
-#Serializer for the Blog Model
 class BlogSerializer(serializers.ModelSerializer):
     """
-    Serializer for the Blog model
+    Serializer for the Blog model.
     """
     interests = InterestSerializer(read_only=True)  # Nested Interest serializer
     interest_id = serializers.PrimaryKeyRelatedField(queryset=Interest.objects.all(),
-                                                      write_only=True, source='interests')
+                                                     write_only=True, source='interests')
 
     class Meta:
         model = Blog
-        fields = ['id', 'title', 'content', 'image', 'interests', 'interest_id','created_at', 'updated_at']
+        fields = ['id', 'title', 'content', 'image', 'interests', 'interest_id', 'created_at', 
+                  'updated_at']
         read_only_fields = ['author', 'created_at', 'updated_at']
 
     def validate(self, attrs):
         """
-        Prevent modifiying the interests during update
+        Prevent modifying the interests during update.
         """
         if self.instance and 'interest' in attrs:
-            raise serializers.ValidationError({"interest":
+            raise serializers.ValidationError({"interest": 
                                                "Interest cannot be modified after creation."})
         return attrs
 
@@ -329,12 +349,13 @@ class BlogSerializer(serializers.ModelSerializer):
         validated_data['author'] = self.context['request'].user
         return super().create(validated_data)
 
-    def update(self,instance,validated_data):
+    def update(self, instance, validated_data):
         """
-        Handle updates, ensuring `interests` is not modified
+        Handle updates, ensuring `interests` is not modified.
         """
         validated_data.pop('interests', None)
         return super().update(instance, validated_data)
+
 
 class AdvertisementSerializer(serializers.ModelSerializer):
     """
@@ -342,7 +363,8 @@ class AdvertisementSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Advertisement
-        fields = ['id', 'ad_image', 'title', 'link', 'start_date', 'end_date', 'created_at', 'updated_at']
+        fields = ['id', 'ad_image', 'title', 'link', 'start_date', 'end_date', 
+                  'created_at', 'updated_at']
 
     def to_internal_value(self, data):
         # Parse start_date and end_date from DD-MM-YYYY to YYYY-MM-DD
@@ -351,12 +373,14 @@ class AdvertisementSerializer(serializers.ModelSerializer):
                 try:
                     data[date_field] = datetime.strptime(data[date_field], "%d-%m-%Y").date()
                 except ValueError as exc:
-                    raise serializers.ValidationError({date_field: "Date must be in DD-MM-YYYY format."}) from exc
+                    raise serializers.ValidationError({date_field: 
+                                                "Date must be in DD-MM-YYYY format."}) from exc
         return super().to_internal_value(data)
+
     def create(self, validated_data):
         # Get the advertiser from the context
         advertiser = self.context['request'].user
 
         # Create the Advertisement instance with the advertiser
         advertisement = Advertisement.objects.create(advertiser=advertiser, **validated_data)
-        return advertisement    
+        return advertisement

@@ -259,15 +259,18 @@ Allows an authenticated user to create a profile.
 ```json
 {
     "user": {
-        "username": "sample123",
-        "email": "sample@123gmail.com",
+        "id": 1,
+        "username": "john_doe",
+        "email": "john.doe@example.com",
         "first_name": "John",
         "last_name": "Doe",
+        "is_active": true,
         "user_type": "user"
     },
-    "phone_number": "9495211413",
+    "phone_number": "1234567890",
     "gender": "M",
-    "photo": "http://127.0.0.1:8000/media/profile_photos/94605_6FYifMb.jpg"
+    "photo": "http://127.0.0.1:8000/media/profile_photos/john_doe.jpg",
+    "interests": []
 }
 ```
 
@@ -295,15 +298,35 @@ Retrieves the profile of the authenticated user.
 ```json
 {
     "user": {
-        "username": "sample123",
-        "email": "sample@123gmail.com",
+        "id": 1,
+        "username": "john_doe",
+        "email": "john.doe@example.com",
         "first_name": "John",
         "last_name": "Doe",
+        "is_active": true,
         "user_type": "user"
     },
-    "phone_number": "9495211413",
+    "phone_number": "1234567890",
     "gender": "M",
-    "photo": "http://127.0.0.1:8000/media/profile_photos/94605_6FYifMb.jpg"
+    "photo": "http://127.0.0.1:8000/media/profile_photos/john_doe.jpg",
+    "interests": [
+        {
+            "interest": {
+                "id": 1,
+                "name": "Technology",
+                "icon": "http://127.0.0.1:8000/media/interest_icons/tech.png"
+            },
+            "added_on": "2024-01-01T12:00:00Z"
+        },
+        {
+            "interest": {
+                "id": 2,
+                "name": "Health & Wellness",
+                "icon": "http://127.0.0.1:8000/media/interest_icons/health.png"
+            },
+            "added_on": "2024-01-02T12:00:00Z"
+        }
+    ]
 }
 ```
 
@@ -311,9 +334,7 @@ Retrieves the profile of the authenticated user.
 - **Code**: 404 Not Found  
 ```json
 {
-  "errors": {
-    "detail": "Profile not found."
-  }
+    "error": "Profile does not exist."
 }
 ```
 
@@ -340,15 +361,18 @@ Updates the profile of the authenticated user.
 ```json
 {
     "user": {
-        "username": "sample123",
-        "email": "sample@123gmail.com",
+        "id": 1,
+        "username": "john_doe",
+        "email": "john.doe@example.com",
         "first_name": "John",
         "last_name": "Doe",
+        "is_active": true,
         "user_type": "user"
     },
-    "phone_number": "9495211443",
+    "phone_number": "1234567890",
     "gender": "M",
-    "photo": "http://127.0.0.1:8000/media/profile_photos/94605_6FYifMb.jpg"
+    "photo": "http://127.0.0.1:8000/media/profile_photos/john_doe.jpg",
+    "interests": []
 }
 ```
 
@@ -590,7 +614,7 @@ Retrieves a list of available interests.
 - **Public Access:** `GET` method for viewing blogs.
 
 ### **13. Admin View Users**
-
+Retrieves details of all users, including their profiles and interests.
 **URL:** `/api/admin-view-users/`  
 **Method:** `GET`  
 **Description:** Retrieves details of all users with `user_type='user'`, including their profiles if available. Users without profiles are also included.
@@ -603,24 +627,61 @@ Retrieves a list of available interests.
   If users with profiles are found:
   ```json
   [
-      {
-          "user": {
-              "username": "john_doe",
-              "email": "john.doe@example.com",
-              "first_name": "John",
-              "last_name": "Doe",
-              "user_type": "user"
-          },
-          "phone_number": "1234567890",
-          "gender": "M",
-          "photo": "/media/profile_photos/john_doe.jpg"
-      },
-      {
-          "username": "jane_doe",
-          "email": "jane.doe@example.com",
-          "user_type": "user"
-      }
+    {
+        "user": {
+            "id": 1,
+            "username": "john_doe",
+            "email": "john.doe@example.com",
+            "first_name": "John",
+            "last_name": "Doe",
+            "is_active": true,
+            "user_type": "user"
+        },
+        "phone_number": "1234567890",
+        "gender": "M",
+        "photo": "http://127.0.0.1:8000/media/profile_photos/john_doe.jpg",
+        "interests": [
+            {
+                "interest": {
+                    "id": 1,
+                    "name": "Technology",
+                    "icon": "http://127.0.0.1:8000/media/interest_icons/tech.png"
+                },
+                "added_on": "2024-01-01T12:00:00Z"
+            },
+            {
+                "interest": {
+                    "id": 2,
+                    "name": "Health & Wellness",
+                    "icon": "http://127.0.0.1:8000/media/interest_icons/health.png"
+                },
+                "added_on": "2024-01-02T12:00:00Z"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "username": "jane_doe",
+        "email": "jane.doe@example.com",
+        "is_active": true,
+        "user_type": "user"
+    }
   ]
+  ```
+#### **Error Responses** 
+- **Code:** 204 No Content
+```json
+{
+    "message": "No users found."
+}
+```
+- **Code:** 500 Internal Server Error
+```json
+{
+    "error": "An unexpected error occurred.",
+    "details": "<error_message>"
+}
+```
 
 ### **13. AdminToggleUserActivation API**
 ## Overview
