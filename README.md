@@ -1049,7 +1049,7 @@ Allows a user to add multiple interests to their profile.
   }
 
   ```
-### **21. User Interest Advertisements**
+### **22. User Interest Advertisements**
 Retrieves advertisements that match the user's selected interests.
 
 - **URL**: `api/advertisements/matching-interests/` 
@@ -1101,5 +1101,61 @@ Retrieves advertisements that match the user's selected interests.
   "details": "Error message describing the issue."
 }
 ```
+### **23. Check Advertiser Malicious Links**
+Checks if a specific advertiser has posted any malicious links in their advertisements.
+
+- **URL**: `/ml/check-malicious-links/<int:advertiser_id>/` 
+- **Method**: `GET` 
+- **Permission**: Admin-only (requires IsAdmin permission).
+#### **Success Response**:
+- **Code**: 200 OK 
+If malicious links are found:
+```json
+{
+    "message": "Malicious links found.",
+    "advertiser_id": 1,
+    "advertiser_username": "advertiser1",
+    "is_malicious": true,
+    "malicious_links": [
+        {
+            "advertisement_id": 1,
+            "title": "Special Offer!",
+            "link": "http://malicious-link.com",
+            "prediction": "Phishing"
+        },
+        {
+            "advertisement_id": 2,
+            "title": "Free Gift!",
+            "link": "http://another-malicious-link.com",
+            "prediction": "Malware"
+        }
+    ]
+}
+```
+If no malicious links are found:
+```json
+{
+    "message": "No malicious links found for this advertiser.",
+    "advertiser_id": 1,
+    "advertiser_username": "advertiser1",
+    "is_malicious": false
+}
+```
+#### **Error Response**:
+- **Code: 404 Not Found:**  
+```json
+{
+    "error": "Advertiser not found."
+}
+```
+- **Code: 500 Internal Server Error:** 
+```json
+{
+    "error": "An unexpected error occurred.",
+    "details": "<error_message>"
+}
+```
 ---
+
+
 
