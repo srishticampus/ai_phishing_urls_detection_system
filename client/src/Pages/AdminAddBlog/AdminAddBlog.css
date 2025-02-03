@@ -22,7 +22,8 @@
 }
 
 .admin-add-blog-dropdown-button {
-    width: 347px;
+    max-width: 347px;
+
 }
 
 .admin-add-blog-dropdown-button:hover {

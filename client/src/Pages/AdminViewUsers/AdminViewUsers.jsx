@@ -67,7 +67,7 @@ function AdminViewUsers() {
         <p className="admin-view-user-user-details-head">User Details</p>
         <div className="container-fluid">
           <table className="table table-responsive table-bordered">
-            <thead className="admin-view-user-table-head">
+            <thead className="admin-view-user-table-head table-secondary">
               <tr>
                 <th>S No</th>
                 <th>Profile</th>

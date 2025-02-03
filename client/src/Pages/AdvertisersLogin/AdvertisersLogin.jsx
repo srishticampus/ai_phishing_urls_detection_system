@@ -59,7 +59,7 @@ function AdvertisersLogin() {
             />
           </div>
           {errorMessage && <p className="error-message">{errorMessage}</p>}
-          <Link className="advertiser-login-forgotpassword" to="/">
+          <Link className="advertiser-login-forgotpassword" to="/advertisers-forget-password">
             Forget Password ?
           </Link>
           <div className="d-flex justify-content-center mt-4">
@@ -70,7 +70,7 @@ function AdvertisersLogin() {
         </form>
         <p className="advertiser-login-dont-have-account mt-4">
           Don&apos;t have an Account ?{" "}
-          <a className="advertiser-login-dont-have-account-atag" href="/advertiser-signup">
+          <a className="advertiser-login-dont-have-account-atag" href="/advertisers-signup">
             Sign up
           </a>
         </p>

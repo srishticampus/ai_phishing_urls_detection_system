@@ -2,6 +2,7 @@ import "../../Pages/AdminViewAdvertisers/AdminViewAdvertisers.css"
 import cancel from "../../assets/Images/cancel.png"
 import accept from "../../assets/Images/accept.png"
 import { useState } from "react";
+import {Link } from "react-router";
 
 function AdminViewAdvertisers() {
   
@@ -10,19 +11,23 @@ function AdminViewAdvertisers() {
     const handleDropdownClick = (value) => {
       setDropdownValue(value); 
     };
+
+
   
   return (
     <div className="admin-view-advertisers-container">
       <div className="d-flex justify-content-center admin-view-advertisers-button-container">
-        <button className="btn admin-view-advertisers-view-request-button">View Request</button>
-        <button className="btn btn-outline-warning admin-view-advertisers-view-details-button ms-5">View Details</button>
+        <button className="btn admin-view-advertisers-view-request-button"><Link className="admin-view-adv-req" to="/admin-view-advertisers">View Request</Link></button>
+        <button className="btn btn-outline-warning admin-view-advertisers-view-details-button ms-5">
+          <Link className="admin-view-adv-details-button-color" to="/admin-view-details">View Details</Link>
+        </button>
       </div>
      <div>
         <p className="admin-view-advertisers-head">View Requests</p>
      </div>
-     <div>
-        <table className="table table-bordered ">
-            <thead>
+     <div className="container">
+        <table className="table table-bordered admin-view-adv-table-border">
+            <thead className="admin-view-adv-table-head table-secondary text-center" >
                 <tr>
                     <th>S No</th>
                     <th>Name</th>
@@ -33,7 +38,7 @@ function AdminViewAdvertisers() {
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody className="text-center">
                 <tr>
                     <td>1</td>
                     <td>Saravanan</td>
