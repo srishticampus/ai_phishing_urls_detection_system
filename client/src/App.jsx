@@ -194,7 +194,7 @@ function App() {
           path="/user-profile"
           element={
             <>
-              <Navbar />
+              <UserNavbar />
               <UserProfile />
               <Footer />
             </>
@@ -205,7 +205,7 @@ function App() {
         path="/user-area-of-interest"
         element={
           <>
-          <Navbar/>
+          <UserNavbar/>
           <UserAreaOfInterests />
           <Footer/>
           </>

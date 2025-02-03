@@ -173,6 +173,15 @@ export const updateBlog = async (id, formData) => {
   );
 };
 
+//User add interest
+
+export const userAddInterest = async (formData) => {
+  return handleResponse(
+    apiClient.post(`/api/add-user-interests/`, formData, generateConfig(true))
+  );
+};
+
+
 // Admin Delete Blogs
 
 export const deleteBlog = async (id) => {

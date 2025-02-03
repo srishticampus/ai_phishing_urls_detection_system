@@ -37,7 +37,7 @@ function AdminSidebar() {
                 </div>
                 <div className="d-flex justify-content-center">
                     <button className="btn admin-dashboard-btn">
-                        <Link to="/admin-dashboard" className="btn">Dashboard</Link>
+                        <Link to="/admin-dashboard" className="btn admin-dashboard-btn-border">Dashboard</Link>
                     </button>
                 </div>
 

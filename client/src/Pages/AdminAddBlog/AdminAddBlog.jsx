@@ -7,9 +7,8 @@ function AdminAddBlog() {
     const [content, setContent] = useState("");
     const [category, setCategory] = useState("LifeStyle");
     const [image, setImage] = useState(null);
-    const [interests, setInterests] = useState([]); // State to store interests
+    const [interests, setInterests] = useState([]); 
 
-    // Fetch the interests when the component mounts
     useEffect(() => {
         const fetchInterests = async () => {
             try {
@@ -36,15 +35,18 @@ function AdminAddBlog() {
         formData.append("category", category);
         if (image) formData.append("image", image);
 
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
+        }
+
         try {
             await addBlog(formData);
-            alert("Blog added successfully!");
             setTitle("");
             setContent("");
             setCategory("LifeStyle");
             setImage(null);
         } catch (error) {
-            alert("Error adding blog!");
+            alert("Error adding blog!",error);
             console.error(error);
         }
     };
@@ -82,7 +84,7 @@ function AdminAddBlog() {
                                                 {category}
                                             </button>
                                             <ul className="dropdown-menu">
-                                                {/* Map over interests to populate dropdown */}
+                                                
                                                 {interests.length > 0 ? (
                                                     interests.map((interest) => (
                                                         <li key={interest.id}>
