@@ -46,7 +46,6 @@ scipy==1.15.1
 six==1.17.0
 soupsieve==2.6
 sqlparse==0.5.2
--e git+ssh://git@github.com/srishticampus/ai_phishing_urls_detection_system.git@13e4ec60cf0b70fa830a1d414bf384566374bd00#egg=src&subdirectory=server/ML/src
 threadpoolctl==3.5.0
 tomlkit==0.13.2
 tqdm==4.67.1
