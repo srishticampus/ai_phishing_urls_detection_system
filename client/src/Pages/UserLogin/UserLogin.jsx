@@ -56,7 +56,7 @@ function UserLogin() {
         draggable: true,
         progress: undefined,
       });
-      navigate("/"); // Navigate to home page after successful login
+      navigate("/user-profile"); // Navigate to home page after successful login
     } else {
       // Display API error messages
       const errorMessage =

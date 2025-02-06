@@ -37,7 +37,6 @@
     border-top: 0;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
-
 }
 
 .user-area-of-interests-footer-content {
@@ -58,3 +57,10 @@
 .user-area-of-interests-btn{
     width: 175px;
 }
+.selected {
+    border: 2px solid #F18C00; /* Green border to indicate selection */
+    background-color: #f0f8ff; /* Light blue background */
+  }
+  .user-area-of-interests-card-size {
+    cursor: pointer;
+  }
