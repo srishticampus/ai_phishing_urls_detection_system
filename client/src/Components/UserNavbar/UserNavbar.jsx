@@ -9,7 +9,17 @@ function UserNavbar() {
 
   // Check login status when the component mounts or when the login status changes
   useEffect(() => {
-    setIsLoggedIn(checkLoginStatus());
+    const handleLoginStatusChange = () => {
+      setIsLoggedIn(checkLoginStatus());
+    };
+
+    // Listen for the custom login status event
+    window.addEventListener("loginStatusChanged", handleLoginStatusChange);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("loginStatusChanged", handleLoginStatusChange);
+    };
   }, []);
 
   // Handle logout
@@ -84,7 +94,7 @@ function UserNavbar() {
                           User Profile
                         </Link>
                       </li>
-                      <li>
+                      {/* <li>
                         <Link className="dropdown-item" to="/user-view-profile">
                         User View Profile
                         </Link>
@@ -94,7 +104,7 @@ function UserNavbar() {
                         <Link className="dropdown-item" to="/user-area-of-interest">
                           Area of Interest
                         </Link>
-                      </li>
+                      </li> */}
                       <li>
                         <Link className="dropdown-item" to="/user-view-advertisement-details">
                           Advertisement Details
@@ -115,7 +125,7 @@ function UserNavbar() {
                   </li>
 
                   {/* Advertiser DropDown */}
-                  <li className="nav-item dropdown">
+                  {/* <li className="nav-item dropdown">
                     <a
                       className="nav-link dropdown-toggle user_navbar_links Navlitems_Margin"
                       href="#"
@@ -151,7 +161,7 @@ function UserNavbar() {
  
 
                     </ul>
-                  </li>
+                  </li> */}
 
                   {/* Logout Button */}
                   <li className="nav-item">

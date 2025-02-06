@@ -57,7 +57,7 @@ import UserViewAdvertisementDetails from "./Pages/UserViewAdvertisementDetails/U
 function App() {
   return (
     <>
-      <ToastContainer position="top-right" transition={Bounce} />
+      <ToastContainer position="top-right" transition={Bounce} autoClose={3000}/>
       <Routes>
         {/* Landing Page Route */}
         <Route
