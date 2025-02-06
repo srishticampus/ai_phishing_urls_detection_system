@@ -69,6 +69,8 @@ export const login = async (data) => {
     // Save tokens to localStorage if login is successful
     localStorage.setItem("accessToken", response.data.token.access);
     localStorage.setItem("refreshToken", response.data.token.refresh);
+    // 🚀 Dispatch custom event after successful login
+    window.dispatchEvent(new Event("loginStatusChanged"));
   }
   return response;
 };
@@ -101,6 +103,8 @@ export const checkLoginStatus = () => {
 export const logout = () => {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
+  // 🚀 Dispatch custom event after logout
+  window.dispatchEvent(new Event("loginStatusChanged"));
 };
 
 export const addUserProfile = async (formData) => {

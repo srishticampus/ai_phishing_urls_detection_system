@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router";
 import "./UserLogin.css";
 import Login_Background from "../../assets/Images/Login_Background.png";
 import { login } from "../../Services/apiService";
-import { toast, ToastContainer } from "react-toastify";
+import { toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import eye icons
 
@@ -56,7 +56,7 @@ function UserLogin() {
         draggable: true,
         progress: undefined,
       });
-      navigate("/"); // Navigate to home page after successful login
+      navigate("/user-profile"); // Navigate to home page after successful login
     } else {
       // Display API error messages
       const errorMessage =
@@ -73,7 +73,6 @@ function UserLogin() {
 
   return (
     <div className="Login-container">
-      <ToastContainer />
       <div className="Login_LeftSide">
         <img className="Login_Page_Img" src={Login_Background} alt="Background" />
       </div>

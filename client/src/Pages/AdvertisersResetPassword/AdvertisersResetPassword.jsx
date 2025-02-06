@@ -61,7 +61,6 @@ function AdvertisersResetPassword() {
           ></i>
         </div>
 
-        {/* Confirm Password Input */}
         <div className="password-input-container">
           <input
             type={confirmPasswordVisible ? "text" : "password"}

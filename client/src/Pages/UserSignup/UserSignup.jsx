@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import SignUp_Page_Img from "../../assets/Images/SignUp_Page_Img.png";
 import { userSignup } from "../../Services/apiService";
 import "./UserSignup.css";
@@ -109,7 +109,6 @@ function UserSignup() {
 
   return (
     <div className="signup-container">
-      <ToastContainer />
       <div className="Signup_LeftSide">
         <img className="SignUp_Page_Img" src={SignUp_Page_Img} alt="Sign Up" />
       </div>
