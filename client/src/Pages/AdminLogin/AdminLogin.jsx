@@ -42,13 +42,13 @@ const navigate = useNavigate();
 
         if (formValid) {
             try {
-                // Include user_type in the request payload
+                
                 const response = await login({ username, password, user_type: "admin" });
                 console.log('Login response:', response); 
                 if (response.success) {
                     console.log('Login successful', response.data);
                     navigate('/admin-dashboard');
-                    // Handle successful login (e.g., redirect to admin dashboard)
+                    
                 } else {
                     setErrors({ ...errors, password: 'Invalid username or password.' });
                 }
