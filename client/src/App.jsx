@@ -52,6 +52,7 @@ import UserViewDetails from "./Pages/UserViewDetails/UserViewDetails";
 import UserResetPassword from "./Pages/UserResetPassword/UserResetPassword";
 import UserAreaOfInterests from "./Pages/UserAreaOfInterests/UserAreaOfInterests";
 import UserViewAdvertisementDetails from "./Pages/UserViewAdvertisementDetails/UserViewAdvertisementDetails";
+import AdvertisersRegistration from "./Pages/AdvertisersRegistration/AdvertisersRegistration";
 
 
 function App() {
@@ -205,9 +206,9 @@ function App() {
         path="/user-area-of-interest"
         element={
           <>
-          <UserNavbar/>
+          {/* <UserNavbar/> */}
           <UserAreaOfInterests />
-          <Footer/>
+          {/* <Footer/> */}
           </>
         }
         >
@@ -586,6 +587,20 @@ function App() {
           </>
         }
         >
+        </Route>
+
+        <Route
+     
+        path="/advertisers-registration"
+        element={
+          <>
+          <UserNavbar/>
+          <AdvertisersRegistration/>
+          <Footer/>
+          </>
+        }
+        >
+
         </Route>
 
       
