@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  django_backend:
+    build: ./server
+    container_name: ai_phishing_django
+    volumes:
+      - ./server:/app
+      - ./server/logs:/app/logs
+      - ./server/media:/app/media
+      - ./server/db.sqlite3:/app/db.sqlite3
+    ports:
+      - "8001:8000"     # Map container port 8000 to host 8001
+    restart: always
