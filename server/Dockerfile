@@ -6,20 +6,20 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # Set working directory
-WORKDIR /app
+WORKDIR /code
 
 # Install dependencies
-COPY requirements.txt /app/
+COPY requirements.txt .
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
-# Copy Django project (excluding venv and unnecessary files)
-COPY . /app/
+# Copy Django project files
+COPY . .
 
 # Create logs directory
-RUN mkdir -p /app/logs
+RUN mkdir -p logs
 
 # Expose port 8000 for Django
 EXPOSE 8000
 
-# Run makemigrations, migrate, and start the server
-CMD ["bash", "-c", "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+# Run migrations and start the server
+CMD ["bash", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
