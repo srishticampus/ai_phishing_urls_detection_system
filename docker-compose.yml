@@ -5,11 +5,7 @@ services:
     build: ./server
     container_name: ai_phishing_django
     volumes:
-      - ./server:/code
-      - db_data:/code/db.sqlite3
+      - ./server:/code  # Maps the host's ./server directory to /code in the container
     ports:
       - "8001:8000"
     restart: always
-
-volumes:
-  db_data:
