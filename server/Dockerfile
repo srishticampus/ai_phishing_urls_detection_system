@@ -22,4 +22,4 @@ RUN mkdir -p logs
 EXPOSE 8000
 
 # Run migrations and start the server
-CMD ["bash", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+CMD ["bash", "-c", "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
