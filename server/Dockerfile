@@ -15,8 +15,11 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 # Copy Django project files
 COPY . .
 
-# Create logs directory
-RUN mkdir -p logs
+# Create logs directory and set permissions
+RUN mkdir -p logs && chmod -R 777 logs
+
+# Create directory for database and set permissions
+RUN mkdir -p /code/db && chmod -R 777 /code/db
 
 # Expose port 8000 for Django
 EXPOSE 8000

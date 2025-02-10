@@ -6,6 +6,8 @@ services:
     container_name: ai_phishing_django
     volumes:
       - ./server:/code
+      - ./server/db.sqlite3:/code/db.sqlite3
+      - ./server/logs:/code/logs
     ports:
       - "8001:8000"
     restart: always
