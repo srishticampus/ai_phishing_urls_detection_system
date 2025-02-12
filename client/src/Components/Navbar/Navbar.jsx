@@ -92,12 +92,12 @@ function Navbar() {
                   >
                     <li>
                       <Link className="dropdown-item" to="/login">
-                        Login as User
+                        User
                       </Link>
                     </li>
                     <li>
                       <Link className="dropdown-item" to="/advertiser-login">
-                        Login as Advertiser
+                        Advertiser
                       </Link>
                     </li>
                   </ul>

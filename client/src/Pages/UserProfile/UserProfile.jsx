@@ -34,7 +34,6 @@ function UserProfile() {
       try {
         const response = await userProfile();
         if (response.success) {
-    
           setProfileData({
             firstName: response.data.user.first_name || "",
             lastName: response.data.user.last_name || "",
@@ -77,7 +76,7 @@ function UserProfile() {
       setProfileData((prevState) => ({
         ...prevState,
         image: URL.createObjectURL(files[0]),
-        photo: files[0], 
+        photo: files[0],
       }));
     }
   };
@@ -92,7 +91,6 @@ function UserProfile() {
     formData.append("phone_number", profileData.phoneNumber);
     formData.append("gender", profileData.gender);
 
-   
     if (profileData.photo instanceof File) {
       formData.append("photo", profileData.photo);
     }
@@ -105,10 +103,8 @@ function UserProfile() {
         profileData.phoneNumber ||
         profileData.gender
       ) {
-       
         response = await updateUserProfile(formData);
       } else {
-       
         response = await addUserProfile(formData);
       }
 
@@ -150,6 +146,8 @@ function UserProfile() {
       </div>
 
       <div className="user-profile-section-two">
+        {errors.form && <p className="error-message">{errors.form}</p>} {/* Show form-wide errors */}
+
         <form onSubmit={handleSubmit}>
           <div className="row mb-5">
             <div className="col-sm-5 user-profile-section-firstname">
@@ -161,6 +159,7 @@ function UserProfile() {
                 value={profileData.firstName}
                 onChange={handleInputChange}
               />
+              {errors.firstName && <span className="error-text">{errors.firstName}</span>} {/* Display error for firstName */}
             </div>
             <div className="col-sm-5 user-profile-section-lastname">
               <input
@@ -171,6 +170,7 @@ function UserProfile() {
                 value={profileData.lastName}
                 onChange={handleInputChange}
               />
+              {errors.lastName && <span className="error-text">{errors.lastName}</span>} {/* Display error for lastName */}
             </div>
           </div>
 
@@ -184,6 +184,7 @@ function UserProfile() {
                 value={profileData.phoneNumber}
                 onChange={handleInputChange}
               />
+              {errors.phoneNumber && <span className="error-text">{errors.phoneNumber}</span>} {/* Display error for phoneNumber */}
             </div>
 
             <div className="col-sm-5 user-profile-section-gender ">
@@ -210,8 +211,10 @@ function UserProfile() {
                   onChange={handleInputChange}
                 />
               </div>
+              {errors.gender && <span className="error-text">{errors.gender}</span>} {/* Display error for gender */}
             </div>
           </div>
+
           <div className="d-flex justify-content-center">
             <button
               type="submit"
