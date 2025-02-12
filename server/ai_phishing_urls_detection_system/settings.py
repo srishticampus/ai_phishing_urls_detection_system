@@ -100,6 +100,10 @@ SIMPLE_JWT = {
 }
 #Cors
 CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '').split(',')
+#Force Script Name
+FORCE_SCRIPT_NAME = os.getenv('FORCE_SCRIPT_NAME', '')
+#Csrf Trusted Origins
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', '').split(',')
 
 #Email Setup
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -159,7 +163,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Directory for collected static files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 # Default primary key field type

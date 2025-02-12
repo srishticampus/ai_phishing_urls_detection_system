@@ -54,7 +54,6 @@ import UserAreaOfInterests from "./Pages/UserAreaOfInterests/UserAreaOfInterests
 import UserViewAdvertisementDetails from "./Pages/UserViewAdvertisementDetails/UserViewAdvertisementDetails";
 import AdvertisersRegistration from "./Pages/AdvertisersRegistration/AdvertisersRegistration";
 
-
 function App() {
   return (
     <>

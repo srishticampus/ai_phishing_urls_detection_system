@@ -62,10 +62,7 @@ function AdvertisersRegistration() {
     };
 
     const handleBusinessTypeChange = (id, name) => {
-        setFormData({ ...formData, businessType: id });
-        setSelectedBusinessType(name);
-        console.log(`Selected Business Type: ID = ${id}, Name = ${name}`);
-    };
+        setFormData({ ...formData,business_type_id: id });
 
     const validateForm = () => {
         const newErrors = {};
@@ -74,10 +71,10 @@ function AdvertisersRegistration() {
         if (!formData.email) newErrors.email = "Email is required";
         if (!formData.password) newErrors.password = "Password is required";
         if (!confirmPassword) newErrors.confirmPassword = "Confirm Password is required"; // Validate confirm password separately
-        if (!formData.contactNumber) newErrors.contactNumber = "Contact Number is required";
+        if (!formData.contact_number) newErrors.contactNumber = "Contact Number is required";
         if (!formData.address) newErrors.address = "Address is required";
-        if (!formData.businessName) newErrors.businessName = "Business Name is required";
-        if (!formData.businessType) newErrors.businessType = "Business Type is required";
+        if (!formData.business_name) newErrors.businessName = "Business Name is required";
+        if (!formData.business_type_id) newErrors.businessType = "Business Type is required";
 
         // Check if email format is correct
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -101,7 +98,7 @@ function AdvertisersRegistration() {
         if (!validateForm()) {
             return; // Don't submit if there are validation errors
         }
-
+        console.log("Form data:", formData);
         try {
             const response = await advertiserSignup(formData); // Only send formData without confirmPassword
             console.log("Signup API response:", response);
@@ -186,8 +183,8 @@ function AdvertisersRegistration() {
                         type="text"
                         placeholder="Business Name"
                         className={`form-control mb-2 ${errors.businessName ? 'is-invalid' : ''}`}
-                        name="businessName"
-                        value={formData.businessName}
+                        name="business_name"
+                        value={formData.business_name}
                         onChange={handleInputChange}
                     />
                     {errors.businessName && <div className="invalid-feedback">{errors.businessName}</div>}
@@ -195,7 +192,7 @@ function AdvertisersRegistration() {
                     <div className="dropdown">
                         <button
                             type="button"
-                            className={`btn btn-light dropdown-toggle mb-2 form-control ${errors.businessType ? 'is-invalid' : ''}`}
+                            className={`btn btn-light dropdown-toggle mb-2 form-control ${errors.business_type_id ? 'is-invalid' : ''}`}
                             data-bs-toggle="dropdown"
                         >
                             {selectedBusinessType || "Business Type"}
@@ -214,17 +211,16 @@ function AdvertisersRegistration() {
                             ))}
                         </ul>
                     </div>
-                    {errors.businessType && <div className="invalid-feedback">{errors.businessType}</div>}
-
+                    {errors.business_type_id && <div className="invalid-feedback">{errors.business_type_id}</div>}
                     <input
                         type="tel"
                         placeholder="Contact Number"
-                        className={`form-control mb-2 ${errors.contactNumber ? 'is-invalid' : ''}`}
-                        name="contactNumber"
-                        value={formData.contactNumber}
+                        className={`form-control mb-2 ${errors.contact_number ? 'is-invalid' : ''}`}
+                        name="contact_number"
+                        value={formData.contact_number}
                         onChange={handleInputChange}
                     />
-                    {errors.contactNumber && <div className="invalid-feedback">{errors.contactNumber}</div>}
+                    {errors.contact_number && <div className="invalid-feedback">{errors.contact_number}</div>}
 
                     <textarea
                         placeholder="Address"
