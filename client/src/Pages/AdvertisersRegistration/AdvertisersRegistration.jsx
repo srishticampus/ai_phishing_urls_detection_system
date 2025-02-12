@@ -63,9 +63,6 @@ function AdvertisersRegistration() {
 
     const handleBusinessTypeChange = (id, name) => {
         setFormData({ ...formData,business_type_id: id });
-        setSelectedBusinessType(name);
-        console.log(`Selected Business Type: ID = ${id}, Name = ${name}`);
-    };
 
     const validateForm = () => {
         const newErrors = {};
@@ -215,7 +212,6 @@ function AdvertisersRegistration() {
                         </ul>
                     </div>
                     {errors.business_type_id && <div className="invalid-feedback">{errors.business_type_id}</div>}
-
                     <input
                         type="tel"
                         placeholder="Contact Number"

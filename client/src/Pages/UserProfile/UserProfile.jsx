@@ -14,7 +14,7 @@ function UserProfile() {
     lastName: "",
     phoneNumber: "",
     gender: "",
-    image: user_empty_profile, // Default to empty profile image
+    image: user_empty_profile, 
   });
 
   const [errors, setErrors] = useState({
@@ -34,7 +34,7 @@ function UserProfile() {
       try {
         const response = await userProfile();
         if (response.success) {
-          // If the profile exists, set the profile data
+    
           setProfileData({
             firstName: response.data.user.first_name || "",
             lastName: response.data.user.last_name || "",
@@ -77,7 +77,7 @@ function UserProfile() {
       setProfileData((prevState) => ({
         ...prevState,
         image: URL.createObjectURL(files[0]),
-        photo: files[0], // Store the actual file for submission
+        photo: files[0], 
       }));
     }
   };
@@ -92,7 +92,7 @@ function UserProfile() {
     formData.append("phone_number", profileData.phoneNumber);
     formData.append("gender", profileData.gender);
 
-    // Append the image file if it exists
+   
     if (profileData.photo instanceof File) {
       formData.append("photo", profileData.photo);
     }
@@ -105,17 +105,17 @@ function UserProfile() {
         profileData.phoneNumber ||
         profileData.gender
       ) {
-        // If the profile exists, update it
+       
         response = await updateUserProfile(formData);
       } else {
-        // If no profile exists, create one
+       
         response = await addUserProfile(formData);
       }
 
       if (response.success) {
         console.log("Profile updated successfully!");
         setLoading(false);
-        navigate("/user-area-of-interest"); // Navigate to the next page
+        navigate("/user-area-of-interest"); 
       } else {
         setErrors((prevErrors) => ({
           ...prevErrors,

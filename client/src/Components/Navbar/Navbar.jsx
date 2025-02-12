@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom";  // Ensure you're using `react-router-dom` here
 import "./Navbar.css";
 import { logout, checkLoginStatus } from "../../Services/apiService";
 
@@ -29,7 +29,7 @@ function Navbar() {
 
   return (
     <>
-       <nav className="navbar navbar-expand-sm ">
+      <nav className="navbar navbar-expand-sm">
         <div className="container-fluid">
           <Link className="navbar-brand logo" to="/">
             <span className="logo_Blog_Color">BLOG</span>&nbsp;
@@ -76,12 +76,32 @@ function Navbar() {
                   Logout
                 </button>
               ) : (
-                <Link
-                  className="btn btn-outline navbar_login_button "
-                  to="/login"
-                >
-                  Login
-                </Link>
+                <div className="dropdown">
+                  <button
+                    className="btn btn-outline navbar_login_button dropdown-toggle"
+                    type="button"
+                    id="dropdownLoginButton"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Login
+                  </button>
+                  <ul
+                    className="dropdown-menu"
+                    aria-labelledby="dropdownLoginButton"
+                  >
+                    <li>
+                      <Link className="dropdown-item" to="/login">
+                        Login as User
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/advertiser-login">
+                        Login as Advertiser
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
               )}
             </form>
           </div>
@@ -92,7 +112,7 @@ function Navbar() {
       {isLogoutConfirmOpen && (
         <div className="modal homepage-navbar-modal-logout">
           <div className="modal-dialog">
-            <div className="modal-content homepage-navbar-modal-content ">
+            <div className="modal-content homepage-navbar-modal-content">
               <div className="modal-header homepage-modal-logout-header">
                 <h5 className="modal-title">
                   Are you sure you want to Logout?

@@ -5,13 +5,13 @@ import "../../Pages/UserAreaOfInterests/UserAreaOfInterests.css";
 function UserAreaOfInterests() {
   const [interests, setInterests] = useState([]);
   const [selectedInterest, setSelectedInterest] = useState(null); // Track the selected interest
+  const baseUrl = import.meta.env.VITE_API_URL;  // Use environment variable for base URL
 
   useEffect(() => {
     const fetchInterests = async () => {
       try {
         const data = await getInterests();
         console.log('API response:', data);
-
         if (data && Array.isArray(data.data)) {
           setInterests(data.data);
         } 
@@ -30,8 +30,6 @@ function UserAreaOfInterests() {
   return (
     <div>
       <p className="user-area-of-interests-head">Area of Interests</p>
-    
-
       {/* First Row: Interests Cards */}
       <div className="row user-area-of-interest-center-row mb-5">
         {interests.slice(0, 5).map((interest) => (
@@ -41,9 +39,10 @@ function UserAreaOfInterests() {
               onClick={() => handleCardClick(interest.id)} 
             >
               <div className="user-area-of-interests-content">
+                {/* Using the interest.icon field for the image source */}
                 <img 
                   className="user-area-of-interests-img-size" 
-                  src={interest.icon} 
+                  src={`${baseUrl}${interest.icon}`}  // Assuming interest.icon contains the image path
                   alt={interest.name} 
                   width="50" 
                   height="50" 
@@ -66,9 +65,10 @@ function UserAreaOfInterests() {
               onClick={() => handleCardClick(interest.id)} // Add click event handler
             >
               <div className="user-area-of-interests-content">
+                {/* Using the interest.icon field for the image source */}
                 <img 
                   className="user-area-of-interests-img-size" 
-                  src={interest.icon} 
+                  src={`${baseUrl}${interest.icon}`}  // Assuming interest.icon contains the image path
                   alt={interest.name} 
                   width="50" 
                   height="50" 

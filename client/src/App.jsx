@@ -54,8 +54,6 @@ import UserAreaOfInterests from "./Pages/UserAreaOfInterests/UserAreaOfInterests
 import UserViewAdvertisementDetails from "./Pages/UserViewAdvertisementDetails/UserViewAdvertisementDetails";
 import AdvertisersRegistration from "./Pages/AdvertisersRegistration/AdvertisersRegistration";
 
-
-
 function App() {
   return (
     <>
@@ -109,7 +107,7 @@ function App() {
         ></Route>
 
         <Route
-        path="user-reset-password"
+        path="/user-reset-password"
         element={
           <>
           <Navbar />
