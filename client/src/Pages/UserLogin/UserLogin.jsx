@@ -77,7 +77,7 @@ function UserLogin() {
         <img className="Login_Page_Img" src={Login_Background} alt="Background" />
       </div>
       <div className="Login_RightSide">
-        <p className="Login_RightSide_head">Login!</p>
+        <p className="Login_RightSide_head">User Login!</p>
         <form onSubmit={handleLogin}>
           <div className="mb-4 mt-3">
             <input

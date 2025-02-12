@@ -51,7 +51,7 @@ function AdvertisersRegistration() {
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            setFormData({ ...formData, profile_mage: file });
+            setFormData({ ...formData, profile_image: file }); // Fixed typo here: profile_mage -> profile_image
             console.log("File selected:", file.name);
         }
     };
@@ -62,7 +62,9 @@ function AdvertisersRegistration() {
     };
 
     const handleBusinessTypeChange = (id, name) => {
-        setFormData({ ...formData,business_type_id: id });
+        setFormData({ ...formData, business_type_id: id });
+        setSelectedBusinessType(name); // Optionally set the selected business type name
+    }; // Fixed the missing closing brace here
 
     const validateForm = () => {
         const newErrors = {};

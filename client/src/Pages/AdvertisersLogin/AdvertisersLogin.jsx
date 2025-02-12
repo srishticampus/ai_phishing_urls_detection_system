@@ -35,7 +35,7 @@ function AdvertisersLogin() {
         />
       </div>
       <div className="advertiser-login-right">
-        <p className="advertiser-login-head">Login</p>
+        <p className="advertiser-login-head">Advertisers Login</p>
         <form onSubmit={handleSubmit}>
           <input
             type="text"
