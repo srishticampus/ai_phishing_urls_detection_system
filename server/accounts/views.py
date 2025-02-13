@@ -484,31 +484,33 @@ class AdminAdvertiserListView(APIView):
         GET method to fetch details of all advertisers.
         """
         try:
-            # Fetch AdvertiserProfiles
-            advertiser_profiles = AdvertiserProfile.objects.select_related('user').all()
-            profile_serializer = AdvertiserProfileSerializer(advertiser_profiles, many=True)
-
-            # Advertisers with profiles
-            advertisers_with_profiles = set()
-            for profile in profile_serializer.data:
-                user_data = profile.get('user', {})
-                if isinstance(user_data, dict):
-                    advertisers_with_profiles.add(user_data.get('username'))
-
             # Fetch all advertisers
-            all_advertisers = User.objects.filter(user_type='advertiser')
+            all_advertisers = User.objects.filter(user_type="advertiser")
 
-            # Advertisers without profiles
-            advertisers_without_profiles = [
-                advertiser for advertiser in all_advertisers
-                if advertiser.username not in advertisers_with_profiles
-            ]
-            advertisers_without_profiles_serializer = UserSerializer(advertisers_without_profiles, many=True)
+            advertiser_list = []
+            for advertiser in all_advertisers:
+                try:
+                    profile = AdvertiserProfile.objects.get(user=advertiser)  # Fetch profile
+                except AdvertiserProfile.DoesNotExist:
+                    profile = None  # Handle advertisers without profiles
 
-            # Combine data
-            combined_data = profile_serializer.data + advertisers_without_profiles_serializer.data
+                advertiser_list.append({
+                    "id": advertiser.id,
+                    "username": advertiser.username,
+                    "email": advertiser.email,
+                    "is_active": advertiser.is_active,
+                    "user_type": advertiser.user_type,
+                    "contact_number": profile.contact_number if profile else None,
+                    "business_name": profile.business_name if profile else None,
+                    "business_type": {
+                        "id": profile.business_type.id if profile and profile.business_type else None,
+                        "name": profile.business_type.name if profile and profile.business_type else None,
+                        "icon": profile.business_type.icon.url if profile and profile.business_type and profile.business_type.icon else None,
+                    } if profile and profile.business_type else None,
+                    "profile_image": profile.profile_image.url if profile and profile.profile_image else None,
+                })
 
-            return Response(combined_data, status=status.HTTP_200_OK)
+            return Response(advertiser_list, status=status.HTTP_200_OK)
 
         except Exception as e:
             return Response(
@@ -530,37 +532,37 @@ class AdminNewAdvertiserListView(APIView):
             # Fetch all inactive AdvertiserProfile objects
             new_advertiser_profiles = AdvertiserProfile.objects.select_related('user').filter(user__is_active=False)
 
-            # Prepare combined data
-            combined_data = []
+            # Prepare structured response
+            advertiser_list = []
             for profile in new_advertiser_profiles:
-                # Serialize the profile
-                profile_data = AdvertiserProfileSerializer(profile).data
-
-                # Serialize the user associated with the profile
-                user_data = {
-                    "id": profile.user.id,
+                advertiser_list.append({
+                    "id": profile.id,
                     "username": profile.user.username,
                     "email": profile.user.email,
                     "is_active": profile.user.is_active,
                     "user_type": profile.user.user_type,
-                }
-
-                # Append both to the combined data
-                combined_data.append(profile_data)
-                combined_data.append(user_data)
+                    "contact_number": profile.contact_number,
+                    "business_name": profile.business_name,
+                    "business_type": {
+                        "id": profile.business_type.id,
+                        "name": profile.business_type.name,
+                        "icon": profile.business_type.icon.url if profile.business_type.icon else None,
+                    },
+                    "profile_image": profile.profile_image.url if profile.profile_image else None,
+                })
 
             # If no inactive profiles found, return a message
-            if not combined_data:
+            if not advertiser_list:
                 return Response({"message": "No new advertisers found"}, status=status.HTTP_204_NO_CONTENT)
 
-            return Response(combined_data, status=status.HTTP_200_OK)
+            return Response(advertiser_list, status=status.HTTP_200_OK)
 
         except Exception as e:
             return Response(
                 {"error": "An unexpected error occurred.", "details": str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
-  
+ 
 class AdminAdvertisementsView(APIView):
     """
     API view for the admin to view all advertisements in the system.
