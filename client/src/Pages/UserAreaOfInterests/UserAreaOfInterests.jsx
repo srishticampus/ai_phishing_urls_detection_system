@@ -4,7 +4,7 @@ import "../../Pages/UserAreaOfInterests/UserAreaOfInterests.css";
 
 function UserAreaOfInterests() {
   const [interests, setInterests] = useState([]);
-  const [selectedInterest, setSelectedInterest] = useState(null); // Track the selected interest
+  const [selectedInterests, setSelectedInterests] = useState([]); // Store an array of selected interests
   const baseUrl = import.meta.env.VITE_API_URL;  // Use environment variable for base URL
 
   useEffect(() => {
@@ -24,7 +24,22 @@ function UserAreaOfInterests() {
   }, []);
 
   const handleCardClick = (interestId) => {
-    setSelectedInterest(interestId); 
+    setSelectedInterests((prevSelectedInterests) => {
+      // Toggle the interest in the array
+      let updatedSelectedInterests;
+      if (prevSelectedInterests.includes(interestId)) {
+        // Remove interest
+        updatedSelectedInterests = prevSelectedInterests.filter(id => id !== interestId);
+      } else {
+        // Add interest
+        updatedSelectedInterests = [...prevSelectedInterests, interestId];
+      }
+      
+      // Log the updated array of selected interests
+      console.log("Selected Interests:", updatedSelectedInterests);
+      
+      return updatedSelectedInterests;
+    });
   };
 
   return (
@@ -33,9 +48,9 @@ function UserAreaOfInterests() {
       {/* First Row: Interests Cards */}
       <div className="row user-area-of-interest-center-row mb-5">
         {interests.slice(0, 5).map((interest) => (
-          <div key={interest.id} className="col-sm-2">
+          <div key={interest.id} className="col-lg-2 col-md-4 col-sm-12 mb-3">
             <div 
-              className={`card user-area-of-interests-card-size ${selectedInterest === interest.id ? 'selected' : ''}`} 
+              className={`card user-area-of-interests-card-size ${selectedInterests.includes(interest.id) ? 'selected' : ''}`} 
               onClick={() => handleCardClick(interest.id)} 
             >
               <div className="user-area-of-interests-content">
@@ -59,10 +74,10 @@ function UserAreaOfInterests() {
       {/* Second Row: Interests Cards */}
       <div className="row user-area-of-interest-center-row">
         {interests.slice(5, 10).map((interest) => (
-          <div key={interest.id} className="col-sm-2">
+          <div key={interest.id} className="col-lg-2 col-md-4 col-sm-12 mb-3">
             <div 
-              className={`card user-area-of-interests-card-size ${selectedInterest === interest.id ? 'selected' : ''}`} 
-              onClick={() => handleCardClick(interest.id)} // Add click event handler
+              className={`card user-area-of-interests-card-size ${selectedInterests.includes(interest.id) ? 'selected' : ''}`} 
+              onClick={() => handleCardClick(interest.id)} 
             >
               <div className="user-area-of-interests-content">
                 {/* Using the interest.icon field for the image source */}
@@ -92,6 +107,8 @@ function UserAreaOfInterests() {
 }
 
 export default UserAreaOfInterests;
+
+
 
 
 
