@@ -13,11 +13,9 @@ const apiClient = axios.create({
 const refreshAccessToken = async () => {
   const refreshToken = localStorage.getItem("refreshToken");
   if (!refreshToken) {
-    console.warn("⚠️ No refresh token found.");
-    return {
-      success: false,
-      errors: { message: "No refresh token available." },
-    };
+    console.warn("⚠️ No refresh token found. Redirecting to '/'...");
+    logoutAndRedirect(); // Logout and redirect immediately
+    return { success: false, errors: { message: "Session expired." } };
   }
 
   try {
@@ -32,26 +30,28 @@ const refreshAccessToken = async () => {
       localStorage.setItem("accessToken", response.data.access);
       return { success: true, accessToken: response.data.access };
     } else {
-      console.warn("⚠️ Token refresh failed.");
-      return {
-        success: false,
-        errors: { message: "Failed to refresh token." },
-      };
+      console.warn("⚠️ Token refresh failed. Redirecting to '/'...");
+      logoutAndRedirect();
+      return { success: false, errors: { message: "Session expired." } };
     }
   } catch (error) {
-    console.error("❌ Refresh token expired. Logging out...", error);
-    logout(); // 🚀 Log out only when refresh token also fails
-    return {
-      success: false,
-      errors: { message: "Session expired, please login again." },
-    };
+    console.error("❌ Refresh token expired. Redirecting to '/'...", error);
+    logoutAndRedirect();
+    return { success: false, errors: { message: "Session expired." } };
   }
+};
+
+// ✅ Function to log out user and redirect to "/"
+const logoutAndRedirect = () => {
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+  window.dispatchEvent(new Event("loginStatusChanged"));
+  window.location.href = "/"; // Redirect user to home page
 };
 
 // ✅ Axios Interceptor: Attaches JWT Token & Handles Expired Tokens
 apiClient.interceptors.request.use(
   async (config) => {
-    // ✅ Skip token check for login & register APIs
     if (
       config.url.includes("/api/login/") ||
       config.url.includes("/api/register/")
@@ -64,7 +64,6 @@ apiClient.interceptors.request.use(
 
       if (!token) {
         console.warn("⚠️ No access token found. Trying to refresh...");
-
         const refreshResponse = await refreshAccessToken();
 
         if (refreshResponse.success) {
@@ -72,15 +71,8 @@ apiClient.interceptors.request.use(
           token = refreshResponse.accessToken;
           localStorage.setItem("accessToken", token);
         } else {
-          console.error(
-            "❌ Both access and refresh tokens expired. Logging out..."
-          );
-          logout();
-          window.dispatchEvent(new Event("loginStatusChanged"));
-          alert("Session expired, please login again.");
-          return Promise.reject(
-            new Error("Session expired, please login again.")
-          );
+          console.error("❌ Both tokens expired. Redirecting to '/'...");
+          return Promise.reject(new Error("Session expired. Redirecting..."));
         }
       }
 
