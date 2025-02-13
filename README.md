@@ -799,26 +799,33 @@ Retrieve a list of all advertisers, including their profiles if available.
 ```json
 [
     {
-        "id": 7,
-        "user": 11,
-        "business_name": "Tech Solutions",
-        "business_type": {
-            "id": 1,
-            "name": "Personal Development",
-            "icon": "/media/interest_icons/Frame_427319157_ieJrjHP.png"
-        },
-        "contact_number": "1234567890",
-        "address": "123 Business Street, City, Country",
-        "profile_image": "/media/advertiser_profile_photos/14_onn45xS.png"
-    },
-    {
-        "id": 11,
+        "id": 1,
         "username": "advertiser001",
         "email": "advertiser001@example.com",
         "is_active": true,
-        "user_type": "advertiser"
+        "user_type": "advertiser",
+        "contact_number": "9495211402",
+        "business_name": "Advertisers Paradise",
+        "business_type": {
+            "id": 1,
+            "name": "Personal Development",
+            "icon": "http://127.0.0.1:8000/media/interest_icons/Frame_427319157.png"
+        },
+        "profile_image": null
+    },
+    {
+        "id": 2,
+        "username": "advertiser002",
+        "email": "advertiser002@example.com",
+        "is_active": false,
+        "user_type": "advertiser",
+        "contact_number": null,
+        "business_name": null,
+        "business_type": null,
+        "profile_image": null
     }
 ]
+
 
 ```
 - **Code: 500 Internal Server Error**  
@@ -840,28 +847,37 @@ Retrieve a list of all new advertisers whose accounts are inactive (is_active=fa
 - **Code**: 200 OK 
 ```json
 [
-    {
-        "id": 7,
-        "user": 11,
+  {
+        "id": 1,
+        "username": "advertiser001",
+        "email": "advertiser001@example.com",
+        "is_active": false,
+        "user_type": "advertiser",
+        "contact_number": "9495211402",
+        "business_name": "Advertisers Paradise",
+        "business_type": {
+            "id": 1,
+            "name": "Personal Development",
+            "icon": "/media/interest_icons/Frame_427319157.png"
+        },
+        "profile_image": null
+  },
+  {
+        "id": 2,
+        "username": "advertiser002",
+        "email": "advertiser002@example.com",
+        "is_active": false,
+        "user_type": "advertiser",
+        "contact_number": "1234567890",
         "business_name": "Tech Solutions",
         "business_type": {
             "id": 1,
             "name": "Personal Development",
-            "icon": "/media/interest_icons/Frame_427319157_ieJrjHP.png"
+            "icon": "/media/interest_icons/Frame_427319157.png"
         },
-        "contact_number": "1234567890",
-        "address": "123 Business Street, City, Country",
-        "profile_image": "/media/advertiser_profile_photos/14_onn45xS.png"
-    },
-    {
-        "id": 11,
-        "username": "advertiser001",
-        "email": "advertiser001@example.com",
-        "is_active": true,
-        "user_type": "advertiser"
-    }
+        "profile_image": "/media/advertiser_profile_photos/14.png"
+  }
 ]
-
 ```
 - **Code: 204 No Content**  
   ```json
