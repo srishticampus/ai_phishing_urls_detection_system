@@ -21,6 +21,9 @@ RUN mkdir -p /code/logs && chmod -R 777 /code/logs
 # Set permissions for the database directory
 RUN mkdir -p /code/db && chmod -R 777 /code/db
 
+# Collect static files
+RUN python manage.py collectstatic --noinput
+
 # Expose port 8000 for Django
 EXPOSE 8000
 

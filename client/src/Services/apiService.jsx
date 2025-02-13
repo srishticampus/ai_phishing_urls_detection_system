@@ -37,23 +37,34 @@ const generateConfig = (isFormData = false, authRequired = true) => ({
 const handleResponse = async (apiCall) => {
   try {
     const response = await apiCall;
-    return { success: true, data: response.data };
+    return { 
+      success: true, 
+      data: response.data, 
+      fullResponse: response // Include the complete response object
+    };
   } catch (error) {
     if (error.response) {
-      // Handle known error responses from the server
-      return { success: false, errors: error.response.data.errors };
+      return { 
+        success: false, 
+        errors: error.response.data.errors, 
+        fullResponse: error.response // Include the complete error response object
+      };
     } else if (error.request) {
-      // Handle cases where the request was made but no response received
       return {
         success: false,
         errors: { message: "No response received from the server." },
+        fullResponse: error.request // Include the request details
       };
     } else {
-      // Handle other unexpected errors
-      return { success: false, errors: { message: error.message } };
+      return { 
+        success: false, 
+        errors: { message: error.message }, 
+        fullResponse: error // Include the complete error object
+      };
     }
   }
 };
+
 
 // User Registration Function
 export const userSignup = async (data) => {

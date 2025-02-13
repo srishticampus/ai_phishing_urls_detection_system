@@ -6,6 +6,7 @@ services:
     container_name: ai_phishing_django
     volumes:
       - ./server:/code  # Maps the host's ./server directory to /code in the container
+      - ./server/staticfiles:/code/staticfiles
     ports:
       - "8001:8000"
     restart: always
