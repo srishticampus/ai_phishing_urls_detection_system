@@ -1,31 +1,100 @@
-//apiService.jsx
 import axios from "axios";
 
 // Create Axios instance
 const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_URL, // Set the base URL from environment variables
+  baseURL: import.meta.env.VITE_API_URL, // Base URL from environment variables
   timeout: 5000, // Set a timeout for requests
   headers: {
     "Content-Type": "application/json", // Default headers
   },
 });
 
-// Axios Interceptor to add JWT token to headers
+// ✅ Function to refresh the access token
+const refreshAccessToken = async () => {
+  const refreshToken = localStorage.getItem("refreshToken");
+  if (!refreshToken) {
+    console.warn("⚠️ No refresh token found.");
+    return {
+      success: false,
+      errors: { message: "No refresh token available." },
+    };
+  }
+
+  try {
+    console.log("🔄 Refreshing access token...");
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URL}/api/token/refresh/`,
+      { refresh: refreshToken }
+    );
+
+    if (response.data.access) {
+      console.log("✅ Access token refreshed.");
+      localStorage.setItem("accessToken", response.data.access);
+      return { success: true, accessToken: response.data.access };
+    } else {
+      console.warn("⚠️ Token refresh failed.");
+      return {
+        success: false,
+        errors: { message: "Failed to refresh token." },
+      };
+    }
+  } catch (error) {
+    console.error("❌ Refresh token expired. Logging out...", error);
+    logout(); // 🚀 Log out only when refresh token also fails
+    return {
+      success: false,
+      errors: { message: "Session expired, please login again." },
+    };
+  }
+};
+
+// ✅ Axios Interceptor: Attaches JWT Token & Handles Expired Tokens
 apiClient.interceptors.request.use(
-  (config) => {
+  async (config) => {
+    // ✅ Skip token check for login & register APIs
+    if (
+      config.url.includes("/api/login/") ||
+      config.url.includes("/api/register/")
+    ) {
+      return config;
+    }
+
     if (config.authRequired !== false) {
-      const token = localStorage.getItem("accessToken");
-      console.log("token" + token);
-      if (token) {
-        config.headers["Authorization"] = `Bearer ${token}`;
+      let token = localStorage.getItem("accessToken");
+
+      if (!token) {
+        console.warn("⚠️ No access token found. Trying to refresh...");
+
+        const refreshResponse = await refreshAccessToken();
+
+        if (refreshResponse.success) {
+          console.log("✅ Token refreshed, retrying request...");
+          token = refreshResponse.accessToken;
+          localStorage.setItem("accessToken", token);
+        } else {
+          console.error(
+            "❌ Both access and refresh tokens expired. Logging out..."
+          );
+          logout();
+          window.dispatchEvent(new Event("loginStatusChanged"));
+          alert("Session expired, please login again.");
+          return Promise.reject(
+            new Error("Session expired, please login again.")
+          );
+        }
       }
+
+      config.headers["Authorization"] = `Bearer ${token}`;
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => {
+    console.error("❌ API Request Error:", error);
+    return Promise.reject(error);
+  }
 );
 
-// Utility to generate headers dynamically
+// ✅ Utility to generate headers dynamically
 const generateConfig = (isFormData = false, authRequired = true) => ({
   headers: {
     "Content-Type": isFormData ? "multipart/form-data" : "application/json",
@@ -33,126 +102,63 @@ const generateConfig = (isFormData = false, authRequired = true) => ({
   authRequired,
 });
 
-// Function to handle API responses and errors
+// ✅ Function to handle API responses & errors
 const handleResponse = async (apiCall) => {
   try {
     const response = await apiCall;
-    return { 
-      success: true, 
-      data: response.data, 
-      fullResponse: response // Include the complete response object
+    return {
+      success: true,
+      data: response.data,
+      fullResponse: response, // Include the complete response object
     };
   } catch (error) {
-    if (error.response) {
-      return { 
-        success: false, 
-        errors: error.response.data.errors, 
-        fullResponse: error.response // Include the complete error response object
-      };
-    } else if (error.request) {
-      return {
-        success: false,
-        errors: { message: "No response received from the server." },
-        fullResponse: error.request // Include the request details
-      };
-    } else {
-      return { 
-        success: false, 
-        errors: { message: error.message }, 
-        fullResponse: error // Include the complete error object
-      };
-    }
+    return {
+      success: false,
+      errors: error.response?.data?.errors || { message: error.message },
+      fullResponse: error.response || error,
+    };
   }
 };
 
-
-// User Registration Function
+// ✅ User Authentication Functions
 export const userSignup = async (data) => {
   return handleResponse(
     apiClient.post("/api/register/", data, { authRequired: false })
   );
 };
 
-// User Login Function
 export const login = async (data) => {
+  console.log("🔵 Attempting login...");
   const response = await handleResponse(apiClient.post("/api/login/", data));
   if (response.success) {
-    // Save tokens to localStorage if login is successful
+    console.log("✅ Login successful. Storing tokens...");
     localStorage.setItem("accessToken", response.data.token.access);
     localStorage.setItem("refreshToken", response.data.token.refresh);
-    // 🚀 Dispatch custom event after successful login
     window.dispatchEvent(new Event("loginStatusChanged"));
   }
   return response;
 };
 
-// Token Refresh
-export const refreshAccessToken = async () => {
-  const refreshToken = localStorage.getItem("refreshToken");
-  if (!refreshToken) {
-    return {
-      success: false,
-      errors: { message: "No refresh token available." },
-    };
-  }
+export const checkLoginStatus = () => !!localStorage.getItem("accessToken");
 
-  const response = await handleResponse(
-    apiClient.post("/api/token/refresh/", { refresh: refreshToken })
-  );
-  if (response.success) {
-    localStorage.setItem("accessToken", response.data.access); // Update access token
-  }
-  return response;
-};
-
-//Check Login Status
-export const checkLoginStatus = () => {
-  return !!localStorage.getItem("accessToken");
-};
-
-// Logout Function
 export const logout = () => {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
-  // 🚀 Dispatch custom event after logout
   window.dispatchEvent(new Event("loginStatusChanged"));
 };
 
+// ✅ User Profile Functions
 export const addUserProfile = async (formData) => {
   return handleResponse(
     apiClient.post("/api/user-profile/add/", formData, generateConfig(true))
   );
 };
 
-//user-profile-view
-
 export const userProfile = async () => {
-  try {
-    const response = await apiClient.get("/api/user-profile/view/", generateConfig());
-    return { success: true, data: response.data };
-  } catch (error) {
-    if (error.response && error.response.status === 404) {
-      // Return an empty profile object if the profile does not exist
-      return {
-        success: true,
-        data: {
-          user: { first_name: "", last_name: "" },
-          phone_number: "",
-          gender: "",
-          photo: "",
-        },
-      };
-    } else {
-      // Handle other errors
-      return {
-        success: false,
-        errors: error.response ? error.response.data : { message: error.message },
-      };
-    }
-  }
+  return handleResponse(
+    apiClient.get("/api/user-profile/view/", generateConfig())
+  );
 };
-
-// Update User Profile
 
 export const updateUserProfile = async (formData) => {
   return handleResponse(
@@ -160,27 +166,29 @@ export const updateUserProfile = async (formData) => {
   );
 };
 
-//Get Interests
+// ✅ User Interests
 export const getInterests = async () => {
-  return handleResponse(apiClient.get("/api/interests/"),generateConfig());
+  return handleResponse(apiClient.get("/api/interests/"), generateConfig());
 };
 
-// Admin Add Blogs
+export const userAddInterest = async (formData) => {
+  return handleResponse(
+    apiClient.post("/api/add-user-interests/", formData, generateConfig(true))
+  );
+};
 
+// ✅ Blog Management
 export const addBlog = async (formData) => {
   return handleResponse(
     apiClient.post("/api/blogs/", formData, generateConfig(true))
   );
 };
 
-// Admin & User View Blogs
-
 export const viewBlogs = async (id = null) => {
-  const endpoint = id ? `/api/blogs/${id}/` : "/api/blogs/";
-  return handleResponse(apiClient.get(endpoint, generateConfig()));
+  return handleResponse(
+    apiClient.get(id ? `/api/blogs/${id}/` : "/api/blogs/", generateConfig())
+  );
 };
-
-// Admin Update Blogs
 
 export const updateBlog = async (id, formData) => {
   return handleResponse(
@@ -188,32 +196,18 @@ export const updateBlog = async (id, formData) => {
   );
 };
 
-//User add interest
-
-export const userAddInterest = async (formData) => {
-  return handleResponse(
-    apiClient.post(`/api/add-user-interests/`, formData, generateConfig(true))
-  );
-};
-
-
-// Admin Delete Blogs
-
 export const deleteBlog = async (id) => {
   return handleResponse(
     apiClient.delete(`/api/blogs/${id}/`, generateConfig())
   );
 };
 
-// Admin View All Users
-
+// ✅ Admin Functions
 export const viewUsers = async () => {
   return handleResponse(
     apiClient.get("/api/admin-view-users/", generateConfig())
   );
 };
-
-// Admin Activate/Deactivate Users
 
 export const toggleUserStatus = async (id) => {
   return handleResponse(
@@ -225,16 +219,15 @@ export const toggleUserStatus = async (id) => {
   );
 };
 
-//Advertiser Registration
-
+// ✅ Advertiser Functions
 export const advertiserSignup = async (formData) => {
   return handleResponse(
     apiClient.post("/api/register-advertiser/", formData, generateConfig(true))
   );
 };
 
-export const adminViewNewAdvertisers = async (formData) => {
+export const adminViewNewAdvertisers = async () => {
   return handleResponse(
-    apiClient.get("api/admin-view-new-advertisers/", formData, generateConfig(true))
+    apiClient.get("/api/admin-view-new-advertisers/", generateConfig())
   );
 };
