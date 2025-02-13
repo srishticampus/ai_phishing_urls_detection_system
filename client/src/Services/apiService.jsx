@@ -223,3 +223,10 @@ export const adminViewNewAdvertisers = async () => {
     apiClient.get("/api/admin-view-new-advertisers/", generateConfig())
   );
 };
+
+
+export const toggleUserActivation = async (id) => {
+  return handleResponse(
+    apiClient.patch(`/api/toggle-user-activation/${id}/`, generateConfig())
+  );
+};
