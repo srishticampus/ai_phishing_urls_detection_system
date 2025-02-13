@@ -1,4 +1,4 @@
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { adminViewNewAdvertisers } from "../../Services/apiService";
 import "../../Pages/AdminHome/AdminHome.css";
 import accept from "../../assets/Images/accept.png";
@@ -15,7 +15,21 @@ function AdminHome() {
     const fetchAdvertisers = async () => {
       try {
         const response = await adminViewNewAdvertisers(); // Assuming this returns an array of advertisers
-        setAdvertisers(response.data); // Adjust based on the actual response structure
+        console.log("fullresponse", response.fullResponse); // Check if the structure is as expected
+
+        // Clean and validate the data before setting the state
+        const validatedData = response.data.map(advertiser => {
+          return {
+            ...advertiser,
+            username: advertiser.username || 'N/A',
+            contact_number: advertiser.contact_number || 'N/A',
+            email: advertiser.email || 'N/A',
+            business_name: advertiser.business_name || 'N/A',
+            business_type: advertiser.business_type?.name || 'N/A',  // Extract the 'name' from the business_type object
+          };
+        });
+
+        setAdvertisers(validatedData); // Set the cleaned data in the state
       } catch (error) {
         console.error("Error fetching advertisers data", error);
       }
@@ -41,28 +55,31 @@ function AdminHome() {
             </tr>
           </thead>
           <tbody>
-            {advertisers.map((advertiser, index) => (
-              <tr className="admin-home-table-tr" key={advertiser.id}>
-                <td className="admin-home-table-td">{index + 1}</td>
-                <td className="admin-home-table-td">{advertiser.name}</td>
-                <td className="admin-home-table-td">{advertiser.phone}</td>
-                <td className="admin-home-table-td">{advertiser.email}</td>
-                <td className="admin-home-table-td">{advertiser.companyName}</td>
-                <td className="admin-home-table-td">{advertiser.businessCategory}</td>
-                <td className="admin-home-table-td">
-                  <div>
-                    <button className="admin-home-table-button btn btn-secondary">
-                      <img src={cancel} alt="Reject" />
-                    </button>
-                    <button className="admin-home-table-button btn btn-success ms-3">
-                      <img src={accept} alt="Accept" />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+            {advertisers.map((advertiser, index) => {
+              return (
+                <tr className="admin-home-table-tr" key={advertiser.id}>
+                  <td className="admin-home-table-td">{index + 1}</td>
+                  <td className="admin-home-table-td">{advertiser.username}</td>
+                  <td className="admin-home-table-td">{advertiser.contact_number}</td>
+                  <td className="admin-home-table-td">{advertiser.email}</td>
+                  <td className="admin-home-table-td">{advertiser.business_name}</td>
+                  <td className="admin-home-table-td">{advertiser.business_type}</td>
+                  <td className="admin-home-table-td">
+                    <div>
+                      <button className="admin-home-table-button btn btn-secondary">
+                        <img src={cancel} alt="Reject" />
+                      </button>
+                      <button className="admin-home-table-button btn btn-success ms-3">
+                        <img src={accept} alt="Accept" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
+
         <div className="d-flex justify-content-end">
           <button className="btn admin-home-container-viewall">View All &nbsp; &gt;</button>
         </div>
@@ -151,7 +168,6 @@ function AdminHome() {
           <button className="btn admin-home-container-viewall">View All &nbsp; &gt;</button>
         </div>
       </div>
-
     </div>
   );
 }
