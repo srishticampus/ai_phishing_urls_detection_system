@@ -205,9 +205,9 @@ function App() {
         path="/user-area-of-interest"
         element={
           <>
-          {/* <UserNavbar/> */}
+          <UserNavbar/>
           <UserAreaOfInterests />
-          {/* <Footer/> */}
+          <Footer/>
           </>
         }
         >

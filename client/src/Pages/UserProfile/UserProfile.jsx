@@ -14,18 +14,11 @@ function UserProfile() {
     lastName: "",
     phoneNumber: "",
     gender: "",
-    image: user_empty_profile, 
+    image: user_empty_profile,
   });
 
-  const [errors, setErrors] = useState({
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
-    gender: "",
-    image: "",
-    form: "",
-  });
-
+  const [hasProfile, setHasProfile] = useState(false); // ✅ Track if profile exists in backend
+  const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -33,7 +26,13 @@ function UserProfile() {
     const fetchUserProfile = async () => {
       try {
         const response = await userProfile();
-        if (response.success) {
+
+        // ✅ Check if response contains actual user data
+        if (
+          response.success &&
+          response.data &&
+          response.data.user.first_name
+        ) {
           setProfileData({
             firstName: response.data.user.first_name || "",
             lastName: response.data.user.last_name || "",
@@ -41,20 +40,16 @@ function UserProfile() {
             gender: response.data.gender || "",
             image: response.data.photo || user_empty_profile,
           });
+          setHasProfile(true); // ✅ Profile exists in backend
         } else {
-          setErrors((prevErrors) => ({
-            ...prevErrors,
-            form: response.errors.message || "Failed to load profile data",
-          }));
+          setHasProfile(false); // ❌ No profile exists in backend
         }
       } catch (error) {
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          form: "Error fetching profile data",
-          error,
-        }));
+        setErrors({ form: "Error fetching profile data" });
+        setHasProfile(false); // ❌ No profile found
       }
     };
+
     fetchUserProfile();
   }, []);
 
@@ -76,7 +71,7 @@ function UserProfile() {
       setProfileData((prevState) => ({
         ...prevState,
         image: URL.createObjectURL(files[0]),
-        photo: files[0],
+        photo: files[0], // Store the actual file for submission
       }));
     }
   };
@@ -97,34 +92,24 @@ function UserProfile() {
 
     try {
       let response;
-      if (
-        profileData.firstName ||
-        profileData.lastName ||
-        profileData.phoneNumber ||
-        profileData.gender
-      ) {
-        response = await updateUserProfile(formData);
+      if (hasProfile) {
+        response = await updateUserProfile(formData); // ✅ Update if profile exists
       } else {
-        response = await addUserProfile(formData);
+        response = await addUserProfile(formData); // ✅ Add if no profile exists
       }
 
       if (response.success) {
-        console.log("Profile updated successfully!");
+        console.log("Profile saved successfully!");
         setLoading(false);
-        navigate("/user-area-of-interest"); 
+        navigate("/user-area-of-interest");
       } else {
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          form: response.errors.message || "Failed to update profile",
-        }));
+        setErrors({
+          form: response.errors?.message || "Failed to update profile",
+        });
         setLoading(false);
       }
     } catch (error) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        form: "An error occurred while submitting the form.",
-        error,
-      }));
+      setErrors({ form: "An error occurred while submitting the form." });
       setLoading(false);
     }
   };
@@ -146,7 +131,7 @@ function UserProfile() {
       </div>
 
       <div className="user-profile-section-two">
-        {errors.form && <p className="error-message">{errors.form}</p>} {/* Show form-wide errors */}
+        {errors.form && <p className="error-message">{errors.form}</p>}
 
         <form onSubmit={handleSubmit}>
           <div className="row mb-5">
@@ -159,7 +144,9 @@ function UserProfile() {
                 value={profileData.firstName}
                 onChange={handleInputChange}
               />
-              {errors.firstName && <span className="error-text">{errors.firstName}</span>} {/* Display error for firstName */}
+              {errors.firstName && (
+                <span className="error-text">{errors.firstName}</span>
+              )}
             </div>
             <div className="col-sm-5 user-profile-section-lastname">
               <input
@@ -170,7 +157,9 @@ function UserProfile() {
                 value={profileData.lastName}
                 onChange={handleInputChange}
               />
-              {errors.lastName && <span className="error-text">{errors.lastName}</span>} {/* Display error for lastName */}
+              {errors.lastName && (
+                <span className="error-text">{errors.lastName}</span>
+              )}
             </div>
           </div>
 
@@ -184,10 +173,12 @@ function UserProfile() {
                 value={profileData.phoneNumber}
                 onChange={handleInputChange}
               />
-              {errors.phoneNumber && <span className="error-text">{errors.phoneNumber}</span>} {/* Display error for phoneNumber */}
+              {errors.phoneNumber && (
+                <span className="error-text">{errors.phoneNumber}</span>
+              )}
             </div>
 
-            <div className="col-sm-5 user-profile-section-gender ">
+            <div className="col-sm-5 user-profile-section-gender">
               <div className="mt-3">
                 <label className="me-5 user-profile-gender">Gender</label>
                 <label className="me-1 user-profile-gender-male">Male</label>
@@ -211,7 +202,9 @@ function UserProfile() {
                   onChange={handleInputChange}
                 />
               </div>
-              {errors.gender && <span className="error-text">{errors.gender}</span>} {/* Display error for gender */}
+              {errors.gender && (
+                <span className="error-text">{errors.gender}</span>
+              )}
             </div>
           </div>
 
@@ -223,12 +216,9 @@ function UserProfile() {
             >
               {loading
                 ? "Submitting..."
-                : profileData.firstName ||
-                  profileData.lastName ||
-                  profileData.phoneNumber ||
-                  profileData.gender
-                ? "Update"
-                : "Next"}
+                : hasProfile
+                ? "Update Profile"
+                : "Create Profile"}
             </button>
           </div>
         </form>

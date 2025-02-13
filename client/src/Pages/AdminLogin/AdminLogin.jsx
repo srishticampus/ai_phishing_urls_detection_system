@@ -65,7 +65,7 @@ const navigate = useNavigate();
                 <img className="admin-login-image" src={backgroundimg} alt="Login Background" />
             </div>
             <div className="admin-login-section-right">
-                <p className="admin-login-right-head">Login</p>
+                <p className="admin-login-right-head">Admin Login</p>
                 <form onSubmit={handleSubmit}>
                     <input
                         type="text"
