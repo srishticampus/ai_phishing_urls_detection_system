@@ -1,16 +1,111 @@
-import { useRef } from 'react';
-import "../../Pages/AdvertisersSignup/AdvertisersSignup.css"
-import useemptyprofile from "../../assets/Images/user_empty_profile.png"
-import { Link } from 'react-router';
+import { useState, useEffect, useRef } from 'react';
+import "../../Pages/AdvertisersSignup/AdvertisersSignup.css";
+import useemptyprofile from "../../assets/Images/user_empty_profile.png";
+import { Link, useNavigate } from 'react-router-dom';  // Import useNavigate
+import { getInterests } from "../../Services/apiService"; // Import getInterests
+import { advertiserSignup } from "../../Services/apiService";
 
 function AdvertisersSignup() {
     const fileInputRef = useRef(null);
+    const [interests, setInterests] = useState([]); // Store business types (interests)
+    const [selectedBusinessType, setSelectedBusinessType] = useState("");
+    const [formData, setFormData] = useState({
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        business_name: "",
+        business_type_id: "",
+        contact_number: "",
+        address: "",
+        profile_image: null,
+        user_type: "advertiser"
+    });
+    const [errors, setErrors] = useState({});
+    
+    const navigate = useNavigate(); // Initialize the navigate hook
+
+    // Fetch business types when the component mounts
+    useEffect(() => {
+        const fetchInterests = async () => {
+            try {
+                const response = await getInterests();
+                if (response && response.data) {
+                    setInterests(response.data);
+                }
+            } catch (error) {
+                console.error("Error fetching business types:", error);
+            }
+        };
+        fetchInterests();
+    }, []);
+
     const handleButtonClick = () => {
         fileInputRef.current.click();
     };
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setFormData({ ...formData, profile_image: file });
+        }
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
+    const handleBusinessTypeChange = (id, name) => {
+        setFormData({ ...formData, business_type_id: id });
+        setSelectedBusinessType(name);
+    };
+
+    const validateForm = () => {
+        const newErrors = {};
+        if (!formData.username) newErrors.username = "Username is required";
+        if (!formData.email) newErrors.email = "Email is required";
+        if (!formData.password) newErrors.password = "Password is required";
+        if (!formData.confirmPassword) newErrors.confirmPassword = "Confirm Password is required";
+        if (!formData.business_name) newErrors.businessName = "Business Name is required";
+        if (!formData.business_type_id) newErrors.businessType = "Business Type is required";
+        if (!formData.contact_number) newErrors.contactNumber = "Contact Number is required";
+        if (!formData.address) newErrors.address = "Address is required";
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (formData.email && !emailRegex.test(formData.email)) {
+            newErrors.email = "Please enter a valid email address";
+        }
+
+        if (formData.password !== formData.confirmPassword) {
+            newErrors.confirmPassword = "Passwords do not match";
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!validateForm()) {
+            return;
+        }
+
+        try {
+            const response = await advertiserSignup(formData);
+            console.log("Signup API response:", response);
+            
+            // Navigate to the "user-area-of-interest" after successful signup
+            navigate("/user-area-of-interest");  // Redirect to the specified path
+        } catch (error) {
+            console.error("Error during signup:", error);
+        }
+    };
+
     return (
-        <div className='d-flex justify-content-center flex-column'>
-            <p className="advertisers-signup-head" >SignUp!</p>
+        <div className="d-flex justify-content-center flex-column">
+            <p className="advertisers-signup-head">SignUp!</p>
             <div>
                 <div className="advertisers-signup-img-div">
                     <img src={useemptyprofile} alt="profileImg" />
@@ -19,57 +114,120 @@ function AdvertisersSignup() {
                         type="file"
                         ref={fileInputRef}
                         style={{ display: 'none' }}
+                        onChange={handleFileChange}
                     />
                 </div>
                 <div className="row advertisers-signup-name-row">
                     <div className="col-sm-4">
-                        <input type="text" className="form-control" placeholder="Name" />
+                        <input
+                            type="text"
+                            className={`form-control ${errors.username ? 'is-invalid' : ''}`} 
+                            placeholder="Name"
+                            name="username"
+                            value={formData.username}
+                            onChange={handleInputChange}
+                        />
+                        {errors.username && <div className="invalid-feedback">{errors.username}</div>}
                     </div>
-                    <div className="col-sm-4 ">
-                        <input type="text" className="form-control" placeholder="Business Name" />
+                    <div className="col-sm-4">
+                        <input
+                            type="text"
+                            className={`form-control ${errors.businessName ? 'is-invalid' : ''}`}
+                            placeholder="Business Name"
+                            name="business_name"
+                            value={formData.business_name}
+                            onChange={handleInputChange}
+                        />
+                        {errors.businessName && <div className="invalid-feedback">{errors.businessName}</div>}
                     </div>
                 </div>
                 <div className="row advertisers-signup-sec-row">
                     <div className="col-sm-4">
-                        <input type="email" className="form-control" placeholder="Email" />
+                        <input
+                            type="email"
+                            className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                            placeholder="Email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleInputChange}
+                        />
+                        {errors.email && <div className="invalid-feedback">{errors.email}</div>}
                     </div>
-
                     <div className="col-sm-4">
                         <div className="dropdown">
-                            <button className="btn btn-outline-secondary dropdown-toggle form-control" type="button" id="businessTypeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                Select Business Type
+                            <button className="btn btn-outline-secondary dropdown-toggle form-control" type="button" data-bs-toggle="dropdown">
+                                {selectedBusinessType || "Select Business Type"}
                             </button>
-                            <ul className="dropdown-menu" aria-labelledby="businessTypeDropdown">
-                                <li><a className="dropdown-item" href="#">Business Type 1</a></li>
-                                <li><a className="dropdown-item" href="#">Business Type 2</a></li>
-                                <li><a className="dropdown-item" href="#">Business Type 3</a></li>
+                            <ul className="dropdown-menu">
+                                {interests.map((interest) => (
+                                    <li key={interest.id}>
+                                        <a className="dropdown-item" href="#" onClick={() => handleBusinessTypeChange(interest.id, interest.name)}>
+                                            {interest.name}
+                                        </a>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
+                        {errors.businessType && <div className="invalid-feedback d-block">{errors.businessType}</div>}
                     </div>
                 </div>
-                <div className='row advertisers-signup-third-row'>
+                <div className="row advertisers-signup-third-row">
                     <div className="col-sm-4">
-                        <input type="text" className="form-control" placeholder="Contact Number" />
+                        <input
+                            type="text"
+                            className={`form-control ${errors.contactNumber ? 'is-invalid' : ''}`}
+                            placeholder="Contact Number"
+                            name="contact_number"
+                            value={formData.contact_number}
+                            onChange={handleInputChange}
+                        />
+                        {errors.contactNumber && <div className="invalid-feedback">{errors.contactNumber}</div>}
                     </div>
-                    <div className="col-sm-4 ">
-                        <input type="password" className="form-control" placeholder="Password" />
+                    <div className="col-sm-4">
+                        <input
+                            type="password"
+                            className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+                            placeholder="Password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleInputChange}
+                        />
+                        {errors.password && <div className="invalid-feedback">{errors.password}</div>}
                     </div>
                 </div>
-                <div className='row advertisers-signup-fourth-row'>
+                <div className="row advertisers-signup-fourth-row">
                     <div className="col-sm-4">
-                        <input type="text" className="form-control" placeholder="Address" />
+                        <input
+                            type="text"
+                            className={`form-control ${errors.address ? 'is-invalid' : ''}`}
+                            placeholder="Address"
+                            name="address"
+                            value={formData.address}
+                            onChange={handleInputChange}
+                        />
+                        {errors.address && <div className="invalid-feedback">{errors.address}</div>}
                     </div>
-                    <div className="col-sm-4 ">
-                        <input type="password" className="form-control" placeholder="Confirm Password" />
+                    <div className="col-sm-4">
+                        <input
+                            type="password"
+                            className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}
+                            placeholder="Confirm Password"
+                            name="confirmPassword"
+                            value={formData.confirmPassword}
+                            onChange={handleInputChange}
+                        />
+                        {errors.confirmPassword && <div className="invalid-feedback">{errors.confirmPassword}</div>}
                     </div>
                 </div>
             </div>
-            <div className="advertisers-signup-button-div mt-4 ">
-                <button type="button" className="btn btn-dark advertisers-signup-button mb-3">SignUp</button>
-                <p className='advertisers-signup-already-have-account'>Already have an account? <Link className='advertisers-signup-login' to="/#">Login</Link> </p>
+            <div className="advertisers-signup-button-div mt-4">
+                <button type="submit" className="btn btn-dark advertisers-signup-button mb-3" onClick={handleSubmit}>SignUp</button>
+                <p className="advertisers-signup-already-have-account">
+                    Already have an account? <Link className="advertisers-signup-login" to="/advertiser-login">Login</Link>
+                </p>
             </div>
         </div>
-    )
+    );
 }
 
-export default AdvertisersSignup
+export default AdvertisersSignup;

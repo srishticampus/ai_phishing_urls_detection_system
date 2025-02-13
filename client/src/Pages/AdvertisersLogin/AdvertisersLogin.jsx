@@ -1,27 +1,61 @@
-import { useState } from "react";
 import "../../Pages/AdvertisersLogin/AdvertisersLogin.css";
 import LoginBackground from "../../assets/Images/Login_Background.png";
-import { Link } from "react-router";
+import { useState } from "react";
+import { login } from "../../Services/apiService";
+import { useNavigate } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router";
 
 function AdvertisersLogin() {
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState({
+    username: '',
+    password: ''
+  });
 
-  const handleTogglePassword = () => {
-    setPasswordVisible(!passwordVisible);
+  const navigate = useNavigate();
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    if (username && password) {
-      // Perform login logic
-      console.log("Logging in...");
-    } else {
-      setErrorMessage("Both fields are required!");
+
+    let formValid = true;
+    let newErrors = { username: '', password: '' };
+
+    // Validate Username
+    if (!username.trim()) {
+      newErrors.username = 'Username is required.';
+      formValid = false;
+    }
+
+    // Validate Password
+    if (!password.trim()) {
+      newErrors.password = 'Password is required.';
+      formValid = false;
+    }
+
+    setErrors(newErrors);
+
+    if (formValid) {
+      try {
+        const response = await login({ username, password });
+        console.log('Login response:', response); 
+        if (response.success) {
+          console.log('Login successful', response.data);
+          navigate('/advertiser-dashboard'); 
+        } else {
+          setErrors({ ...errors, password: 'Invalid username or password.' });
+        }
+      } catch (error) {
+        console.error('Login failed', error);
+        setErrors({ ...errors, password: 'An error occurred. Please try again.' });
+      }
     }
   };
 
@@ -44,33 +78,38 @@ function AdvertisersLogin() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
+          {errors.username && <p className="error-message">{errors.username}</p>}
+
           <div className="password-container">
             <input
-              type={passwordVisible ? "text" : "password"}
+              type={showPassword ? "text" : "password"}
               className="form-control advertiser-login-password mt-3"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <FontAwesomeIcon
-              icon={passwordVisible ? faEyeSlash : faEye}
+              icon={showPassword ? faEyeSlash : faEye}
               className="password-toggle-icon"
-              onClick={handleTogglePassword}
+              onClick={togglePasswordVisibility}
             />
+            {errors.password && <p className="error-message">{errors.password}</p>}
           </div>
-          {errorMessage && <p className="error-message">{errorMessage}</p>}
+
           <Link className="advertiser-login-forgotpassword" to="/advertisers-forget-password">
             Forget Password ?
           </Link>
+
           <div className="d-flex justify-content-center mt-4">
             <button type="submit" className="btn advertiser-login-button">
               Login
             </button>
           </div>
         </form>
+
         <p className="advertiser-login-dont-have-account mt-4">
           Don&apos;t have an Account ?{" "}
-          <a className="advertiser-login-dont-have-account-atag" href="/advertisers-signup">
+          <a className="advertiser-login-dont-have-account-atag" href="/blog_sphere/advertisers-signup">
             Sign up
           </a>
         </p>

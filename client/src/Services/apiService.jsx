@@ -221,3 +221,9 @@ export const advertiserSignup = async (formData) => {
     apiClient.post("/api/register-advertiser/", formData, generateConfig(true))
   );
 };
+
+export const adminViewNewAdvertisers = async (formData) => {
+  return handleResponse(
+    apiClient.get("api/admin-view-new-advertisers/", formData, generateConfig(true))
+  );
+};
