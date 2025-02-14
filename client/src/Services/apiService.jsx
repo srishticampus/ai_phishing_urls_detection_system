@@ -134,6 +134,7 @@ export const login = async (data) => {
     console.log("✅ Login successful. Storing tokens...");
     localStorage.setItem("accessToken", response.data.token.access);
     localStorage.setItem("refreshToken", response.data.token.refresh);
+    console.log("accessToken", response.data.token.access)
     window.dispatchEvent(new Event("loginStatusChanged"));
   }
   return response;
