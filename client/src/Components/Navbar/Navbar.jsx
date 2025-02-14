@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";  // Ensure you're using `react-router-dom` here
 import "./Navbar.css";
 import { logout, checkLoginStatus } from "../../Services/apiService";
 
@@ -8,32 +8,24 @@ function Navbar() {
   const [isLogoutConfirmOpen, setIsLogoutConfirmOpen] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // ✅ Listen for login/logout changes globally
-    const handleAuthChange = () => {
-      setIsLoggedIn(checkLoginStatus());
-    };
-
-    window.addEventListener("loginStatusChanged", handleAuthChange);
-
-    return () => {
-      window.removeEventListener("loginStatusChanged", handleAuthChange);
-    };
-  }, []);
-
   const handleLogoutClick = () => {
     setIsLogoutConfirmOpen(true); // Open the confirmation modal
   };
 
   const confirmLogout = () => {
     logout();
+    setIsLoggedIn(false);
     setIsLogoutConfirmOpen(false);
-    navigate("/"); // ✅ Redirect to home after logout
+    navigate("/"); // Navigate to home after logout
   };
 
   const cancelLogout = () => {
-    setIsLogoutConfirmOpen(false);
+    setIsLogoutConfirmOpen(false); // Close the confirmation modal
   };
+
+  useEffect(() => {
+    setIsLoggedIn(checkLoginStatus());
+  }, []);
 
   return (
     <>

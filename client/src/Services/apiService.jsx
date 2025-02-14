@@ -128,6 +128,8 @@ export const login = async (data) => {
     localStorage.setItem("refreshToken", response.data.token.refresh);
     console.log("accessToken", response.data.token.access)
     window.dispatchEvent(new Event("loginStatusChanged"));
+    // ✅ Store user type (e.g., user, advertiser, admin)
+    localStorage.setItem("userType", response.data.user_type);
   }
   return response;
 };
@@ -165,8 +167,9 @@ export const getInterests = async () => {
 };
 
 export const userAddInterest = async (formData) => {
+  console.log(formData);
   return handleResponse(
-    apiClient.post("/api/add-user-interests/", formData, generateConfig(true))
+    apiClient.post("/api/add-user-interests/", formData, generateConfig(false))
   );
 };
 
@@ -224,7 +227,6 @@ export const adminViewNewAdvertisers = async () => {
     apiClient.get("/api/admin-view-new-advertisers/", generateConfig())
   );
 };
-
 
 export const toggleUserActivation = async (id) => {
   return handleResponse(

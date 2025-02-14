@@ -7,6 +7,8 @@ import {
 } from "../../Services/apiService";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify"; // ✅ Import Toastify
+import "react-toastify/dist/ReactToastify.css"; // ✅ Import Toastify CSS
 
 function UserProfile() {
   const [profileData, setProfileData] = useState({
@@ -18,7 +20,6 @@ function UserProfile() {
   });
 
   const [hasProfile, setHasProfile] = useState(false); // ✅ Track if profile exists in backend
-  const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -27,12 +28,7 @@ function UserProfile() {
       try {
         const response = await userProfile();
 
-        // ✅ Check if response contains actual user data
-        if (
-          response.success &&
-          response.data &&
-          response.data.user.first_name
-        ) {
+        if (response.success && response.data?.user?.first_name) {
           setProfileData({
             firstName: response.data.user.first_name || "",
             lastName: response.data.user.last_name || "",
@@ -40,13 +36,13 @@ function UserProfile() {
             gender: response.data.gender || "",
             image: response.data.photo || user_empty_profile,
           });
-          setHasProfile(true); // ✅ Profile exists in backend
+          setHasProfile(true);
         } else {
-          setHasProfile(false); // ❌ No profile exists in backend
+          setHasProfile(false);
         }
       } catch (error) {
-        setErrors({ form: "Error fetching profile data" });
-        setHasProfile(false); // ❌ No profile found
+        toast.error("Error fetching profile data.");
+        setHasProfile(false);
       }
     };
 
@@ -59,10 +55,6 @@ function UserProfile() {
       ...prevState,
       [name]: value,
     }));
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      [name]: "",
-    }));
   };
 
   const handleImageChange = (e) => {
@@ -71,7 +63,7 @@ function UserProfile() {
       setProfileData((prevState) => ({
         ...prevState,
         image: URL.createObjectURL(files[0]),
-        photo: files[0], // Store the actual file for submission
+        photo: files[0], // Store actual file for submission
       }));
     }
   };
@@ -99,17 +91,14 @@ function UserProfile() {
       }
 
       if (response.success) {
-        console.log("Profile saved successfully!");
-        setLoading(false);
-        navigate("/user-area-of-interest");
+        toast.success(`Profile ${hasProfile ? "updated" : "created"} successfully! 🎉`);
+        setTimeout(() => navigate("/user-area-of-interest"), 2000); // ✅ Redirect after 2 sec
       } else {
-        setErrors({
-          form: response.errors?.message || "Failed to update profile",
-        });
-        setLoading(false);
+        toast.error(response.errors?.message || "Failed to save profile.");
       }
     } catch (error) {
-      setErrors({ form: "An error occurred while submitting the form." });
+      toast.error("An error occurred while saving the profile.");
+    } finally {
       setLoading(false);
     }
   };
@@ -119,20 +108,13 @@ function UserProfile() {
       <div className="user-profile-section-one">
         <p className="user-profile-head">Profile</p>
 
-        <img
-          className="user_empty_profile mt-3"
-          src={profileData.image}
-          alt="profileImage"
-        />
+        <img className="user_empty_profile mt-3" src={profileData.image} alt="profileImage" />
         <button className="btn mt-3">
-          <input type="file" name="image" onChange={handleImageChange} />+ Add
-          Image
+          <input type="file" name="image" onChange={handleImageChange} />+ Add Image
         </button>
       </div>
 
       <div className="user-profile-section-two">
-        {errors.form && <p className="error-message">{errors.form}</p>}
-
         <form onSubmit={handleSubmit}>
           <div className="row mb-5">
             <div className="col-sm-5 user-profile-section-firstname">
@@ -144,9 +126,6 @@ function UserProfile() {
                 value={profileData.firstName}
                 onChange={handleInputChange}
               />
-              {errors.firstName && (
-                <span className="error-text">{errors.firstName}</span>
-              )}
             </div>
             <div className="col-sm-5 user-profile-section-lastname">
               <input
@@ -157,9 +136,6 @@ function UserProfile() {
                 value={profileData.lastName}
                 onChange={handleInputChange}
               />
-              {errors.lastName && (
-                <span className="error-text">{errors.lastName}</span>
-              )}
             </div>
           </div>
 
@@ -173,9 +149,6 @@ function UserProfile() {
                 value={profileData.phoneNumber}
                 onChange={handleInputChange}
               />
-              {errors.phoneNumber && (
-                <span className="error-text">{errors.phoneNumber}</span>
-              )}
             </div>
 
             <div className="col-sm-5 user-profile-section-gender">
@@ -191,9 +164,7 @@ function UserProfile() {
                   onChange={handleInputChange}
                 />
 
-                <label className="me-1 user-profile-gender-female">
-                  Female
-                </label>
+                <label className="me-1 user-profile-gender-female">Female</label>
                 <input
                   type="radio"
                   name="gender"
@@ -202,9 +173,6 @@ function UserProfile() {
                   onChange={handleInputChange}
                 />
               </div>
-              {errors.gender && (
-                <span className="error-text">{errors.gender}</span>
-              )}
             </div>
           </div>
 
@@ -214,11 +182,7 @@ function UserProfile() {
               className="btn btn-dark mt-5 user-profile-next-button"
               disabled={loading}
             >
-              {loading
-                ? "Submitting..."
-                : hasProfile
-                ? "Update Profile"
-                : "Create Profile"}
+              {loading ? "Submitting..." : hasProfile ? "Update Profile" : "Create Profile"}
             </button>
           </div>
         </form>
