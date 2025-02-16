@@ -1,8 +1,8 @@
-import "../../Pages/AdminViewUsers/AdminViewUsers.css";
+import { useState, useEffect } from "react";
+import { viewUsers, toggleUserActivation } from "../../Services/apiService";
 import profileface from "../../assets/Images/profile-face.png";
 import { Switch } from "antd";
-import { useState, useEffect } from "react";
-import { viewUsers } from "../../Services/apiService";
+import "../../Pages/AdminViewUsers/AdminViewUsers.css";
 
 function AdminViewUsers() {
   const [dropdownValue, setDropdownValue] = useState("1");
@@ -38,11 +38,29 @@ function AdminViewUsers() {
     : [];
   const totalPages = Math.ceil(users.length / (rowsPerPage || 1));
 
-  const handleSwitchChange = (checked, user) => {
-    const updatedUsers = users.map((u) =>
-      u.id === user.id ? { ...u, is_active: checked } : u
-    );
-    setUsers(updatedUsers);
+  // Modify the handleSwitchChange to toggle user activation
+  const handleSwitchChange = async (checked, user) => {
+    const userId = user.user ? user.user.id : user.id; // Extract user ID
+
+    if (!userId) {
+      console.error("User ID is missing");
+      return;
+    }
+
+    console.log("Toggling user with ID:", userId);
+    try {
+      const response = await toggleUserActivation(userId); // Toggle user activation
+
+      const updatedUsers = users.map((u) =>
+        (u.user ? u.user.id : u.id) === userId ? { ...u, is_active: checked } : u
+      );
+      setUsers(updatedUsers);
+
+      console.log(response.message); // Optionally log the response message from API
+
+    } catch (error) {
+      console.error("Error toggling user activation", error);
+    }
   };
 
   const handleDropdownClick = (value) => {
@@ -80,41 +98,39 @@ function AdminViewUsers() {
               </tr>
             </thead>
             <tbody>
-              {paginatedUsers.map((user, index) => (
-                <tr key={index}>
-                  <>
+              {paginatedUsers.map((user, index) => {
+                const userId = user.user ? user.user.id : user.id; 
+                return (
+                  <tr key={index}>
                     <td>{(currentPage - 1) * rowsPerPage + index + 1}</td>
                     <td>
                       <img src={profileface} alt="profile" />
                     </td>
                     <td>
-                      {user.user?.first_name} {user.user?.last_name}
+                      {user.user ? `${user.user.first_name} ${user.user.last_name}` : "N/A"}
                     </td>
                     <td>{user.phone_number}</td>
                     <td>{user.user?.email}</td>
                     <td>{user.gender}</td>
-                    <td>{user.interest || "N/A"}</td>
+                    <td>{user.interests?.join(", ") || "N/A"}</td>
                     <td>
                       <Switch
                         checked={user.is_active}
                         checkedChildren="Active"
                         unCheckedChildren="Inactive"
-                        onChange={(checked) =>
-                          handleSwitchChange(checked, user)
-                        }
+                        onChange={(checked) => handleSwitchChange(checked, user)} // Use the correct user ID
                         style={{
-                          backgroundColor: user.is_active
-                            ? "#F18C00"
-                            : "#BFBFBF",
+                          backgroundColor: user.is_active ? "#F18C00" : "#BFBFBF",
                         }}
                       />
                     </td>
-                  </>
-                </tr>
-              ))}
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
 
+          {/* Pagination and dropdown */}
           <div className="d-flex justify-content-between">
             <div className="admin-view-user dropdown-container">
               <span className="admin-view-user">Show</span>
