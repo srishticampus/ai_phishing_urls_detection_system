@@ -1,25 +1,25 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router";
+import { useNavigate, Link } from "react-router-dom";
 import "./UserLogin.css";
 import Login_Background from "../../assets/Images/Login_Background.png";
-import { login } from "../../Services/apiService";
-import { toast} from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import eye icons
+import { login, userProfile } from "../../Services/apiService"; // ✅ Import userProfile
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { FaEye, FaEyeSlash } from "react-icons/fa"; // ✅ Import eye icons
 
 function UserLogin() {
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({}); // State for validation errors
-  const [apiError, setApiError] = useState(""); // State for API error messages
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false); // State for password visibility
+  const [errors, setErrors] = useState({});
+  const [apiError, setApiError] = useState("");
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   // Handle input changes
   const handleUsernameChange = (e) => setUsername(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
-  // Validation function
+  // ✅ Validate form inputs
   const validateForm = () => {
     const newErrors = {};
     if (!username) newErrors.username = "Username is required";
@@ -27,54 +27,60 @@ function UserLogin() {
     return newErrors;
   };
 
-  // Handle form submission
+  // ✅ Handle form submission
   const handleLogin = async (e) => {
-    e.preventDefault(); // Prevent form submission
+    e.preventDefault();
 
+    // Validate form before sending request
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
-    setErrors({}); // Clear previous validation errors
-    setApiError(""); // Clear previous API error
 
+    setErrors({});
+    setApiError("");
+
+    // Send login request
     const formData = { username, password };
-
     const response = await login(formData);
-    // console.log(response);
 
     if (response.success) {
-      console.log(response.data.message) 
-      // toast.success(response.data.message);
       toast.success(response.data.message, {
-        position: "top-right",  // Adjust position as needed
-        autoClose: 5000,         // Toast duration (in milliseconds)
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
+        position: "top-right",
+        autoClose: 3000,
       });
-      navigate("/user-profile"); // Navigate to home page after successful login
+
+      // ✅ Check if user has a profile
+      const profileResponse = await userProfile();
+      if (profileResponse.success && profileResponse.data.user.first_name) {
+        navigate("/user-homepage"); // ✅ Redirect if profile exists
+      } else {
+        navigate("/user-profile"); // ✅ Redirect if profile is empty
+      }
     } else {
-      // Display API error messages
-      const errorMessage =
-        response.errors?.non_field_errors?.[0] ||
-        "Invalid login credentials. Please try again.";
-      setApiError(errorMessage);
+      setApiError(
+        response.errors?.non_field_errors?.[0] || "Invalid login credentials."
+      );
+      toast.error("Login failed. Please check your credentials.", {
+        position: "top-right",
+      });
     }
   };
 
   // Toggle password visibility
   const togglePasswordVisibility = () => {
-    setIsPasswordVisible(prevState => !prevState);
+    setIsPasswordVisible((prevState) => !prevState);
   };
 
   return (
     <div className="Login-container">
       <div className="Login_LeftSide">
-        <img className="Login_Page_Img" src={Login_Background} alt="Background" />
+        <img
+          className="Login_Page_Img"
+          src={Login_Background}
+          alt="Background"
+        />
       </div>
       <div className="Login_RightSide">
         <p className="Login_RightSide_head">User Login!</p>
@@ -94,7 +100,7 @@ function UserLogin() {
 
           <div className="mb-4 position-relative">
             <input
-              type={isPasswordVisible ? "text" : "password"} // Toggle between text and password type
+              type={isPasswordVisible ? "text" : "password"}
               className="form-control"
               id="password"
               placeholder="Password"
@@ -112,7 +118,9 @@ function UserLogin() {
           </div>
 
           <div className="d-flex justify-content-end mb-3">
-            <Link to="/forgetpassword" className="login-forgetpass">Forget Password?</Link>
+            <Link to="/forgetpassword" className="login-forgetpass">
+              Forget Password?
+            </Link>
           </div>
 
           {apiError && <div className="error">{apiError}</div>}
@@ -122,7 +130,10 @@ function UserLogin() {
           </button>
         </form>
         <p>
-          Don&apos;t have an account? <Link className="signup-decoration" to="/signup"><span className="dont-have-an-account-signup">Sign Up</span></Link>
+          Don&apos;t have an account?{" "}
+          <Link className="signup-decoration" to="/signup">
+            <span className="dont-have-an-account-signup">Sign Up</span>
+          </Link>
         </p>
       </div>
     </div>
