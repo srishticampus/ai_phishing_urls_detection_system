@@ -1,10 +1,10 @@
 import "../../Components/HomePageNavbar/HomePageNavbar.css";
-import { Link, useNavigate } from "react-router-dom"; // ✅ Use useNavigate
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faUser, faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { Switch } from "antd";
-import { logout, checkLoginStatus } from "../../Services/apiService"; // ✅ Import auth functions
+import { logout, checkLoginStatus } from "../../Services/apiService";
 import Vector from "../../assets/Images/Vector.png";
 
 function HomePageNavbar() {
@@ -12,9 +12,9 @@ function HomePageNavbar() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLogoutConfirmOpen, setIsLogoutConfirmOpen] = useState(false);
   const [isSafeMode, setIsSafeMode] = useState(false);
-  const navigate = useNavigate(); // ✅ React Navigation
+  const navigate = useNavigate();
 
-  // ✅ Listen for login/logout changes globally
+  // Listen for login/logout changes globally
   useEffect(() => {
     const handleAuthChange = () => {
       setIsLoggedIn(checkLoginStatus());
@@ -27,7 +27,7 @@ function HomePageNavbar() {
     };
   }, []);
 
-  // ✅ Check Safe Mode from localStorage on mount
+  // Check Safe Mode from localStorage on mount
   useEffect(() => {
     const savedMode = localStorage.getItem("safeMode") === "true";
     setIsSafeMode(savedMode);
@@ -37,15 +37,17 @@ function HomePageNavbar() {
   const closeModal = () => setIsModalOpen(false);
 
   const handleLogoutClick = () => {
-    setIsModalOpen(false);
-    setIsLogoutConfirmOpen(true);isLoggedIn
-    logout();
-    setIsLogoutConfirmOpen(false);
-    navigate("/"); // ✅ Redirect to home after logout
+    setIsLogoutConfirmOpen(true); // Open logout confirmation modal
+  };
+
+  const confirmLogout = () => {
+    logout(); // Call the logout function
+    setIsLogoutConfirmOpen(false); // Close the confirmation modal
+    navigate("/"); // Redirect to home page
   };
 
   const cancelLogout = () => {
-    setIsLogoutConfirmOpen(false);
+    setIsLogoutConfirmOpen(false); // Close the confirmation modal
   };
 
   const handleSearch = (event) => {
@@ -117,7 +119,7 @@ function HomePageNavbar() {
         </div>
       </nav>
 
-      {/* ✅ User Menu Modal */}
+      {/* User Menu Modal */}
       {isModalOpen && (
         <div className="modal homepage-navbar-modal">
           <div className="modal-dialog" id="modal-dialog-right">
@@ -150,7 +152,7 @@ function HomePageNavbar() {
         </div>
       )}
 
-      {/* ✅ Logout Confirmation Modal */}
+      {/* Logout Confirmation Modal */}
       {isLogoutConfirmOpen && (
         <div className="modal homepage-navbar-modal-logout">
           <div className="modal-dialog">

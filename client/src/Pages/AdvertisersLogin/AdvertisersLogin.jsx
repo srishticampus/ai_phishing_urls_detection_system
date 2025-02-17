@@ -9,11 +9,11 @@ import { Link } from "react-router";
 
 function AdvertisersLogin() {
   const [showPassword, setShowPassword] = useState(false);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({
-    username: '',
-    password: ''
+    username: "",
+    password: "",
   });
 
   const navigate = useNavigate();
@@ -26,17 +26,17 @@ function AdvertisersLogin() {
     event.preventDefault();
 
     let formValid = true;
-    let newErrors = { username: '', password: '' };
+    let newErrors = { username: "", password: "" };
 
     // Validate Username
     if (!username.trim()) {
-      newErrors.username = 'Username is required.';
+      newErrors.username = "Username is required.";
       formValid = false;
     }
 
     // Validate Password
     if (!password.trim()) {
-      newErrors.password = 'Password is required.';
+      newErrors.password = "Password is required.";
       formValid = false;
     }
 
@@ -45,16 +45,19 @@ function AdvertisersLogin() {
     if (formValid) {
       try {
         const response = await login({ username, password });
-        console.log('Login response:', response); 
+        console.log("Login response:", response);
         if (response.success) {
-          console.log('Login successful', response.data);
-          navigate('/advertiser-dashboard'); 
+          console.log("Login successful", response.data);
+          navigate("/advertiser-dashboard");
         } else {
-          setErrors({ ...errors, password: 'Invalid username or password.' });
+          setErrors({ ...errors, password: "Invalid username or password." });
         }
       } catch (error) {
-        console.error('Login failed', error);
-        setErrors({ ...errors, password: 'An error occurred. Please try again.' });
+        console.error("Login failed", error);
+        setErrors({
+          ...errors,
+          password: "An error occurred. Please try again.",
+        });
       }
     }
   };
@@ -78,7 +81,9 @@ function AdvertisersLogin() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
-          {errors.username && <p className="error-message">{errors.username}</p>}
+          {errors.username && (
+            <p className="error-message">{errors.username}</p>
+          )}
 
           <div className="password-container">
             <input
@@ -93,10 +98,15 @@ function AdvertisersLogin() {
               className="password-toggle-icon"
               onClick={togglePasswordVisibility}
             />
-            {errors.password && <p className="error-message">{errors.password}</p>}
+            {errors.password && (
+              <p className="error-message">{errors.password}</p>
+            )}
           </div>
 
-          <Link className="advertiser-login-forgotpassword" to="/advertisers-forget-password">
+          <Link
+            className="advertiser-login-forgotpassword"
+            to="/advertisers-forget-password"
+          >
             Forget Password ?
           </Link>
 
@@ -109,9 +119,12 @@ function AdvertisersLogin() {
 
         <p className="advertiser-login-dont-have-account mt-4">
           Don&apos;t have an Account ?{" "}
-          <a className="advertiser-login-dont-have-account-atag" href="/blog_sphere/advertisers-signup">
+          <Link
+            className="advertiser-login-dont-have-account-atag"
+            to="/advertisers-signup"
+          >
             Sign up
-          </a>
+          </Link>
         </p>
       </div>
     </div>

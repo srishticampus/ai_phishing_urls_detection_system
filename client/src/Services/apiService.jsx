@@ -1,3 +1,4 @@
+//Service/apiService.jsx
 import axios from "axios";
 
 // Create Axios instance
@@ -45,6 +46,7 @@ const refreshAccessToken = async () => {
 const logoutAndRedirect = () => {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
+  localStorage.removeItem("userType");
   window.dispatchEvent(new Event("loginStatusChanged"));
   window.location.href = "/"; // Redirect user to home page
 };
@@ -126,10 +128,8 @@ export const login = async (data) => {
     console.log("✅ Login successful. Storing tokens...");
     localStorage.setItem("accessToken", response.data.token.access);
     localStorage.setItem("refreshToken", response.data.token.refresh);
-    console.log("accessToken", response.data.token.access)
-    window.dispatchEvent(new Event("loginStatusChanged"));
-    // ✅ Store user type (e.g., user, advertiser, admin)
     localStorage.setItem("userType", response.data.user_type);
+    window.dispatchEvent(new Event("loginStatusChanged")); // Dispatch event
   }
   return response;
 };
@@ -139,7 +139,8 @@ export const checkLoginStatus = () => !!localStorage.getItem("accessToken");
 export const logout = () => {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
-  window.dispatchEvent(new Event("loginStatusChanged"));
+  localStorage.removeItem("userType");
+  window.dispatchEvent(new Event("loginStatusChanged")); // Dispatch event
 };
 
 // ✅ User Profile Functions
