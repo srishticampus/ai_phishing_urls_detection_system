@@ -5,7 +5,7 @@ import { Switch } from "antd";
 import LandingP_card_one from '../../assets/Images/LandingP_card_one.png';
 import tabler_photo from '../../assets/Images/tabler_photo.png';
 import LandingPage_Bg from '../../assets/Images/LandingPage_Bg.png';
-import { toggleUserActivation } from "../../Services/apiService";
+import { toggleUserStatus } from "../../Services/apiService";
 
 function AdminHome() {
   const [advertisers, setAdvertisers] = useState([]);
@@ -41,7 +41,7 @@ function AdminHome() {
   const handleSwitchChange = async (checked, id) => {
     try {
       // Call the API to toggle user activation
-      const response = await toggleUserActivation(id);
+      const response = await toggleUserStatus(id);
 
       // Ensure that the correct advertiser is updated based on the unique id
       const updatedAdvertisers = advertisers.map(advertiser =>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { viewUsers, toggleUserActivation } from "../../Services/apiService";
+import { viewUsers, toggleUserStatus } from "../../Services/apiService";
 import profileface from "../../assets/Images/profile-face.png";
 import { Switch } from "antd";
 import "../../Pages/AdminViewUsers/AdminViewUsers.css";
@@ -49,7 +49,7 @@ function AdminViewUsers() {
 
     console.log("Toggling user with ID:", userId);
     try {
-      const response = await toggleUserActivation(userId); // Toggle user activation
+      const response = await toggleUserStatus(userId); // Toggle user activation
 
       const updatedUsers = users.map((u) =>
         (u.user ? u.user.id : u.id) === userId ? { ...u, is_active: checked } : u

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { adminViewNewAdvertisers, toggleUserActivation } from "../../Services/apiService";
+import { adminViewNewAdvertisers, toggleUserStatus } from "../../Services/apiService";
 import "../../Pages/AdminViewAdvertisers/AdminViewAdvertisers.css";
 import { Switch } from "antd"; // Import Switch component
 import { Link } from "react-router-dom";
@@ -39,7 +39,7 @@ function AdminViewAdvertisers() {
   const handleSwitchChange = async (checked, id) => {
     try {
       // Call the API to toggle user activation
-      const response = await toggleUserActivation(id);
+      const response = await toggleUserStatus(id);
 
       // Find the advertiser that was toggled
       const updatedAdvertisers = advertisers.map(advertiser =>
