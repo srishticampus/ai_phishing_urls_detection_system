@@ -36,7 +36,7 @@ function Footer() {
           </div>
 
           <div className="footer_sec_three">
-            <p className="footer_terms_and_polices">Terms & Polices</p>
+            <p className="footer_terms_and_polices">Terms & Policies</p>
             <ul>
               <li ><Link className="footerList" to="/terms-of-conditions">Terms of Conditions</Link></li>
               <li ><Link className="footerList" to="/f&q">F&Q</Link></li>

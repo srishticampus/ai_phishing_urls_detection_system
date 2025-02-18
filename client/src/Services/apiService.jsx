@@ -100,31 +100,31 @@ apiClient.interceptors.request.use(
 );
 
 // ✅ Utility to generate headers dynamically
-// const generateConfig = (isFormData = false, authRequired = true) => ({
-//   headers: {
-//     "Content-Type": isFormData ? "multipart/form-data" : "application/json",
-//   },
-//   authRequired,
-// });
-const generateConfig = (isFormData = false, authRequired = true) => {
-  const config = {
-    headers: {
-      "Content-Type": isFormData ? "multipart/form-data" : "application/json",
-    },
-  };
+const generateConfig = (isFormData = false, authRequired = true) => ({
+  headers: {
+    "Content-Type": isFormData ? "multipart/form-data" : "application/json",
+  },
+  authRequired,
+});
+// const generateConfig = (isFormData = false, authRequired = true) => {
+//   const config = {
+//     headers: {
+//       "Content-Type": isFormData ? "multipart/form-data" : "application/json",
+//     },
+//   };
 
-  if (authRequired) {
-    const token = localStorage.getItem("authToken"); // Assuming you're using localStorage to store the token
-    if (token) {
-      config.headers["Authorization"] = `Bearer ${token}`;
-    } else {
-      // Optionally, you can handle the case when the token is missing
-      console.warn("No authorization token found.");
-    }
-  }
+//   if (authRequired) {
+//     const token = localStorage.getItem("authToken"); // Assuming you're using localStorage to store the token
+//     if (token) {
+//       config.headers["Authorization"] = `Bearer ${token}`;
+//     } else {
+//       // Optionally, you can handle the case when the token is missing
+//       console.warn("No authorization token found.");
+//     }
+//   }
 
-  return config;
-};
+//   return config;
+// };
 
 // ✅ Function to handle API responses & errors
 const handleResponse = async (apiCall) => {
@@ -301,3 +301,20 @@ export const advertisersViewAdvertisement = async (formData) => {
     apiClient.get("api/advertisements/", formData, generateConfig(true))
   );
 }
+
+export const advertisersViewAdvertisementDetails = async (id) => {
+  try {
+    const response = await apiClient.get(`api/advertisements/${id}/`, generateConfig(true));
+    return response.data; 
+  } catch (error) {
+    console.error("Error fetching advertisement details:", error);
+    throw error; 
+  }
+};
+
+
+
+
+
+
+

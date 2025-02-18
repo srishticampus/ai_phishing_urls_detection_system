@@ -1,4 +1,3 @@
-
 import "../../Pages/UserHomePage/UserHomePage.css";
 import adv from "../../assets/Images/advertisement.png";
 import card_profile from '../../assets/Images/card_profile.png';

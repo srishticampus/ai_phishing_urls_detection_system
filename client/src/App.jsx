@@ -77,7 +77,7 @@ function App() {
     <>
       <ToastContainer position="top-right" transition={Bounce} autoClose={3000} />
       <Routes>
-        {/* Landing Page Route */} 
+        {/* Landing Page Route */}
         <Route
           path="/"
           element={
@@ -545,8 +545,9 @@ function App() {
         />
 
         {/* Advertisers View Advertisement Details Route */}
+
         <Route
-          path="/advertisers-view-advertisement-details"
+          path="/advertisers-view-advertisement-details/:id" // Use a dynamic route with :id
           element={
             <>
               <AdvertiserViewSidebar />
@@ -554,6 +555,17 @@ function App() {
             </>
           }
         />
+
+
+        {/* <Route
+          path="/advertisers-view-advertisement-details"
+          element={
+            <>
+              <AdvertiserViewSidebar />
+              <AdvertisersViewAdvertisementDetails />
+            </>
+          }
+        /> */}
 
         {/* Advertisers Edit Advertisements Route */}
         <Route
