@@ -5,7 +5,7 @@ import "../../Pages/AdminAddBlog/AdminAddBlog.css";
 function AdminAddBlog() {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const [category, setCategory] = useState("LifeStyle");
+    const [category, setCategory] = useState("");  // Initially set it to an empty string or null
     const [image, setImage] = useState(null);
     const [interests, setInterests] = useState([]); 
 
@@ -32,7 +32,7 @@ function AdminAddBlog() {
         const formData = new FormData();
         formData.append("title", title);
         formData.append("content", content);
-        formData.append("category", category);
+        formData.append("interest_id", category);   
         if (image) formData.append("image", image);
 
         for (let [key, value] of formData.entries()) {
@@ -43,7 +43,7 @@ function AdminAddBlog() {
             await addBlog(formData);
             setTitle("");
             setContent("");
-            setCategory("LifeStyle");
+            setCategory("");  
             setImage(null);
         } catch (error) {
             alert("Error adding blog!",error);
@@ -81,17 +81,16 @@ function AdminAddBlog() {
                                                 className="btn btn-outline-dark dropdown-toggle admin-add-blog-dropdown-button form-control"
                                                 data-bs-toggle="dropdown"
                                             >
-                                                {category}
+                                                {category ? category : "Select Category"} {/* Display category name or placeholder */}
                                             </button>
                                             <ul className="dropdown-menu">
-                                                
                                                 {interests.length > 0 ? (
                                                     interests.map((interest) => (
                                                         <li key={interest.id}>
                                                             <a
                                                                 className="dropdown-item"
                                                                 href="#"
-                                                                onClick={() => setCategory(interest.name)}
+                                                                onClick={() => setCategory(interest.id)} 
                                                             >
                                                                 {interest.name}
                                                             </a>
