@@ -54,13 +54,13 @@ function AdvertisersAddAdvertisements() {
     formDataToSubmit.append("ad_image", formData.ad_image);
     formDataToSubmit.append("title", formData.title);
     formDataToSubmit.append("link", formData.link);
-    formDataToSubmit.append("start_date", formattedStartDate);  // Use formatted date
-    formDataToSubmit.append("end_date", formattedEndDate);      // Use formatted date
+    formDataToSubmit.append("start_date", formattedStartDate);  
+    formDataToSubmit.append("end_date", formattedEndDate);      
   
     try {
+      console.log(formDataToSubmit);
       const response = await advertisersAddAdvertisement(formDataToSubmit);
       
-      // Log the response to check for success or error
       console.log("Response:", response);
   
       if (response && response.id) {

@@ -51,7 +51,7 @@ function AdvertisersLogin() {
           console.log("Login successful", response.data);
           toast.success("Login successful! Redirecting to dashboard..."); // Show success toast
           setTimeout(() => {
-            navigate("/advertiser-dashboard"); // Redirect after a delay
+            navigate("/advertisers-dashboard"); // Redirect after a delay
           }, 2000); // 2-second delay
         } else {
           // Handle specific error for inactive account

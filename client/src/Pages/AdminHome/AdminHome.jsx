@@ -25,7 +25,7 @@ function AdminHome() {
             email: advertiser.email || 'N/A',
             business_name: advertiser.business_name || 'N/A',
             business_type: advertiser.business_type?.name || 'N/A',
-            is_active: advertiser.is_active || false,
+            is_active: advertiser.is_active || false, // Assuming this field indicates active/inactive
           };
         });
 
@@ -40,16 +40,16 @@ function AdminHome() {
 
   const handleSwitchChange = async (checked, id) => {
     try {
-
+      // Call the API to toggle user activation
       const response = await toggleUserActivation(id);
 
-
+      // Find the advertiser that was toggled
       const updatedAdvertisers = advertisers.map(advertiser =>
         advertiser.id === id
           ? { ...advertiser, is_active: checked }
           : advertiser
       );
-
+      
       setAdvertisers(updatedAdvertisers);
 
       if (checked) {
@@ -57,13 +57,12 @@ function AdminHome() {
       } else {
         console.log(`Advertiser with id ${id} is deactivated`);
       }
-
+      // Optionally, show a success message or log the response
       console.log(response.message);
     } catch (error) {
       console.error("Error toggling user activation", error);
     }
   };
-
 
   return (
     <div className="admin-home-container">
