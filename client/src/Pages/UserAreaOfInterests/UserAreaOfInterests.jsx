@@ -48,6 +48,7 @@ function UserAreaOfInterests() {
     const formData = { interest_ids: selectedInterests };
 
     try {
+      console.log("Adding interests:", formData);
       const response = await userAddInterest(formData);
       if (response.success) {
         toast.success("Interests added successfully! 🎉");
