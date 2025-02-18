@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import SignUp_Page_Img from "../../assets/Images/SignUp_Page_Img.png";
 import { userSignup } from "../../Services/apiService";

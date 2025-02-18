@@ -3,7 +3,7 @@ import backgroundimg from "../../assets/Images/Login_Background.png";
 import { useState } from "react";
 import 'font-awesome/css/font-awesome.min.css';
 import { login } from "../../Services/apiService";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 function AdminLogin() {
     const [showPassword, setShowPassword] = useState(false);
