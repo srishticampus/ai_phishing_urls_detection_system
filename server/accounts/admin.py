@@ -1,14 +1,8 @@
-"""
-This module contains admin configurations for the accounts app.
-
-It customizes the Django admin interface for managing users, user profiles, interests,
-and user interests. These configurations include list displays, search capabilities,
-and filtering options to enhance admin usability.
-"""
-
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import UserProfile, Interest, UserInterest, User, AdvertiserProfile, Blog, Advertisement
+from .models import (
+    UserProfile, Interest, UserInterest, User, AdvertiserProfile, Blog, Advertisement
+)
 
 # Register the custom User model
 @admin.register(User)
@@ -21,21 +15,9 @@ class CustomUserAdmin(UserAdmin):
                     'user_type', 'is_active', 'is_staff')
     search_fields = ('id', 'username', 'email', 'first_name', 'last_name')
     list_filter = ('is_active', 'is_staff', 'user_type', 'groups')
-
-    fieldsets = (
-        (None, {'fields': ('username', 'password')}),
-        ('Personal info', {'fields': ('first_name', 'last_name', 'email', 'user_type')}),
-        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 
-                                    'groups', 'user_permissions')}),
-        ('Important dates', {'fields': ('last_login', 'date_joined')}),
-    )
-    add_fieldsets = (
-        (None, {'classes': ('wide',), 'fields': ('username', 'email', 'password')}),
-    )
-
     ordering = ('id',)  # Order by ID
 
-# Register the UserProfile, Interest, and UserInterest models
+# Register UserProfile, Interest, and UserInterest models
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
     """
@@ -64,9 +46,7 @@ class UserInterestAdmin(admin.ModelAdmin):
     search_fields = ('id', 'user_profile__user__username', 'interest__name')
 
     def user_profile_display(self, obj):
-        """
-        Custom function to display username for UserInterest.
-        """
+        """ Custom function to display username for UserInterest. """
         return obj.user_profile.user.username
     user_profile_display.short_description = 'Username'
 
@@ -78,13 +58,6 @@ class AdvertiserProfileAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'business_name', 'business_type', 'contact_number')
     search_fields = ('id', 'user__username', 'business_name', 'contact_number', 'business_type__name')
     list_filter = ('business_type',)
-
-    def user_email(self, obj):
-        """
-        Custom function to display email for AdvertiserProfile.
-        """
-        return obj.user.email
-    user_email.short_description = 'Email'
 
 @admin.register(Blog)
 class BlogAdmin(admin.ModelAdmin):
@@ -98,8 +71,24 @@ class BlogAdmin(admin.ModelAdmin):
 @admin.register(Advertisement)
 class AdvertisementAdmin(admin.ModelAdmin):
     """
-    Admin interface for viewing Advertisements.
+    Admin interface for managing Advertisements.
     """
-    list_display = ('id', 'title', 'advertiser', 'start_date', 'end_date', 'created_at')
-    search_fields = ('id', 'title', 'advertiser__username')
-    list_filter = ('start_date', 'end_date')
+    list_display = (
+        'id', 'advertiser', 'title', 'ad_image', 'link',
+        'start_date', 'end_date', 'created_at', 'updated_at'
+    )
+    search_fields = ('id', 'title', 'advertiser__username', 'link')
+    list_filter = ('start_date', 'end_date', 'advertiser')
+    readonly_fields = ('created_at', 'updated_at')  # Prevent modification of timestamps
+    ordering = ["-created_at"]  # Show latest ads first
+    fieldsets = (
+        ('Advertisement Details', {
+            'fields': ('advertiser', 'title', 'ad_image', 'link')
+        }),
+        ('Schedule', {
+            'fields': ('start_date', 'end_date')
+        }),
+        ('Timestamps', {
+            'fields': ('created_at', 'updated_at')
+        }),
+    )
