@@ -4,6 +4,7 @@ import { useState } from "react";
 import 'font-awesome/css/font-awesome.min.css';
 import { login } from "../../Services/apiService";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify"; // Import toast
 
 function AdminLogin() {
     const [showPassword, setShowPassword] = useState(false);
@@ -14,7 +15,7 @@ function AdminLogin() {
         password: ''
     });
 
-const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -42,20 +43,25 @@ const navigate = useNavigate();
 
         if (formValid) {
             try {
-                
                 const response = await login({ username, password, user_type: "admin" });
-                console.log('Login response:', response); 
+                console.log('Login response:', response);
                 if (response.success) {
                     console.log('Login successful', response.data);
-                    navigate('/admin-dashboard');
-                    
+                    toast.success("Login successful! Redirecting to dashboard..."); // Show success toast
+                    setTimeout(() => {
+                        navigate('/admin-dashboard'); // Redirect after a delay
+                    }, 2000); // 2-second delay
                 } else {
                     setErrors({ ...errors, password: 'Invalid username or password.' });
+                    toast.error("Invalid username or password."); // Show error toast
                 }
             } catch (error) {
                 console.error('Login failed', error);
                 setErrors({ ...errors, password: 'An error occurred. Please try again.' });
+                toast.error("An error occurred. Please try again."); // Show error toast
             }
+        } else {
+            toast.error("Please fix the errors in the form."); // Show error toast for validation errors
         }
     };
 

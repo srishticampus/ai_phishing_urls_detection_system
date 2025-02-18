@@ -8,19 +8,20 @@ related features, using Django REST Framework and Simple JWT for token handling.
 import os
 import logging
 from django.contrib.auth.tokens import default_token_generator
+from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
-from django.db import DatabaseError,transaction
+from django.db import DatabaseError, transaction, IntegrityError
 from rest_framework import permissions,generics,status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.exceptions import APIException
+from rest_framework.exceptions import APIException, ParseError
 from rest_framework_simplejwt.views import TokenObtainPairView
 from accounts.models import User,UserProfile,Interest,Blog,AdvertiserProfile,Advertisement,UserInterest
 from .serializers import (UserSerializer,CustomTokenObtainPairSerializer,ResetPasswordSerializer,
                           UserProfileSerializer,InterestSerializer,BlogSerializer,UserDetailsSerializer,
-                          UserAdvertiserProfileSerializer,AdvertiserProfileSerializer,AdvertisementSerializer,AddUserInterestsSerializer)
+                          UserAdvertiserProfileSerializer,AdvertisementSerializer,AddUserInterestsSerializer)
 from .permissions import IsAdminorReadOnly,IsAdmin
 
 logger = logging.getLogger(__name__)
@@ -457,20 +458,63 @@ class RegisterAdvertiserView(APIView):
         """
         try:
             data = request.data.copy()
+
+            # Handle profile image if included in the request
             if 'profile_image' in request.FILES:
                 data['profile_image'] = request.FILES['profile_image']
+
             serializer = UserAdvertiserProfileSerializer(data=data)
+
             if serializer.is_valid():
                 data = serializer.save()
                 return Response(
                     {"message": "Advertiser registered successfully.", "data": data},
                     status=status.HTTP_201_CREATED
-                    )
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        except Exception as e:
+                )
+
+            # Extract unique constraint errors from serializer
+            errors = serializer.errors
+            if "username" in errors and any("already exists" in str(e) for e in errors["username"]):
+                return Response(
+                    {"error": "An account with that username already exists."},
+                    status=status.HTTP_409_CONFLICT
+                )
+
+            if "email" in errors and any("already exists" in str(e) for e in errors["email"]):
+                return Response(
+                    {"error": "An account with that email already exists."},
+                    status=status.HTTP_409_CONFLICT
+                )
+
+            return Response(errors, status=status.HTTP_400_BAD_REQUEST)
+
+        except IntegrityError as e:
+            error_msg = str(e).lower()
+            if "unique constraint" in error_msg and "username" in error_msg:
+                return Response(
+                    {"error": "An account with that username already exists."},
+                    status=status.HTTP_409_CONFLICT
+                )
+            if "unique constraint" in error_msg and "email" in error_msg:
+                return Response(
+                    {"error": "An account with that email already exists."},
+                    status=status.HTTP_409_CONFLICT
+                )
             return Response(
-                {"error": "An unexpected error occurred.", "details": str(e)},
+                {"error": "Database integrity error occurred.", "details": str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+        except ValidationError as e:
+            return Response(
+                {"error": "Invalid input.", "details": e.detail},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        except ParseError as e:
+            return Response(
+                {"error": "Invalid data format.", "details": str(e)},
+                status=status.HTTP_400_BAD_REQUEST
             )
 
 class AdminAdvertiserListView(APIView):
@@ -529,14 +573,14 @@ class AdminNewAdvertiserListView(APIView):
         GET method to fetch details of all new advertisers.
         """
         try:
-            # Fetch all inactive AdvertiserProfile objects
+            # Fetch all inactive AdvertiserProfile objects with related User
             new_advertiser_profiles = AdvertiserProfile.objects.select_related('user').filter(user__is_active=False)
 
             # Prepare structured response
             advertiser_list = []
             for profile in new_advertiser_profiles:
                 advertiser_list.append({
-                    "id": profile.id,
+                    "id": profile.user.id,  # ✅ Use the `User` table's `id`
                     "username": profile.user.username,
                     "email": profile.user.email,
                     "is_active": profile.user.is_active,
@@ -562,7 +606,7 @@ class AdminNewAdvertiserListView(APIView):
                 {"error": "An unexpected error occurred.", "details": str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
- 
+
 class AdminAdvertisementsView(APIView):
     """
     API view for the admin to view all advertisements in the system.

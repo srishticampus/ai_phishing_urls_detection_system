@@ -59,13 +59,14 @@ apiClient.interceptors.request.use(
     if (
       config.url.includes("/api/login/") ||
       config.url.includes("/api/register/") ||
-      config.url.includes("/api/register-advertiser/")
+      config.url.includes("/api/register-advertiser/")||
+      config.url.includes("/api/interests/")
     ) {
       return config;
     }
 
     if (config.authRequired !== false) {
-      //let token = localStorage.getItem("accessToken");
+      let token = localStorage.getItem("accessToken");
 
       // if (!token) {
       //   console.warn("⚠️ No access token found. Trying to refresh...");
@@ -89,7 +90,7 @@ apiClient.interceptors.request.use(
       //   }
       // }
 
-      //config.headers["Authorization"] = `Bearer ${token}`;
+      config.headers["Authorization"] = `Bearer ${token}`;
     }
     return config;
   },

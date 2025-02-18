@@ -351,6 +351,7 @@ function App() {
           path="/admin-login"
           element={
             <>
+              <Navbar/>
               <AdminLogin />
               <Footer />
             </>
@@ -591,7 +592,7 @@ function App() {
         />
 
         {/* Advertisers Registration Route */}
-        <Route
+        {/* <Route
           path="/advertisers-registration"
           element={
             <>
@@ -599,7 +600,7 @@ function App() {
               <Footer />
             </>
           }
-        />
+        /> */}
       </Routes>
     </>
   );
