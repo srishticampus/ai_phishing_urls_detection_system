@@ -202,7 +202,7 @@ export const getInterests = async () => {
 
 export const userAddInterest = async (formData) => {
   return handleResponse(
-    apiClient.post("/api/add-user-interests/", formData, generateConfig(true))
+    apiClient.post("/api/add-user-interests/", formData, generateConfig())
   );
 };
 

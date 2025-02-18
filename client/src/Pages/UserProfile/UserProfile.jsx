@@ -71,17 +71,17 @@ function UserProfile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+  
     const formData = new FormData();
     formData.append("first_name", profileData.firstName);
     formData.append("last_name", profileData.lastName);
     formData.append("phone_number", profileData.phoneNumber);
     formData.append("gender", profileData.gender);
-
+  
     if (profileData.photo instanceof File) {
       formData.append("photo", profileData.photo);
     }
-
+  
     try {
       let response;
       if (hasProfile) {
@@ -89,10 +89,14 @@ function UserProfile() {
       } else {
         response = await addUserProfile(formData); // ✅ Add if no profile exists
       }
-
+  
       if (response.success) {
         toast.success(`Profile ${hasProfile ? "updated" : "created"} successfully! 🎉`);
-        setTimeout(() => navigate("/user-area-of-interest"), 2000); // ✅ Redirect after 2 sec
+        
+        if (!hasProfile) {
+          // ✅ Redirect only if a new profile is created
+          setTimeout(() => navigate("/user-profile"), 2000); 
+        }
       } else {
         toast.error(response.errors?.message || "Failed to save profile.");
       }
@@ -102,7 +106,7 @@ function UserProfile() {
       setLoading(false);
     }
   };
-
+  
   return (
     <div className="user-addprofile-container">
       <div className="user-profile-section-one">
