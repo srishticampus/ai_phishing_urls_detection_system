@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"; // Add useState and useEffect
+import { useState, useEffect } from "react"; 
 import { Routes, Route } from "react-router";
 import { ToastContainer, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -17,7 +17,7 @@ import FandQ from "./Pages/FandQ/FandQ";
 import About from "./Pages/AboutUS/About";
 import UserProfile from "./Pages/UserProfile/UserProfile";
 import UserEditProfile from "./Pages/UserEditProfile/UserEditProfile";
-import UserNavbar from "./Components/UserNavbar/UserNavbar";
+// import UserNavbar from "./Components/UserNavbar/UserNavbar";
 import HomePageNavbar from "./Components/HomePageNavbar/HomePageNavbar";
 import UserViewProfile from "./Pages/UserViewProfile/UserViewProfile";
 import AdminSidebar from "./Pages/AdminSidebar/AdminSidebar";
@@ -52,7 +52,7 @@ import UserViewDetails from "./Pages/UserViewDetails/UserViewDetails";
 import UserResetPassword from "./Pages/UserResetPassword/UserResetPassword";
 import UserAreaOfInterests from "./Pages/UserAreaOfInterests/UserAreaOfInterests";
 import UserViewAdvertisementDetails from "./Pages/UserViewAdvertisementDetails/UserViewAdvertisementDetails";
-import AdvertisersRegistration from "./Pages/AdvertisersRegistration/AdvertisersRegistration";
+// import AdvertisersRegistration from "./Pages/AdvertisersRegistration/AdvertisersRegistration";
 import { checkLoginStatus } from "./Services/apiService"; // Import the checkLoginStatus function
 
 

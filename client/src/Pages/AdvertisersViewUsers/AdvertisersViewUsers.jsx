@@ -1,3 +1,4 @@
+
 import "../../Pages/AdvertisersViewUsers/AdvertisersViewUsers.css"
 import profileface from "../../assets/Images/profile-face.png"
 
@@ -22,7 +23,7 @@ function AdvertisersViewUsers() {
                 <tr>
                     <td>1</td>
                     <td><img src={profileface}/></td>
-                    <td>Saravanan</td>
+                    <td>Saravn</td>
                     <td>123</td>
                     <td>xyz@gmail.com</td>
                     <td>Male</td>
