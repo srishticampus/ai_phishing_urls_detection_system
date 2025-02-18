@@ -14,7 +14,9 @@ function AdminSidebar() {
     }, []);
 
     const handleLogoutClick = () => {
-        setShowModal(true);
+        console.log("Logout clicked");
+        setShowModal(prevState => !prevState);
+        console.log("showModal", showModal);
     };
 
     const handleLogoutConfirm = () => {
