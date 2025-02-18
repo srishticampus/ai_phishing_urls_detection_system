@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react"; // Add useState and useEffect
-import { useState, useEffect } from "react"; // Add useState and useEffect
 import { Routes, Route } from "react-router";
 import { ToastContainer, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -54,7 +53,6 @@ import UserResetPassword from "./Pages/UserResetPassword/UserResetPassword";
 import UserAreaOfInterests from "./Pages/UserAreaOfInterests/UserAreaOfInterests";
 import UserViewAdvertisementDetails from "./Pages/UserViewAdvertisementDetails/UserViewAdvertisementDetails";
 import AdvertisersRegistration from "./Pages/AdvertisersRegistration/AdvertisersRegistration";
-import { checkLoginStatus } from "./Services/apiService"; // Import the checkLoginStatus function
 import { checkLoginStatus } from "./Services/apiService"; // Import the checkLoginStatus function
 
 function App() {
