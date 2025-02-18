@@ -13,7 +13,7 @@ function AdminViewAdvertisers() {
     const fetchAdvertisers = async () => {
       try {
         const response = await adminViewNewAdvertisers();
-        console.log("Advertisers Data", response.fullResponse);
+        console.log("Advertisers Data", response);
 
         const validatedData = response.data.map(advertiser => {
           return {

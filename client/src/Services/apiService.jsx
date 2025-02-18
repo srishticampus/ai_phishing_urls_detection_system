@@ -59,7 +59,8 @@ apiClient.interceptors.request.use(
     if (
       config.url.includes("/api/login/") ||
       config.url.includes("/api/register/") ||
-      config.url.includes("/api/register-advertiser/")
+      config.url.includes("/api/register-advertiser/")||
+      config.url.includes("/api/interests/")
     ) {
       return config;
     }
@@ -195,7 +196,7 @@ export const updateUserProfile = async (formData) => {
 export const getInterests = async () => {
   return handleResponse(
     apiClient.get("/api/interests/"),
-    { authRequired: false }
+    {authRequired: false}
   );
 };
 
@@ -253,7 +254,7 @@ export const advertiserSignup = async (formData) => {
     apiClient.post(
       "/api/register-advertiser/",
       formData,
-      generateConfig(true, false)
+     generateConfig(true, false)
     )
   );
 };
@@ -263,32 +264,6 @@ export const adminViewNewAdvertisers = async () => {
     apiClient.get("/api/admin-view-new-advertisers/", generateConfig())
   );
 };
-
-export const toggleUserActivation = async (id) => {
-  return handleResponse(
-    apiClient.patch(`/api/toggle-user-activation/${id}/`, generateConfig())
-  );
-};
-
-// export const advertisersAddAdvertisement = async (formData) => {
-//   return handleResponse(
-//     apiClient.post(
-//       "api/advertisements/",
-//       formData,
-//      generateConfig(true, true)
-//     )
-//   );
-// };
-
-// export const advertisersViewAdvertisement = async (formData) => {
-//   return handleResponse(
-//     apiClient.get(
-//       "api/advertisements/",
-//       formData,
-//      generateConfig(true, true)
-//     )
-//   );
-// };
 
 export const advertisersAddAdvertisement = async (formData) => {
   console.log(formData);

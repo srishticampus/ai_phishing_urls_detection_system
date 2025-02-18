@@ -104,7 +104,10 @@ function AdvertisersSignup() {
                     navigate("/advertiser-login"); // Redirect after a delay
                 }, 2000); // 2-second delay
             } else {
-                toast.error(response.errors.message || "Signup failed. Please try again."); // Show error toast
+                // Extract error messages from the API response
+                console.log("Signup failed:", response.fullResponse.data);
+                const errorMessages = Object.values(response.fullResponse.data).flat().join(", ");
+                toast.error(errorMessages || "Signup failed. Please try again."); // Show error toast
             }
         } catch (error) {
             console.error("Error during signup:", error);
@@ -131,7 +134,7 @@ function AdvertisersSignup() {
                         <input
                             type="text"
                             className={`form-control ${errors.username ? 'is-invalid' : ''}`}
-                            placeholder="Name"
+                            placeholder="Username"
                             name="username"
                             value={formData.username}
                             onChange={handleInputChange}
