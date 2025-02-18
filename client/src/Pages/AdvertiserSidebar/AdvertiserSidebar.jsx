@@ -45,6 +45,9 @@ function AdvertiserSidebar() {
                 <Link to="/advertisers-add-advertisements">
                     <button className="btn text-light mb-3">Add Advertisements</button>
                 </Link>
+                <Link to="/advertisers-view-advertisements">
+                    <button className="btn text-light mb-3">View Advertisements</button>
+                </Link>
                 <Link to="/advertiser-view-user">
                     <button className="btn text-light mb-3">View Users</button>
                 </Link>

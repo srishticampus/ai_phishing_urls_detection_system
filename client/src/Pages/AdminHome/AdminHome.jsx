@@ -11,7 +11,7 @@ function AdminHome() {
   const [advertisers, setAdvertisers] = useState([]);
 
   useEffect(() => {
-    // Fetch the data on component mount
+
     const fetchAdvertisers = async () => {
       try {
         const response = await adminViewNewAdvertisers();
