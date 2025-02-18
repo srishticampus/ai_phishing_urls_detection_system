@@ -1,7 +1,7 @@
 import "../../Components/HomePageNavbar/HomePageNavbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faUser, faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faUser, faArrowRightFromBracket,faPencilRuler } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { Switch } from "antd";
 import { logout, checkLoginStatus } from "../../Services/apiService";
@@ -130,6 +130,12 @@ function HomePageNavbar() {
                   <Link to="/user-view-profile" className="user-view-profile-color">Profile</Link>
                 </span>
                 <button type="button" className="btn-close" onClick={closeModal}></button>
+              </div>
+              <div className="modal-header homepage-modal-header">
+                <FontAwesomeIcon icon={faPencilRuler} style={{ cursor: "pointer", color: "#f18c00" }} />
+                <span className="ms-2">
+                  <Link to="/user-profile" className="user-view-profile-color">Edit Profile</Link>
+                </span>
               </div>
               <div className="modal-body homepage-modal-body">
                 Choose Mode
