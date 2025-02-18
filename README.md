@@ -936,6 +936,7 @@ Retrieves all advertisements created by the currently logged-in advertiser.
   "details": "Error message describing the issue."
   }
   ```
+  
 ## ** View Single Advertisement**  
 Retrieve details of a specific advertisement by its ID.
 - **URL**: `api/advertisements/<int:advertisement_id>/`  

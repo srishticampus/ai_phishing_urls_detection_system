@@ -1,22 +1,24 @@
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 import { addBlog, getInterests } from "../../Services/apiService"; 
 import "../../Pages/AdminAddBlog/AdminAddBlog.css";
 
 function AdminAddBlog() {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const [category, setCategory] = useState("");  // Initially set it to an empty string or null
+    const [category, setCategory] = useState("");
     const [image, setImage] = useState(null);
-    const [interests, setInterests] = useState([]); 
+    const [interests, setInterests] = useState([]);
 
     useEffect(() => {
         const fetchInterests = async () => {
             try {
                 const response = await getInterests();
-                console.log("API: Response",response)
+                console.log("API: Response", response);
                 setInterests(response.data);
             } catch (error) {
                 console.error("Error fetching interests:", error);
+                toast.error("Failed to load categories!");
             }
         };
 
@@ -32,21 +34,18 @@ function AdminAddBlog() {
         const formData = new FormData();
         formData.append("title", title);
         formData.append("content", content);
-        formData.append("interest_id", category);   
+        formData.append("interest_id", category);
         if (image) formData.append("image", image);
-
-        for (let [key, value] of formData.entries()) {
-            console.log(`${key}:`, value);
-        }
 
         try {
             await addBlog(formData);
+            toast.success("Blog added successfully!");
             setTitle("");
             setContent("");
-            setCategory("");  
+            setCategory("");
             setImage(null);
         } catch (error) {
-            alert("Error adding blog!",error);
+            toast.error("Error adding blog!");
             console.error(error);
         }
     };
@@ -81,7 +80,7 @@ function AdminAddBlog() {
                                                 className="btn btn-outline-dark dropdown-toggle admin-add-blog-dropdown-button form-control"
                                                 data-bs-toggle="dropdown"
                                             >
-                                                {category ? category : "Select Category"} {/* Display category name or placeholder */}
+                                                {category ? category : "Select Category"}
                                             </button>
                                             <ul className="dropdown-menu">
                                                 {interests.length > 0 ? (
@@ -90,7 +89,7 @@ function AdminAddBlog() {
                                                             <a
                                                                 className="dropdown-item"
                                                                 href="#"
-                                                                onClick={() => setCategory(interest.id)} 
+                                                                onClick={() => setCategory(interest.id)}
                                                             >
                                                                 {interest.name}
                                                             </a>
