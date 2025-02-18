@@ -11,7 +11,7 @@ function AdminHome() {
   const [advertisers, setAdvertisers] = useState([]);
 
   useEffect(() => {
-    // Fetch the data on component mount
+
     const fetchAdvertisers = async () => {
       try {
         const response = await adminViewNewAdvertisers();
@@ -40,10 +40,10 @@ function AdminHome() {
 
   const handleSwitchChange = async (checked, id) => {
     try {
-      // Call the API to toggle user activation
+
       const response = await toggleUserActivation(id);
 
-      // Ensure that the correct advertiser is updated based on the unique id
+
       const updatedAdvertisers = advertisers.map(advertiser =>
         advertiser.id === id
           ? { ...advertiser, is_active: checked }

@@ -250,3 +250,17 @@ export const toggleUserActivation = async (id) => {
     apiClient.patch(`/api/toggle-user-activation/${id}/`, generateConfig())
   );
 };
+
+
+export const advertisersAddAdvertisement = async (formData) => {
+  return handleResponse(
+    apiClient.post("api/advertisements/", formData, generateConfig(true))
+  );
+}
+
+
+export const advertisersViewAdvertisement = async (formData) => {
+  return handleResponse(
+    apiClient.get("api/advertisements/", formData, generateConfig(true))
+  );
+}
