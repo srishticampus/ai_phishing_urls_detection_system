@@ -287,7 +287,19 @@ export const advertisersViewAdvertisementDetails = async (id) => {
   }
 };
 
+// ✅ Admin Functions
+export const adminViewAdvertisers = async () => {
+  return handleResponse(
+    apiClient.get("/api/admin-view-advertisers/", generateConfig())
+  );
+};
 
+// ✅ Check Malicious Links
+export const checkMaliciousLinks = async (advertiserId) => {
+  return handleResponse(
+    apiClient.get(`/ml/check-malicious-links/${advertiserId}/`, generateConfig())
+  );
+};
 
 
 
