@@ -77,7 +77,7 @@ function App() {
     <>
       <ToastContainer position="top-right" transition={Bounce} autoClose={3000} />
       <Routes>
-        {/* Landing Page Route */}
+        {/* Landing Page Route */} 
         <Route
           path="/"
           element={
@@ -417,6 +417,7 @@ function App() {
           path="/advertiser-login"
           element={
             <>
+              <Navbar />
               <AdvertisersLogin />
               <Footer />
             </>
@@ -428,6 +429,7 @@ function App() {
           path="/advertisers-forget-password"
           element={
             <>
+              <Navbar />
               <AdvertisersForgetPassword />
               <Footer />
             </>
@@ -439,6 +441,7 @@ function App() {
           path="/advertisers-reset-password"
           element={
             <>
+              <Navbar />
               <AdvertisersResetPassword />
               <Footer />
             </>
@@ -450,6 +453,7 @@ function App() {
           path="/advertisers-signup"
           element={
             <>
+              <Navbar />
               <AdvertisersSignup />
               <Footer />
             </>

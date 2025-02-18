@@ -4,7 +4,7 @@ import insta from "../../assets/Images/insta.png";
 import pinterest from "../../assets/Images/pinterest.png";
 import twitter from "../../assets/Images/twitter.png";
 import ytb from "../../assets/Images/ytb.png";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (

@@ -2,10 +2,11 @@ import "../../Pages/AdvertisersLogin/AdvertisersLogin.css";
 import LoginBackground from "../../assets/Images/Login_Background.png";
 import { useState } from "react";
 import { login } from "../../Services/apiService";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify"; // Import toast
 
 function AdvertisersLogin() {
   const [showPassword, setShowPassword] = useState(false);
@@ -48,9 +49,18 @@ function AdvertisersLogin() {
         console.log("Login response:", response);
         if (response.success) {
           console.log("Login successful", response.data);
-          navigate("/advertiser-dashboard");
+          toast.success("Login successful! Redirecting to dashboard..."); // Show success toast
+          setTimeout(() => {
+            navigate("/advertiser-dashboard"); // Redirect after a delay
+          }, 2000); // 2-second delay
         } else {
-          setErrors({ ...errors, password: "Invalid username or password." });
+          // Handle specific error for inactive account
+          if (response.errors?.error?.includes("This account is not active. Please contact the ADMIN.")) {
+            toast.error("This account is not active. Please contact the ADMIN."); // Show error toast
+          } else {
+            setErrors({ ...errors, password: "Invalid username or password." });
+            toast.error("Invalid username or password."); // Show error toast
+          }
         }
       } catch (error) {
         console.error("Login failed", error);
@@ -58,7 +68,10 @@ function AdvertisersLogin() {
           ...errors,
           password: "An error occurred. Please try again.",
         });
+        toast.error("An error occurred. Please try again."); // Show error toast
       }
+    } else {
+      toast.error("Please fix the errors in the form."); // Show error toast for validation errors
     }
   };
 

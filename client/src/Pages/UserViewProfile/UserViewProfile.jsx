@@ -1,6 +1,6 @@
 import "../../Pages/UserViewProfile/UserViewProfile.css"
 import user_empty_profile from "../../assets/Images/user_empty_profile.png"
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 
 function UserViewProfile() {
