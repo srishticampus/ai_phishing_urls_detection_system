@@ -571,7 +571,7 @@ function App() {
 
         {/* Advertisers Edit Advertisements Route */}
         <Route
-          path="/advertisers-edit-advertisement"
+          path="/advertisers-edit-advertisement/:id"
           element={
             <>
               <AdvertiserViewSidebar />
@@ -603,6 +603,8 @@ function App() {
             </>
           }
         />
+
+       
 
         {/* Advertisers Registration Route */}
         {/* <Route

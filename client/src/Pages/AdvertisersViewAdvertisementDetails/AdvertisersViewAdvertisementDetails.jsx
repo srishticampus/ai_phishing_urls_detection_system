@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { advertisersViewAdvertisementDetails } from "../../Services/apiService";
 import advimg from "../../assets/Images/advertisement.png";
 import "../AdvertisersViewAdvertisementDetails/AdvertisersViewAdvertisementDetails.css";
@@ -40,8 +40,8 @@ function AdvertisersViewAdvertisementDetails() {
   // Construct the image URL correctly
   const imageUrl =
     advertisement?.ad_image
-      ? `${baseUrl}${advertisement.ad_image}` 
-      : advimg; 
+      ? `${baseUrl}${advertisement.ad_image}`
+      : advimg;
 
   return (
     <div className="advertisers-view-advertisement-details-container">
@@ -64,7 +64,11 @@ function AdvertisersViewAdvertisementDetails() {
             <a href={advertisement?.link}>{advertisement?.link}</a>
             <div className="mt-5">
               <button className="btn btn-outline-dark w-25 me-4">Delete</button>
-              <button className="btn btn-dark w-25">Edit</button>
+
+              <Link to={`/advertisers-edit-advertisement/${advertisement.id}`}>
+                <button className="btn btn-dark w-25">Edit</button>
+              </Link>
+             
             </div>
           </div>
         </div>

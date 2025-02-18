@@ -288,6 +288,13 @@ export const advertisersViewAdvertisementDetails = async (id) => {
 };
 
 
+export const advertisersEditAdvertisement = async (id, formData) => {
+  return handleResponse(
+    apiClient.put(`api/advertisements/${id}/`, formData, generateConfig(true, true)
+  ));
+};
+
+
 
 
 

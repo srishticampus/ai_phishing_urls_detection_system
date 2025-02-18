@@ -48,9 +48,9 @@ function AdvertiserSidebar() {
                 <Link to="/advertisers-view-advertisements">
                     <button className="btn text-light mb-3">View Advertisements</button>
                 </Link>
-                <Link to="/advertiser-view-user">
+                {/* <Link to="/advertiser-view-user">
                     <button className="btn text-light mb-3">View Users</button>
-                </Link>
+                </Link> */}
                 <Link to="/advertisers-reset-password">
                     <button className="btn text-light mb-3">Reset Password</button>
                 </Link>
