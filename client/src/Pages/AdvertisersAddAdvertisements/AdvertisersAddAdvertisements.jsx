@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { advertisersAddAdvertisement } from "../../Services/apiService";
 import "../../Pages/AdvertisersAddAdvertisements/AdvertisersAddAdvertisement.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // ✅ Import Toastify styles
 
 function AdvertisersAddAdvertisements() {
   const [formData, setFormData] = useState({
@@ -26,45 +28,35 @@ function AdvertisersAddAdvertisements() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    // Function to format date to DD-MM-YYYY
+
+    // ✅ Format date to DD-MM-YYYY
     const formatDate = (date) => {
       const d = new Date(date);
-      const day = ("0" + d.getDate()).slice(-2);  // Ensure two digits
-      const month = ("0" + (d.getMonth() + 1)).slice(-2);  // Ensure two digits
-      const year = d.getFullYear();
-      return `${day}-${month}-${year}`;
+      return `${("0" + d.getDate()).slice(-2)}-${("0" + (d.getMonth() + 1)).slice(-2)}-${d.getFullYear()}`;
     };
-  
-    // Format the start_date and end_date to "DD-MM-YYYY"
-    const formattedStartDate = formatDate(formData.start_date);
-    const formattedEndDate = formatDate(formData.end_date);
-  
-    // Log the formatted dates to check
-    console.log("Formatted start_date:", formattedStartDate);
-    console.log("Formatted end_date:", formattedEndDate);
-  
-    // Validate that start_date is earlier than end_date
-    if (new Date(formattedStartDate) > new Date(formattedEndDate)) {
-      alert("End date cannot be earlier than start date.");
+
+    // ✅ Validate that start_date is earlier than end_date
+    if (new Date(formData.start_date) > new Date(formData.end_date)) {
+      toast.warn("End date cannot be earlier than start date.");
       return;
     }
-  
+
+    // ✅ Prepare FormData
     const formDataToSubmit = new FormData();
     formDataToSubmit.append("ad_image", formData.ad_image);
     formDataToSubmit.append("title", formData.title);
     formDataToSubmit.append("link", formData.link);
-    formDataToSubmit.append("start_date", formattedStartDate);  
-    formDataToSubmit.append("end_date", formattedEndDate);      
-  
+    formDataToSubmit.append("start_date", formatDate(formData.start_date));
+    formDataToSubmit.append("end_date", formatDate(formData.end_date));
+
     try {
-      console.log(formDataToSubmit);
+      console.log("Submitting Data:", formDataToSubmit);
       const response = await advertisersAddAdvertisement(formDataToSubmit);
       
-      console.log("Response:", response);
-  
-      if (response && response.id) {
-        alert("Advertisement created successfully!");
+      if (response.success) {
+        toast.success("Advertisement created successfully! 🎉");
+
+        // ✅ Reset form after success
         setFormData({
           ad_image: null,
           title: "",
@@ -72,18 +64,14 @@ function AdvertisersAddAdvertisements() {
           start_date: "",
           end_date: "",
         });
+      } else {
+        toast.error(response.errors?.message || "Failed to create advertisement.");
       }
     } catch (error) {
-      console.error("Error creating advertisement", error);
-      // Log the error response to check what the backend says
-      console.error("Error response:", error.response);
-      alert("Failed to create advertisement.");
+      console.error("Error:", error);
+      toast.error("Something went wrong. Please try again.");
     }
   };
-  
-
-  
-  
 
   useEffect(() => {
     const today = new Date().toISOString().split("T")[0];
@@ -109,41 +97,14 @@ function AdvertisersAddAdvertisements() {
                   type="button"
                 >
                   Upload Image
-                  <input
-                    id="fileInput"
-                    type="file"
-                    accept="image/*"
-                    style={{ display: "none" }}
-                    onChange={handleFileChange}
-                  />
                 </button>
-
-                {/* <button
-                  className="btn btn-light dropdown-toggle adv-add-dropdown-button"
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Actions
-                </button>
-                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Action 1
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Action 2
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Action 3
-                    </a>
-                  </li>
-                </ul> */}
+                <input
+                  id="fileInput"
+                  type="file"
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  onChange={handleFileChange}
+                />
               </div>
 
               <div className="mt-3">
@@ -156,7 +117,6 @@ function AdvertisersAddAdvertisements() {
                   required
                   className="form-control"
                 />
-                <hr />
               </div>
 
               <div className="mt-3">
@@ -167,22 +127,19 @@ function AdvertisersAddAdvertisements() {
                   value={formData.link}
                   onChange={handleInputChange}
                   required
-                       className="form-control"
+                  className="form-control"
                 />
-                <hr />
               </div>
 
               <div className="d-flex justify-content-center mt-3">
                 <label>Start Date: </label>
                 <input
-                  id="startDate"
                   type="date"
                   name="start_date"
                   value={formData.start_date}
                   onChange={handleInputChange}
                   required
                   className="me-5"
-                  
                 />
                 <label>End Date: </label>
                 <input
@@ -191,19 +148,8 @@ function AdvertisersAddAdvertisements() {
                   value={formData.end_date}
                   onChange={handleInputChange}
                   required
-           
                 />
               </div>
-
-              {/* <div className="mt-3">
-                <p>Description:</p>
-                <textarea
-                  name="description"
-                  value={formData.description || ""}
-                  onChange={handleInputChange}
-                  className="form-control"
-                />
-              </div> */}
 
               <div className="card-footer d-flex justify-content-center mt-4">
                 <button className="btn btn-dark w-25" type="submit">
