@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { adminViewNewAdvertisers, toggleUserActivation } from "../../Services/apiService";
 import "../../Pages/AdminViewAdvertisers/AdminViewAdvertisers.css";
 import { Switch } from "antd"; // Import Switch component
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 function AdminViewAdvertisers() {
   const [advertisers, setAdvertisers] = useState([]);

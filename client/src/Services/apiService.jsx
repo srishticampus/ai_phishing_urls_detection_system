@@ -1,3 +1,4 @@
+//Service/apiService.jsx
 import axios from "axios";
 
 // Create Axios instance
@@ -13,9 +14,11 @@ const apiClient = axios.create({
 const refreshAccessToken = async () => {
   const refreshToken = localStorage.getItem("refreshToken");
   if (!refreshToken) {
-    console.warn("⚠️ No refresh token found. Redirecting to '/'...");
-    logoutAndRedirect(); // Logout and redirect immediately
-    return { success: false, errors: { message: "Session expired." } };
+    console.warn("⚠️ No refresh token found.");
+    return {
+      success: false,
+      errors: { message: "No refresh token available." },
+    };
   }
 
   try {
@@ -30,53 +33,63 @@ const refreshAccessToken = async () => {
       localStorage.setItem("accessToken", response.data.access);
       return { success: true, accessToken: response.data.access };
     } else {
-      console.warn("⚠️ Token refresh failed. Redirecting to '/'...");
-      logoutAndRedirect();
-      return { success: false, errors: { message: "Session expired." } };
+      console.warn("⚠️ Token refresh failed.");
+      return {
+        success: false,
+        errors: { message: "Failed to refresh token." },
+      };
     }
   } catch (error) {
-    console.error("❌ Refresh token expired. Redirecting to '/'...", error);
-    logoutAndRedirect();
-    return { success: false, errors: { message: "Session expired." } };
+    console.error("❌ Refresh token expired. Logging out...", error);
+    logout(); // 🚀 Log out only when refresh token also fails
+    return {
+      success: false,
+      errors: { message: "Session expired, please login again." },
+    };
   }
-};
-
-// ✅ Function to log out user and redirect to "/"
-const logoutAndRedirect = () => {
-  localStorage.removeItem("accessToken");
-  localStorage.removeItem("refreshToken");
-  window.dispatchEvent(new Event("loginStatusChanged"));
-  window.location.href = "/"; // Redirect user to home page
 };
 
 // ✅ Axios Interceptor: Attaches JWT Token & Handles Expired Tokens
 apiClient.interceptors.request.use(
   async (config) => {
+    // ✅ Skip token check for login & register APIs
+    if (config.authRequired === false) {
+      return config;
+    }
     if (
       config.url.includes("/api/login/") ||
-      config.url.includes("/api/register/")
+      config.url.includes("/api/register/") ||
+      config.url.includes("/api/register-advertiser/")
     ) {
       return config;
     }
 
     if (config.authRequired !== false) {
-      let token = localStorage.getItem("accessToken");
+      //let token = localStorage.getItem("accessToken");
 
-      if (!token) {
-        console.warn("⚠️ No access token found. Trying to refresh...");
-        const refreshResponse = await refreshAccessToken();
+      // if (!token) {
+      //   console.warn("⚠️ No access token found. Trying to refresh...");
 
-        if (refreshResponse.success) {
-          console.log("✅ Token refreshed, retrying request...");
-          token = refreshResponse.accessToken;
-          localStorage.setItem("accessToken", token);
-        } else {
-          console.error("❌ Both tokens expired. Redirecting to '/'...");
-          return Promise.reject(new Error("Session expired. Redirecting..."));
-        }
-      }
+      //   const refreshResponse = await refreshAccessToken();
 
-      config.headers["Authorization"] = `Bearer ${token}`;
+      //   if (refreshResponse.success) {
+      //     console.log("✅ Token refreshed, retrying request...");
+      //     token = refreshResponse.accessToken;
+      //     localStorage.setItem("accessToken", token);
+      //   } else {
+      //     console.error(
+      //       "❌ Both access and refresh tokens expired. Logging out..."
+      //     );
+      //     logout();
+      //     window.dispatchEvent(new Event("loginStatusChanged"));
+      //     alert("Session expired, please login again.");
+      //     return Promise.reject(
+      //       new Error("Session expired, please login again.")
+      //     );
+      //   }
+      // }
+
+      //config.headers["Authorization"] = `Bearer ${token}`;
     }
     return config;
   },
@@ -126,10 +139,8 @@ export const login = async (data) => {
     console.log("✅ Login successful. Storing tokens...");
     localStorage.setItem("accessToken", response.data.token.access);
     localStorage.setItem("refreshToken", response.data.token.refresh);
-    console.log("accessToken", response.data.token.access)
+    console.log("accessToken", response.data.token.access);
     window.dispatchEvent(new Event("loginStatusChanged"));
-    // ✅ Store user type (e.g., user, advertiser, admin)
-    localStorage.setItem("userType", response.data.user_type);
   }
   return response;
 };
@@ -163,13 +174,15 @@ export const updateUserProfile = async (formData) => {
 
 // ✅ User Interests
 export const getInterests = async () => {
-  return handleResponse(apiClient.get("/api/interests/"), generateConfig());
+  return handleResponse(
+    apiClient.get("/api/interests/"),
+    {authRequired: false}
+  );
 };
 
 export const userAddInterest = async (formData) => {
-  console.log(formData);
   return handleResponse(
-    apiClient.post("/api/add-user-interests/", formData, generateConfig(false))
+    apiClient.post("/api/add-user-interests/", formData, generateConfig(true))
   );
 };
 
@@ -218,7 +231,11 @@ export const toggleUserStatus = async (id) => {
 // ✅ Advertiser Functions
 export const advertiserSignup = async (formData) => {
   return handleResponse(
-    apiClient.post("/api/register-advertiser/", formData, generateConfig(true))
+    apiClient.post(
+      "/api/register-advertiser/",
+      formData,
+     generateConfig(true, false)
+    )
   );
 };
 

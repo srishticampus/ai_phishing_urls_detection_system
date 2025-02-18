@@ -1,6 +1,6 @@
 import { getInterests, userAddInterest } from "../../Services/apiService";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify"; // ✅ Import Toastify
 import "react-toastify/dist/ReactToastify.css"; // ✅ Import Toastify CSS
 import "../../Pages/UserAreaOfInterests/UserAreaOfInterests.css";

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";  // Ensure you're using `react-router-dom` here
+import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { logout, checkLoginStatus } from "../../Services/apiService";
 

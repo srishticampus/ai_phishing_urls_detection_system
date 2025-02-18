@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react"; // Add useState and useEffect
 import { Routes, Route } from "react-router";
 import { ToastContainer, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,7 +16,6 @@ import PrivacyandPolicy from "./Pages/PrivacyPolicy/PrivacyandPolicy";
 import FandQ from "./Pages/FandQ/FandQ";
 import About from "./Pages/AboutUS/About";
 import UserProfile from "./Pages/UserProfile/UserProfile";
-// import ForgetPassword from "./Pages/ForgetPassword/ForgetPassword";
 import UserEditProfile from "./Pages/UserEditProfile/UserEditProfile";
 import UserNavbar from "./Components/UserNavbar/UserNavbar";
 import HomePageNavbar from "./Components/HomePageNavbar/HomePageNavbar";
@@ -29,7 +29,7 @@ import AdminDetailedView from "./Pages/AdminDetailedViewBlog/AdminDetailedView";
 import AdminEditBlog from "./Pages/AdminEditBlog/AdminEditBlog";
 import AdminLogin from "./Pages/AdminLogin/AdminLogin";
 import AdminViewUsers from "./Pages/AdminViewUsers/AdminViewUsers";
-import AdminViewAdvertisers from "./Pages/AdminViewAdvertisers/AdminViewAdvertisers"
+import AdminViewAdvertisers from "./Pages/AdminViewAdvertisers/AdminViewAdvertisers";
 import AdminViewDetails from "./Pages/AdminViewDetails/AdminViewDetails";
 import AdminViewAdvertisement from "./Pages/AdminViewAdvertisement/AdminViewAdvertisement";
 import AdminViewAdvertisementDetail from "./Pages/AdminViewAdvertisementDetail/AdminViewAdvertisementDetail";
@@ -53,18 +53,36 @@ import UserResetPassword from "./Pages/UserResetPassword/UserResetPassword";
 import UserAreaOfInterests from "./Pages/UserAreaOfInterests/UserAreaOfInterests";
 import UserViewAdvertisementDetails from "./Pages/UserViewAdvertisementDetails/UserViewAdvertisementDetails";
 import AdvertisersRegistration from "./Pages/AdvertisersRegistration/AdvertisersRegistration";
+import { checkLoginStatus } from "./Services/apiService"; // Import the checkLoginStatus function
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(checkLoginStatus()); // Track login status
+
+  // Listen for login status changes
+  useEffect(() => {
+    const handleLoginStatusChange = () => {
+      setIsLoggedIn(checkLoginStatus());
+    };
+
+    // Add event listener for login status changes
+    window.addEventListener("loginStatusChanged", handleLoginStatusChange);
+
+    // Cleanup event listener on unmount
+    return () => {
+      window.removeEventListener("loginStatusChanged", handleLoginStatusChange);
+    };
+  }, []);
+
   return (
     <>
-      <ToastContainer position="top-right" transition={Bounce} autoClose={3000}/>
+      <ToastContainer position="top-right" transition={Bounce} autoClose={3000} />
       <Routes>
-        {/* Landing Page Route */}
+        {/* Landing Page Route */} 
         <Route
           path="/"
           element={
             <>
-              <Navbar />
+              {isLoggedIn ? <HomePageNavbar /> : <Navbar />}
               <LandingPage />
               <Footer />
             </>
@@ -76,7 +94,7 @@ function App() {
           path="/signup"
           element={
             <>
-              <UserNavbar />
+              <Navbar />
               <UserSignup />
               <Footer />
             </>
@@ -88,13 +106,14 @@ function App() {
           path="/login"
           element={
             <>
-              <UserNavbar />
+              <Navbar />
               <UserLogin />
               <Footer />
             </>
           }
         />
-        {/* forgetpassword Route */}
+
+        {/* Forget Password Route */}
         <Route
           path="/forgetpassword"
           element={
@@ -104,69 +123,69 @@ function App() {
               <Footer />
             </>
           }
-        ></Route>
+        />
 
+        {/* User Reset Password Route */}
         <Route
-        path="/user-reset-password"
-        element={
-          <>
-          <Navbar />
-          <UserResetPassword/>
-          <Footer/>
-          </>
-        }
-        >
-        </Route>
+          path="/user-reset-password"
+          element={
+            <>
+              <Navbar />
+              <UserResetPassword />
+              <Footer />
+            </>
+          }
+        />
 
-
-
-
-
-        {/* contactus Route */}
+        {/* Contact Us Route */}
         <Route
           path="/contact"
           element={
             <>
-              <Navbar />
+              {isLoggedIn ? <HomePageNavbar /> : <Navbar />}
               <ContactUS />
+              <Footer />
             </>
           }
-        ></Route>
-        {/* servcies Route */}
+        />
+
+        {/* Services Route */}
         <Route
           path="/services"
           element={
             <>
-              <Navbar />
+              {isLoggedIn ? <HomePageNavbar /> : <Navbar />}
               <Services />
               <Footer />
             </>
           }
-        ></Route>
-        {/* Terms of conditions */}
+        />
+
+        {/* Terms of Conditions Route */}
         <Route
           path="/terms-of-conditions"
           element={
             <>
               <Navbar />
               <TermsOfConditions />
-              <Footer/>
+              <Footer />
             </>
           }
-        ></Route>
-        {/* privacy policy */}
+        />
+
+        {/* Privacy Policy Route */}
         <Route
           path="/privacy-policy"
           element={
             <>
               <Navbar />
               <PrivacyandPolicy />
-              <Footer/>
+              <Footer />
             </>
           }
-        ></Route>
+        />
 
-        {/* F&Q */}
+        {/* F&Q Route */}
         <Route
           path="/f&q"
           element={
@@ -176,101 +195,93 @@ function App() {
               <Footer />
             </>
           }
-        ></Route>
+        />
 
-        {/* about*/}
-
+        {/* About Route */}
         <Route
           path="/about"
           element={
             <>
-              <Navbar />
+              {isLoggedIn ? <HomePageNavbar /> : <Navbar />}
               <About />
               <Footer />
             </>
           }
-        ></Route>
+        />
+
+        {/* User Profile Route */}
         <Route
           path="/user-profile"
           element={
             <>
-              <UserNavbar />
+              <HomePageNavbar />
               <UserProfile />
               <Footer />
             </>
           }
-        ></Route>
+        />
 
+        {/* User Area of Interest Route */}
         <Route
-        path="/user-area-of-interest"
-        element={
-          <>
-          <UserNavbar/>
-          <UserAreaOfInterests />
-          <Footer/>
-          </>
-        }
-        >
-
-        </Route>
-
-        {/* <Route
-        {/* <Route
-          path="/forget-password"
+          path="/user-area-of-interest"
           element={
             <>
-              <Navbar />
-              <ForgetPassword />
+              <HomePageNavbar />
+              <UserAreaOfInterests />
+              <Footer />
             </>
           }
-        >
-        </Route> */}
-        {/* </Route> */}
+        />
 
+        {/* User Edit Profile Route */}
         <Route
           path="/user-edit-profile"
           element={
             <>
               <HomePageNavbar />
               <UserEditProfile />
-              <Footer/>
+              <Footer />
             </>
           }
-        >
-        </Route>
+        />
 
+        {/* User Home Page Route */}
         <Route
           path="/user-home-page"
           element={
             <>
               <HomePageNavbar />
+              <UserHomePage />
+              <Footer />
             </>
           }
-        ></Route>
+        />
 
+        {/* User View Profile Route */}
         <Route
           path="/user-view-profile"
           element={
             <>
               <HomePageNavbar />
               <UserViewProfile />
-              <Footer/>
+              <Footer />
             </>
           }
-        ></Route>
+        />
 
+        {/* User View Advertisement Details Route */}
         <Route
-        path="/user-view-advertisement-details"
-        element={
-          <>
-          <Navbar/>
-          <UserViewAdvertisementDetails/>
-          <Footer/>
-          </>
-        }>
-      
-        </Route>
+          path="/user-view-advertisement-details"
+          element={
+            <>
+              <HomePageNavbar />
+              <UserViewAdvertisementDetails />
+              <Footer />
+            </>
+          }
+        />
 
+        {/* Admin Dashboard Route */}
         <Route
           path="/dashboard"
           element={
@@ -278,9 +289,9 @@ function App() {
               <AdminSidebar />
             </>
           }
-        >
-        </Route>
+        />
 
+        {/* Admin Home Route */}
         <Route
           path="/admin-dashboard"
           element={
@@ -291,6 +302,7 @@ function App() {
           }
         />
 
+        {/* Admin Add Blog Route */}
         <Route
           path="/admin-add-blog"
           element={
@@ -299,8 +311,9 @@ function App() {
               <AdminViewSidebar />
             </>
           }
-        ></Route>
+        />
 
+        {/* Admin View Blog Route */}
         <Route
           path="/admin-view-blog"
           element={
@@ -309,12 +322,10 @@ function App() {
               <AdminViewSidebar />
             </>
           }
-        >
+        />
 
-        </Route>
-
+        {/* Admin Detailed View Blog Route */}
         <Route
-
           path="/admin-detailed-view-blog"
           element={
             <>
@@ -322,10 +333,9 @@ function App() {
               <AdminViewSidebar />
             </>
           }
-        >
+        />
 
-        </Route>
-
+        {/* Admin Edit Blog Route */}
         <Route
           path="/admin-edit-blog"
           element={
@@ -334,22 +344,20 @@ function App() {
               <AdminViewSidebar />
             </>
           }
-        >
-        </Route>
+        />
 
-
+        {/* Admin Login Route */}
         <Route
           path="/admin-login"
           element={
             <>
-              <UserNavbar />
               <AdminLogin />
               <Footer />
             </>
           }
-        >
-        </Route>
+        />
 
+        {/* Admin View Users Route */}
         <Route
           path="/admin-view-users"
           element={
@@ -358,9 +366,9 @@ function App() {
               <AdminViewUsers />
             </>
           }
-        >
-        </Route>
+        />
 
+        {/* Admin View Advertisers Route */}
         <Route
           path="/admin-view-advertisers"
           element={
@@ -369,9 +377,9 @@ function App() {
               <AdminViewAdvertisers />
             </>
           }
-        >
-        </Route>
+        />
 
+        {/* Admin View Details Route */}
         <Route
           path="/admin-view-details"
           element={
@@ -380,9 +388,9 @@ function App() {
               <AdminViewDetails />
             </>
           }
-        >
-        </Route>
+        />
 
+        {/* Admin View Advertisement Route */}
         <Route
           path="/admin-view-advertisement"
           element={
@@ -391,9 +399,9 @@ function App() {
               <AdminViewAdvertisement />
             </>
           }
-        >
-        </Route>
+        />
 
+        {/* Admin View Advertisement Detail Route */}
         <Route
           path="/admin-view-advertisement-detail"
           element={
@@ -402,58 +410,57 @@ function App() {
               <AdminViewAdvertisementDetail />
             </>
           }
-        >
+        />
 
-        </Route>
-
+        {/* Advertiser Login Route */}
         <Route
           path="/advertiser-login"
           element={
             <>
-              <UserNavbar />
+              <Navbar />
               <AdvertisersLogin />
               <Footer />
             </>
           }
-        >
-        </Route>
+        />
 
+        {/* Advertisers Forget Password Route */}
         <Route
           path="/advertisers-forget-password"
           element={
             <>
-              <UserNavbar />
+              <Navbar />
               <AdvertisersForgetPassword />
               <Footer />
             </>
           }
-        >
-        </Route>
+        />
 
+        {/* Advertisers Reset Password Route */}
         <Route
           path="/advertisers-reset-password"
           element={
             <>
-              <UserNavbar />
+              <Navbar />
               <AdvertisersResetPassword />
               <Footer />
             </>
           }
-        >
-        </Route>
+        />
 
+        {/* Advertisers Signup Route */}
         <Route
           path="/advertisers-signup"
           element={
             <>
-              <UserNavbar />
+              <Navbar />
               <AdvertisersSignup />
               <Footer />
             </>
           }
-        >
-        </Route>
+        />
 
+        {/* Advertiser Dashboard Route */}
         <Route
           path="/advertiser-dashboard"
           element={
@@ -461,9 +468,9 @@ function App() {
               <AdvertiserSidebar />
             </>
           }
-        >
-        </Route>
+        />
 
+        {/* Advertiser View Sidebar Route */}
         <Route
           path="/advertiser-view-sidebar"
           element={
@@ -471,9 +478,9 @@ function App() {
               <AdvertiserViewSidebar />
             </>
           }
-        >
-        </Route>
+        />
 
+        {/* Advertisers Dashboard Route */}
         <Route
           path="/advertisers-dashboard"
           element={
@@ -482,9 +489,9 @@ function App() {
               <AdvertisersDashboard />
             </>
           }
-        >
-        </Route>
+        />
 
+        {/* Advertiser View Profile Route */}
         <Route
           path="/advertiser-view-profile"
           element={
@@ -492,9 +499,9 @@ function App() {
               <AdvertiserViewProfile />
             </>
           }
-        >
-        </Route>
+        />
 
+        {/* Advertiser Edit Profile Route */}
         <Route
           path="/advertiser-edit-profile"
           element={
@@ -502,109 +509,97 @@ function App() {
               <AdvertiserEditProfile />
             </>
           }
-        >
-        </Route>
+        />
 
+        {/* Advertiser View Users Route */}
         <Route
-        path="/advertiser-view-user"
-        element={
-          <>
-          <AdvertiserViewSidebar />
-         <AdvertisersViewUsers />
-          </>
-        }
-        >
+          path="/advertiser-view-user"
+          element={
+            <>
+              <AdvertiserViewSidebar />
+              <AdvertisersViewUsers />
+            </>
+          }
+        />
 
-        </Route>
-
+        {/* Advertisers Add Advertisements Route */}
         <Route
-        path="/advertisers-add-advertisements"
-        element={
-          <>
-          <AdvertiserViewSidebar />
-          <AdvertisersAddAdvertisements/>
-          </>
-        }
-        >
+          path="/advertisers-add-advertisements"
+          element={
+            <>
+              <AdvertiserViewSidebar />
+              <AdvertisersAddAdvertisements />
+            </>
+          }
+        />
 
-        </Route>
-
+        {/* Advertisers View Advertisements Route */}
         <Route
-        path="/advertisers-view-advertisements"
-        element={
-          <>
-           <AdvertiserViewSidebar />
-          <AdvertisersViewAdvertisements/>
-          </>
-        }
-        >
-        </Route>
+          path="/advertisers-view-advertisements"
+          element={
+            <>
+              <AdvertiserViewSidebar />
+              <AdvertisersViewAdvertisements />
+            </>
+          }
+        />
 
+        {/* Advertisers View Advertisement Details Route */}
         <Route
-        path="/advertisers-view-advertisement-details"
-        element={
-          <>
-          <AdvertiserViewSidebar />
-          <AdvertisersViewAdvertisementDetails/>
-          </>
-        }
-        >
+          path="/advertisers-view-advertisement-details"
+          element={
+            <>
+              <AdvertiserViewSidebar />
+              <AdvertisersViewAdvertisementDetails />
+            </>
+          }
+        />
 
-        </Route>
-
+        {/* Advertisers Edit Advertisements Route */}
         <Route
-        path="/advertisers-edit-advertisement"
-        element={
-          <>
-          <AdvertiserViewSidebar />
-          <AdvertisersEditAdvertisements/>
-          </>
-        }
-        >
-        </Route>
+          path="/advertisers-edit-advertisement"
+          element={
+            <>
+              <AdvertiserViewSidebar />
+              <AdvertisersEditAdvertisements />
+            </>
+          }
+        />
 
-
+        {/* User Homepage Route */}
         <Route
-        path="/user-homepage"
-        element={
-          <>
-            <HomePageNavbar />
-          <UserHomePage/>
-          <Footer/>
-          </>
-        }
-        >
-        </Route>
+          path="/user-homepage"
+          element={
+            <>
+              <HomePageNavbar />
+              <UserHomePage />
+              <Footer />
+            </>
+          }
+        />
 
+        {/* User View Details Route */}
         <Route
-        path="/user-view-details"
-        element={
-          <>
-          <HomePageNavbar />
-          <UserViewDetails/>
-          <Footer/>
-          </>
-        }
-        >
-        </Route>
+          path="/user-view-details"
+          element={
+            <>
+              <HomePageNavbar />
+              <UserViewDetails />
+              <Footer />
+            </>
+          }
+        />
 
+        {/* Advertisers Registration Route */}
         <Route
-     
-        path="/advertisers-registration"
-        element={
-          <>
-          <UserNavbar/>
-          <AdvertisersRegistration/>
-          <Footer/>
-          </>
-        }
-        >
-
-        </Route>
-
-      
-
-
+          path="/advertisers-registration"
+          element={
+            <>
+              <AdvertisersRegistration />
+              <Footer />
+            </>
+          }
+        />
       </Routes>
     </>
   );

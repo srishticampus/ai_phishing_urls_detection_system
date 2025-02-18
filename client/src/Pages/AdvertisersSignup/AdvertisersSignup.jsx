@@ -1,13 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
 import "../../Pages/AdvertisersSignup/AdvertisersSignup.css";
 import useemptyprofile from "../../assets/Images/user_empty_profile.png";
-import { Link, useNavigate } from 'react-router-dom';  // Import useNavigate
-import { getInterests } from "../../Services/apiService"; // Import getInterests
+import { Link, useNavigate } from 'react-router-dom';
+import { getInterests } from "../../Services/apiService";
 import { advertiserSignup } from "../../Services/apiService";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function AdvertisersSignup() {
     const fileInputRef = useRef(null);
-    const [interests, setInterests] = useState([]); // Store business types (interests)
+    const [interests, setInterests] = useState([]);
     const [selectedBusinessType, setSelectedBusinessType] = useState("");
     const [formData, setFormData] = useState({
         username: "",
@@ -22,8 +24,7 @@ function AdvertisersSignup() {
         user_type: "advertiser"
     });
     const [errors, setErrors] = useState({});
-    
-    const navigate = useNavigate(); // Initialize the navigate hook
+    const navigate = useNavigate();
 
     // Fetch business types when the component mounts
     useEffect(() => {
@@ -89,17 +90,25 @@ function AdvertisersSignup() {
         e.preventDefault();
 
         if (!validateForm()) {
+            toast.error("Please fix the errors in the form."); // Show error toast
             return;
         }
 
         try {
             const response = await advertiserSignup(formData);
             console.log("Signup API response:", response);
-            
-            // Navigate to the "user-area-of-interest" after successful signup
-            navigate("/user-area-of-interest");  // Redirect to the specified path
+
+            if (response.success) {
+                toast.success("Signup successful! Redirecting to login..."); // Show success toast
+                setTimeout(() => {
+                    navigate("/advertiser-login"); // Redirect after a delay
+                }, 2000); // 2-second delay
+            } else {
+                toast.error(response.errors.message || "Signup failed. Please try again."); // Show error toast
+            }
         } catch (error) {
             console.error("Error during signup:", error);
+            toast.error("An error occurred. Please try again."); // Show error toast
         }
     };
 
@@ -121,7 +130,7 @@ function AdvertisersSignup() {
                     <div className="col-sm-4">
                         <input
                             type="text"
-                            className={`form-control ${errors.username ? 'is-invalid' : ''}`} 
+                            className={`form-control ${errors.username ? 'is-invalid' : ''}`}
                             placeholder="Name"
                             name="username"
                             value={formData.username}

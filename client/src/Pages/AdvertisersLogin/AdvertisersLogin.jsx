@@ -2,18 +2,19 @@ import "../../Pages/AdvertisersLogin/AdvertisersLogin.css";
 import LoginBackground from "../../assets/Images/Login_Background.png";
 import { useState } from "react";
 import { login } from "../../Services/apiService";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify"; // Import toast
 
 function AdvertisersLogin() {
   const [showPassword, setShowPassword] = useState(false);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({
-    username: '',
-    password: ''
+    username: "",
+    password: "",
   });
 
   const navigate = useNavigate();
@@ -26,17 +27,17 @@ function AdvertisersLogin() {
     event.preventDefault();
 
     let formValid = true;
-    let newErrors = { username: '', password: '' };
+    let newErrors = { username: "", password: "" };
 
     // Validate Username
     if (!username.trim()) {
-      newErrors.username = 'Username is required.';
+      newErrors.username = "Username is required.";
       formValid = false;
     }
 
     // Validate Password
     if (!password.trim()) {
-      newErrors.password = 'Password is required.';
+      newErrors.password = "Password is required.";
       formValid = false;
     }
 
@@ -45,17 +46,32 @@ function AdvertisersLogin() {
     if (formValid) {
       try {
         const response = await login({ username, password });
-        console.log('Login response:', response); 
+        console.log("Login response:", response);
         if (response.success) {
-          console.log('Login successful', response.data);
-          navigate('/advertiser-dashboard'); 
+          console.log("Login successful", response.data);
+          toast.success("Login successful! Redirecting to dashboard..."); // Show success toast
+          setTimeout(() => {
+            navigate("/advertiser-dashboard"); // Redirect after a delay
+          }, 2000); // 2-second delay
         } else {
-          setErrors({ ...errors, password: 'Invalid username or password.' });
+          // Handle specific error for inactive account
+          if (response.errors?.error?.includes("This account is not active. Please contact the ADMIN.")) {
+            toast.error("This account is not active. Please contact the ADMIN."); // Show error toast
+          } else {
+            setErrors({ ...errors, password: "Invalid username or password." });
+            toast.error("Invalid username or password."); // Show error toast
+          }
         }
       } catch (error) {
-        console.error('Login failed', error);
-        setErrors({ ...errors, password: 'An error occurred. Please try again.' });
+        console.error("Login failed", error);
+        setErrors({
+          ...errors,
+          password: "An error occurred. Please try again.",
+        });
+        toast.error("An error occurred. Please try again."); // Show error toast
       }
+    } else {
+      toast.error("Please fix the errors in the form."); // Show error toast for validation errors
     }
   };
 
@@ -78,7 +94,9 @@ function AdvertisersLogin() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
-          {errors.username && <p className="error-message">{errors.username}</p>}
+          {errors.username && (
+            <p className="error-message">{errors.username}</p>
+          )}
 
           <div className="password-container">
             <input
@@ -93,10 +111,15 @@ function AdvertisersLogin() {
               className="password-toggle-icon"
               onClick={togglePasswordVisibility}
             />
-            {errors.password && <p className="error-message">{errors.password}</p>}
+            {errors.password && (
+              <p className="error-message">{errors.password}</p>
+            )}
           </div>
 
-          <Link className="advertiser-login-forgotpassword" to="/advertisers-forget-password">
+          <Link
+            className="advertiser-login-forgotpassword"
+            to="/advertisers-forget-password"
+          >
             Forget Password ?
           </Link>
 
@@ -109,9 +132,12 @@ function AdvertisersLogin() {
 
         <p className="advertiser-login-dont-have-account mt-4">
           Don&apos;t have an Account ?{" "}
-          <a className="advertiser-login-dont-have-account-atag" href="/blog_sphere/advertisers-signup">
+          <Link
+            className="advertiser-login-dont-have-account-atag"
+            to="/advertisers-signup"
+          >
             Sign up
-          </a>
+          </Link>
         </p>
       </div>
     </div>
