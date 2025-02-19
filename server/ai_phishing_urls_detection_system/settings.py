@@ -101,7 +101,7 @@ SIMPLE_JWT = {
 #Cors
 CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '').split(',')
 #Force Script Name
-#FORCE_SCRIPT_NAME = os.getenv('FORCE_SCRIPT_NAME', '')
+FORCE_SCRIPT_NAME = os.getenv('FORCE_SCRIPT_NAME', '')
 #Csrf Trusted Origins
 CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', '').split(',')
 
