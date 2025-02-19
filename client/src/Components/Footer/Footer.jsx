@@ -5,8 +5,28 @@ import pinterest from "../../assets/Images/pinterest.png";
 import twitter from "../../assets/Images/twitter.png";
 import ytb from "../../assets/Images/ytb.png";
 import { Link } from "react-router-dom";
+import { checkLoginStatus } from "../../Services/apiService";
+import { useEffect, useState } from "react";
+
 
 function Footer() {
+    const [isLoggedIn, setIsLoggedIn] = useState(checkLoginStatus()); // Track login status
+  
+    // Listen for login status changes
+    useEffect(() => {
+      const handleLoginStatusChange = () => {
+        setIsLoggedIn(checkLoginStatus()); 
+      };
+  
+      // Add event listener for login status changes
+      window.addEventListener("loginStatusChanged", handleLoginStatusChange);
+  
+      // Cleanup event listener on unmount
+      return () => {
+        window.removeEventListener("loginStatusChanged", handleLoginStatusChange);
+      };
+    }, []);
+  
   return (
     <>
       <div className="footerBG">
@@ -31,6 +51,14 @@ function Footer() {
               <li><Link className="footerList" to="/">Home</Link></li>
               <li><Link className="footerList" to="/about" >About</Link></li>
               <li><Link className="footerList" to="/contact">Contact</Link></li>
+
+              {
+                isLoggedIn?(
+                  <li></li>
+                ):(
+                  <li><Link className="footerList" to="/login">Login</Link></li>
+                )
+              }
               {/* <li><Link className="footerList" to="/login">Login</Link></li> */}
             </ul>
           </div>
