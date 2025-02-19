@@ -4,8 +4,11 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { userProfile } from "../../Services/apiService";
 import { toast } from "react-toastify"; // ✅ Import Toastify
+const baseUrl = import.meta.env.VITE_API_URL;
 
 function UserViewProfile() {
+    // console.log(baseUrl);
+    
     const [profileData, setProfileData] = useState({
         firstName: "",
         lastName: "",
@@ -22,7 +25,10 @@ function UserViewProfile() {
         const fetchUserProfile = async () => {
             try {
                 const response = await userProfile();
+                console.log(response);
+                
                 if (response.success) {
+                    
                     setProfileData({
                         firstName: response.data.user.first_name || "",
                         lastName: response.data.user.last_name || "",
@@ -44,6 +50,10 @@ function UserViewProfile() {
 
         fetchUserProfile();
     }, []);
+    console.log(baseUrl);
+    
+    console.log(profileData.image);
+    
 
     if (loading) {
         return <p className="text-center mt-5">Loading profile...</p>;
@@ -52,12 +62,15 @@ function UserViewProfile() {
     if (error) {
         return <p className="text-center mt-5 text-danger">{error}</p>;
     }
+    console.log(`${baseUrl}/${profileData.image}`);
 
     return (
         <div>
             <div className="user-view-profile-section-one">
                 <p className="user-view-profile-head">Profile</p>
-                <img className="user-view-empty-profile mt-3" src={profileData.image} alt="User Profile" />
+                <img className="user-view-empty-profile mt-3"
+                src={`${baseUrl}${profileData.image}`}       
+                          alt="User Profile" />
                 <p className="user-view-profile-name">{profileData.firstName} {profileData.lastName}</p>
             </div>
             <div className="user-view-profile-section-two">
