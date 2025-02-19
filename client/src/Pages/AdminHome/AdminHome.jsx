@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { adminViewNewAdvertisers } from "../../Services/apiService";
+import { viewBlogs } from "../../Services/apiService"; // Import viewBlogs function
 import "../../Pages/AdminHome/AdminHome.css";
 import { Switch } from "antd";
 import LandingP_card_one from '../../assets/Images/LandingP_card_one.png';
@@ -9,9 +10,9 @@ import { toggleUserStatus } from "../../Services/apiService";
 
 function AdminHome() {
   const [advertisers, setAdvertisers] = useState([]);
-
+  const [blogs, setBlogs] = useState([]); // State to store blogs
+  const baseUrl = import.meta.env.VITE_API_URL;
   useEffect(() => {
-
     const fetchAdvertisers = async () => {
       try {
         const response = await adminViewNewAdvertisers();
@@ -35,7 +36,18 @@ function AdminHome() {
       }
     };
 
+    const fetchBlogs = async () => { // Fetch blogs
+      try {
+        const response = await viewBlogs();
+        console.log("Blogs data:", response);
+        setBlogs(response.data); // Set blogs data to state
+      } catch (error) {
+        console.error("Error fetching blogs data", error);
+      }
+    };
+
     fetchAdvertisers();
+    fetchBlogs(); // Fetch blogs on component mount
   }, []);
 
   const handleSwitchChange = async (checked, id) => {
@@ -63,7 +75,6 @@ function AdminHome() {
       console.error("Error toggling user activation", error);
     }
   };
-
 
   return (
     <div className="admin-home-container">
@@ -115,76 +126,31 @@ function AdminHome() {
         <p className="admin-home-container-head ms-3">View Recent Blogs</p>
         <div className="d-flex justify-content-center">
           <div className="row">
-            <div className="card col-sm-3 admin-home-cardsize">
-              <img className="admin-home-cardone-imgone" src={LandingP_card_one} />
-              <div>
-                <span>
-                  <p className="badge p-2 admin-home-cardone-header">Food & Cooking</p>
-                </span>
-                <img className="admin-home-cardone-headerone" src={tabler_photo} alt="tabler" />
-              </div>
-              <div className="card-body">
-                <p className="admin-home-cardone-body">Budget Sacrificing Experience</p>
-                <div className="d-flex">
-                  <div className="d-flex landingpage-card-profile-info">
-                    <p className="profile-textcolor">June 28, 2018</p>
+            {blogs.map((blog) => (
+              <div className="card col-sm-3 admin-home-cardsize" key={blog.id}>
+                <img className="admin-home-cardone-imgone" src={`${baseUrl}${blog.image}` || LandingPage_Bg} />
+                <div>
+                  <span>
+                    <p className="badge p-2 admin-home-cardone-header">{blog.category}</p>
+                  </span>
+                  <img className="admin-home-cardone-headerone" src={tabler_photo} alt="tabler" />
+                </div>
+                <div className="card-body">
+                  <p className="admin-home-cardone-body">{blog.title}</p>
+                  <div className="d-flex">
+                    <div className="d-flex landingpage-card-profile-info">
+                      <p className="profile-textcolor">{blog.date}</p>
+                    </div>
                   </div>
                 </div>
+                <p className="admin-view-blog-cardone-para">
+                  {blog.short_description || "Aenean eleifend ante maecenas pulvinar montes lorem et pede dis dolor pretium donec dictum."}
+                </p>
+                <button className="btn admin-home-readmore-button">
+                  Read More <span className="greaterthan-symbol">&gt;</span>
+                </button>
               </div>
-              <p className="admin-view-blog-cardone-para">
-                Aenean eleifend ante maecenas pulvinar montes lorem et pede dis dolor pretium donec dictum. Vici consequat justo enim. Venenatis eget adipiscing luctus lorem.
-              </p>
-              <button className="btn admin-home-readmore-button">
-                Read More <span className="greaterthan-symbol">&gt;</span>
-              </button>
-            </div>
-            <div className="card col-sm-3 admin-home-cardsize">
-              <img className="admin-home-cardone-imgone" src={LandingPage_Bg} />
-              <div>
-                <span>
-                  <p className="badge p-2 admin-home-cardone-header">Food & Cooking</p>
-                </span>
-                <img className="admin-home-cardone-headerone" src={tabler_photo} alt="tabler" />
-              </div>
-              <div className="card-body">
-                <p className="admin-home-cardone-body">Budget Sacrificing Experience</p>
-                <div className="d-flex">
-                  <div className="d-flex landingpage-card-profile-info">
-                    <p className="profile-textcolor">June 28, 2018</p>
-                  </div>
-                </div>
-              </div>
-              <p className="admin-view-blog-cardone-para">
-                Aenean eleifend ante maecenas pulvinar montes lorem et pede dis dolor pretium donec dictum. Vici consequat justo enim. Venenatis eget adipiscing luctus lorem.
-              </p>
-              <button className="btn admin-home-readmore-button">
-                Read More <span className="greaterthan-symbol">&gt;</span>
-              </button>
-            </div>
-            <div className="card col-sm-3 admin-home-cardsize">
-              <img className="admin-home-cardone-imgone" src={LandingPage_Bg} />
-              <div>
-                <span>
-                  <p className="badge p-2 admin-home-cardone-header">Food & Cooking</p>
-                </span>
-                <img className="admin-home-cardone-headerone" src={tabler_photo} alt="tabler" />
-              </div>
-              <div className="card-body">
-                <p className="admin-home-cardone-body">Budget Sacrificing Experience</p>
-                <div className="d-flex">
-                  <div className="d-flex landingpage-card-profile-info">
-                    <p className="profile-textcolor">June 28, 2018</p>
-                  </div>
-                </div>
-              </div>
-              <p className="admin-view-blog-cardone-para">
-                Aenean eleifend ante maecenas pulvinar montes lorem et pede dis dolor pretium donec dictum. Vici consequat justo enim. Venenatis eget adipiscing luctus lorem.
-              </p>
-              <button className="btn admin-home-readmore-button">
-                Read More <span className="greaterthan-symbol">&gt;</span>
-              </button>
-            </div>
-            {/* More blog cards... */}
+            ))}
           </div>
         </div>
 

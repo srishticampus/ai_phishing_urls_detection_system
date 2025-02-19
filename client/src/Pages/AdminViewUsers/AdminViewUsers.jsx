@@ -9,7 +9,7 @@ function AdminViewUsers() {
   const [currentPage, setCurrentPage] = useState(1);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const baseUrl = import.meta.env.VITE_API_URL;
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -107,7 +107,7 @@ function AdminViewUsers() {
                   <tr key={index}>
                     <td>{(currentPage - 1) * rowsPerPage + index + 1}</td>
                     <td>
-                      <img src={profileface} alt="profile" />
+                      <img src={`${baseUrl}${user.photo}`} alt="profile" />
                     </td>
                     <td>
                       {user.user ? `${user.user.first_name} ${user.user.last_name}` : "N/A"}
@@ -115,7 +115,11 @@ function AdminViewUsers() {
                     <td>{user.phone_number}</td>
                     <td>{user.user?.email}</td>
                     <td>{user.gender}</td>
-                    <td>{user.interests?.join(", ") || "N/A"}</td>
+                    <td>
+  {user.interests?.map((interest) => interest.interest.name).join(", ") || "N/A"}
+</td>
+
+                    {/* <td>{user.interests?.join(", ") || "N/A"}</td> */}
                     <td>
                       <Switch
                         checked={user.is_active}

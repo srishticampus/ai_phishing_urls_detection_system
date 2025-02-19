@@ -7,7 +7,7 @@ import { Switch } from "antd";
 import { logout, checkLoginStatus } from "../../Services/apiService";
 import Vector from "../../assets/Images/Vector.png";
 
-function HomePageNavbar() {
+function  HomePageNavbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(checkLoginStatus());
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLogoutConfirmOpen, setIsLogoutConfirmOpen] = useState(false);
@@ -36,9 +36,14 @@ function HomePageNavbar() {
   const toggleModal = () => setIsModalOpen(!isModalOpen);
   const closeModal = () => setIsModalOpen(false);
 
+  // const handleLogoutClick = () => {
+  //   setIsLogoutConfirmOpen(true); // Open logout confirmation modal
+  // };
   const handleLogoutClick = () => {
+    setIsModalOpen(false); // Close the profile dropdown
     setIsLogoutConfirmOpen(true); // Open logout confirmation modal
   };
+  
 
   const confirmLogout = () => {
     logout(); // Call the logout function
