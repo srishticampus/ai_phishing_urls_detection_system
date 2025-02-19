@@ -7,7 +7,7 @@ import { Switch } from "antd";
 import { logout, checkLoginStatus } from "../../Services/apiService";
 import Vector from "../../assets/Images/Vector.png";
 
-function HomePageNavbar() {
+function  HomePageNavbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(checkLoginStatus());
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLogoutConfirmOpen, setIsLogoutConfirmOpen] = useState(false);

@@ -9,12 +9,15 @@ function AdminViewAdvertisement() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const baseUrl = import.meta.env.VITE_API_URL;
+
   // Fetch advertisements on component mount
   useEffect(() => {
     const fetchAdvertisements = async () => {
       try {
         const response = await advertisersViewAdvertisement();
-        setAdvertisements(response.data); // Assuming response.data contains the list of advertisements
+        setAdvertisements(response.data);
+        console.log(response.data) // Assuming response.data contains the list of advertisements
         setLoading(false);
       } catch (err) {
         setError('Failed to load advertisements',err);
@@ -41,7 +44,7 @@ function AdminViewAdvertisement() {
             advertisements.map((ad, index) => (
               <div className="card col-sm-4 admin-view-advertisement-card-size" key={index}>
                 {/* Assuming 'ad.image' contains the image URL, use 'cardimg' as fallback */}
-                <img src={ad.image || cardimg} alt={`Advertisement ${index + 1}`} />
+                <img src={`${baseUrl}${ad.ad_image}` || cardimg} alt={`Advertisement ${index + 1}`} />
               </div>
             ))
           ) : (
