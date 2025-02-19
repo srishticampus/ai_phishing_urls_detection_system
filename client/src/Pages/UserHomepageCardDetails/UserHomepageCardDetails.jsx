@@ -1,4 +1,4 @@
-
+import "../UserHomepageCardDetails/UserHomepageCardDetails.css"
 import  { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { viewBlogs } from "../../Services/apiService";
@@ -14,6 +14,7 @@ const UserHomepageCardDetails = () => {
       try {
         const response = await viewBlogs(id); // Fetch data using the ID
         setBlog(response.data);  // Assuming the API returns the full blog object
+        console.log(response.data);
         setLoading(false);
       } catch (error) {
         setError('Failed to fetch blog details',error);
@@ -30,6 +31,7 @@ const UserHomepageCardDetails = () => {
   if (!blog) return <div>No blog found</div>;
 
   return (
+
     <div className="card user-homepage-details-card">
       <img 
         className="user-homepage-cardone-imgone" 
@@ -40,7 +42,6 @@ const UserHomepageCardDetails = () => {
         <h2>{blog.title}</h2>
         <p>{blog.content}</p>
         <p>Interest: {blog.interests.name}</p>
-        <p>Author: {blog.author}</p>
         <p>Created at: {new Date(blog.created_at).toLocaleDateString()}</p>
         {/* Add more fields from your blog data as needed */}
       </div>
