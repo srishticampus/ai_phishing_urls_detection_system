@@ -63,7 +63,7 @@ function App() {
   // Listen for login status changes
   useEffect(() => {
     const handleLoginStatusChange = () => {
-      setIsLoggedIn(checkLoginStatus());
+      setIsLoggedIn(checkLoginStatus()); 
     };
 
     // Add event listener for login status changes
@@ -216,7 +216,7 @@ function App() {
           path="/user-profile"
           element={
             <>
-              <HomePageNavbar />
+              {/* <HomePageNavbar /> */}
               <UserProfile />
               <Footer />
             </>
@@ -228,7 +228,7 @@ function App() {
           path="/user-area-of-interest"
           element={
             <>
-              <HomePageNavbar />
+              {/* <HomePageNavbar /> */}
               <UserAreaOfInterests />
               <Footer />
             </>

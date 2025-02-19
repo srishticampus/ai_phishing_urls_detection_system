@@ -7,8 +7,8 @@ import {
 } from "../../Services/apiService";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify"; 
-import "react-toastify/dist/ReactToastify.css"; 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function UserProfile() {
   const [profileData, setProfileData] = useState({
@@ -19,7 +19,7 @@ function UserProfile() {
     image: user_empty_profile,
   });
 
-  const [hasProfile, setHasProfile] = useState(false); 
+  const [hasProfile, setHasProfile] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -60,13 +60,21 @@ function UserProfile() {
   const handleImageChange = (e) => {
     const { files } = e.target;
     if (files && files[0]) {
+      const fileSize = files[0].size / (1024 * 1024); // Convert bytes to MB
+  
+      if (fileSize > 2) {
+        toast.error("File size must be below 2MB!");
+        return;
+      }
+  
       setProfileData((prevState) => ({
         ...prevState,
         image: URL.createObjectURL(files[0]),
-        photo: files[0], 
+        photo: files[0],
       }));
     }
   };
+  
 
   const validateForm = () => {
     const nameRegex = /^[A-Za-z\s]+$/; // Only letters and spaces allowed
@@ -109,30 +117,34 @@ function UserProfile() {
     if (!validateForm()) return; // Stop submission if validation fails
 
     setLoading(true);
-  
+
     const formData = new FormData();
     formData.append("first_name", profileData.firstName);
     formData.append("last_name", profileData.lastName);
     formData.append("phone_number", profileData.phoneNumber);
     formData.append("gender", profileData.gender);
-  
+
     if (profileData.photo instanceof File) {
       formData.append("photo", profileData.photo);
     }
-  
+
     try {
       let response;
       if (hasProfile) {
-        response = await updateUserProfile(formData); 
+        response = await updateUserProfile(formData);
       } else {
         response = await addUserProfile(formData);
       }
-  
+
       if (response.success) {
-        toast.success(`Profile ${hasProfile ? "updated" : "created"} successfully! 🎉`);
-        
+        toast.success(
+          `Profile ${hasProfile ? "updated" : "created"} successfully! 🎉`
+        );
+
         if (!hasProfile) {
-          setTimeout(() => navigate("/user-profile"), 2000); 
+          // setTimeout(() => navigate("/user-profile"), 2000);
+          setTimeout(() => navigate("/user-area-of-interest"), 2000);
+
         }
       } else {
         toast.error(response.errors?.message || "Failed to save profile.");
@@ -143,15 +155,20 @@ function UserProfile() {
       setLoading(false);
     }
   };
-  
+
   return (
     <div className="user-addprofile-container">
       <div className="user-profile-section-one">
         <p className="user-profile-head">Profile</p>
 
-        <img className="user_empty_profile mt-3" src={profileData.image} alt="profileImage" />
+        <img
+          className="user_empty_profile mt-3"
+          src={profileData.image}
+          alt="profileImage"
+        />
         <button className="btn mt-3">
-          <input type="file" name="image" onChange={handleImageChange} />+ Add Image
+          <input type="file" name="image" onChange={handleImageChange} />+ Add
+          Image
         </button>
       </div>
 
@@ -205,7 +222,9 @@ function UserProfile() {
                   onChange={handleInputChange}
                 />
 
-                <label className="me-1 user-profile-gender-female">Female</label>
+                <label className="me-1 user-profile-gender-female">
+                  Female
+                </label>
                 <input
                   type="radio"
                   name="gender"
@@ -223,7 +242,11 @@ function UserProfile() {
               className="btn btn-dark mt-5 user-profile-next-button"
               disabled={loading}
             >
-              {loading ? "Submitting..." : hasProfile ? "Update Profile" : "Create Profile"}
+              {loading
+                ? "Submitting..."
+                : hasProfile
+                ? "Update Profile"
+                : "Create Profile"}
             </button>
           </div>
         </form>
