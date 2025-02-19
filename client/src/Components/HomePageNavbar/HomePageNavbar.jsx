@@ -66,6 +66,9 @@ function  HomePageNavbar() {
     localStorage.setItem("safeMode", checked);
   };
 
+  console.log(isLoggedIn);
+  
+
   return (
     <div>
       <nav className={`navbar navbar-expand-md ${isSafeMode ? "homepage-navbar-background-color" : "homepage-navbar-background-color-disabled"}`}>
@@ -88,7 +91,7 @@ function  HomePageNavbar() {
           <div className="collapse navbar-collapse" id="mynavbar">
             <ul className="navbar-nav navbar_list mx-auto">
               <li className="nav-item navbar_nav-item">
-                <Link className="nav-link navbar-links-homepage" to="/">Home</Link>
+                <Link className="nav-link navbar-links-homepage" to="/user-homepage">Home</Link>
               </li>
               <li className="nav-item navbar_nav-item">
                 <Link className="nav-link navbar-links-homepage" to="/about">About</Link>

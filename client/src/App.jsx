@@ -600,7 +600,9 @@ function App() {
         path="/user-homepage-card-details/:id"
         element={
           <>
+          <HomePageNavbar />
           <UserHomepageCardDetails/>
+          <Footer />
           </>
         }
         >
