@@ -220,6 +220,16 @@ export const viewBlogs = async (id = null) => {
   );
 };
 
+
+
+export const advertisementMatchingInterest = async () => {
+  return handleResponse(
+    apiClient.get(`api/advertisements/matching-interests/` , generateConfig(false ,true))
+  )
+}
+
+
+
 export const updateBlog = async (id, formData) => {
   return handleResponse(
     apiClient.put(`/api/blogs/${id}/`, formData, generateConfig(true))
