@@ -146,7 +146,7 @@ function App() {
             <>
               {isLoggedIn ? <HomePageNavbar /> : <Navbar />}
               <ContactUS />
-              <Footer />
+              <Footer/>
             </>
           }
         />
