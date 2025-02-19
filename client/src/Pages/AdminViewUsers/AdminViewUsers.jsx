@@ -9,7 +9,7 @@ function AdminViewUsers() {
   const [currentPage, setCurrentPage] = useState(1);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const baseUrl = import.meta.env.VITE_API_URL;
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -104,7 +104,7 @@ function AdminViewUsers() {
                   <tr key={index}>
                     <td>{(currentPage - 1) * rowsPerPage + index + 1}</td>
                     <td>
-                      <img src={profileface} alt="profile" />
+                      <img src={`${baseUrl}${user.photo}`} alt="profile" />
                     </td>
                     <td>
                       {user.user ? `${user.user.first_name} ${user.user.last_name}` : "N/A"}
