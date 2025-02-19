@@ -21,6 +21,7 @@ import sideimg3 from "../../assets/Images/sideimg3.png";
 import { useEffect, useState } from "react";
 import { viewBlogs } from "../../Services/apiService";
 import { useNavigate } from "react-router-dom";
+import { advertisementSafetyCheck } from "../../Services/apiService";
 
 function UserHomePage() {
   const [blogs, setBlogs] = useState([]);
@@ -28,6 +29,8 @@ function UserHomePage() {
   const [error, setError] = useState(null);
   const baseUrl = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
+  const [isAdSafe, setIsAdSafe] = useState(null); // Store the safety status
+  const [adLink, setAdLink] = useState(""); // Store the ad link
 
   const [safeMode, setSafeMode] = useState(true);
   const [showModal, setShowModal] = useState(false); // Modal state
@@ -56,14 +59,28 @@ function UserHomePage() {
   }, []); // Empty dependency array means this runs once when the component mounts
 
   const handleReadMoreClick = (id) => {
-    // Navigate to the details page with the specific blog ID
+
     navigate(`/user-homepage-card-details/${id}`);
   };
+  const handleCardClick = async (adId, adLink) => {
+    setAdLink(adLink);
 
-  const handleCardClick = () => {
-    // Check if safeMode is true and show modal accordingly
     if (safeMode) {
-      setShowModal(true); // Trigger the modal
+
+      try {
+        const response = await advertisementSafetyCheck(adId);
+        console.log("safety",response)
+        if (response.is_safe) {
+          setIsAdSafe(true);
+        } else {
+          setIsAdSafe(false);
+        }
+        setShowModal(true);
+      } catch (error) {
+        console.error("Error checking advertisement safety:", error);
+        setIsAdSafe(false);
+        setShowModal(true);
+      }
     }
   };
 
@@ -78,8 +95,7 @@ function UserHomePage() {
     <div className="container user-homepage-container">
       <div className="row">
         <div className="col-sm-9">
-          {/* Carousel and content here */}
-          {/* ... rest of the code... */}
+
           <div
             id="carouselExample"
             className="carousel slide"
@@ -301,7 +317,7 @@ function UserHomePage() {
               )}
             </div>
 
-            {/* <div className="row">
+            <div className="row">
               <div className="card col-sm-12 p-3 user-homepage-above-footer-card">
                 <p className="user-homepage-div3-head">You may also like</p>
                 <div className="row">
@@ -404,7 +420,7 @@ function UserHomePage() {
                   </p>
                 </div>
               </div>
-            </div> */}
+            </div>
 
             {/* Modal */}
             {showModal && (
@@ -417,7 +433,9 @@ function UserHomePage() {
                 <div className="modal-dialog">
                   <div className="modal-content">
                     <div className="modal-header">
-                      <h5 className="modal-title">Safe Mode is ON</h5>
+                      <h5 className="modal-title">
+                        {isAdSafe ? "Safe Mode is ON" : "Warning: Unsafe Link"}
+                      </h5>
                       <button
                         type="button"
                         className="btn-close"
@@ -426,10 +444,15 @@ function UserHomePage() {
                       ></button>
                     </div>
                     <div className="modal-body">
-                      <p>
-                        This is a safe mode notification modal. Please proceed
-                        with caution.
-                      </p>
+                      {isAdSafe ? (
+                        <p>
+                          The advertisement link ({adLink}) is safe to visit.
+                        </p>
+                      ) : (
+                        <p>
+                          The advertisement link ({adLink}) is unsafe. Please proceed with caution.
+                        </p>
+                      )}
                     </div>
                     <div className="modal-footer">
                       <button
@@ -447,15 +470,24 @@ function UserHomePage() {
           </div>
         </div>
         <div className="col-sm-3">
-          <div className="cards-container" onClick={handleCardClick}>
-            <div className="card user-homepage-card-size">
+          <div className="cards-container">
+            {/* First card */}
+            <div
+              className="card user-homepage-card-size"
+              onClick={() => handleCardClick(1, "https://example.com/advertisement1")} // Pass the correct ad ID and link
+            >
               <img
                 className="homepage-card-img-size mb-5"
                 src={adv}
                 alt="Advertisement"
               />
             </div>
-            <div className="card user-homepage-card-size">
+
+            {/* Second card */}
+            <div
+              className="card user-homepage-card-size"
+              onClick={() => handleCardClick(5, "https://example.com/advertisement2")} // Pass the correct ad ID and link
+            >
               <img
                 className="homepage-card-img-size"
                 src={ads1}
@@ -464,6 +496,7 @@ function UserHomePage() {
             </div>
           </div>
         </div>
+
       </div>
     </div>
   );
