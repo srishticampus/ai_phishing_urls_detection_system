@@ -53,7 +53,7 @@ import UserAreaOfInterests from "./Pages/UserAreaOfInterests/UserAreaOfInterests
 import UserViewAdvertisementDetails from "./Pages/UserViewAdvertisementDetails/UserViewAdvertisementDetails";
 import { checkLoginStatus } from "./Services/apiService";
 import ProtectedRoute from "./Routes/ProtectedRoute"; // Import the ProtectedRoute component
-import { AuthProvider } from "./Context/AuthContext";
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(checkLoginStatus()); // Track login status
