@@ -300,6 +300,18 @@ export const checkMaliciousLinks = async (advertiserId) => {
     apiClient.get(`/ml/check-malicious-links/${advertiserId}/`, generateConfig())
   );
 };
+export const advertisersEditAdvertisement = async (id, formData) => {
+  return handleResponse(
+    apiClient.put(`api/advertisements/${id}/`, formData, generateConfig(true, true)
+  ));
+};
+
+export const advertisersDeleteAdvertisement = async (id, formData) => {
+  return handleResponse(
+    apiClient.delete(`api/advertisements/${id}/`, formData, generateConfig(true, true)
+  ));
+};
+
 
 
 

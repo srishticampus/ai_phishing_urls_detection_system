@@ -1,5 +1,5 @@
 import "../../Pages/AdvertisersDashboard/AdvertisersDashboard.css"
-import profileface from "../../assets/Images/profile-face.png" 
+// import profileface from "../../assets/Images/profile-face.png" 
 import { useState, useEffect } from 'react';
 import { advertisersViewAdvertisement, viewUsers } from "../../Services/apiService"; 
 const baseUrl = import.meta.env.VITE_API_URL;
@@ -80,7 +80,7 @@ function AdvertisersDashboard() {
         <p>View All &gt;</p>
       </div>
 
-      <div>
+      {/* <div>
         <p className="advertisers-dashboard-head">View Recent Users</p>
         <table className="table table-bordered">
           <thead>
@@ -100,14 +100,12 @@ function AdvertisersDashboard() {
                 <tr key={user.id}>
                   <td>{index + 1}</td>
                   <td><img src={profileface} alt="Profile" /></td>
-                  {/* <td>{user.first_name} {user.last_name}</td> */}
                   <td>{user.username}</td>
                   <td>{user.phone_number}</td>
                   <td>{user.email}</td>
                   <td>{user.gender === 'M' ? 'Male' : 'Female'}</td>
                   <td>
-                    {
-                      // Check if interests is valid, then join, otherwise show 'N/A'
+
                       Array.isArray(user.interests) && user.interests.length > 0 
                         ? user.interests.join(', ') 
                         : 'N/A'
@@ -123,7 +121,7 @@ function AdvertisersDashboard() {
         <div className="d-flex justify-content-end advertiser-dashboard-view-all-table">
           <p>View All &gt;</p>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
