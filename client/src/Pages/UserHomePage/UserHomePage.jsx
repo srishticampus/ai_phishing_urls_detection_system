@@ -22,6 +22,7 @@ import { useEffect, useState } from "react";
 import { viewBlogs } from "../../Services/apiService";
 import { useNavigate } from "react-router-dom";
 import { advertisementSafetyCheck } from "../../Services/apiService";
+import { advertisementMatchingInterest } from "../../Services/apiService";
 
 function UserHomePage() {
   const [blogs, setBlogs] = useState([]);
@@ -34,7 +35,11 @@ function UserHomePage() {
 
   const [safeMode, setSafeMode] = useState(true);
   const [showModal, setShowModal] = useState(false); // Modal state
-
+  const [matchingAds, setMatchingAds] = useState([]); // State to store matching ads
+  const [adLoading, setAdLoading] = useState(true); // Loading state for ads
+  const [adError, setAdError] = useState(null); // Error state for ads
+ 
+ 
   useEffect(() => {
     const storedSafeMode = localStorage.getItem("safeMode");
     if (storedSafeMode === "false") {
@@ -43,11 +48,31 @@ function UserHomePage() {
   }, []);
 
   useEffect(() => {
+    const fetchMatchingAds = async () => {
+      setAdLoading(true); // Set loading to true before fetching
+
+      try {
+        const response = await advertisementMatchingInterest();
+        console.log("Matching Ads:", response.data);
+        setMatchingAds(response.data); // Update the state with matching ads
+    
+      } catch (error) {
+        setAdError("Failed to fetch matching ads");
+        console.error(error);
+      } finally {
+        setAdLoading(false); // Set loading to false after fetching
+      }
+    };
+
+    fetchMatchingAds(); // Call the function
+  }, []); 
+
+  useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await viewBlogs(); // or viewBlogs(id) if you have a specific ID
-        console.log(response.data); // Logs the data array
-        setBlogs(response.data); // Correctly set the response data (the blogs array)
+        const response = await viewBlogs(); 
+        console.log(response.data); 
+        setBlogs(response.data); 
         setLoading(false);
       } catch (error) {
         setError("Failed to fetch blogs", error);
@@ -56,8 +81,7 @@ function UserHomePage() {
     };
 
     fetchBlogs();
-  }, []); // Empty dependency array means this runs once when the component mounts
-
+  }, []); 
   const handleReadMoreClick = (id) => {
 
     navigate(`/user-homepage-card-details/${id}`);
@@ -469,9 +493,31 @@ function UserHomePage() {
             )}
           </div>
         </div>
+
         <div className="col-sm-3">
+        <div className="cards-container">
+          {matchingAds.length > 0 ? (
+            matchingAds.map((ad) => (
+              <div
+                key={ad.id}
+                className="card user-homepage-card-size"
+                onClick={() => handleCardClick(ad.id, ad.link)} // Use ad.id and ad.link for click handling
+              >
+                <img
+                  className="homepage-card-img-size mb-5"
+                  src={`${baseUrl}${ad.ad_image}`} // Dynamically set the image src
+                  alt="Advertisement"
+                />
+              </div>
+            ))
+          ) : (
+            <p>No ads available</p> // Show message if no matching ads
+          )}
+        </div>
+      </div>
+        {/* <div className="col-sm-3">
           <div className="cards-container">
-            {/* First card */}
+
             <div
               className="card user-homepage-card-size"
               onClick={() => handleCardClick(1, "https://example.com/advertisement1")} // Pass the correct ad ID and link
@@ -483,7 +529,6 @@ function UserHomePage() {
               />
             </div>
 
-            {/* Second card */}
             <div
               className="card user-homepage-card-size"
               onClick={() => handleCardClick(5, "https://example.com/advertisement2")} // Pass the correct ad ID and link
@@ -495,7 +540,7 @@ function UserHomePage() {
               />
             </div>
           </div>
-        </div>
+        </div> */}
 
       </div>
     </div>

@@ -69,7 +69,8 @@ function UserViewProfile() {
             <div className="user-view-profile-section-one">
                 <p className="user-view-profile-head">Profile</p>
                 <img className="user-view-empty-profile mt-3"
-                src={`${baseUrl}${profileData.image}`}       
+              
+                src={profileData.image}     
                           alt="User Profile" />
                 <p className="user-view-profile-name">{profileData.firstName} {profileData.lastName}</p>
             </div>
