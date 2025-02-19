@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { viewBlogs } from "../../Services/apiService";
 
 const UserHomepageCardDetails = () => {
-  const { id } = useParams();  // Get the blog ID from the URL
+  const { id } = useParams();  
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -12,8 +12,8 @@ const UserHomepageCardDetails = () => {
   useEffect(() => {
     const fetchBlogDetails = async () => {
       try {
-        const response = await viewBlogs(id); // Fetch data using the ID
-        setBlog(response.data);  // Assuming the API returns the full blog object
+        const response = await viewBlogs(id);
+        setBlog(response.data);  
         console.log(response.data);
         setLoading(false);
       } catch (error) {
@@ -23,7 +23,7 @@ const UserHomepageCardDetails = () => {
     };
 
     fetchBlogDetails();
-  }, [id]);  // Refetch if the ID changes (in case of navigating to a new blog)
+  }, [id]);  
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
@@ -32,7 +32,8 @@ const UserHomepageCardDetails = () => {
 
   return (
 
-    <div className="card user-homepage-details-card">
+  <div className="user-homepage-details-card-parent">
+      <div className="card user-homepage-details-card">
       <img 
         className="user-homepage-cardone-imgone" 
         src={`${baseUrl}${blog.image}`} 
@@ -43,9 +44,10 @@ const UserHomepageCardDetails = () => {
         <p>{blog.content}</p>
         <p>Interest: {blog.interests.name}</p>
         <p>Created at: {new Date(blog.created_at).toLocaleDateString()}</p>
-        {/* Add more fields from your blog data as needed */}
+     
       </div>
     </div>
+  </div>
   );
 };
 
