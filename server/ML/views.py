@@ -115,3 +115,42 @@ class AdvertisementSafetyCheck(APIView):
             'is_safe': is_safe,
             'analyzed_at': analysis.analyzed_at
         })
+
+class AdvertisementClickSafetyCheckView(APIView):
+    """
+    API endpoint to check the safety prediction of an advertisement's link when clicked.
+    """
+    def get(self, request, ad_id):
+        """
+        GET request to check if the clicked advertisement's link is safe or not.
+        """
+        try:
+            # Retrieve the advertisement
+            advertisement = Advertisement.objects.get(id=ad_id)
+
+            # Check if the link has been analyzed before
+            analysis, created = AdvertisementAnalysis.objects.get_or_create(
+                advertisement=advertisement,
+                defaults={"prediction": analyze_url(advertisement.link)}
+            )
+
+            # Map the prediction to a simple safety status
+            is_safe = analysis.prediction.lower() == "benign"
+
+            # Return the safety status
+            return Response({
+                "advertisement_id": ad_id,
+                "advertisement_title": advertisement.title,
+                "advertiser": advertisement.advertiser.username,
+                "link": advertisement.link,
+                "prediction": analysis.prediction,
+                "is_safe": is_safe,
+                "analyzed_at": analysis.analyzed_at
+            }, status=status.HTTP_200_OK)
+
+        except Advertisement.DoesNotExist:
+            return Response({"error": "Advertisement not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        except Exception as e:
+            return Response({"error": "An unexpected error occurred.", "details": str(e)},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
