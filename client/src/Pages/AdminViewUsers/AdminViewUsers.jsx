@@ -112,7 +112,11 @@ function AdminViewUsers() {
                     <td>{user.phone_number}</td>
                     <td>{user.user?.email}</td>
                     <td>{user.gender}</td>
-                    <td>{user.interests?.join(", ") || "N/A"}</td>
+                    <td>
+  {user.interests?.map((interest) => interest.interest.name).join(", ") || "N/A"}
+</td>
+
+                    {/* <td>{user.interests?.join(", ") || "N/A"}</td> */}
                     <td>
                       <Switch
                         checked={user.is_active}
