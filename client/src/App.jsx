@@ -54,6 +54,8 @@ import UserViewAdvertisementDetails from "./Pages/UserViewAdvertisementDetails/U
 import { checkLoginStatus } from "./Services/apiService";
 import ProtectedRoute from "./Routes/ProtectedRoute"; // Import the ProtectedRoute component
 import { AuthProvider } from "./Context/AuthContext";
+import UserHomepageCardDetails from "./Pages/UserHomepageCardDetails/UserHomepageCardDetails"
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(checkLoginStatus()); // Track login status
@@ -580,6 +582,30 @@ function App() {
             </>
           }
         />
+
+       
+
+        {/* Advertisers Registration Route */}
+        {/* <Route
+          path="/advertisers-registration"
+          element={
+            <>
+              <AdvertisersRegistration />
+              <Footer />
+            </>
+          }
+        /> */}
+
+        <Route
+        path="/user-homepage-card-details/:id"
+        element={
+          <>
+          <UserHomepageCardDetails/>
+          </>
+        }
+        >
+
+        </Route>
       </Routes>
     </>
   );
