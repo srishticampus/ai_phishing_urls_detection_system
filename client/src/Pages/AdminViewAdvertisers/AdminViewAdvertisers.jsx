@@ -96,7 +96,7 @@ function AdminViewAdvertisers() {
             </tr>
           </thead>
           <tbody className="text-center">
-            {advertisers.map((advertiser, index) => (
+            {advertisers&&advertisers?.map((advertiser, index) => (
               <tr key={advertiser.id}>
                 <td>{index + 1}</td>
                 <td>{advertiser.username}</td>
