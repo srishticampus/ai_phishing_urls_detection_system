@@ -103,7 +103,7 @@ class ForgotPasswordView(APIView):
         uid = urlsafe_base64_encode(force_bytes(user.pk))
 
         #Construct Password reset link
-        frontend_url = os.getenv('FRONTEND_URL','http://localhost:3000')
+        frontend_url = os.getenv('FRONTEND_URL')
         reset_link = f"{frontend_url}/reset-password/{uid}/{token}/"
 
         #Send email

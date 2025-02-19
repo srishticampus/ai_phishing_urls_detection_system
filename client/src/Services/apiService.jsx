@@ -200,6 +200,18 @@ export const getInterests = async () => {
     {authRequired: false}
   );
 };
+//Forgot Password
+export const forgotPassword = async (email) => {
+  return handleResponse(
+    apiClient.post("/api/forgot-password/", { email }, generateConfig(false, false))
+  );
+};
+//Reset Password
+export const resetPassword = async (data) => {
+  return handleResponse(
+    apiClient.post("/api/reset-password/", data, generateConfig(false, false))
+  );
+};
 
 export const userAddInterest = async (formData) => {
   return handleResponse(
@@ -219,6 +231,16 @@ export const viewBlogs = async (id = null) => {
     apiClient.get(id ? `/api/blogs/${id}/` : "/api/blogs/", generateConfig())
   );
 };
+
+
+
+export const advertisementMatchingInterest = async () => {
+  return handleResponse(
+    apiClient.get(`api/advertisements/matching-interests/` , generateConfig(false ,true))
+  )
+}
+
+
 
 export const updateBlog = async (id, formData) => {
   return handleResponse(
@@ -313,7 +335,10 @@ export const advertisersDeleteAdvertisement = async (id, formData) => {
   ));
 };
 
-
+export const advertisementSafetyCheck = async (id) => {
+  return handleResponse(apiClient.get(`/ml/advertisements/${id}/click-safety-check/` ,generateConfig(false ,false)
+));
+}
 
 
 
