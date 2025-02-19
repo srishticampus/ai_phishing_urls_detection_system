@@ -51,8 +51,12 @@
 }
 .user-area-of-interest-center-row{
     display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Automatically adjusts number of columns */
+    gap: 10px; /* Adds space between the cards */
     place-content: center;
-    grid-auto-flow: column;
+    /* display: grid;
+    place-content: center;
+    grid-auto-flow: column; */
 }
 .user-area-of-interests-btn{
     width: 175px;
