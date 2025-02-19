@@ -216,7 +216,7 @@ function App() {
           path="/user-profile"
           element={
             <>
-              {/* <HomePageNavbar /> */}
+              <HomePageNavbar />
               <UserProfile />
               <Footer />
             </>
