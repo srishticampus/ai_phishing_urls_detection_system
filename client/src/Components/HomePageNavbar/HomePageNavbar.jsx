@@ -36,9 +36,14 @@ function  HomePageNavbar() {
   const toggleModal = () => setIsModalOpen(!isModalOpen);
   const closeModal = () => setIsModalOpen(false);
 
+  // const handleLogoutClick = () => {
+  //   setIsLogoutConfirmOpen(true); // Open logout confirmation modal
+  // };
   const handleLogoutClick = () => {
+    setIsModalOpen(false); // Close the profile dropdown
     setIsLogoutConfirmOpen(true); // Open logout confirmation modal
   };
+  
 
   const confirmLogout = () => {
     logout(); // Call the logout function
