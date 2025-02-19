@@ -21,39 +21,65 @@ import sideimg3 from "../../assets/Images/sideimg3.png"
 import { useEffect, useState } from 'react';
 import { viewBlogs } from "../../Services/apiService";
 import { useNavigate } from 'react-router-dom';
+
 function UserHomePage() {
-  const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const baseUrl = import.meta.env.VITE_API_URL;
-  const navigate = useNavigate();
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const response = await viewBlogs();  // or viewBlogs(id) if you have a specific ID
-        console.log(response.data); // Logs the data array
-        setBlogs(response.data);  // Correctly set the response data (the blogs array)
-        setLoading(false);
-      } catch (error) {
-        setError('Failed to fetch blogs',error);
-        setLoading(false);
-      }
+    const [blogs, setBlogs] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const baseUrl = import.meta.env.VITE_API_URL;
+    const navigate = useNavigate();
+
+    const [safeMode, setSafeMode] = useState(true);
+    const [showModal, setShowModal] = useState(false);  // Modal state
+
+    useEffect(() => {
+        const storedSafeMode = localStorage.getItem('safeMode');
+        if (storedSafeMode === 'false') {
+            setSafeMode(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        const fetchBlogs = async () => {
+            try {
+                const response = await viewBlogs();  // or viewBlogs(id) if you have a specific ID
+                console.log(response.data); // Logs the data array
+                setBlogs(response.data);  // Correctly set the response data (the blogs array)
+                setLoading(false);
+            } catch (error) {
+                setError('Failed to fetch blogs', error);
+                setLoading(false);
+            }
+        };
+
+        fetchBlogs();
+    }, []); // Empty dependency array means this runs once when the component mounts
+
+    const handleReadMoreClick = (id) => {
+        // Navigate to the details page with the specific blog ID
+        navigate(`/user-homepage-card-details/${id}`);
     };
 
-    fetchBlogs();
-  }, []); // Empty dependency array means this runs once when the component mounts
-  const handleReadMoreClick = (id) => {
-    // Navigate to the details page with the specific blog ID
-    navigate(`/user-homepage-card-details/${id}`);
-  };
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+    const handleCardClick = () => {
+        // Check if safeMode is true and show modal accordingly
+        if (safeMode) {
+            setShowModal(true);  // Trigger the modal
+        }
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);  // Close the modal
+    };
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>{error}</div>;
 
     return (
         <div className="container user-homepage-container">
-
             <div className="row">
                 <div className="col-sm-9">
+                    {/* Carousel and content here */}
+                    {/* ... rest of the code... */}
                     <div id="carouselExample" className="carousel slide" data-bs-ride="carousel">
                         <div className="carousel-inner">
 
@@ -150,228 +176,77 @@ function UserHomePage() {
                             <span className="visually-hidden">Next</span>
                         </button>
                     </div>
-                    <p className="user-homepage-div2-head">Our Recent Blogs</p>
-
                     <div className="row">
-                    <div className="row">
-      {blogs.length > 0 ? (
-        blogs.map((blog) => (
-          <div key={blog.id} className="card col-sm-2 user-homepage-cardsize">
-            <img 
-              className="user-homepage-cardone-imgone" 
-              src={`${baseUrl}${blog.image}` || LandingPage_Bg} 
-              alt={blog.title} 
-            />
-            <div>
-              <span>
-                <p className="badge p-2 user-homepage-cardone-header">
-                  {blog.interests.name || 'Unknown Interest'}
-                </p>
-              </span>
-              <img 
-                className="user-homepage-cardone-headerone" 
-                src={tabler_photo} 
-                alt="Tabler" 
-              />
-            </div>
-            <div className="card-body">
-              <p className="user-homepage-cardone-body">
-                {blog.title || 'No Title'}
-              </p>
-              <div className="d-flex">
-                <div className="d-flex user-homepage-card-profile-info">
-                  <img 
-                    className="user-homepage-card-profile-img" 
-                    src={card_profile} 
-                    alt="Profile" 
-                  />
-                  <p className="user-homepage-card-profilename">
-                    {blog.author || 'Author Name'}
-                  </p>
-                  <span>
-                    <div className="user-homepage-profile-rectangle"></div>
-                  </span>
-                  <p className="user-homepage-profile-textcolor">
-                    {new Date(blog.created_at).toLocaleDateString() || 'Unknown Date'}
-                  </p>
-                  <span>
-                    <div className="user-homepage-profile-textcolortwo"></div>
-                  </span>
-                  <span>
-                    <img src={Group} alt="Group" />
-                  </span>
-                  <p className="user-homepage-share-color">
-                    {blog.shares || '0'} shares
-                  </p>
-                </div>
-              </div>
-            </div>
-            <p className="user-homepage-cardone-para">
-              {blog.content || 'No content available'}
-            </p>
-            <button 
-              className="btn user-homepage-readmore-button" 
-              onClick={() => handleReadMoreClick(blog.id)} // Call the function with the blog ID
-            >
-              Read More <span className="greaterthan-symbol">&gt;</span>
-            </button>
-            {/* <button className="btn user-homepage-readmore-button">
-              Read More <span className="greaterthan-symbol">&gt;</span>
-            </button> */}
-          </div>
-        ))
-      ) : (
-        <p>No blogs available</p>
-      )}
-    </div>
-                        {/* <div className="card col-sm-2 user-homepage-cardsize">
-                            <img className="user-homepage-cardone-imgone" src={LandingPage_Bg} alt="Blog 1" />
-                            <div>
-                                <span><p className="badge  p-2 user-homepage-cardone-header">Food & Cooking</p></span>
-                                <img className="user-homepage-cardone-headerone" src={tabler_photo} alt="tabler" />
-                            </div>
-                            <div className="card-body">
-                                <p className="user-homepage-cardone-body">Budget Sacrificing Experience</p>
-                                <div className="d-flex">
-                                    <div className="d-flex user-homepage-card-profile-info">
-                                        <img className="user-homepage-card-profile-img" src={card_profile} alt="Profile" />
-                                        <p className="user-homepage-card-profilename">Joanna Wellick</p>
-                                        <span><div className="user-homepage-profile-rectangle"></div></span>
-                                        <p className="user-homepage-profile-textcolor">June 28, 2018</p>
-                                        <span><div className="user-homepage-profile-textcolortwo"></div></span>
-                                        <span><img src={Group} alt="Group" /></span>
-                                        <p className="user-homepage-share-color">1K shares</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <p className="user-homepage-cardone-para">Aenean eleifend ante maecenas pulvinar montes lorem et pede dis dolor pretium donec dictum. Vici consequat justo enim. Venenatis eget adipiscing luctus lorem.</p>
-                            <button className="btn user-homepage-readmore-button">Read More <span className="greaterthan-symbol">&gt;</span></button>
-                        </div>
-
-                        <div className="card col-sm-2 user-homepage-cardsize">
-                            <img className="user-homepage-cardone-imgone" src={LandingPage_Bg} alt="Blog 1" />
-                            <div>
-                                <span><p className="badge  p-2 user-homepage-cardone-header">Food & Cooking</p></span>
-                                <img className="user-homepage-cardone-headerone" src={tabler_photo} alt="tabler" />
-                            </div>
-                            <div className="card-body">
-                                <p className="user-homepage-cardone-body">Budget Sacrificing Experience</p>
-                                <div className="d-flex">
-                                    <div className="d-flex user-homepage-card-profile-info">
-                                        <img className="user-homepage-card-profile-img" src={card_profile} alt="Profile" />
-                                        <p className="user-homepage-card-profilename">Joanna Wellick</p>
-                                        <span><div className="user-homepage-profile-rectangle"></div></span>
-                                        <p className="user-homepage-profile-textcolor">June 28, 2018</p>
-                                        <span><div className="user-homepage-profile-textcolortwo"></div></span>
-                                        <span><img src={Group} alt="Group" /></span>
-                                        <p className="user-homepage-share-color">1K shares</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <p className="user-homepage-cardone-para">Aenean eleifend ante maecenas pulvinar montes lorem et pede dis dolor pretium donec dictum. Vici consequat justo enim. Venenatis eget adipiscing luctus lorem.</p>
-                            <button className="btn user-homepage-readmore-button">Read More <span className="greaterthan-symbol">&gt;</span></button>
-                        </div>
-
-
-                        <div className="card col-sm-2 user-homepage-cardsize">
-                            <img className="user-homepage-cardone-imgone" src={LandingPage_Bg} alt="Blog 1" />
-                            <div>
-                                <span><p className="badge  p-2 user-homepage-cardone-header">Food & Cooking</p></span>
-                                <img className="user-homepage-cardone-headerone" src={tabler_photo} alt="tabler" />
-                            </div>
-                            <div className="card-body">
-                                <p className="user-homepage-cardone-body">Budget Sacrificing Experience</p>
-                                <div className="d-flex">
-                                    <div className="d-flex user-homepage-card-profile-info">
-                                        <img className="user-homepage-card-profile-img" src={card_profile} alt="Profile" />
-                                        <p className="user-homepage-card-profilename">Joanna Wellick</p>
-                                        <span><div className="user-homepage-profile-rectangle"></div></span>
-                                        <p className="user-homepage-profile-textcolor">June 28, 2018</p>
-                                        <span><div className="user-homepage-profile-textcolortwo"></div></span>
-                                        <span><img src={Group} alt="Group" /></span>
-                                        <p className="user-homepage-share-color">1K shares</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <p className="user-homepage-cardone-para">Aenean eleifend ante maecenas pulvinar montes lorem et pede dis dolor pretium donec dictum. Vici consequat justo enim. Venenatis eget adipiscing luctus lorem.</p>
-                            <button className="btn user-homepage-readmore-button">Read More <span className="greaterthan-symbol">&gt;</span></button>
-                        </div>
-
-                        <div className="card col-sm-2 user-homepage-cardsize">
-                            <img className="user-homepage-cardone-imgone" src={LandingPage_Bg} alt="Blog 1" />
-                            <div>
-                                <span><p className="badge  p-2 user-homepage-cardone-header">Food & Cooking</p></span>
-                                <img className="user-homepage-cardone-headerone" src={tabler_photo} alt="tabler" />
-                            </div>
-                            <div className="card-body">
-                                <p className="user-homepage-cardone-body">Budget Sacrificing Experience</p>
-                                <div className="d-flex">
-                                    <div className="d-flex user-homepage-card-profile-info">
-                                        <img className="user-homepage-card-profile-img" src={card_profile} alt="Profile" />
-                                        <p className="user-homepage-card-profilename">Joanna Wellick</p>
-                                        <span><div className="user-homepage-profile-rectangle"></div></span>
-                                        <p className="user-homepage-profile-textcolor">June 28, 2018</p>
-                                        <span><div className="user-homepage-profile-textcolortwo"></div></span>
-                                        <span><img src={Group} alt="Group" /></span>
-                                        <p className="user-homepage-share-color">1K shares</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <p className="user-homepage-cardone-para">Aenean eleifend ante maecenas pulvinar montes lorem et pede dis dolor pretium donec dictum. Vici consequat justo enim. Venenatis eget adipiscing luctus lorem.</p>
-                            <button className="btn user-homepage-readmore-button">Read More <span className="greaterthan-symbol">&gt;</span></button>
-                        </div>
-
-                        <div className="card col-sm-2 user-homepage-cardsize">
-                            <img className="user-homepage-cardone-imgone" src={LandingPage_Bg} alt="Blog 1" />
-                            <div>
-                                <span><p className="badge  p-2 user-homepage-cardone-header">Food & Cooking</p></span>
-                                <img className="user-homepage-cardone-headerone" src={tabler_photo} alt="tabler" />
-                            </div>
-                            <div className="card-body">
-                                <p className="user-homepage-cardone-body">Budget Sacrificing Experience</p>
-                                <div className="d-flex">
-                                    <div className="d-flex user-homepage-card-profile-info">
-                                        <img className="user-homepage-card-profile-img" src={card_profile} alt="Profile" />
-                                        <p className="user-homepage-card-profilename">Joanna Wellick</p>
-                                        <span><div className="user-homepage-profile-rectangle"></div></span>
-                                        <p className="user-homepage-profile-textcolor">June 28, 2018</p>
-                                        <span><div className="user-homepage-profile-textcolortwo"></div></span>
-                                        <span><img src={Group} alt="Group" /></span>
-                                        <p className="user-homepage-share-color">1K shares</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <p className="user-homepage-cardone-para">Aenean eleifend ante maecenas pulvinar montes lorem et pede dis dolor pretium donec dictum. Vici consequat justo enim. Venenatis eget adipiscing luctus lorem.</p>
-                            <button className="btn user-homepage-readmore-button">Read More <span className="greaterthan-symbol">&gt;</span></button>
-                        </div>
-
-                        <div className="card col-sm-2 user-homepage-cardsize">
-                            <img className="user-homepage-cardone-imgone" src={LandingPage_Bg} alt="Blog 1" />
-                            <div>
-                                <span><p className="badge  p-2 user-homepage-cardone-header">Food & Cooking</p></span>
-                                <img className="user-homepage-cardone-headerone" src={tabler_photo} alt="tabler" />
-                            </div>
-                            <div className="card-body">
-                                <p className="user-homepage-cardone-body">Budget Sacrificing Experience</p>
-                                <div className="d-flex">
-                                    <div className="d-flex user-homepage-card-profile-info">
-                                        <img className="user-homepage-card-profile-img" src={card_profile} alt="Profile" />
-                                        <p className="user-homepage-card-profilename">Joanna Wellick</p>
-                                        <span><div className="user-homepage-profile-rectangle"></div></span>
-                                        <p className="user-homepage-profile-textcolor">June 28, 2018</p>
-                                        <span><div className="user-homepage-profile-textcolortwo"></div></span>
-                                        <span><img src={Group} alt="Group" /></span>
-                                        <p className="user-homepage-share-color">1K shares</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <p className="user-homepage-cardone-para">Aenean eleifend ante maecenas pulvinar montes lorem et pede dis dolor pretium donec dictum. Vici consequat justo enim. Venenatis eget adipiscing luctus lorem.</p>
-                            <button className="btn user-homepage-readmore-button">Read More <span className="greaterthan-symbol">&gt;</span></button>
-                        </div>
-                        <div className="d-flex justify-content-center mt-5 mb-5">
-                            <button className="btn btn-outline-dark">Load More</button>
-                        </div> */}
                         <div className="row">
+                            {blogs.length > 0 ? (
+                                blogs.map((blog) => (
+                                    <div key={blog.id} className="card col-sm-2 user-homepage-cardsize">
+                                        <img
+                                            className="user-homepage-cardone-imgone"
+                                            src={`${baseUrl}${blog.image}` || LandingPage_Bg}
+                                            alt={blog.title}
+                                        />
+                                        <div>
+                                            <span>
+                                                <p className="badge p-2 user-homepage-cardone-header">
+                                                    {blog.interests.name || 'Unknown Interest'}
+                                                </p>
+                                            </span>
+                                            <img
+                                                className="user-homepage-cardone-headerone"
+                                                src={tabler_photo}
+                                                alt="Tabler"
+                                            />
+                                        </div>
+                                        <div className="card-body">
+                                            <p className="user-homepage-cardone-body">
+                                                {blog.title || 'No Title'}
+                                            </p>
+                                            <div className="d-flex">
+                                                <div className="d-flex user-homepage-card-profile-info">
+                                                    <img
+                                                        className="user-homepage-card-profile-img"
+                                                        src={card_profile}
+                                                        alt="Profile"
+                                                    />
+                                                    <p className="user-homepage-card-profilename">
+                                                        {blog.author || 'Author Name'}
+                                                    </p>
+                                                    <span>
+                                                        <div className="user-homepage-profile-rectangle"></div>
+                                                    </span>
+                                                    <p className="user-homepage-profile-textcolor">
+                                                        {new Date(blog.created_at).toLocaleDateString() || 'Unknown Date'}
+                                                    </p>
+                                                    <span>
+                                                        <div className="user-homepage-profile-textcolortwo"></div>
+                                                    </span>
+                                                    <span>
+                                                        <img src={Group} alt="Group" />
+                                                    </span>
+                                                    <p className="user-homepage-share-color">
+                                                        {blog.shares || '0'} shares
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p className="user-homepage-cardone-para">
+                                            {blog.content || 'No content available'}
+                                        </p>
+                                        <button
+                                            className="btn user-homepage-readmore-button"
+                                            onClick={() => handleReadMoreClick(blog.id)} // Call the function with the blog ID
+                                        >
+                                            Read More <span className="greaterthan-symbol">&gt;</span>
+                                        </button>
+                                    </div>
+                                ))
+                            ) : (
+                                <p>No blogs available</p>
+                            )}
+                        </div>
+                        
+      <div className="row">
                             <div className="card col-sm-12 p-3 user-homepage-above-footer-card">
                                 <p className="user-homepage-div3-head">You may also like</p>
                                 <div className="row">
@@ -445,17 +320,48 @@ function UserHomePage() {
                             </div>
                         </div>
 
+
+
+
+
+
+
+
+                        {/* Modal */}
+                        {showModal && (
+                            <div className="modal fade show" style={{ display: 'block', opacity: 1 }} tabIndex="-1" aria-hidden="true">
+                                <div className="modal-dialog">
+                                    <div className="modal-content">
+                                        <div className="modal-header">
+                                            <h5 className="modal-title">Safe Mode is ON</h5>
+                                            <button type="button" className="btn-close" onClick={handleCloseModal} aria-label="Close"></button>
+                                        </div>
+                                        <div className="modal-body">
+                                            <p>This is a safe mode notification modal. Please proceed with caution.</p>
+                                        </div>
+                                        <div className="modal-footer">
+                                            <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>
+                                                Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
                     </div>
-
-
-
                 </div>
                 <div className="col-sm-3">
-                    <div className="card user-homepage-card-size">
-                        <img className="homepage-card-img-size mb-5" src={adv} alt="Advertisement" />
-                    </div>
-                    <div className="card user-homepage-card-size">
-                        <img className="homepage-card-img-size" src={ads1} alt="Advertisement" />
+                    <div
+                        className="cards-container"  
+                        onClick={handleCardClick}
+                    >
+                        <div className="card user-homepage-card-size">
+                            <img className="homepage-card-img-size mb-5" src={adv} alt="Advertisement" />
+                        </div>
+                        <div className="card user-homepage-card-size">
+                            <img className="homepage-card-img-size" src={ads1} alt="Advertisement" />
+                        </div>
                     </div>
                 </div>
             </div>

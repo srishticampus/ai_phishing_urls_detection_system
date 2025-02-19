@@ -7,8 +7,8 @@ import {
 } from "../../Services/apiService";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify"; // ✅ Import Toastify
-import "react-toastify/dist/ReactToastify.css"; // ✅ Import Toastify CSS
+import { toast } from "react-toastify"; 
+import "react-toastify/dist/ReactToastify.css"; 
 
 function UserProfile() {
   const [profileData, setProfileData] = useState({
@@ -19,7 +19,7 @@ function UserProfile() {
     image: user_empty_profile,
   });
 
-  const [hasProfile, setHasProfile] = useState(false); // ✅ Track if profile exists in backend
+  const [hasProfile, setHasProfile] = useState(false); 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -63,13 +63,51 @@ function UserProfile() {
       setProfileData((prevState) => ({
         ...prevState,
         image: URL.createObjectURL(files[0]),
-        photo: files[0], // Store actual file for submission
+        photo: files[0], 
       }));
     }
   };
 
+  const validateForm = () => {
+    const nameRegex = /^[A-Za-z\s]+$/; // Only letters and spaces allowed
+    const phoneRegex = /^\d{10}$/; // Must be exactly 10 digits
+
+    if (!profileData.firstName.trim()) {
+      toast.error("First Name is required.");
+      return false;
+    } else if (!nameRegex.test(profileData.firstName)) {
+      toast.error("First Name can only contain letters.");
+      return false;
+    }
+
+    if (!profileData.lastName.trim()) {
+      toast.error("Last Name is required.");
+      return false;
+    } else if (!nameRegex.test(profileData.lastName)) {
+      toast.error("Last Name can only contain letters.");
+      return false;
+    }
+
+    if (!profileData.phoneNumber.trim()) {
+      toast.error("Phone Number is required.");
+      return false;
+    } else if (!phoneRegex.test(profileData.phoneNumber)) {
+      toast.error("Phone Number must be exactly 10 digits.");
+      return false;
+    }
+
+    if (!profileData.gender) {
+      toast.error("Please select a gender.");
+      return false;
+    }
+
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return; // Stop submission if validation fails
+
     setLoading(true);
   
     const formData = new FormData();
@@ -85,16 +123,15 @@ function UserProfile() {
     try {
       let response;
       if (hasProfile) {
-        response = await updateUserProfile(formData); // ✅ Update if profile exists
+        response = await updateUserProfile(formData); 
       } else {
-        response = await addUserProfile(formData); // ✅ Add if no profile exists
+        response = await addUserProfile(formData);
       }
   
       if (response.success) {
         toast.success(`Profile ${hasProfile ? "updated" : "created"} successfully! 🎉`);
         
         if (!hasProfile) {
-          // ✅ Redirect only if a new profile is created
           setTimeout(() => navigate("/user-profile"), 2000); 
         }
       } else {
