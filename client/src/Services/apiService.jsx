@@ -200,6 +200,18 @@ export const getInterests = async () => {
     {authRequired: false}
   );
 };
+//Forgot Password
+export const forgotPassword = async (email) => {
+  return handleResponse(
+    apiClient.post("/api/forgot-password/", { email }, generateConfig(false, false))
+  );
+};
+//Reset Password
+export const resetPassword = async (data) => {
+  return handleResponse(
+    apiClient.post("/api/reset-password/", data, generateConfig(false, false))
+  );
+};
 
 export const userAddInterest = async (formData) => {
   return handleResponse(

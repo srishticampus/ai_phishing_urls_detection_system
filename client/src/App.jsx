@@ -53,7 +53,6 @@ import UserAreaOfInterests from "./Pages/UserAreaOfInterests/UserAreaOfInterests
 import UserViewAdvertisementDetails from "./Pages/UserViewAdvertisementDetails/UserViewAdvertisementDetails";
 import { checkLoginStatus } from "./Services/apiService";
 import ProtectedRoute from "./Routes/ProtectedRoute"; // Import the ProtectedRoute component
-import { AuthProvider } from "./Context/AuthContext";
 import UserHomepageCardDetails from "./Pages/UserHomepageCardDetails/UserHomepageCardDetails"
 
 
@@ -129,7 +128,7 @@ function App() {
 
         {/* User Reset Password Route */}
         <Route
-          path="/user-reset-password"
+          path="/reset-password/:uid/:token"
           element={
             <>
               <Navbar />
