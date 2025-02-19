@@ -36,9 +36,14 @@ function  HomePageNavbar() {
   const toggleModal = () => setIsModalOpen(!isModalOpen);
   const closeModal = () => setIsModalOpen(false);
 
+  // const handleLogoutClick = () => {
+  //   setIsLogoutConfirmOpen(true); // Open logout confirmation modal
+  // };
   const handleLogoutClick = () => {
+    setIsModalOpen(false); // Close the profile dropdown
     setIsLogoutConfirmOpen(true); // Open logout confirmation modal
   };
+  
 
   const confirmLogout = () => {
     logout(); // Call the logout function
@@ -60,6 +65,9 @@ function  HomePageNavbar() {
     setIsSafeMode(checked);
     localStorage.setItem("safeMode", checked);
   };
+
+  console.log(isLoggedIn);
+  
 
   return (
     <div>
@@ -83,7 +91,7 @@ function  HomePageNavbar() {
           <div className="collapse navbar-collapse" id="mynavbar">
             <ul className="navbar-nav navbar_list mx-auto">
               <li className="nav-item navbar_nav-item">
-                <Link className="nav-link navbar-links-homepage" to="/">Home</Link>
+                <Link className="nav-link navbar-links-homepage" to="/user-homepage">Home</Link>
               </li>
               <li className="nav-item navbar_nav-item">
                 <Link className="nav-link navbar-links-homepage" to="/about">About</Link>

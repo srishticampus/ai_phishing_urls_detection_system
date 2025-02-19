@@ -32,8 +32,7 @@ const UserHomepageCardDetails = () => {
 
   return (
 
-  <div className="user-homepage-details-card-parent">
-      <div className="card user-homepage-details-card">
+    <div className="card user-homepage-details-card w-100">
       <img 
         className="user-homepage-cardone-imgone" 
         src={`${baseUrl}${blog.image}`} 
@@ -47,7 +46,7 @@ const UserHomepageCardDetails = () => {
      
       </div>
     </div>
-  </div>
+  
   );
 };
 

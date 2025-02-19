@@ -216,7 +216,7 @@ function App() {
           path="/user-profile"
           element={
             <>
-              {/* <HomePageNavbar /> */}
+              <HomePageNavbar />
               <UserProfile />
               <Footer />
             </>
@@ -600,7 +600,9 @@ function App() {
         path="/user-homepage-card-details/:id"
         element={
           <>
+          <HomePageNavbar />
           <UserHomepageCardDetails/>
+          <Footer />
           </>
         }
         >

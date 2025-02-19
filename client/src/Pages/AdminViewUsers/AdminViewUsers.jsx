@@ -5,7 +5,7 @@ import { Switch } from "antd";
 import "../../Pages/AdminViewUsers/AdminViewUsers.css";
 
 function AdminViewUsers() {
-  const [dropdownValue, setDropdownValue] = useState("1");
+  const [dropdownValue, setDropdownValue] = useState("5");
   const [currentPage, setCurrentPage] = useState(1);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -79,6 +79,9 @@ function AdminViewUsers() {
     return <div>Loading...</div>;
   }
 
+  console.log(paginatedUsers);
+  
+
   return (
     <div>
       <div className="admin-view-user-container">
@@ -135,8 +138,8 @@ function AdminViewUsers() {
           </table>
 
           {/* Pagination and dropdown */}
-          <div className="d-flex justify-content-between">
-            <div className="admin-view-user dropdown-container">
+          <div className="d-flex justify-content-end">
+            {/* <div className="admin-view-user dropdown-container">
               <span className="admin-view-user">Show</span>
               <div className="admin-view-user dropdown">
                 <button
@@ -168,7 +171,7 @@ function AdminViewUsers() {
                 </ul>
               </div>
               <p className="admin-view-user">Per Page</p>
-            </div>
+            </div> */}
 
             <div>
               <nav aria-label="Page navigation example">
