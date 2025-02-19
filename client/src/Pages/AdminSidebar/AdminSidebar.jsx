@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { logout, checkLoginStatus } from "../../Services/apiService";
+import { useAuth } from '../../Context/AuthContext';
 import adminimg from "../../assets/Images/Admin_dashboard_img.png";
 import "../../Pages/AdminSidebar/AdminSidebar.css";
 
 function AdminSidebar() {
     const [isLoggedIn, setIsLoggedIn] = useState(checkLoginStatus());
     const [showModal, setShowModal] = useState(false);
+    const { setIsAuthenticated } = useAuth();
     const navigate = useNavigate(); 
 
     useEffect(() => {
@@ -23,6 +25,7 @@ function AdminSidebar() {
         logout(); // Remove tokens
         setIsLoggedIn(false);
         setShowModal(false);
+        setIsAuthenticated(false);
         navigate("/admin-login"); // Redirect to admin login page after logout
     };
 

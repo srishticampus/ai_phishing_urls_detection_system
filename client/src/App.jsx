@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"; 
+import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router";
 import { ToastContainer, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -17,7 +17,6 @@ import FandQ from "./Pages/FandQ/FandQ";
 import About from "./Pages/AboutUS/About";
 import UserProfile from "./Pages/UserProfile/UserProfile";
 import UserEditProfile from "./Pages/UserEditProfile/UserEditProfile";
-// import UserNavbar from "./Components/UserNavbar/UserNavbar";
 import HomePageNavbar from "./Components/HomePageNavbar/HomePageNavbar";
 import UserViewProfile from "./Pages/UserViewProfile/UserViewProfile";
 import AdminSidebar from "./Pages/AdminSidebar/AdminSidebar";
@@ -52,9 +51,9 @@ import UserViewDetails from "./Pages/UserViewDetails/UserViewDetails";
 import UserResetPassword from "./Pages/UserResetPassword/UserResetPassword";
 import UserAreaOfInterests from "./Pages/UserAreaOfInterests/UserAreaOfInterests";
 import UserViewAdvertisementDetails from "./Pages/UserViewAdvertisementDetails/UserViewAdvertisementDetails";
-// import AdvertisersRegistration from "./Pages/AdvertisersRegistration/AdvertisersRegistration";
-import { checkLoginStatus } from "./Services/apiService"; // Import the checkLoginStatus function
-
+import { checkLoginStatus } from "./Services/apiService";
+import ProtectedRoute from "./Routes/ProtectedRoute"; // Import the ProtectedRoute component
+import { AuthProvider } from "./Context/AuthContext";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(checkLoginStatus()); // Track login status
@@ -282,138 +281,128 @@ function App() {
           }
         />
 
-        {/* Admin Dashboard Route */}
-        <Route
-          path="/dashboard"
-          element={
-            <>
-              <AdminSidebar />
-            </>
-          }
-        />
-
-        {/* Admin Home Route */}
-        <Route
-          path="/admin-dashboard"
-          element={
-            <>
-              <AdminHome />
-              <AdminViewSidebar />
-            </>
-          }
-        />
-
-        {/* Admin Add Blog Route */}
-        <Route
-          path="/admin-add-blog"
-          element={
-            <>
-              <AdminAddBlog />
-              <AdminViewSidebar />
-            </>
-          }
-        />
-
-        {/* Admin View Blog Route */}
-        <Route
-          path="/admin-view-blog"
-          element={
-            <>
-              <AdminViewBlog />
-              <AdminViewSidebar />
-            </>
-          }
-        />
-
-        {/* Admin Detailed View Blog Route */}
-        <Route
-          path="/admin-detailed-view-blog"
-          element={
-            <>
-              <AdminDetailedView />
-              <AdminViewSidebar />
-            </>
-          }
-        />
-
-        {/* Admin Edit Blog Route */}
-        <Route
-          path="/admin-edit-blog"
-          element={
-            <>
-              <AdminEditBlog />
-              <AdminViewSidebar />
-            </>
-          }
-        />
-
         {/* Admin Login Route */}
         <Route
           path="/admin-login"
           element={
             <>
-              <Navbar/>
+              <Navbar />
               <AdminLogin />
               <Footer />
             </>
           }
         />
+        {/* Protected Admin Routes */}
+        <Route element={<ProtectedRoute />}>
+          <Route
+            path="/dashboard"
+            element={
+              <>
+                <AdminSidebar />
+              </>
+            }
+          />
 
-        {/* Admin View Users Route */}
-        <Route
-          path="/admin-view-users"
-          element={
-            <>
-              <AdminViewSidebar />
-              <AdminViewUsers />
-            </>
-          }
-        />
+          <Route
+            path="/admin-dashboard"
+            element={
+              <>
+                <AdminHome />
+                <AdminViewSidebar />
+              </>
+            }
+          />
 
-        {/* Admin View Advertisers Route */}
-        <Route
-          path="/admin-view-advertisers"
-          element={
-            <>
-              <AdminViewSidebar />
-              <AdminViewAdvertisers />
-            </>
-          }
-        />
+          <Route
+            path="/admin-add-blog"
+            element={
+              <>
+                <AdminAddBlog />
+                <AdminViewSidebar />
+              </>
+            }
+          />
 
-        {/* Admin View Details Route */}
-        <Route
-          path="/admin-view-details"
-          element={
-            <>
-              <AdminViewSidebar />
-              <AdminViewDetails />
-            </>
-          }
-        />
+          <Route
+            path="/admin-view-blog"
+            element={
+              <>
+                <AdminViewBlog />
+                <AdminViewSidebar />
+              </>
+            }
+          />
 
-        {/* Admin View Advertisement Route */}
-        <Route
-          path="/admin-view-advertisement"
-          element={
-            <>
-              <AdminViewSidebar />
-              <AdminViewAdvertisement />
-            </>
-          }
-        />
+          <Route
+            path="/admin-detailed-view-blog"
+            element={
+              <>
+                <AdminDetailedView />
+                <AdminViewSidebar />
+              </>
+            }
+          />
 
-        {/* Admin View Advertisement Detail Route */}
-        <Route
-          path="/admin-view-advertisement-detail"
-          element={
-            <>
-              <AdminViewSidebar />
-              <AdminViewAdvertisementDetail />
-            </>
-          }
-        />
+          <Route
+            path="/admin-edit-blog"
+            element={
+              <>
+                <AdminEditBlog />
+                <AdminViewSidebar />
+              </>
+            }
+          />
 
+          <Route
+            path="/admin-view-users"
+            element={
+              <>
+                <AdminViewSidebar />
+                <AdminViewUsers />
+              </>
+            }
+          />
+
+          <Route
+            path="/admin-view-advertisers"
+            element={
+              <>
+                <AdminViewSidebar />
+                <AdminViewAdvertisers />
+              </>
+            }
+          />
+
+          <Route
+            path="/admin-view-details"
+            element={
+              <>
+                <AdminViewSidebar />
+                <AdminViewDetails />
+              </>
+            }
+          />
+
+          <Route
+            path="/admin-view-advertisement"
+            element={
+              <>
+                <AdminViewSidebar />
+                <AdminViewAdvertisement />
+              </>
+            }
+          />
+
+          <Route
+            path="/admin-view-advertisement-detail"
+            element={
+              <>
+                <AdminViewSidebar />
+                <AdminViewAdvertisementDetail />
+              </>
+            }
+          />
+        </Route>
         {/* Advertiser Login Route */}
         <Route
           path="/advertiser-login"
@@ -547,9 +536,8 @@ function App() {
         />
 
         {/* Advertisers View Advertisement Details Route */}
-
         <Route
-          path="/advertisers-view-advertisement-details/:id" // Use a dynamic route with :id
+          path="/advertisers-view-advertisement-details/:id"
           element={
             <>
               <AdvertiserViewSidebar />
@@ -557,17 +545,6 @@ function App() {
             </>
           }
         />
-
-
-        {/* <Route
-          path="/advertisers-view-advertisement-details"
-          element={
-            <>
-              <AdvertiserViewSidebar />
-              <AdvertisersViewAdvertisementDetails />
-            </>
-          }
-        /> */}
 
         {/* Advertisers Edit Advertisements Route */}
         <Route
@@ -603,19 +580,6 @@ function App() {
             </>
           }
         />
-
-       
-
-        {/* Advertisers Registration Route */}
-        {/* <Route
-          path="/advertisers-registration"
-          element={
-            <>
-              <AdvertisersRegistration />
-              <Footer />
-            </>
-          }
-        /> */}
       </Routes>
     </>
   );
