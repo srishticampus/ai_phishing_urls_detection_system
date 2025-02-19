@@ -33,7 +33,7 @@ function ContactUS() {
             </div>
 
             <div className="contactus-footer">
-           <Footer/>
+           {/* <Footer/> */}
             </div>
         </div>
     )
