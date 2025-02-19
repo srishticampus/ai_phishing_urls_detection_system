@@ -54,6 +54,8 @@ import UserAreaOfInterests from "./Pages/UserAreaOfInterests/UserAreaOfInterests
 import UserViewAdvertisementDetails from "./Pages/UserViewAdvertisementDetails/UserViewAdvertisementDetails";
 // import AdvertisersRegistration from "./Pages/AdvertisersRegistration/AdvertisersRegistration";
 import { checkLoginStatus } from "./Services/apiService"; // Import the checkLoginStatus function
+import UserHomepageCardDetails from "./Pages/UserHomepageCardDetails/UserHomepageCardDetails";
+
 
 
 function App() {
@@ -616,6 +618,17 @@ function App() {
             </>
           }
         /> */}
+
+        <Route
+        path="/user-homepage-card-details/:id"
+        element={
+          <>
+          <UserHomepageCardDetails/>
+          </>
+        }
+        >
+
+        </Route>
       </Routes>
     </>
   );

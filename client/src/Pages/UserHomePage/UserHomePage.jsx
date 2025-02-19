@@ -20,13 +20,13 @@ import sideimg2 from "../../assets/Images/sideimg2.png"
 import sideimg3 from "../../assets/Images/sideimg3.png"
 import { useEffect, useState } from 'react';
 import { viewBlogs } from "../../Services/apiService";
-
+import { useNavigate } from 'react-router-dom';
 function UserHomePage() {
-    const [blogs, setBlogs] = useState([]);
+  const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const baseUrl = import.meta.env.VITE_API_URL;
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
@@ -42,7 +42,10 @@ function UserHomePage() {
 
     fetchBlogs();
   }, []); // Empty dependency array means this runs once when the component mounts
-
+  const handleReadMoreClick = (id) => {
+    // Navigate to the details page with the specific blog ID
+    navigate(`/user-homepage-card-details/${id}`);
+  };
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
@@ -206,9 +209,15 @@ function UserHomePage() {
             <p className="user-homepage-cardone-para">
               {blog.content || 'No content available'}
             </p>
-            <button className="btn user-homepage-readmore-button">
+            <button 
+              className="btn user-homepage-readmore-button" 
+              onClick={() => handleReadMoreClick(blog.id)} // Call the function with the blog ID
+            >
               Read More <span className="greaterthan-symbol">&gt;</span>
             </button>
+            {/* <button className="btn user-homepage-readmore-button">
+              Read More <span className="greaterthan-symbol">&gt;</span>
+            </button> */}
           </div>
         ))
       ) : (
