@@ -137,6 +137,7 @@ function AdminHome() {
                 </div>
                 <div className="card-body">
                   <p className="admin-home-cardone-body">{blog.title}</p>
+
                   <div className="d-flex">
                     <div className="d-flex landingpage-card-profile-info">
                       <p className="profile-textcolor">{blog.date}</p>
@@ -144,11 +145,11 @@ function AdminHome() {
                   </div>
                 </div>
                 <p className="admin-view-blog-cardone-para">
-                  {blog.short_description || "Aenean eleifend ante maecenas pulvinar montes lorem et pede dis dolor pretium donec dictum."}
+                  {blog.content} 
                 </p>
-                <button className="btn admin-home-readmore-button">
+                {/* <button className="btn admin-home-readmore-button">
                   Read More <span className="greaterthan-symbol">&gt;</span>
-                </button>
+                </button> */}
               </div>
             ))}
           </div>

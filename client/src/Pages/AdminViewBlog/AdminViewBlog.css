@@ -1,4 +1,4 @@
-.admin-view-blog-container{
+.admin-view-blog-container {
     margin-left: 250px;
     margin-top: 70px;
 }
@@ -23,8 +23,8 @@
     width: 393.75px;
     height: 295.312px;
     flex-shrink: 0;
-    border: none;
     height: auto;
+    margin-left: 20px;
 }
 
 .admin-view-blog-cardone-para {
@@ -38,7 +38,7 @@
 }
 
 
-.admin-view-blog-readmore-button{
+.admin-view-blog-readmore-button {
     color: #F18C00;
     font-family: Lato;
     font-size: 16px;
@@ -76,7 +76,7 @@
     backdrop-filter: blur(4.218749046325684px);
 }
 
-.admin-view-blog-cardone-headerone{
+.admin-view-blog-cardone-headerone {
     position: absolute;
     top: 20px;
     right: 30px;
@@ -121,11 +121,12 @@
     height: 3px;
     fill: #7F7F7F;
 }
-.share-color{
+
+.share-color {
     color: #7F7F7F;
-font-family: Lato;
-font-size: 12px;
-font-style: normal;
-font-weight: 400;
-line-height: 28.125px; 
+    font-family: Lato;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28.125px;
 }
