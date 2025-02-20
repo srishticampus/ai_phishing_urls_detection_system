@@ -341,7 +341,7 @@ export const advertisersDeleteAdvertisement = async (id, formData) => {
 };
 
 export const advertisementSafetyCheck = async (id) => {
-  return handleResponse(apiClient.get(`/ml/advertisements/${id}/click-safety-check/` ,generateConfig(false ,false)
+  return handleResponse(apiClient.get(`/ml/advertisements/${id}/click-safety-check/` ,generateConfig()
 ));
 }
 

@@ -51,10 +51,9 @@ function AdvertiserSidebar() {
                 {/* <Link to="/advertiser-view-user">
                     <button className="btn text-light mb-3">View Users</button>
                 </Link> */}
-                <Link to="/advertisers-reset-password">
+                {/* <Link to="/advertisers-reset-password">
                     <button className="btn text-light mb-3">Reset Password</button>
-                </Link>
-
+                </Link> */}
                 {/* Display logout button only if the user is logged in */}
                 {isLoggedIn ? (
                     <button className="btn text-light advertiser-logout-login-button mb-3" onClick={handleLogoutClick}>

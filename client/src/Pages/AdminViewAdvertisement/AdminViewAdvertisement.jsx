@@ -64,3 +64,4 @@ function AdminViewAdvertisement() {
 }
 
 export default AdminViewAdvertisement;
+ 
