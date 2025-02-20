@@ -39,12 +39,12 @@ function AdminViewAdvertisement() {
         <p className="admin-view-advertisement">Advertisements</p>
       </div>
       <div className="admin-view-advertisement-center-row">
-        <div className="row">
+        <div className="row ">
           {/* Render each advertisement dynamically */}
           {advertisements.length > 0 ? (
             advertisements.map((ad, index) => (
               <div
-                className="card col-sm-4 admin-view-advertisement-card-size"
+                className="card col-sm-4 admin-view-advertisement-card-size "
                 key={index}
               >
                 {/* Assuming 'ad.image' contains the image URL, use 'cardimg' as fallback */}
@@ -52,6 +52,12 @@ function AdminViewAdvertisement() {
                   src={`${baseUrl}${ad.ad_image}` || cardimg}
                   alt={`Advertisement ${index + 1}`}
                 />
+                <div className="card-body">
+                  <p>{ad.title}</p>
+                  <p>start date:{ad.start_date}</p>
+                  <p>End date:{ad.end_date}</p>
+                  <p>Link:{ad.link}</p>
+                </div>
               </div>
             ))
           ) : (

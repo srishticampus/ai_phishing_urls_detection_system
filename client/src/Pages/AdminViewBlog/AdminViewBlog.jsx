@@ -27,6 +27,16 @@ function AdminViewBlog() {
         fetchBlogs();
     }, []);
 
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', {
+            weekday: 'long', // Monday
+            year: 'numeric', // 2025
+            month: 'long', // February
+            day: 'numeric' // 17
+        });
+    };
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -59,14 +69,14 @@ function AdminViewBlog() {
                                         <img className="admin-view-blog-cardone-headerone" src={tabler_photo} alt="tabler" />
                                     </div>
                                     <div className="card-body">
-                                        <p className="admin-view-blog-cardone-body">{blog.title || 'Title'}</p>
+                                        <p className="admin-view-blog-cardone-body">Title: {blog.title || 'Title'}</p>
                                         <div className="d-flex">
                                             <div className="d-flex landingpage-card-profile-info">
-                                                <p className="profile-textcolor">{"june 28,2018"}</p>
+                                                <p className="profile-textcolor"> {formatDate(blog.created_at)}</p>
                                             </div>
                                         </div>
                                     </div>
-                                    <p className="admin-view-blog-cardone-para">{blog.content || 'Blog description goes here.'}</p>
+                                    <p className="admin-view-blog-cardone-para">Content {blog.content || 'Blog description goes here.'}</p>
                                     <button className="btn admin-view-blog-readmore-button">
                                         Read More <span className="greaterthan-symbol">&gt;</span>
                                     </button>
