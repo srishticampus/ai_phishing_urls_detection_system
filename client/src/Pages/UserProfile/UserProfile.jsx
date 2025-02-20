@@ -22,7 +22,7 @@ function UserProfile() {
   const [hasProfile, setHasProfile] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
