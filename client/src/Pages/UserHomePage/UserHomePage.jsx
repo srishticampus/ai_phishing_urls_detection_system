@@ -38,15 +38,24 @@ function UserHomePage() {
   const [matchingAds, setMatchingAds] = useState([]); // State to store matching ads
   const [adLoading, setAdLoading] = useState(true); // Loading state for ads
   const [adError, setAdError] = useState(null); // Error state for ads
- 
- 
-  useEffect(() => {
-    const storedSafeMode = localStorage.getItem("safeMode");
-    if (storedSafeMode === "false") {
-      setSafeMode(false);
-    }
-  }, []);
 
+  useEffect(() => {
+    const updateSafeMode = () => {
+      const storedSafeMode = localStorage.getItem("safeMode") === "true";
+      setSafeMode(storedSafeMode);
+    };
+  
+    // ✅ Listen for safeMode changes
+    window.addEventListener("safeModeChanged", updateSafeMode);
+  
+    // ✅ Initialize safeMode state on mount
+    updateSafeMode();
+  
+    return () => {
+      window.removeEventListener("safeModeChanged", updateSafeMode);
+    };
+  }, []);
+  
   useEffect(() => {
     const fetchMatchingAds = async () => {
       setAdLoading(true); // Set loading to true before fetching
@@ -55,7 +64,6 @@ function UserHomePage() {
         const response = await advertisementMatchingInterest();
         console.log("Matching Ads:", response.data);
         setMatchingAds(response.data); // Update the state with matching ads
-    
       } catch (error) {
         setAdError("Failed to fetch matching ads");
         console.error(error);
@@ -65,14 +73,14 @@ function UserHomePage() {
     };
 
     fetchMatchingAds(); // Call the function
-  }, []); 
+  }, []);
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await viewBlogs(); 
-        console.log(response.data); 
-        setBlogs(response.data); 
+        const response = await viewBlogs();
+        console.log(response.data);
+        setBlogs(response.data);
         setLoading(false);
       } catch (error) {
         setError("Failed to fetch blogs", error);
@@ -81,36 +89,38 @@ function UserHomePage() {
     };
 
     fetchBlogs();
-  }, []); 
+  }, []);
   const handleReadMoreClick = (id) => {
-
     navigate(`/user-homepage-card-details/${id}`);
   };
 
-
   const handleCardClick = async (adId, adLink) => {
     setAdLink(adLink);
-
-    if (safeMode) {
-
-      try {
-        const response = await advertisementSafetyCheck(adId);
-        console.log("safety",response)
- 
-        if (response.is_safe) {
-          setIsAdSafe(true);
-        } else {
-          setIsAdSafe(false);
-        }
-        setShowModal(true);
-      } catch (error) {
-        console.error("Error checking advertisement safety:", error);
+  
+    if (!safeMode) {
+      // ✅ Directly open the link if safeMode is OFF
+      window.open(adLink, "_blank", "noopener,noreferrer");
+      return;
+    }
+  
+    // ✅ Safe Mode is ON, check ad safety first
+    try {
+      const response = await advertisementSafetyCheck(adId);
+      console.log("Safety Check:", response);
+  
+      if (response.is_safe) {
+        setIsAdSafe(true);
+      } else {
         setIsAdSafe(false);
-        setShowModal(true);
       }
+      setShowModal(true);
+    } catch (error) {
+      console.error("Error checking advertisement safety:", error);
+      setIsAdSafe(false);
+      setShowModal(true);
     }
   };
-
+  
   const handleCloseModal = () => {
     setShowModal(false); // Close the modal
   };
@@ -122,7 +132,6 @@ function UserHomePage() {
     <div className="container user-homepage-container">
       <div className="row">
         <div className="col-sm-9">
-
           <div
             id="carouselExample"
             className="carousel slide"
@@ -473,11 +482,14 @@ function UserHomePage() {
                     <div className="modal-body">
                       {isAdSafe ? (
                         <p>
-                          The advertisement link ({adLink}) is safe to visit.
+                          The advertisement link <strong>({adLink})</strong> is
+                          safe to visit.
                         </p>
                       ) : (
                         <p>
-                          The advertisement link ({adLink}) is unsafe. Please proceed with caution.
+                          The advertisement link <strong>({adLink})</strong> is{" "}
+                          <span className="text-danger">unsafe</span>. Proceed
+                          with caution!
                         </p>
                       )}
                     </div>
@@ -489,6 +501,17 @@ function UserHomePage() {
                       >
                         Close
                       </button>
+                      {/* ✅ Continue to the link */}
+                      <a
+                        href={adLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`btn ${
+                          isAdSafe ? "btn-success" : "btn-danger"
+                        }`}
+                      >
+                        {isAdSafe ? "Proceed to Link" : "Proceed with Caution"}
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -498,28 +521,26 @@ function UserHomePage() {
         </div>
 
         <div className="col-sm-3">
-        <div className="cards-container">
-          {matchingAds.length > 0 ? (
-            matchingAds.map((ad) => (
-              <div
-                key={ad.id}
-                className="card user-homepage-card-size"
-                onClick={() => handleCardClick(ad.id, ad.link)} 
-              >
-                <img
-                  className="homepage-card-img-size mb-5"
-                  src={`${baseUrl}${ad.ad_image}`} 
-                  alt="Advertisement"
-                />
-              </div>
-            ))
-          ) : (
-            <p>No ads available</p> 
-          )}
+          <div className="cards-container">
+            {matchingAds.length > 0 ? (
+              matchingAds.map((ad) => (
+                <div
+                  key={ad.id}
+                  className="card user-homepage-card-size"
+                  onClick={() => handleCardClick(ad.id, ad.link)}
+                >
+                  <img
+                    className="homepage-card-img-size mb-5"
+                    src={`${baseUrl}${ad.ad_image}`}
+                    alt="Advertisement"
+                  />
+                </div>
+              ))
+            ) : (
+              <p>No ads available</p>
+            )}
+          </div>
         </div>
-      </div>
-        
-
       </div>
     </div>
   );

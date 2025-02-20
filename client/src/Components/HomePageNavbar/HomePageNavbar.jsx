@@ -64,6 +64,8 @@ function  HomePageNavbar() {
   const handleSwitchChange = (checked) => {
     setIsSafeMode(checked);
     localStorage.setItem("safeMode", checked);
+    // ✅ Dispatch event to update other components without reload
+    window.dispatchEvent(new Event("safeModeChanged"));
   };
 
   console.log(isLoggedIn);
