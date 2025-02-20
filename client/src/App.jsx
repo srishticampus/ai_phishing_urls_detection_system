@@ -430,7 +430,7 @@ function App() {
 
         {/* Advertisers Reset Password Route */}
         <Route
-          path="/advertisers-reset-password"
+          path="/advertisers-reset-password/:uid/:token"
           element={
             <>
               <Navbar />
