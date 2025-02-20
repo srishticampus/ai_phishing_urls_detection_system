@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import './Landpage.css';
 import LandingPage_Bg from '../../assets/Images/LandingPage_Bg.png';
 import LandingP_card_one from '../../assets/Images/LandingP_card_one.png';
@@ -9,8 +10,26 @@ import LandingP_Bg_three from '../../assets/Images/LandingPageBg_3.png';
 import LandingP_Bg_four from '../../assets/Images/LandingPage_Bg_4.png';
 import LandingPage_Bg_five from '../../assets/Images/LandingPageBg_5.png';
 import LandingPage_Bg_six from '../../assets/Images/LandingPageBg_6.png';
+import { viewBlogs } from "../../Services/apiService"; 
+const baseUrl = import.meta.env.VITE_API_URL;
 
 function LandingPage() {
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      const response = await viewBlogs(); // Fetch the blogs
+      if (response.success) {
+        setBlogs(response.data); // Set the blogs data if successful
+        console.log(response.data);
+      } else {
+        setBlogs([]); // Set empty array if no data is returned
+      }
+    };
+
+    fetchBlogs(); // Call the function to fetch the blogs
+  }, []);
+
   return (
     <>
       <div className="landingpage-section-one">
@@ -20,19 +39,16 @@ function LandingPage() {
             <div className="carousel-item active">
               <img className="d-block w-100 landingpage-bgimg" src={LandingPage_Bg} alt="Landing Page Background" />
               <div className="landingpage-bgimg-container">
-         
-                  <p className="landingpage-bgimg-headone">Welcome to BLOG<span className="landingpage-headone-span">SPHERE !</span></p>
-                  <p className="landingpage-bgimg-headtwo">From Thoughts to Trends – Your Blogging Hub</p>
-                  <p className="landingpage-bgimg-para">Explore a diverse range of content that enlightens, entertains, and inspires with every read. Uncover fresh ideas, new perspectives, and engaging <br />content with every visit.</p>
-                  <button className="landingpage-bgimg-button">Explore Now</button>
-       
+                <p className="landingpage-bgimg-headone">Welcome to BLOG<span className="landingpage-headone-span">SPHERE !</span></p>
+                <p className="landingpage-bgimg-headtwo">From Thoughts to Trends – Your Blogging Hub</p>
+                <p className="landingpage-bgimg-para">Explore a diverse range of content that enlightens, entertains, and inspires with every read. Uncover fresh ideas, new perspectives, and engaging <br />content with every visit.</p>
+                <button className="landingpage-bgimg-button">Explore Now</button>
               </div>
             </div>
 
             {/* Carousel Item 2 */}
             <div className="carousel-item">
               <img className="d-block w-100 landingpage-bgimg" src={LandingP_Bg_two} alt="Landing Page Background" />
-              {/* Add your second background content here if needed */}
               <div className="landingpage-bgimg-container">
                 <p className="landingpage-bgimg-headone">Welcome to BLOG<span className="landingpage-headone-span">SPHERE !</span></p>
                 <p className="landingpage-bgimg-headtwo">From Thoughts to Trends – Your Blogging Hub</p>
@@ -44,7 +60,6 @@ function LandingPage() {
             {/* Carousel Item 3*/}
             <div className="carousel-item">
               <img className="d-block w-100 landingpage-bgimg" src={LandingP_Bg_three} alt="Landing Page Background" />
-              {/* Add your third background content here if needed */}
               <div className="landingpage-bgimg-container">
                 <p className="landingpage-bgimg-headone">Welcome to BLOG<span className="landingpage-headone-span">SPHERE !</span></p>
                 <p className="landingpage-bgimg-headtwo">From Thoughts to Trends – Your Blogging Hub</p>
@@ -52,10 +67,10 @@ function LandingPage() {
                 <button className="landingpage-bgimg-button">Explore Now</button>
               </div>
             </div>
-
+            
+            {/* Additional Carousel Items */}
             <div className="carousel-item">
               <img className="d-block w-100 landingpage-bgimg" src={LandingP_Bg_four} alt="Landing Page Background" />
-              {/* Add your third background content here if needed */}
               <div className="landingpage-bgimg-container">
                 <p className="landingpage-bgimg-headone">Welcome to BLOG<span className="landingpage-headone-span">SPHERE !</span></p>
                 <p className="landingpage-bgimg-headtwo">From Thoughts to Trends – Your Blogging Hub</p>
@@ -63,35 +78,8 @@ function LandingPage() {
                 <button className="landingpage-bgimg-button">Explore Now</button>
               </div>
             </div>
-            <div className="carousel-item">
-              <img className="d-block w-100 landingpage-bgimg" src={LandingPage_Bg_five} alt="Landing Page Background" />
-              {/* Add your third background content here if needed */}
-              <div className="landingpage-bgimg-container">
-                <p className="landingpage-bgimg-headone">Welcome to BLOG<span className="landingpage-headone-span">SPHERE !</span></p>
-                <p className="landingpage-bgimg-headtwo">From Thoughts to Trends – Your Blogging Hub</p>
-                <p className="landingpage-bgimg-para">Explore a diverse range of content that enlightens, entertains, and inspires with every read. Uncover fresh ideas, new perspectives, and engaging <br />content with every visit.</p>
-                <button className="landingpage-bgimg-button">Explore Now</button>
-              </div>
-            </div>
-            <div className="carousel-item">
-              <img className="d-block w-100 landingpage-bgimg" src={LandingPage_Bg_six} alt="Landing Page Background" />
-              {/* Add your third background content here if needed */}
-              <div className="landingpage-bgimg-container">
-                <p className="landingpage-bgimg-headone">Welcome to BLOG<span className="landingpage-headone-span">SPHERE !</span></p>
-                <p className="landingpage-bgimg-headtwo">From Thoughts to Trends – Your Blogging Hub</p>
-                <p className="landingpage-bgimg-para">Explore a diverse range of content that enlightens, entertains, and inspires with every read. Uncover fresh ideas, new perspectives, and engaging <br />content with every visit.</p>
-                <button className="landingpage-bgimg-button">Explore Now</button>
-              </div>
-            </div>
+            {/* Other Carousel Items */}
           </div>
-          {/* <button className="carousel-control-prev" type="button" data-bs-target="#landingPageCarousel" data-bs-slide="prev">
-            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span className="visually-hidden">Previous</span>
-          </button>
-          <button className="carousel-control-next" type="button" data-bs-target="#landingPageCarousel" data-bs-slide="next">
-            <span className="carousel-control-next-icon" aria-hidden="true"></span>
-            <span className="visually-hidden">Next</span>
-          </button> */}
         </div>
       </div>
 
@@ -99,166 +87,191 @@ function LandingPage() {
         <p className="landingpage-sectwo-head mb-5">Our Recent Blogs...</p>
         <div className="container">
           <div className="row">
+            {/* Displaying Blogs */}
+            {blogs.length > 0 ? (
+              blogs.map((blog, index) => (
+                <div className="card col-sm-3 landingpage-cardsize" key={index}>
+                  <img className="landingpage-cardone-imgone" src={`${baseUrl}${blog.image}` || LandingP_card_one} alt="Blog" />
+                  <div>
+                    <span><p className="badge p-2 cardone-header">{blog.category}</p></span>
+                    <img className="cardone-headerone" src={tabler_photo} alt="tabler" />
+                  </div>
+                  <div className="card-body">
+                    <p className="landingpage-cardone-body">{blog.title}</p>
+                    <p className="landingpage-cardone-body">{blog.content}</p>
+                    <div className="d-flex">
+                      <div className="d-flex landingpage-card-profile-info">
+                        <img className="landingpage-card-profile-img" src={card_profile} alt="Profile" />
+                        <p className="landingpage-card-profilename">{blog.author}</p>
+                        <span><div className="profile-rectangle"></div></span>
+                        <p className="profile-textcolor">{blog.date}</p>
+                        <span><div className="profile-textcolortwo"></div></span>
+                        <span><img src={Group} alt="Group" /></span>
+                        <p className="share-color">{blog.shares} shares</p>
+                      </div>
+                    </div>
+                  </div>
+                  <p className="landingpage-cardone-para">{blog.excerpt}</p>
+                  <button className="btn landingpage-readmore-button">Read More <span className="greaterthan-symbol">&gt;</span></button>
+                </div>
+              ))
+            ) : (
+              <p>No blogs available at the moment.</p>
+            )}
+          </div>
+
+          {/* Dummy Cards with Static Images */}
+          <div className="row mt-5">
             <div className="card col-sm-3 landingpage-cardsize">
-              <img className="landingpage-cardone-imgone" src={LandingPage_Bg} />
+              <img className="landingpage-cardone-imgone" src={LandingP_card_one} />
               <div>
-                <span><p className="badge  p-2 cardone-header">Food & Cooking</p></span>
+                <span><p className="badge p-2 cardone-header">Lifestyle</p></span>
                 <img className="cardone-headerone" src={tabler_photo} alt="tabler" />
               </div>
               <div className="card-body">
-                <p className="landingpage-cardone-body">Budget Sacrificing Experience</p>
+                <p className="landingpage-cardone-body">Create a Cozy and Stylish Space</p>
                 <div className="d-flex">
                   <div className="d-flex landingpage-card-profile-info">
                     <img className="landingpage-card-profile-img" src={card_profile} alt="Profile" />
-                    <p className="landingpage-card-profilename">Joanna Wellick</p>
+                    <p className="landingpage-card-profilename">John Doe</p>
                     <span><div className="profile-rectangle"></div></span>
-                    <p className="profile-textcolor">June 28, 2018</p>
+                    <p className="profile-textcolor">February 20, 2025</p>
                     <span><div className="profile-textcolortwo"></div></span>
                     <span><img src={Group} alt="Group" /></span>
-                    <p className="share-color">1K shares</p>
+                    <p className="share-color">500 shares</p>
                   </div>
                 </div>
               </div>
-              <p className="landingpage-cardone-para">Aenean eleifend ante maecenas pulvinar montes lorem et pede dis dolor pretium donec dictum. Vici consequat justo enim. Venenatis eget adipiscing luctus lorem.</p>
+              <p className="landingpage-cardone-para">Tips on decorating your home with cozy vibes.</p>
               <button className="btn landingpage-readmore-button">Read More <span className="greaterthan-symbol">&gt;</span></button>
             </div>
-            {/* Add more blog cards here */}
-            <div className="card col-sm-3 landingpage-cardsize">
-              <img src={LandingP_card_one} />
-              <div>
-                <span><p className="badge  p-2 cardone-header">Travel & Adventure</p></span>
-                <img className="cardone-headerone" src={tabler_photo} alt="tabler" />
-              </div>
-              <div className="card-body">
-                <p className="landingpage-cardone-body">Integer Maecenas Eget Viverra
-                </p>
-                <div className="d-flex">
-                  <div className="d-flex landingpage-card-profile-info">
-                    <img className="landingpage-card-profile-img" src={card_profile} alt="Profile" />
-                    <p className="landingpage-card-profilename">Joanna Wellick</p>
-                    <span><div className="profile-rectangle"></div></span>
-                    <p className="profile-textcolor">June 28, 2018</p>
-                    <span><div className="profile-textcolortwo"></div></span>
-                    <span><img src={Group} alt="Group" /></span>
-                    <p className="share-color">1K shares</p>
-                  </div>
-                </div>
-              </div>
-              <p className="landingpage-cardone-para">Aenean eleifend ante maecenas pulvinar montes lorem et pede dis dolor pretium donec dictum. Vici consequat justo enim. Venenatis eget adipiscing luctus lorem.
-              </p>
-              <button className=" btn landingpage-readmore-button">Read More <span className="greaterthan-symbol">&gt;</span></button>
-            </div>
-            <div className="card col-sm-3 landingpage-cardsize">
-              <img src={LandingP_card_one} />
-              <div>
-                <span><p className="badge  p-2 cardone-header">Lifestyle</p></span>
-                <img className="cardone-headerone" src={tabler_photo} alt="tabler" />
-              </div>
-              <div className="card-body">
-                <p className="landingpage-cardone-body">Create a Cozy and Stylish Space
-                </p>
-                <div className="d-flex">
-                  <div className="d-flex landingpage-card-profile-info">
-                    <img className="landingpage-card-profile-img" src={card_profile} alt="Profile" />
-                    <p className="landingpage-card-profilename">Joanna Wellick</p>
-                    <span><div className="profile-rectangle"></div></span>
-                    <p className="profile-textcolor">June 28, 2018</p>
-                    <span><div className="profile-textcolortwo"></div></span>
-                    <span><img src={Group} alt="Group" /></span>
-                    <p className="share-color">1K shares</p>
-                  </div>
-                </div>
-              </div>
-              <p className="landingpage-cardone-para">Aenean eleifend ante maecenas pulvinar montes lorem et pede dis dolor pretium donec dictum. Vici consequat justo enim. Venenatis eget adipiscing luctus lorem.
-              </p>
-              <button className=" btn landingpage-readmore-button">Read More <span className="greaterthan-symbol">&gt;</span></button>
-            </div>
 
+            {/* More dummy cards */}
+            <div className="card col-sm-3 landingpage-cardsize">
+              <img className="landingpage-cardone-imgone" src={LandingP_card_one} />
+              <div>
+                <span><p className="badge p-2 cardone-header">Food & Cooking</p></span>
+                <img className="cardone-headerone" src={tabler_photo} alt="tabler" />
+              </div>
+              <div className="card-body">
+                <p className="landingpage-cardone-body">Quick and Easy Recipes</p>
+                <div className="d-flex">
+                  <div className="d-flex landingpage-card-profile-info">
+                    <img className="landingpage-card-profile-img" src={card_profile} alt="Profile" />
+                    <p className="landingpage-card-profilename">Jane Smith</p>
+                    <span><div className="profile-rectangle"></div></span>
+                    <p className="profile-textcolor">February 15, 2025</p>
+                    <span><div className="profile-textcolortwo"></div></span>
+                    <span><img src={Group} alt="Group" /></span>
+                    <p className="share-color">300 shares</p>
+                  </div>
+                </div>
+              </div>
+              <p className="landingpage-cardone-para">Try these simple recipes for your next meal.</p>
+              <button className="btn landingpage-readmore-button">Read More <span className="greaterthan-symbol">&gt;</span></button>
+            </div>
+            <div className="card col-sm-3 landingpage-cardsize">
+              <img className="landingpage-cardone-imgone" src={LandingP_card_one} />
+              <div>
+                <span><p className="badge p-2 cardone-header">Food & Cooking</p></span>
+                <img className="cardone-headerone" src={tabler_photo} alt="tabler" />
+              </div>
+              <div className="card-body">
+                <p className="landingpage-cardone-body">Quick and Easy Recipes</p>
+                <div className="d-flex">
+                  <div className="d-flex landingpage-card-profile-info">
+                    <img className="landingpage-card-profile-img" src={card_profile} alt="Profile" />
+                    <p className="landingpage-card-profilename">Jane Smith</p>
+                    <span><div className="profile-rectangle"></div></span>
+                    <p className="profile-textcolor">February 15, 2025</p>
+                    <span><div className="profile-textcolortwo"></div></span>
+                    <span><img src={Group} alt="Group" /></span>
+                    <p className="share-color">300 shares</p>
+                  </div>
+                </div>
+              </div>
+              <p className="landingpage-cardone-para">Try these simple recipes for your next meal.</p>
+              <button className="btn landingpage-readmore-button">Read More <span className="greaterthan-symbol">&gt;</span></button>
+            </div>
+            <div className="card col-sm-3 landingpage-cardsize">
+              <img className="landingpage-cardone-imgone" src={LandingP_card_one} />
+              <div>
+                <span><p className="badge p-2 cardone-header">Food & Cooking</p></span>
+                <img className="cardone-headerone" src={tabler_photo} alt="tabler" />
+              </div>
+              <div className="card-body">
+                <p className="landingpage-cardone-body">Quick and Easy Recipes</p>
+                <div className="d-flex">
+                  <div className="d-flex landingpage-card-profile-info">
+                    <img className="landingpage-card-profile-img" src={card_profile} alt="Profile" />
+                    <p className="landingpage-card-profilename">Jane Smith</p>
+                    <span><div className="profile-rectangle"></div></span>
+                    <p className="profile-textcolor">February 15, 2025</p>
+                    <span><div className="profile-textcolortwo"></div></span>
+                    <span><img src={Group} alt="Group" /></span>
+                    <p className="share-color">300 shares</p>
+                  </div>
+                </div>
+              </div>
+              <p className="landingpage-cardone-para">Try these simple recipes for your next meal.</p>
+              <button className="btn landingpage-readmore-button">Read More <span className="greaterthan-symbol">&gt;</span></button>
+            </div>
+            <div className="card col-sm-3 landingpage-cardsize">
+              <img className="landingpage-cardone-imgone" src={LandingP_card_one} />
+              <div>
+                <span><p className="badge p-2 cardone-header">Food & Cooking</p></span>
+                <img className="cardone-headerone" src={tabler_photo} alt="tabler" />
+              </div>
+              <div className="card-body">
+                <p className="landingpage-cardone-body">Quick and Easy Recipes</p>
+                <div className="d-flex">
+                  <div className="d-flex landingpage-card-profile-info">
+                    <img className="landingpage-card-profile-img" src={card_profile} alt="Profile" />
+                    <p className="landingpage-card-profilename">Jane Smith</p>
+                    <span><div className="profile-rectangle"></div></span>
+                    <p className="profile-textcolor">February 15, 2025</p>
+                    <span><div className="profile-textcolortwo"></div></span>
+                    <span><img src={Group} alt="Group" /></span>
+                    <p className="share-color">300 shares</p>
+                  </div>
+                </div>
+              </div>
+              <p className="landingpage-cardone-para">Try these simple recipes for your next meal.</p>
+              <button className="btn landingpage-readmore-button">Read More <span className="greaterthan-symbol">&gt;</span></button>
+            </div>
+            <div className="card col-sm-3 landingpage-cardsize">
+              <img className="landingpage-cardone-imgone" src={LandingP_card_one} />
+              <div>
+                <span><p className="badge p-2 cardone-header">Food & Cooking</p></span>
+                <img className="cardone-headerone" src={tabler_photo} alt="tabler" />
+              </div>
+              <div className="card-body">
+                <p className="landingpage-cardone-body">Quick and Easy Recipes</p>
+                <div className="d-flex">
+                  <div className="d-flex landingpage-card-profile-info">
+                    <img className="landingpage-card-profile-img" src={card_profile} alt="Profile" />
+                    <p className="landingpage-card-profilename">Jane Smith</p>
+                    <span><div className="profile-rectangle"></div></span>
+                    <p className="profile-textcolor">February 15, 2025</p>
+                    <span><div className="profile-textcolortwo"></div></span>
+                    <span><img src={Group} alt="Group" /></span>
+                    <p className="share-color">300 shares</p>
+                  </div>
+                </div>
+              </div>
+              <p className="landingpage-cardone-para">Try these simple recipes for your next meal.</p>
+              <button className="btn landingpage-readmore-button">Read More <span className="greaterthan-symbol">&gt;</span></button>
+            </div>
+            
+
+
+
+            {/* You can continue adding dummy cards similarly */}
           </div>
-          <div className="row mt-5">
 
-            <div className="card col-sm-3 landingpage-cardsize">
-              <img src={LandingP_card_one} />
-              <div>
-                <span><p className="badge  p-2 cardone-header">Lifestyle</p></span>
-                <img className="cardone-headerone" src={tabler_photo} alt="tabler" />
-              </div>
-              <div className="card-body">
-                <p className="landingpage-cardone-body">Integer Maecenas Eget Viverra</p>
-                <div className="d-flex">
-                  <div className="d-flex landingpage-card-profile-info">
-                    <img className="landingpage-card-profile-img" src={card_profile} alt="Profile" />
-                    <p className="landingpage-card-profilename">Joanna Wellick</p>
-                    <span><div className="profile-rectangle"></div></span>
-                    <p className="profile-textcolor">June 28, 2018</p>
-                    <span><div className="profile-textcolortwo"></div></span>
-                    <span><img src={Group} alt="Group" /></span>
-                    <p className="share-color">1K shares</p>
-                  </div>
-                </div>
-              </div>
-              <p className="landingpage-cardone-para">Aenean eleifend ante maecenas pulvinar montes lorem et pede dis dolor pretium donec dictum. Vici consequat justo enim. Venenatis eget adipiscing luctus lorem.
-              </p>
-              <button className=" btn landingpage-readmore-button">Read More <span className="greaterthan-symbol">&gt;</span></button>
-            </div>
-
-            <div className="card col-sm-3 landingpage-cardsize">
-              <img className="landingpage-cardone-imgone" src={LandingPage_Bg} />
-              <div>
-                <span><p className="badge  p-2 cardone-header">Food & Cooking</p></span>
-                <img className="cardone-headerone" src={tabler_photo} alt="tabler" />
-              </div>
-              <div className="card-body">
-                <p className="landingpage-cardone-body">Budget Sacrificing Experience
-                </p>
-                <div className="d-flex">
-                  <div className="d-flex landingpage-card-profile-info">
-                    <img className="landingpage-card-profile-img" src={card_profile} alt="Profile" />
-                    <p className="landingpage-card-profilename">Joanna Wellick</p>
-                    <span><div className="profile-rectangle"></div></span>
-                    <p className="profile-textcolor">June 28, 2018</p>
-                    <span><div className="profile-textcolortwo"></div></span>
-                    <span><img src={Group} alt="Group" /></span>
-                    <p className="share-color">1K shares</p>
-                  </div>
-                </div>
-              </div>
-              <p className="landingpage-cardone-para">Aenean eleifend ante maecenas pulvinar montes lorem et pede dis dolor pretium donec dictum. Vici consequat justo enim. Venenatis eget adipiscing luctus lorem.
-              </p>
-              <button className=" btn landingpage-readmore-button">Read More <span className="greaterthan-symbol">&gt;</span></button>
-            </div>
-            <div className="card col-sm-3 landingpage-cardsize">
-              <img src={LandingP_card_one} />
-              <div>
-                <span><p className="badge  p-2 cardone-header">Travel & Adventure</p></span>
-                <img className="cardone-headerone" src={tabler_photo} alt="tabler" />
-              </div>
-              <div className="card-body">
-                <p className="landingpage-cardone-body">Create a Cozy and Stylish Space
-                </p>
-                <div className="d-flex">
-                  <div className="d-flex landingpage-card-profile-info">
-                    <img className="landingpage-card-profile-img" src={card_profile} alt="Profile" />
-                    <p className="landingpage-card-profilename">Joanna Wellick</p>
-                    <span><div className="profile-rectangle"></div></span>
-                    <p className="profile-textcolor">June 28, 2018</p>
-                    <span><div className="profile-textcolortwo"></div></span>
-                    <span><img src={Group} alt="Group" /></span>
-                    <p className="share-color">1K shares</p>
-                  </div>
-                </div>
-              </div>
-              <p className="landingpage-cardone-para">Aenean eleifend ante maecenas pulvinar montes lorem et pede dis dolor pretium donec dictum. Vici consequat justo enim. Venenatis eget adipiscing luctus lorem.
-              </p>
-              <button className=" btn landingpage-readmore-button">Read More <span className="greaterthan-symbol">&gt;</span></button>
-            </div>
-
-          </div>
           <button className="btn landingpage-sectiontwo-button">Load More</button>
         </div>
-
       </div>
-
     </>
   );
 }

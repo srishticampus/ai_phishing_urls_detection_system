@@ -6,6 +6,7 @@ import { getInterests } from "../../Services/apiService";
 import { advertiserSignup } from "../../Services/apiService";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import 'font-awesome/css/font-awesome.min.css'; // Import FontAwesome for the toggle icon
 
 function AdvertisersSignup() {
     const fileInputRef = useRef(null);
@@ -24,6 +25,8 @@ function AdvertisersSignup() {
         user_type: "advertiser"
     });
     const [errors, setErrors] = useState({});
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const navigate = useNavigate();
 
     // Fetch business types when the component mounts
@@ -115,6 +118,14 @@ function AdvertisersSignup() {
         }
     };
 
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const toggleConfirmPasswordVisibility = () => {
+        setShowConfirmPassword(!showConfirmPassword);
+    };
+
     return (
         <div className="d-flex justify-content-center flex-column">
             <p className="advertisers-signup-head">SignUp!</p>
@@ -196,15 +207,23 @@ function AdvertisersSignup() {
                         {errors.contactNumber && <div className="invalid-feedback">{errors.contactNumber}</div>}
                     </div>
                     <div className="col-sm-4">
-                        <input
-                            type="password"
-                            className={`form-control ${errors.password ? 'is-invalid' : ''}`}
-                            placeholder="Password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleInputChange}
-                        />
-                        {errors.password && <div className="invalid-feedback">{errors.password}</div>}
+                        <div className="password-field-container">
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+                                placeholder="Password"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleInputChange}
+                            />
+                            {errors.password && <div className="invalid-feedback">{errors.password}</div>}
+                            <span
+                                className="password-toggle-icon"
+                                onClick={togglePasswordVisibility}
+                            >
+                                <i className={`fa ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`} />
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div className="row advertisers-signup-fourth-row">
@@ -220,15 +239,23 @@ function AdvertisersSignup() {
                         {errors.address && <div className="invalid-feedback">{errors.address}</div>}
                     </div>
                     <div className="col-sm-4">
-                        <input
-                            type="password"
-                            className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}
-                            placeholder="Confirm Password"
-                            name="confirmPassword"
-                            value={formData.confirmPassword}
-                            onChange={handleInputChange}
-                        />
-                        {errors.confirmPassword && <div className="invalid-feedback">{errors.confirmPassword}</div>}
+                        <div className="password-field-container">
+                            <input
+                                type={showConfirmPassword ? "text" : "password"}
+                                className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}
+                                placeholder="Confirm Password"
+                                name="confirmPassword"
+                                value={formData.confirmPassword}
+                                onChange={handleInputChange}
+                            />
+                            {errors.confirmPassword && <div className="invalid-feedback">{errors.confirmPassword}</div>}
+                            <span
+                                className="password-toggle-icon"
+                                onClick={toggleConfirmPasswordVisibility}
+                            >
+                                <i className={`fa ${showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'}`} />
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
