@@ -7,6 +7,7 @@ function AdminAddBlog() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
+  const [categoryName, setCategoryName] = useState("");
   const [image, setImage] = useState(null);
   const [interests, setInterests] = useState([]);
 
@@ -91,7 +92,7 @@ function AdminAddBlog() {
                         className="btn btn-outline-dark dropdown-toggle admin-add-blog-dropdown-button form-control"
                         data-bs-toggle="dropdown"
                       >
-                        {category ? category : "Select Category"}
+                        {categoryName ? categoryName : "Select Category"}
                       </button>
                       <ul className="dropdown-menu">
                         {interests.length > 0 ? (
@@ -100,7 +101,8 @@ function AdminAddBlog() {
                               <a
                                 className="dropdown-item"
                                 href="#"
-                                onClick={() => setCategory(interest.id)}
+                                // onClick={() => setCategory(interest.id)}
+                                 onClick={()=>{setCategory(interest.id);setCategoryName(interest.name)}}
                               >
                                 {interest.name}
                               </a>

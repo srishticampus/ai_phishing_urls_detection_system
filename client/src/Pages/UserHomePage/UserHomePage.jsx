@@ -308,7 +308,7 @@ function UserHomePage() {
                       <p className="user-homepage-cardone-body">
                         {blog.title || "No Title"}
                       </p>
-                      <div className="d-flex">
+                      {/* <div className="d-flex">
                         <div className="d-flex user-homepage-card-profile-info">
                           <img
                             className="user-homepage-card-profile-img"
@@ -335,7 +335,7 @@ function UserHomePage() {
                             {blog.shares || "0"} shares
                           </p>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                     <p className="user-homepage-cardone-para">
                       {blog.content || "No content available"}

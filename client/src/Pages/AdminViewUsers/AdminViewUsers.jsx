@@ -107,7 +107,7 @@ function AdminViewUsers() {
                   <tr key={index}>
                     <td>{(currentPage - 1) * rowsPerPage + index + 1}</td>
                     <td>
-                      <img src={`${baseUrl}${user.photo}`} alt="profile" />
+                      <img src={`${baseUrl}${user.photo}`} alt="profile" style={{height:'100px', width:'100px',objectFit:'cover'}} />
                     </td>
                     <td>
                       {user.user ? `${user.user.first_name} ${user.user.last_name}` : "N/A"}
