@@ -17,6 +17,7 @@ from rest_framework import permissions,generics,status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.exceptions import APIException, ParseError
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework_simplejwt.views import TokenObtainPairView
 from accounts.models import User,UserProfile,Interest,Blog,AdvertiserProfile,Advertisement,UserInterest
 from .serializers import (UserSerializer,CustomTokenObtainPairSerializer,ResetPasswordSerializer,
@@ -633,6 +634,7 @@ class AdvertisementDetailView(APIView):
     API view to retrieve, update, or delete a single advertisement by its ID.
     """
     permission_classes = [permissions.IsAuthenticated]
+    parser_classes = (MultiPartParser, FormParser)
 
     def get_object(self, advertisement_id, user):
         """
@@ -710,22 +712,25 @@ class AdvertisementDetailView(APIView):
         try:
             advertisement = self.get_object(advertisement_id, request.user)
             if advertisement is None:
-                return Response(
-                    {"error": "Advertisement not found or you do not have permission to update it."},
-                    status=status.HTTP_404_NOT_FOUND,
-                )
+                return Response({"error": "Advertisement not found."}, status=status.HTTP_404_NOT_FOUND)
 
-            serializer = AdvertisementSerializer(advertisement, data=request.data, partial=True)
+            data = request.data.copy()  # ✅ Ensure mutable data
+
+            # ✅ Keep the existing image if no new image is provided
+            if "ad_image" not in request.FILES:
+                data["ad_image"] = advertisement.ad_image  # Preserve existing image
+
+            serializer = AdvertisementSerializer(advertisement, data=data, partial=True)
+
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)
 
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
         except Exception as e:
-            return Response(
-                {"error": "An unexpected error occurred.", "details": str(e)},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            )
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
     def delete(self, request, advertisement_id):
         """
