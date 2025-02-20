@@ -270,7 +270,12 @@ export const toggleUserStatus = async (id) => {
     )
   );
 };
-
+//Admin View Advertisements
+export const adminViewAdvertisements = async () => {
+  return handleResponse(
+    apiClient.get("api/admin/advertisements/", generateConfig())
+  );
+};
 // ✅ Advertiser Functions
 export const advertiserSignup = async (formData) => {
   return handleResponse(
