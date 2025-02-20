@@ -24,6 +24,7 @@ function AdvertisersEditAdvertisements() {
       try {
         const data = await advertisersViewAdvertisementDetails(id);
         setAdvertisement(data);
+        console.log(data)
         setFormData({
           title: data.title,
           link: data.link,
@@ -69,17 +70,17 @@ function AdvertisersEditAdvertisements() {
     form.append("link", formData.link);
     form.append("start_date", formattedStartDate);
     form.append("end_date", formattedEndDate);
-  
+    
     if (formData.ad_image) {
       form.append("ad_image", formData.ad_image);
     }
-  
+    
     try {
-      const updatedData = await advertisersEditAdvertisement(id, form);
-      console.log("Updated advertisement:", updatedData);
+      const response = await advertisersEditAdvertisement(id, form);
+      console.log("Updated advertisement:", response);
     } catch (err) {
       setError("Failed to update advertisement details.");
-      console.error(err);
+      console.error(err.response || err);
     }
   };
   
