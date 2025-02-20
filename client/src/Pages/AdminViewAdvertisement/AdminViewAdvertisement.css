@@ -1,5 +1,5 @@
 .admin-view-advertisement-container {
-    margin-left: 250px;
+    margin-left: 260px;
     margin-top: 70px;
 
 }
@@ -11,10 +11,11 @@
 
 
 .admin-view-advertisement-card-size {
-    border: 0;
+    padding: 10px;
     background: transparent;
     width: 330px;
-    height: 500px;
+    margin-left: 20px;
+
 }
 .admin-view-advertisement{
     color: #F18C00;

@@ -58,21 +58,21 @@ function UserHomePage() {
   
   useEffect(() => {
     const fetchMatchingAds = async () => {
-      setAdLoading(true); // Set loading to true before fetching
+      setAdLoading(true); 
 
       try {
         const response = await advertisementMatchingInterest();
         console.log("Matching Ads:", response.data);
-        setMatchingAds(response.data); // Update the state with matching ads
+        setMatchingAds(response.data); 
       } catch (error) {
         setAdError("Failed to fetch matching ads");
         console.error(error);
       } finally {
-        setAdLoading(false); // Set loading to false after fetching
+        setAdLoading(false); 
       }
     };
 
-    fetchMatchingAds(); // Call the function
+    fetchMatchingAds(); 
   }, []);
 
   useEffect(() => {
