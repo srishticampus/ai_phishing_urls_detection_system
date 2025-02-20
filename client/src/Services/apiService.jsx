@@ -330,7 +330,7 @@ export const checkMaliciousLinks = async (advertiserId) => {
 };
 export const advertisersEditAdvertisement = async (id, formData) => {
   return handleResponse(
-    apiClient.put(`api/advertisements/${id}/`, formData, generateConfig(true, true)
+    apiClient.put(`api/advertisements/${id}/`, formData, generateConfig(true)
   ));
 };
 
