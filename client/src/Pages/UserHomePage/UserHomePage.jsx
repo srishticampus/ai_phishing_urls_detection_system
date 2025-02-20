@@ -86,6 +86,8 @@ function UserHomePage() {
 
     navigate(`/user-homepage-card-details/${id}`);
   };
+
+
   const handleCardClick = async (adId, adLink) => {
     setAdLink(adLink);
 
@@ -94,6 +96,7 @@ function UserHomePage() {
       try {
         const response = await advertisementSafetyCheck(adId);
         console.log("safety",response)
+ 
         if (response.is_safe) {
           setIsAdSafe(true);
         } else {
@@ -501,46 +504,21 @@ function UserHomePage() {
               <div
                 key={ad.id}
                 className="card user-homepage-card-size"
-                onClick={() => handleCardClick(ad.id, ad.link)} // Use ad.id and ad.link for click handling
+                onClick={() => handleCardClick(ad.id, ad.link)} 
               >
                 <img
                   className="homepage-card-img-size mb-5"
-                  src={`${baseUrl}${ad.ad_image}`} // Dynamically set the image src
+                  src={`${baseUrl}${ad.ad_image}`} 
                   alt="Advertisement"
                 />
               </div>
             ))
           ) : (
-            <p>No ads available</p> // Show message if no matching ads
+            <p>No ads available</p> 
           )}
         </div>
       </div>
-        {/* <div className="col-sm-3">
-          <div className="cards-container">
-
-            <div
-              className="card user-homepage-card-size"
-              onClick={() => handleCardClick(1, "https://example.com/advertisement1")} // Pass the correct ad ID and link
-            >
-              <img
-                className="homepage-card-img-size mb-5"
-                src={adv}
-                alt="Advertisement"
-              />
-            </div>
-
-            <div
-              className="card user-homepage-card-size"
-              onClick={() => handleCardClick(5, "https://example.com/advertisement2")} // Pass the correct ad ID and link
-            >
-              <img
-                className="homepage-card-img-size"
-                src={ads1}
-                alt="Advertisement"
-              />
-            </div>
-          </div>
-        </div> */}
+        
 
       </div>
     </div>
