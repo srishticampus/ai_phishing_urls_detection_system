@@ -1,5 +1,5 @@
-import  { useState, useEffect } from 'react';
-import { advertisersViewAdvertisement } from "../../Services/apiService";  // Make sure this path is correct
+import { useState, useEffect } from "react";
+import { adminViewAdvertisements } from "../../Services/apiService"; // Make sure this path is correct
 import "../../Pages/AdminViewAdvertisement/AdminViewAdvertisement.css";
 import cardimg from "../../assets/Images/advertisement.png";
 
@@ -15,12 +15,13 @@ function AdminViewAdvertisement() {
   useEffect(() => {
     const fetchAdvertisements = async () => {
       try {
-        const response = await advertisersViewAdvertisement();
+        const response = await adminViewAdvertisements();
+        console.log(response);
         setAdvertisements(response.data);
-        console.log(response.data) // Assuming response.data contains the list of advertisements
+        console.log(response.data); // Assuming response.data contains the list of advertisements
         setLoading(false);
       } catch (err) {
-        setError('Failed to load advertisements',err);
+        setError("Failed to load advertisements", err);
         setLoading(false);
       }
     };
@@ -42,9 +43,15 @@ function AdminViewAdvertisement() {
           {/* Render each advertisement dynamically */}
           {advertisements.length > 0 ? (
             advertisements.map((ad, index) => (
-              <div className="card col-sm-4 admin-view-advertisement-card-size" key={index}>
+              <div
+                className="card col-sm-4 admin-view-advertisement-card-size"
+                key={index}
+              >
                 {/* Assuming 'ad.image' contains the image URL, use 'cardimg' as fallback */}
-                <img src={`${baseUrl}${ad.ad_image}` || cardimg} alt={`Advertisement ${index + 1}`} />
+                <img
+                  src={`${baseUrl}${ad.ad_image}` || cardimg}
+                  alt={`Advertisement ${index + 1}`}
+                />
               </div>
             ))
           ) : (
