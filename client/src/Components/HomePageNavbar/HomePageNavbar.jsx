@@ -1,59 +1,68 @@
 import "../../Components/HomePageNavbar/HomePageNavbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faUser, faArrowRightFromBracket,faPencilRuler } from "@fortawesome/free-solid-svg-icons";
-import { useState, useEffect } from "react";
+import { faSearch, faUser, faArrowRightFromBracket, faPencilRuler } from "@fortawesome/free-solid-svg-icons";
+import { useState, useEffect, useRef } from "react";
 import { Switch } from "antd";
 import { logout, checkLoginStatus } from "../../Services/apiService";
 import Vector from "../../assets/Images/Vector.png";
 
-function  HomePageNavbar() {
+function HomePageNavbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(checkLoginStatus());
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLogoutConfirmOpen, setIsLogoutConfirmOpen] = useState(false);
   const [isSafeMode, setIsSafeMode] = useState(false);
   const navigate = useNavigate();
+  const modalRef = useRef(null); // ✅ Reference for modal
 
-  // Listen for login/logout changes globally
+  // ✅ Listen for login/logout changes globally
   useEffect(() => {
     const handleAuthChange = () => {
       setIsLoggedIn(checkLoginStatus());
     };
 
     window.addEventListener("loginStatusChanged", handleAuthChange);
-
-    return () => {
-      window.removeEventListener("loginStatusChanged", handleAuthChange);
-    };
+    return () => window.removeEventListener("loginStatusChanged", handleAuthChange);
   }, []);
 
-  // Check Safe Mode from localStorage on mount
+  // ✅ Check Safe Mode from localStorage on mount
   useEffect(() => {
     const savedMode = localStorage.getItem("safeMode") === "true";
     setIsSafeMode(savedMode);
   }, []);
 
+  // ✅ Handle click outside modal to close it
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        setIsModalOpen(false);
+      }
+    };
+
+    if (isModalOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isModalOpen]);
+
   const toggleModal = () => setIsModalOpen(!isModalOpen);
   const closeModal = () => setIsModalOpen(false);
 
-  // const handleLogoutClick = () => {
-  //   setIsLogoutConfirmOpen(true); // Open logout confirmation modal
-  // };
   const handleLogoutClick = () => {
-    setIsModalOpen(false); // Close the profile dropdown
-    setIsLogoutConfirmOpen(true); // Open logout confirmation modal
+    setIsModalOpen(false); // ✅ Close the profile dropdown
+    setIsLogoutConfirmOpen(true); // ✅ Open logout confirmation modal
   };
-  
 
   const confirmLogout = () => {
-    logout(); // Call the logout function
-    setIsLogoutConfirmOpen(false); // Close the confirmation modal
-    navigate("/"); // Redirect to home page
+    logout();
+    setIsLogoutConfirmOpen(false);
+    navigate("/");
   };
 
-  const cancelLogout = () => {
-    setIsLogoutConfirmOpen(false); // Close the confirmation modal
-  };
+  const cancelLogout = () => setIsLogoutConfirmOpen(false);
 
   const handleSearch = (event) => {
     event.preventDefault();
@@ -64,12 +73,8 @@ function  HomePageNavbar() {
   const handleSwitchChange = (checked) => {
     setIsSafeMode(checked);
     localStorage.setItem("safeMode", checked);
-    // ✅ Dispatch event to update other components without reload
     window.dispatchEvent(new Event("safeModeChanged"));
   };
-
-  console.log(isLoggedIn);
-  
 
   return (
     <div>
@@ -79,37 +84,23 @@ function  HomePageNavbar() {
             <span className="logo-blog-color-homepage">BLOG</span>&nbsp;
             <span className="logo-sphere-color-homepage">SPHERE</span>
           </Link>
-          <button
-            className="navbar-toggler navbar-toggler-background-color"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#mynavbar"
-            aria-controls="mynavbar"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
+
+          <button className="navbar-toggler navbar-toggler-background-color" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
             <span className="navbar-toggler-icon bg-light"></span>
           </button>
+
           <div className="collapse navbar-collapse" id="mynavbar">
             <ul className="navbar-nav navbar_list mx-auto">
-              <li className="nav-item navbar_nav-item">
-                <Link className="nav-link navbar-links-homepage" to="/user-homepage">Home</Link>
-              </li>
-              <li className="nav-item navbar_nav-item">
-                <Link className="nav-link navbar-links-homepage" to="/about">About</Link>
-              </li>
-              <li className="nav-item navbar_nav-item">
-                <Link className="nav-link navbar-links-homepage" to="/services">Services</Link>
-              </li>
-              <li className="nav-item navbar_nav-item">
-                <Link className="nav-link navbar-links-homepage" to="/contact">Contact</Link>
-              </li>
+              <li className="nav-item navbar_nav-item"><Link className="nav-link navbar-links-homepage" to="/user-homepage">Home</Link></li>
+              <li className="nav-item navbar_nav-item"><Link className="nav-link navbar-links-homepage" to="/about">About</Link></li>
+              <li className="nav-item navbar_nav-item"><Link className="nav-link navbar-links-homepage" to="/services">Services</Link></li>
+              <li className="nav-item navbar_nav-item"><Link className="nav-link navbar-links-homepage" to="/contact">Contact</Link></li>
             </ul>
 
             <form className="d-flex ms-auto" onSubmit={handleSearch}>
               <div className="input-group searchbar-grp">
                 <input type="text" className="form-control search-input-field" name="searchInput" placeholder="Search..." />
-                <button type="submit" className="btn searchbar-input-button" aria-label="Search">
+                <button type="submit" className="btn searchbar-input-button">
                   <FontAwesomeIcon icon={faSearch} className="searchbar-input-icon" />
                 </button>
               </div>
@@ -129,23 +120,19 @@ function  HomePageNavbar() {
         </div>
       </nav>
 
-      {/* User Menu Modal */}
+      {/* ✅ User Menu Modal */}
       {isModalOpen && (
         <div className="modal homepage-navbar-modal">
           <div className="modal-dialog" id="modal-dialog-right">
-            <div className="modal-content">
+            <div className="modal-content" ref={modalRef}> {/* ✅ Attach ref here */}
               <div className="modal-header homepage-modal-header">
                 <FontAwesomeIcon icon={faUser} style={{ cursor: "pointer", color: "#f18c00" }} />
-                <span className="ms-2">
-                  <Link to="/user-view-profile" className="user-view-profile-color">Profile</Link>
-                </span>
+                <span className="ms-2"><Link to="/user-view-profile" className="user-view-profile-color">Profile</Link></span>
                 <button type="button" className="btn-close" onClick={closeModal}></button>
               </div>
               <div className="modal-header homepage-modal-header">
                 <FontAwesomeIcon icon={faPencilRuler} style={{ cursor: "pointer", color: "#f18c00" }} />
-                <span className="ms-2">
-                  <Link to="/user-profile" className="user-view-profile-color">Edit Profile</Link>
-                </span>
+                <span className="ms-2"><Link to="/user-profile" className="user-view-profile-color">Edit Profile</Link></span>
               </div>
               <div className="modal-body homepage-modal-body">
                 Choose Mode
@@ -155,11 +142,7 @@ function  HomePageNavbar() {
               </div>
               <div className="modal-footer" style={{ display: "flex", justifyContent: "flex-start", width: "100%" }}>
                 <div style={{ display: "flex", alignItems: "center" }}>
-                  <FontAwesomeIcon
-                    icon={faArrowRightFromBracket}
-                    style={{ color: "#f18c00", marginRight: "10px", cursor: "pointer" }}
-                    onClick={handleLogoutClick}
-                  />
+                  <FontAwesomeIcon icon={faArrowRightFromBracket} style={{ color: "#f18c00", marginRight: "10px", cursor: "pointer" }} onClick={handleLogoutClick} />
                   <span style={{ cursor: "pointer", color: "#000" }} onClick={handleLogoutClick}>Logout</span>
                 </div>
               </div>
@@ -168,7 +151,7 @@ function  HomePageNavbar() {
         </div>
       )}
 
-      {/* Logout Confirmation Modal */}
+      {/* ✅ Logout Confirmation Modal */}
       {isLogoutConfirmOpen && (
         <div className="modal homepage-navbar-modal-logout">
           <div className="modal-dialog">
