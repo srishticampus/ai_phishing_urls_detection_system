@@ -179,7 +179,7 @@ function UserHomePage() {
           <button type="button" className="btn-close" onClick={handleCloseModal}></button>
         </div>
         <div className="modal-body">
-          <p>{isAdSafe ? "✅ This link is Safe (Benign)." : `⚠️ This link is Unsafe (${prediction}). Proceed with caution!`}</p>
+          <p>{isAdSafe ? "✅ This xz link is Safe (Benign)." : `⚠️ This link is Unsafe (${prediction}). Proceed with caution!`}</p>
           {/* ✅ Display link on the next line */}
           <p>
             <strong>Ad Link:</strong><br />
