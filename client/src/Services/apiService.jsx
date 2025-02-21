@@ -345,6 +345,9 @@ export const advertisementSafetyCheck = async (id) => {
 ));
 }
 
-
+//View Blogs Matching Users Interests
+export const viewBlogsMatchingInterests = async () => {
+ return handleResponse(apiClient.get("/api/blogs/matching-interests/", generateConfig()));
+}
 
 

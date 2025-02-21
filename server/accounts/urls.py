@@ -10,7 +10,8 @@ from .views import (UserRegistrationView,LoginView,ForgotPasswordView,ResetPassw
                     UserProfileCreateView,UserProfileRetrieveView,UserProfileUpdateView,
                     InterestListView,BlogListCreateView,AdminUserListView,AdminToggleUserActivationView,
                     RegisterAdvertiserView,AdminAdvertiserListView,AdminNewAdvertiserListView,
-                    AdminAdvertisementsView,AdvertisementDetailView,UserInterestAdvertisementsView,AddUserInterestsView)
+                    AdminAdvertisementsView,AdvertisementDetailView,UserInterestAdvertisementsView,
+                    AddUserInterestsView,UserInterestBlogsView)
 
 app_name = 'accounts'
 
@@ -33,18 +34,19 @@ urlpatterns = [
 
     # Admin related URLs
     path('admin-view-users/',AdminUserListView.as_view(),name='admin-view-users'),
-    path('toggle-user-activation/<int:user_id>/', AdminToggleUserActivationView.as_view(), 
+    path('toggle-user-activation/<int:user_id>/', AdminToggleUserActivationView.as_view(),
          name='toggle-user-activation'),
     path('register-advertiser/', RegisterAdvertiserView.as_view(), name='register-advertiser'),
     path('admin-view-advertisers/', AdminAdvertiserListView.as_view(),
           name='admin-view-advertisers'),
-    path('admin-view-new-advertisers/', AdminNewAdvertiserListView.as_view(), 
+    path('admin-view-new-advertisers/', AdminNewAdvertiserListView.as_view(),
          name='admin-view-new-advertisers'),
     path('admin/advertisements/', AdminAdvertisementsView.as_view(), name='admin-advertisements'),
-    path('advertisements/<int:advertisement_id>/', AdvertisementDetailView.as_view(), 
+    path('advertisements/<int:advertisement_id>/', AdvertisementDetailView.as_view(),
          name='advertisement-detail'),
     path('advertisements/', AdvertisementDetailView.as_view(), name='advertisement-create'),
-    path('advertisements/matching-interests/', UserInterestAdvertisementsView.as_view(), 
+    path('advertisements/matching-interests/', UserInterestAdvertisementsView.as_view(),
          name='user-interest-advertisements'),
-
+    path('blogs/matching-interests/', UserInterestBlogsView.as_view(),
+         name='blogs-matching-interests'),
 ]
