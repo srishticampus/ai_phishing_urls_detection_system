@@ -801,3 +801,47 @@ class UserInterestAdvertisementsView(APIView):
                 {"error": "An unexpected error occurred.", "details": str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
+class UserInterestBlogsView(APIView):
+    """
+    API view for users to fetch blogs matching their selected interests.
+    """
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        """
+        GET method to fetch blogs related to the user's selected interests.
+        """
+        try:
+            # Get the logged-in user
+            user = request.user
+            # Fetch the user's profile
+            user_profile = UserProfile.objects.get(user=user)
+
+            # Fetch the user's selected interests
+            user_interests = UserInterest.objects.filter(user_profile=user_profile)
+            interest_ids = user_interests.values_list('interest_id', flat=True)
+            # Fetch blogs matching the user's interests
+            matching_blogs = Blog.objects.filter(interests__id__in=interest_ids).distinct()
+
+            # Serialize the blogs
+            serializer = BlogSerializer(matching_blogs, many=True)
+
+            # Return response
+            if not serializer.data:
+                return Response(
+                    {"message": "No blogs found matching your interests."},
+                    status=status.HTTP_204_NO_CONTENT
+                )
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        except UserProfile.DoesNotExist:
+            return Response(
+                {"error": "User profile does not exist."},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Exception as e:
+            return Response(
+                {"error": "An unexpected error occurred.", "details": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )

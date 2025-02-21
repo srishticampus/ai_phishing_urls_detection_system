@@ -1,7 +1,7 @@
 import "../../Pages/UserHomePage/UserHomePage.css";
 import { useEffect, useState } from "react";
-import { viewBlogs, advertisementSafetyCheck, advertisementMatchingInterest } from "../../Services/apiService";
-import { useNavigate } from "react-router-dom";
+import { advertisementSafetyCheck, advertisementMatchingInterest,viewBlogsMatchingInterests } from "../../Services/apiService";
+//import { useNavigate } from "react-router-dom";
 import left from "../../assets/Images/left.png";
 import right from "../../assets/Images/right.png";
 import homepage from "../../assets/Images/homapageimg.png";
@@ -42,7 +42,7 @@ function UserHomePage() {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await viewBlogs();
+        const response = await viewBlogsMatchingInterests();
         setBlogs(response.data);
       } catch (err) {
         setError("Failed to fetch blogs");
