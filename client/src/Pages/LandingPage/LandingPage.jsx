@@ -12,23 +12,36 @@ import LandingPage_Bg_five from '../../assets/Images/LandingPageBg_5.png';
 import LandingPage_Bg_six from '../../assets/Images/LandingPageBg_6.png';
 import { viewBlogs } from "../../Services/apiService"; 
 const baseUrl = import.meta.env.VITE_API_URL;
+import { useNavigate } from 'react-router-dom'; // For navigation
+export const checkLoginStatus = () => !!localStorage.getItem("accessToken");
+
 
 function LandingPage() {
   const [blogs, setBlogs] = useState([]);
+  const navigate = useNavigate(); // hook for navigation
 
   useEffect(() => {
     const fetchBlogs = async () => {
-      const response = await viewBlogs(); // Fetch the blogs
+      const response = await viewBlogs(); 
       if (response.success) {
-        setBlogs(response.data); // Set the blogs data if successful
+        setBlogs(response.data); 
         console.log(response.data);
       } else {
-        setBlogs([]); // Set empty array if no data is returned
+        setBlogs([]); 
       }
     };
 
-    fetchBlogs(); // Call the function to fetch the blogs
+    fetchBlogs(); 
   }, []);
+  const handleExploreNowClick = () => {
+    if (checkLoginStatus()) {
+      // If logged in, navigate to the explore page or another page (e.g. dashboard, blog page)
+      navigate('/user-home-page'); // Adjust the path as necessary
+    } else {
+      // If not logged in, redirect to login page
+      navigate('/login'); // Adjust the path as necessary
+    }
+  };
 
   return (
     <>
@@ -42,7 +55,7 @@ function LandingPage() {
                 <p className="landingpage-bgimg-headone">Welcome to BLOG<span className="landingpage-headone-span">SPHERE !</span></p>
                 <p className="landingpage-bgimg-headtwo">From Thoughts to Trends – Your Blogging Hub</p>
                 <p className="landingpage-bgimg-para">Explore a diverse range of content that enlightens, entertains, and inspires with every read. Uncover fresh ideas, new perspectives, and engaging <br />content with every visit.</p>
-                <button className="landingpage-bgimg-button">Explore Now</button>
+                <button className="landingpage-bgimg-button" onClick={handleExploreNowClick}>Explore Now</button>
               </div>
             </div>
 
@@ -53,7 +66,7 @@ function LandingPage() {
                 <p className="landingpage-bgimg-headone">Welcome to BLOG<span className="landingpage-headone-span">SPHERE !</span></p>
                 <p className="landingpage-bgimg-headtwo">From Thoughts to Trends – Your Blogging Hub</p>
                 <p className="landingpage-bgimg-para">Explore a diverse range of content that enlightens, entertains, and inspires with every read. Uncover fresh ideas, new perspectives, and engaging <br />content with every visit.</p>
-                <button className="landingpage-bgimg-button">Explore Now</button>
+                <button className="landingpage-bgimg-button" onClick={handleExploreNowClick}>Explore Now</button>
               </div>
             </div>
 
@@ -64,7 +77,7 @@ function LandingPage() {
                 <p className="landingpage-bgimg-headone">Welcome to BLOG<span className="landingpage-headone-span">SPHERE !</span></p>
                 <p className="landingpage-bgimg-headtwo">From Thoughts to Trends – Your Blogging Hub</p>
                 <p className="landingpage-bgimg-para">Explore a diverse range of content that enlightens, entertains, and inspires with every read. Uncover fresh ideas, new perspectives, and engaging <br />content with every visit.</p>
-                <button className="landingpage-bgimg-button">Explore Now</button>
+                <button className="landingpage-bgimg-button" onClick={handleExploreNowClick}>Explore Now</button>
               </div>
             </div>
             
@@ -269,7 +282,7 @@ function LandingPage() {
             {/* You can continue adding dummy cards similarly */}
           </div>
 
-          <button className="btn landingpage-sectiontwo-button">Load More</button>
+          <button className="btn landingpage-sectiontwo-button" onClick={handleExploreNowClick}>Load More</button>
         </div>
       </div>
     </>
