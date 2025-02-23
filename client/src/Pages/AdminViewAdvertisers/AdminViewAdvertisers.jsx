@@ -6,7 +6,10 @@ import { Link } from "react-router-dom";
 
 function AdminViewAdvertisers() {
   const [advertisers, setAdvertisers] = useState([]);
-  const [dropdownValue, setDropdownValue] = useState('');  
+  const [dropdownValue, setDropdownValue] = useState('1'); // Default to 1 item per page
+  const [paginatedAdvertisers, setPaginatedAdvertisers] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1); // Track current page
+  const [totalPages, setTotalPages] = useState(1); // Track total number of pages
 
   // Fetch advertisers on component mount
   useEffect(() => {
@@ -35,6 +38,23 @@ function AdminViewAdvertisers() {
 
     fetchAdvertisers(); // Trigger fetch on component mount
   }, []);
+
+  // Update paginated advertisers whenever dropdown value or current page changes
+  useEffect(() => {
+    // Calculate the number of items to display per page
+    const itemsPerPage = Number(dropdownValue);
+
+    // Paginate the advertisers based on the current page and items per page
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const currentAdvertisers = advertisers.slice(startIndex, endIndex);
+
+    setPaginatedAdvertisers(currentAdvertisers);
+
+    // Calculate the total number of pages
+    const totalPages = Math.ceil(advertisers.length / itemsPerPage);
+    setTotalPages(totalPages);
+  }, [advertisers, dropdownValue, currentPage]);
 
   const handleSwitchChange = async (checked, id) => {
     try {
@@ -65,6 +85,11 @@ function AdminViewAdvertisers() {
 
   const handleDropdownClick = (value) => {
     setDropdownValue(value); // Set selected dropdown value
+    setCurrentPage(1); // Reset to the first page whenever the dropdown value changes
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page); // Change to the selected page
   };
 
   return (
@@ -96,9 +121,9 @@ function AdminViewAdvertisers() {
             </tr>
           </thead>
           <tbody className="text-center">
-            {advertisers&&advertisers?.map((advertiser, index) => (
+            {paginatedAdvertisers.map((advertiser, index) => (
               <tr key={advertiser.id}>
-                <td>{index + 1}</td>
+                <td>{(currentPage - 1) * Number(dropdownValue) + (index + 1)}</td> {/* Corrected index */}
                 <td>{advertiser.username}</td>
                 <td>{advertiser.contact_number}</td>
                 <td>{advertiser.email}</td>
@@ -154,19 +179,19 @@ function AdminViewAdvertisers() {
           <div>
             <nav aria-label="Page navigation example">
               <ul className="admin-view-advertiser pagination justify-content-center">
-                <li className="admin-view-advertiser page-item">
+                <li className="admin-view-advertiser page-item" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
                   <a className="admin-view-advertiser page-link" href="#" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                   </a>
                 </li>
-                {[1, 2, 3, 4, 5, 6].map((pageNumber) => (
-                  <li key={pageNumber} className="admin-view-advertiser page-item">
+                {[...Array(totalPages)].map((_, pageIndex) => (
+                  <li key={pageIndex} className="admin-view-advertiser page-item" onClick={() => handlePageChange(pageIndex + 1)}>
                     <a className="admin-view-advertiser page-link" href="#">
-                      {pageNumber}
+                      {pageIndex + 1}
                     </a>
                   </li>
                 ))}
-                <li className="admin-view-advertiser page-item">
+                <li className="admin-view-advertiser page-item" onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
                   <a className="admin-view-advertiser page-link" href="#" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                   </a>
