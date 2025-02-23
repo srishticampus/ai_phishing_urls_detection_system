@@ -253,24 +253,28 @@ export const updateBlog = async (id, formData) => {
 //     apiClient.delete(`/api/blogs/${id}/`, generateConfig())
 //   );
 // };
+
+// ✅ Function to delete a blog
 export const deleteBlog = async (id) => {
-  const url = `/api/blogs/${id}/`;
+  const url = `/api/blogs/`;  // The base URL for the DELETE request, now using apiClient's baseURL
+
   console.log("Making DELETE request to:", url);  // Log the URL being called
   
   try {
-    const response = await apiClient.delete(url, generateConfig());
+    // Send a DELETE request with the blog id as a query parameter
+    const response = await apiClient.delete(url, { params: { id } });
     
-    // Log the full response to the console
-    const fullResponse = await handleResponse(response);
-    console.log("Full Response:", fullResponse); // Log the full response object
+    // Log the full response object
+    console.log("Full Response:", response);  // Log the full response object
 
-    return fullResponse; // Return the full response
+    return response.data;  // Return the response data directly
   } catch (error) {
     // Log error in case of failure
     console.error("Error in deleteBlog:", error);
-    throw error;
+    throw error;  // Re-throw error to be handled by the caller
   }
 };
+
 
 
 // ✅ Admin Functions

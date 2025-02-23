@@ -345,7 +345,7 @@ function App() {
           />
 
           <Route
-            path="/admin-edit-blog"
+            path="/admin-edit-blog/"
             element={
               <>
                 <AdminEditBlog />

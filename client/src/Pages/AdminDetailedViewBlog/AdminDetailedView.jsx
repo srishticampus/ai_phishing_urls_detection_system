@@ -22,26 +22,28 @@ function AdminDetailedView() {
 
         fetchBlogDetails();
     }, [id]);
-
+    const handleEdit = () => {
+        navigate(`/admin-edit-blog/${id}`);  // Navigating to AdminEditBlog page with the blog ID
+    }
     const handleDelete = async () => {
         console.log("Deleting blog with ID:", id); // Log ID to check if it's correct
         const confirmDelete = window.confirm("Are you sure you want to delete this blog?");
         if (confirmDelete) {
-            try {
-                const response = await deleteBlog(id); // Ensure ID is passed here
-                console.log("Delete Blog Response:", response);
-                if (response.success) {
-                    alert('Blog deleted successfully!');
-                    navigate('/admin-view-blog');
-                } else {
-                    alert('Error deleting the blog');
-                }
-            } catch (error) {
-                console.error("Error deleting the blog:", error);
-                alert('Error deleting the blog');
+          try {
+            const response = await deleteBlog(id); // Ensure ID is passed here
+            console.log("Delete Blog Response:", response);
+            if (response.success) {
+              alert('Blog deleted successfully!');
+              navigate('/admin-view-blog');
+            } else {
+              alert('Error deleting the blog');
             }
+          } catch (error) {
+            console.error("Error deleting the blog:", error);
+            alert('Error deleting the blog');
+          }
         }
-    };
+      };
     
 
     if (!blog) {
@@ -66,7 +68,7 @@ function AdminDetailedView() {
             </div>
             <div className="d-flex justify-content-center mb-5">
                 <button className="btn btn-outline-dark admin-detailed-view-edit-delete-button" onClick={handleDelete}>Delete</button>
-                <button className="btn btn-dark admin-detailed-view-edit-delete-button ms-3">Edit</button>
+                <button className="btn btn-dark admin-detailed-view-edit-delete-button ms-3" onClick={handleEdit}>Edit</button>
             </div>
         </div>
         </>
