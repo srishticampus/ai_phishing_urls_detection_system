@@ -2,12 +2,14 @@ import "../../Pages/AdminViewBlog/AdminViewBlog.css";
 import tabler_photo from '../../assets/Images/tabler_photo.png';
 import { viewBlogs } from "../../Services/apiService";
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 const baseUrl = import.meta.env.VITE_API_URL;
 
 function AdminViewBlog() {
 
     const [blogs, setBlogs] = useState([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate(); 
 
     useEffect(() => {
         const fetchBlogs = async () => {
@@ -35,6 +37,9 @@ function AdminViewBlog() {
             month: 'long', // February
             day: 'numeric' // 17
         });
+    };
+    const handleReadMore = (id) => {
+        navigate(`/admin-detailed-view-blog/${id}`); // Navigate to detailed view with blog ID
     };
 
     if (loading) {
@@ -77,9 +82,15 @@ function AdminViewBlog() {
                                         </div>
                                     </div>
                                     <p className="admin-view-blog-cardone-para">Content {blog.content || 'Blog description goes here.'}</p>
-                                    <button className="btn admin-view-blog-readmore-button">
+                                    <button 
+                                        className="btn admin-view-blog-readmore-button" 
+                                        onClick={() => handleReadMore(blog.id)} // Call handleReadMore with the blog id
+                                    >
                                         Read More <span className="greaterthan-symbol">&gt;</span>
                                     </button>
+                                    {/* <button className="btn admin-view-blog-readmore-button">
+                                        Read More <span className="greaterthan-symbol">&gt;</span>
+                                    </button> */}
                                 </div>
                             ))
                         )}
