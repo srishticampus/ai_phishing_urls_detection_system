@@ -80,48 +80,7 @@ function AdvertisersDashboard() {
         <p>View All &gt;</p>
       </div>
 
-      {/* <div>
-        <p className="advertisers-dashboard-head">View Recent Users</p>
-        <table className="table table-bordered">
-          <thead>
-            <tr>
-              <th>S No</th>
-              <th>Profile</th>
-              <th>Name</th>
-              <th>Phone Number</th>
-              <th>Email</th>
-              <th>Gender</th>
-              <th>Area of Interests</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.length > 0 ? (
-              users.map((user, index) => (
-                <tr key={user.id}>
-                  <td>{index + 1}</td>
-                  <td><img src={profileface} alt="Profile" /></td>
-                  <td>{user.username}</td>
-                  <td>{user.phone_number}</td>
-                  <td>{user.email}</td>
-                  <td>{user.gender === 'M' ? 'Male' : 'Female'}</td>
-                  <td>
-
-                      Array.isArray(user.interests) && user.interests.length > 0 
-                        ? user.interests.join(', ') 
-                        : 'N/A'
-                    }
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr><td colSpan="7">No users available.</td></tr>
-            )}
-          </tbody>
-        </table>
-        <div className="d-flex justify-content-end advertiser-dashboard-view-all-table">
-          <p>View All &gt;</p>
-        </div>
-      </div> */}
+      
     </div>
   );
 }
