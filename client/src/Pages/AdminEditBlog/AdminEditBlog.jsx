@@ -81,7 +81,7 @@ if (!blog) {
         </div>
 
         <div className="container">
-         <input type="text" className="form-control" id="blogTitle" value={blog.title}></input>
+        Title: <input type="text" className="form-control" id="blogTitle" value={blog.title}></input>
           <hr />
           Content: <textarea rows={5} cols={50} value={blog.content || 'No content available'} />
           <hr></hr>
