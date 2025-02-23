@@ -1,34 +1,42 @@
+/* TermsOfConditions.css */
+
+/* Container for terms and conditions page */
 .terms-and-condition-div {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;     
+    align-items: center;
     max-width: 1200px;
     height: 100vh;
-    margin: 0 auto;          
-    padding: 0 20px;        
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
+/* Heading for Terms and Conditions */
+.terms-and-conditions-head {
+    color: #F18C00;
+    font-family: Lato, sans-serif; /* Ensuring the same font-family as in Services */
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+/* Paragraph text for Terms and Conditions */
 .terms-and-conditions-para {
     color: #7F7F7F;
     text-align: center;
-    font-family: Lato;
-    font-size: 24px;
+    font-family: Lato, sans-serif; /* Ensuring the same font-family as in Services */
+    font-size: 17px;
     font-style: normal;
-    font-weight: 500;
-    line-height: normal;
+    font-weight: 500; /* Matching weight from Services */
+    line-height: 2;
     text-align: justify;
 }
-.terms-of-condition-footer{
+
+/* Footer styling (if needed) */
+.terms-of-condition-footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-}
-.terms-and-conditions-head{
-    color: #F18C00;
-font-family: Lato;
-font-size: 40px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
 }

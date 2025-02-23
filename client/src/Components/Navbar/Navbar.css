@@ -63,3 +63,14 @@
   border: white;
 }
 
+.navbar_links {
+    color: white;
+}
+
+.navbar_links:hover {
+    color: #F18c00;
+}
+
+.navbar_links.active {
+    color: #F18c00;
+}

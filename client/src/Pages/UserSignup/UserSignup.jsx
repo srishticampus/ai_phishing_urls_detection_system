@@ -140,7 +140,10 @@ function UserSignup() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <span className="password-eye-icon" onClick={() => setIsPasswordVisible((prev) => !prev)}>
+            <span
+              className="password-eye-icon"
+              onClick={() => setIsPasswordVisible((prev) => !prev)}
+            >
               {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
             </span>
             {errors.password && <div className="error">{errors.password}</div>}
@@ -154,10 +157,15 @@ function UserSignup() {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
-            <span className="password-eye-icon" onClick={() => setIsPassVisible((prev) => !prev)}>
+            <span
+              className="password-eye-icon"
+              onClick={() => setIsPassVisible((prev) => !prev)}
+            >
               {isPassVisible ? <FaEyeSlash /> : <FaEye />}
             </span>
-            {errors.confirmPassword && <div className="error">{errors.confirmPassword}</div>}
+            {errors.confirmPassword && (
+              <div className="error">{errors.confirmPassword}</div>
+            )}
           </div>
 
           {apiError && <div className="api-error">{apiError}</div>}
