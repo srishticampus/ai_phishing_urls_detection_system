@@ -31,13 +31,14 @@
 }
 
 .navbar-links-homepage {
-    color: #1C1C1C;
+    color: #F18C00;
     font-family: Lato;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
 }
+
 
 .navbar-toggler-background-color {
     background-color: white;

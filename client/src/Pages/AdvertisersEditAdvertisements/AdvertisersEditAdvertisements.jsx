@@ -65,20 +65,21 @@ function AdvertisersEditAdvertisements() {
   };
 
   const handleUpdateClick = async () => {
-    const formattedStartDate = format(new Date(formData.start_date), "yyyy-MM-dd");
-    const formattedEndDate = format(new Date(formData.end_date), "yyyy-MM-dd");
-
+    // Change the format to "DD-MM-YYYY"
+    const formattedStartDate = format(new Date(formData.start_date), "dd-MM-yyyy");
+    const formattedEndDate = format(new Date(formData.end_date), "dd-MM-yyyy");
+  
     const form = new FormData();
     form.append("title", formData.title);
     form.append("link", formData.link);
     form.append("start_date", formattedStartDate);
     form.append("end_date", formattedEndDate);
-
+  
     // ✅ Append image only if a new file is selected
     if (formData.ad_image instanceof File) {
       form.append("ad_image", formData.ad_image);
     }
-
+  
     try {
       const response = await advertisersEditAdvertisement(id, form);
       console.log("✅ Advertisement updated:", response);
@@ -89,7 +90,7 @@ function AdvertisersEditAdvertisements() {
       toast.error("Failed to update advertisement. ❌", { position: "top-right", autoClose: 3000 });
     }
   };
-
+  
   if (loading) return <p>Loading advertisement details...</p>;
   if (error) return <p className="text-danger">{error}</p>;
 

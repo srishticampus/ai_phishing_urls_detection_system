@@ -44,6 +44,9 @@
 .navbar_links:hover {
     color: #F18c00; 
 }
+.navbar_links.active {
+    color: #F18c00;  
+}
 
 .navbar_login_button {
     padding: 10px 30px;
