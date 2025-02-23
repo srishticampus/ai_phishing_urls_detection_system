@@ -12,14 +12,17 @@ function UserHomePage() {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
   const [matchingAds, setMatchingAds] = useState([]);
-  const [displayedAds, setDisplayedAds] = useState([]); // Stores the 4 ads being displayed
-  const [currentIndex, setCurrentIndex] = useState(0); // Index for cycling ads
+  const [displayedAds, setDisplayedAds] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   const [isAdSafe, setIsAdSafe] = useState(null);
   const [adLink, setAdLink] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [safeMode, setSafeMode] = useState(localStorage.getItem("safeMode") === "true");
   const [prediction, setPrediction] = useState("");
+
   const baseUrl = import.meta.env.VITE_API_URL;
 
   // ✅ Listen for Safe Mode changes
@@ -31,7 +34,7 @@ function UserHomePage() {
     return () => window.removeEventListener("safeModeChanged", updateSafeMode);
   }, []);
 
-  // ✅ Fetch blogs
+  // ✅ Fetch blogs matching user's interests
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
@@ -46,14 +49,14 @@ function UserHomePage() {
     fetchBlogs();
   }, []);
 
-  // ✅ Fetch matching ads
+  // ✅ Fetch and sort ads (newest first) & set up auto-cycling
   useEffect(() => {
     const fetchMatchingAds = async () => {
       try {
         const response = await advertisementMatchingInterest();
-        const sortedAds = response.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); // Sort newest first
+        const sortedAds = response.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
         setMatchingAds(sortedAds);
-        setDisplayedAds(sortedAds.slice(0, 4)); // Show only first 4 ads initially
+        setDisplayedAds(sortedAds.slice(0, 4));
       } catch (err) {
         console.error("Failed to fetch matching ads:", err);
       }
@@ -68,9 +71,8 @@ function UserHomePage() {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % matchingAds.length);
         setDisplayedAds(matchingAds.slice(currentIndex, currentIndex + 4));
       }
-    }, 5000); // Change every 5 seconds
-
-    return () => clearInterval(interval); // Cleanup on unmount
+    }, 5000);
+    return () => clearInterval(interval);
   }, [matchingAds, currentIndex]);
 
   // ✅ Handle advertisement click
@@ -84,8 +86,9 @@ function UserHomePage() {
 
     try {
       const response = await advertisementSafetyCheck(adId);
-      setPrediction(response.data.prediction?.toLowerCase());
-      setIsAdSafe(response.data.prediction?.toLowerCase() === "benign");
+      const predicted = response.data.prediction?.toLowerCase();
+      setPrediction(predicted);
+      setIsAdSafe(predicted === "benign");
       setShowModal(true);
     } catch (error) {
       console.error("Error checking advertisement safety:", error);
@@ -180,6 +183,12 @@ function UserHomePage() {
               <div className="modal-body">
                 <p>{isAdSafe ? "✅ This link is Safe (Benign)." : `⚠️ This link is Unsafe (${prediction}). Proceed with caution!`}</p>
                 <p><strong>Ad Link:</strong><br /><a href={adLink} target="_blank" rel="noopener noreferrer">{adLink}</a></p>
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>Close</button>
+                <a href={adLink} target="_blank" rel="noopener noreferrer" className={`btn ${isAdSafe ? "btn-success" : "btn-danger"}`}>
+                  {isAdSafe ? "Proceed" : "Proceed at Your Own Risk"}
+                </a>
               </div>
             </div>
           </div>

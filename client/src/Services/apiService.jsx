@@ -242,10 +242,28 @@ export const advertisementMatchingInterest = async () => {
 
 
 
+// export const updateBlog = async (id, formData) => {
+//   return handleResponse(
+//     apiClient.put(`/api/blogs/${id}/`, formData, generateConfig(true))
+//   );
+// };
+
 export const updateBlog = async (id, formData) => {
-  return handleResponse(
-    apiClient.put(`/api/blogs/${id}/`, formData, generateConfig(true))
-  );
+  try {
+    // Set the proper headers for file uploads (multipart/form-data)
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data', // Important for file uploads
+      },
+    };
+
+    // Send PUT request to update the blog
+    const response = await apiClient.put(`/api/blogs/${id}/`, formData, config);
+    return response;
+  } catch (error) {
+    console.error('Error updating the blog:', error);
+    throw error;
+  }
 };
 
 // export const deleteBlog = async (id) => {
