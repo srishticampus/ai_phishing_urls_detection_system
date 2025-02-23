@@ -248,11 +248,30 @@ export const updateBlog = async (id, formData) => {
   );
 };
 
+// export const deleteBlog = async (id) => {
+//   return handleResponse(
+//     apiClient.delete(`/api/blogs/${id}/`, generateConfig())
+//   );
+// };
 export const deleteBlog = async (id) => {
-  return handleResponse(
-    apiClient.delete(`/api/blogs/${id}/`, generateConfig())
-  );
+  const url = `/api/blogs/${id}/`;
+  console.log("Making DELETE request to:", url);  // Log the URL being called
+  
+  try {
+    const response = await apiClient.delete(url, generateConfig());
+    
+    // Log the full response to the console
+    const fullResponse = await handleResponse(response);
+    console.log("Full Response:", fullResponse); // Log the full response object
+
+    return fullResponse; // Return the full response
+  } catch (error) {
+    // Log error in case of failure
+    console.error("Error in deleteBlog:", error);
+    throw error;
+  }
 };
+
 
 // ✅ Admin Functions
 export const viewUsers = async () => {
