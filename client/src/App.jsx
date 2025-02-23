@@ -335,7 +335,7 @@ function App() {
           />
 
           <Route
-            path="/admin-detailed-view-blog"
+            path="/admin-detailed-view-blog/:id"
             element={
               <>
                 <AdminDetailedView />
@@ -345,7 +345,7 @@ function App() {
           />
 
           <Route
-            path="/admin-edit-blog"
+            path="/admin-edit-blog/"
             element={
               <>
                 <AdminEditBlog />

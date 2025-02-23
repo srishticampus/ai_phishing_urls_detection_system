@@ -1,35 +1,28 @@
 import "../../Pages/UserHomePage/UserHomePage.css";
 import { useEffect, useState } from "react";
-import { advertisementSafetyCheck, advertisementMatchingInterest,viewBlogsMatchingInterests } from "../../Services/apiService";
-//import { useNavigate } from "react-router-dom";
+import { advertisementSafetyCheck, advertisementMatchingInterest, viewBlogsMatchingInterests } from "../../Services/apiService";
+
 import left from "../../assets/Images/left.png";
 import right from "../../assets/Images/right.png";
 import homepage from "../../assets/Images/homapageimg.png";
-// import personlap from "../../assets/Images/personlap.png";
-// import card_profile from "../../assets/Images/card_profile.png";
 import tabler_photo from "../../assets/Images/tabler_photo.png";
-// import Group from "../../assets/Images/Group.png";
 import LandingPage_Bg from "../../assets/Images/LandingPage_Bg.png";
-// import LandingPage_Bg_4 from "../../assets/Images/LandingPage_Bg_4.png";
-// import LandingPageBg_6 from "../../assets/Images/LandingPageBg_6.png";
-// import LandingPageBg_3 from "../../assets/Images/LandingPageBg_3.png";
-// import LandingPageBg_2 from "../../assets/Images/LandingPageBg_2.png";
-// import LandingPageBg_5 from "../../assets/Images/LandingPageBg_5.png";
 
 function UserHomePage() {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [matchingAds, setMatchingAds] = useState([]);
+  const [displayedAds, setDisplayedAds] = useState([]); // Stores the 4 ads being displayed
+  const [currentIndex, setCurrentIndex] = useState(0); // Index for cycling ads
   const [isAdSafe, setIsAdSafe] = useState(null);
   const [adLink, setAdLink] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [safeMode, setSafeMode] = useState(localStorage.getItem("safeMode") === "true");
   const [prediction, setPrediction] = useState("");
-  //const navigate = useNavigate();
   const baseUrl = import.meta.env.VITE_API_URL;
 
-  // ✅ Listen for Safe Mode changes & update immediately
+  // ✅ Listen for Safe Mode changes
   useEffect(() => {
     const updateSafeMode = () => {
       setSafeMode(localStorage.getItem("safeMode") === "true");
@@ -58,7 +51,9 @@ function UserHomePage() {
     const fetchMatchingAds = async () => {
       try {
         const response = await advertisementMatchingInterest();
-        setMatchingAds(response.data);
+        const sortedAds = response.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); // Sort newest first
+        setMatchingAds(sortedAds);
+        setDisplayedAds(sortedAds.slice(0, 4)); // Show only first 4 ads initially
       } catch (err) {
         console.error("Failed to fetch matching ads:", err);
       }
@@ -66,12 +61,23 @@ function UserHomePage() {
     fetchMatchingAds();
   }, []);
 
+  // ✅ Auto-cycle ads every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (matchingAds.length > 4) {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % matchingAds.length);
+        setDisplayedAds(matchingAds.slice(currentIndex, currentIndex + 4));
+      }
+    }, 5000); // Change every 5 seconds
+
+    return () => clearInterval(interval); // Cleanup on unmount
+  }, [matchingAds, currentIndex]);
+
   // ✅ Handle advertisement click
   const handleCardClick = async (adId, adLink) => {
     setAdLink(adLink);
 
     if (!safeMode) {
-      // ✅ Safe Mode is OFF, directly open the link
       window.open(adLink, "_blank", "noopener,noreferrer");
       return;
     }
@@ -79,14 +85,7 @@ function UserHomePage() {
     try {
       const response = await advertisementSafetyCheck(adId);
       setPrediction(response.data.prediction?.toLowerCase());
-
-      // ✅ Check prediction and classify ad safety
-      if (prediction === "benign") {
-        setIsAdSafe(true);
-      } else {
-        setIsAdSafe(false);
-      }
-
+      setIsAdSafe(response.data.prediction?.toLowerCase() === "benign");
       setShowModal(true);
     } catch (error) {
       console.error("Error checking advertisement safety:", error);
@@ -156,8 +155,8 @@ function UserHomePage() {
         {/* Right Side (Advertisements) */}
         <div className="col-sm-3">
           <div className="cards-container">
-            {matchingAds.length > 0 ? (
-              matchingAds.map((ad) => (
+            {displayedAds.length > 0 ? (
+              displayedAds.map((ad) => (
                 <div key={ad.id} className="card user-homepage-card-size" onClick={() => handleCardClick(ad.id, ad.link)}>
                   <img className="homepage-card-img-size mb-5" src={`${baseUrl}${ad.ad_image}`} alt="Advertisement" />
                 </div>
@@ -169,34 +168,23 @@ function UserHomePage() {
         </div>
       </div>
 
-     {/* Safety Check Modal */}
-{showModal && (
-  <div className="modal fade show" style={{ display: "block", opacity: 1 }} tabIndex="-1" aria-hidden="true">
-    <div className="modal-dialog">
-      <div className="modal-content">
-        <div className="modal-header">
-          <h5 className="modal-title">{isAdSafe ? "Safe Mode is ON" : "⚠️ Warning: Unsafe Link"}</h5>
-          <button type="button" className="btn-close" onClick={handleCloseModal}></button>
+      {/* Safety Check Modal */}
+      {showModal && (
+        <div className="modal fade show" style={{ display: "block", opacity: 1 }} tabIndex="-1" aria-hidden="true">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">{isAdSafe ? "Safe Mode is ON" : "⚠️ Warning: Unsafe Link"}</h5>
+                <button type="button" className="btn-close" onClick={handleCloseModal}></button>
+              </div>
+              <div className="modal-body">
+                <p>{isAdSafe ? "✅ This link is Safe (Benign)." : `⚠️ This link is Unsafe (${prediction}). Proceed with caution!`}</p>
+                <p><strong>Ad Link:</strong><br /><a href={adLink} target="_blank" rel="noopener noreferrer">{adLink}</a></p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="modal-body">
-          <p>{isAdSafe ? "✅ This link is Safe (Benign)." : `⚠️ This link is Unsafe (${prediction}). Proceed with caution!`}</p>
-          {/* ✅ Display link on the next line */}
-          <p>
-            <strong>Ad Link:</strong><br />
-            <a href={adLink} target="_blank" rel="noopener noreferrer">{adLink}</a>
-          </p>
-        </div>
-        <div className="modal-footer">
-          <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>Close</button>
-          <a href={adLink} target="_blank" rel="noopener noreferrer" className={`btn ${isAdSafe ? "btn-success" : "btn-danger"}`}>
-            {isAdSafe ? "Proceed" : "Proceed at Your Own Risk"}
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-)}
-
+      )}
     </div>
   );
 }
