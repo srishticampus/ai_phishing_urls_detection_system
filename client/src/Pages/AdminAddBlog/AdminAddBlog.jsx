@@ -43,12 +43,24 @@ function AdminAddBlog() {
   
   const handleSubmit = async (event) => {
     event.preventDefault();
+  
+    // Check if image and category are provided
+    if (!image) {
+      toast.error("Please upload an image!");
+      return;
+    }
+  
+    if (!category) {
+      toast.error("Please select a category!");
+      return;
+    }
+  
     const formData = new FormData();
     formData.append("title", title);
     formData.append("content", content);
     formData.append("interest_id", category);
-    if (image) formData.append("image", image);
-
+    formData.append("image", image);
+  
     try {
       await addBlog(formData);
       toast.success("Blog added successfully!");
@@ -61,6 +73,7 @@ function AdminAddBlog() {
       console.error(error);
     }
   };
+  
 
   return (
     <div>

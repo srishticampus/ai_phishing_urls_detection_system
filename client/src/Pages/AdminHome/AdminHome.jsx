@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { adminViewNewAdvertisers } from "../../Services/apiService";
+import { viewNewAdvertisers } from "../../Services/apiService";
 import { viewBlogs } from "../../Services/apiService"; // Import viewBlogs function
 import "../../Pages/AdminHome/AdminHome.css";
 import { Switch } from "antd";
@@ -7,15 +7,17 @@ import LandingP_card_one from '../../assets/Images/LandingP_card_one.png';
 import tabler_photo from '../../assets/Images/tabler_photo.png';
 import LandingPage_Bg from '../../assets/Images/LandingPage_Bg.png';
 import { toggleUserStatus } from "../../Services/apiService";
+import { useNavigate } from "react-router";
 
 function AdminHome() {
   const [advertisers, setAdvertisers] = useState([]);
   const [blogs, setBlogs] = useState([]); // State to store blogs
   const baseUrl = import.meta.env.VITE_API_URL;
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchAdvertisers = async () => {
       try {
-        const response = await adminViewNewAdvertisers();
+        const response = await viewNewAdvertisers();
         console.log("fullresponse", response.fullResponse);
 
         const validatedData = response.data.map(advertiser => {
@@ -29,8 +31,13 @@ function AdminHome() {
             is_active: advertiser.is_active || false,
           };
         });
+        setAdvertisers(prevAdvertisers => {
+          // Combine previous and new advertisers, then slice to get the latest 5
+          const combinedAdvertisers = [...validatedData, ...prevAdvertisers];
+          return combinedAdvertisers.slice(0, 5); // Slice to ensure only the latest 5
+        });
 
-        setAdvertisers(validatedData);
+
       } catch (error) {
         console.error("Error fetching advertisers data", error);
       }
@@ -49,6 +56,13 @@ function AdminHome() {
     fetchAdvertisers();
     fetchBlogs(); // Fetch blogs on component mount
   }, []);
+
+  function handleViewALL(){
+    navigate('/admin-view-advertisers')
+  }
+  function handleViewALLBlogs(){
+    navigate('/admin-view-blog')
+  }
 
   const handleSwitchChange = async (checked, id) => {
     try {
@@ -117,7 +131,7 @@ function AdminHome() {
         </table>
 
         <div className="d-flex justify-content-end">
-          <button className="btn admin-home-container-viewall">View All &nbsp; &gt;</button>
+          <button className="btn admin-home-container-viewall" onClick={handleViewALL}>View All &nbsp; &gt;</button>
         </div>
       </div>
 
@@ -156,7 +170,7 @@ function AdminHome() {
         </div>
 
         <div className="d-flex justify-content-end">
-          <button className="btn admin-home-container-viewall">View All &nbsp; &gt;</button>
+          <button className="btn admin-home-container-viewall" onClick={handleViewALLBlogs}>View All &nbsp; &gt;</button>
         </div>
       </div>
     </div>

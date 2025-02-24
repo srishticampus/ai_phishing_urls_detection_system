@@ -39,15 +39,20 @@ function UserHomePage() {
     const fetchBlogs = async () => {
       try {
         const response = await viewBlogsMatchingInterests();
+        console.log("Full Response Data:", response); // Log the full response to inspect it
+        console.log("Response Data:", response.data); // Log only the data part
         setBlogs(response.data);
       } catch (err) {
-        setError("Failed to fetch blogs");
+        setError("Failed to fetch blogs", err);
+        console.log("Failed to fetch blogs", err);
       } finally {
         setLoading(false);
       }
     };
     fetchBlogs();
   }, []);
+  
+  
 
   // ✅ Fetch and sort ads (newest first) & set up auto-cycling
   useEffect(() => {

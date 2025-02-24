@@ -1,3 +1,6 @@
+/* Privacy.css */
+
+/* Container for Privacy and Policy page */
 .privacy-and-policy-div {
     display: flex;
     flex-direction: column;
@@ -9,26 +12,26 @@
     padding: 0 20px;
 }
 
+/* Heading for Privacy and Policy */
 .privacy-and-policy-head {
     color: #F18C00;
-    font-family: Lato;
+    font-family: Lato, sans-serif; /* Ensuring the same font-family as in Services */
     font-size: 40px;
-    font-style: normal;
-    font-weight: 700;
+    font-weight: 700; /* Matching the font-weight used in Services */
     line-height: normal;
 }
 
+/* Paragraph for Privacy and Policy */
 .privacy-and-policy-para {
     color: #7F7F7F;
-    text-align: center;
-    font-family: Lato;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    text-align: justify;
+    text-align: justify; /* Ensuring text is justified */
+    font-family: Lato, sans-serif; /* Ensuring the same font-family as in Services */
+    font-size: 17px; /* Matching the font-size used in Terms and Services */
+    font-weight: 500; /* Matching the font-weight used in Services */
+    line-height: 2;
 }
 
+/* Footer styling for Privacy and Policy (if needed) */
 .privacy-and-policy-footer {
     position: fixed;
     bottom: 0;

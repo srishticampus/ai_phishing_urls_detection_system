@@ -37,12 +37,29 @@ function Footer() {
               <span className="footer_sphere_color">SPHERE</span>
             </p>
             <div className="footerIcons">
+              <a href="https://www.facebook.com/login/" target="_blank" rel="noopener noreferrer">
+                <img className="IconSpacing" src={fb} alt="Facebook" />
+              </a>
+              <a href="https://x.com/i/flow/login?lang=en&mx=2" target="_blank" rel="noopener noreferrer">
+                <img className="IconSpacing" src={twitter} alt="Twitter" />
+              </a>
+              <a href="https://www.instagram.com/accounts/emailsignup/" target="_blank" rel="noopener noreferrer">
+                <img className="IconSpacing" src={insta} alt="Instagram" />
+              </a>
+              <a href="https://in.pinterest.com/login/" target="_blank" rel="noopener noreferrer">
+                <img className="IconSpacing" src={pinterest} alt="Pinterest" />
+              </a>
+              <a href="https://www.youtube.com/account" target="_blank" rel="noopener noreferrer">
+                <img className="IconSpacing" src={ytb} alt="YouTube" />
+              </a>
+            </div>
+            {/* <div className="footerIcons">
               <img className="IconSpacing" src={fb} />
               <img className="IconSpacing" src={twitter} />
               <img className="IconSpacing" src={insta} />
               <img className="IconSpacing" src={pinterest} />
               <img className="IconSpacing" src={ytb} />
-            </div>
+            </div> */}
           </div>
 
           <div className="footer_sec_two">

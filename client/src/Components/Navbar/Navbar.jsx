@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, NavLink } from "react-router-dom";
 import "./Navbar.css";
 import { logout, checkLoginStatus } from "../../Services/apiService";
 
@@ -46,24 +46,49 @@ function Navbar() {
           <div className="collapse navbar-collapse" id="mynavbar">
             <ul className="navbar-nav navbar_list mx-auto">
               <li className="nav-item navbar_nav-item">
-                <Link className="nav-link navbar_links" to="/">
+                <NavLink
+                  className="nav-link navbar_links"
+                  to="/"
+                  end
+                  style={({ isActive }) => ({
+                    color: isActive ? '#F18c00' : 'white',
+                  })}
+                >
                   Home
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item navbar_nav-item">
-                <Link className="nav-link navbar_links" to="/about">
+                <NavLink
+                  className="nav-link navbar_links"
+                  to="/about"
+                  style={({ isActive }) => ({
+                    color: isActive ? '#F18c00' : 'white',
+                  })}
+                >
                   About
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item navbar_nav-item">
-                <Link className="nav-link navbar_links" to="/services">
+                <NavLink
+                  className="nav-link navbar_links"
+                  to="/services"
+                  style={({ isActive }) => ({
+                    color: isActive ? '#F18c00' : 'white',
+                  })}
+                >
                   Services
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item navbar_nav-item">
-                <Link className="nav-link navbar_links" to="/contact">
+                <NavLink
+                  className="nav-link navbar_links"
+                  to="/contact"
+                  style={({ isActive }) => ({
+                    color: isActive ? '#F18c00' : 'white',
+                  })}
+                >
                   Contact
-                </Link>
+                </NavLink>
               </li>
             </ul>
             <form className="d-flex ms-auto">

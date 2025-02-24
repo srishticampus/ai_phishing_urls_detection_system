@@ -302,6 +302,12 @@ export const viewUsers = async () => {
   );
 };
 
+export const viewNewAdvertisers = async () => {
+  return handleResponse(
+    apiClient.get("/api/admin-view-new-advertisers/", generateConfig())
+  );
+};
+
 export const toggleUserStatus = async (id) => {
   return handleResponse(
     apiClient.patch(
