@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { viewBlogs, updateBlog, getInterests } from "../../Services/apiService";
 import "../../Pages/AdminEditBlog/AdminEditBlog.css";
 import img from "../../assets/Images/LandingPage_Bg.png";
-import { useParams } from "react-router-dom";
+import { useParams , useNavigate } from "react-router-dom";
 
 const baseUrl = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
@@ -19,7 +19,7 @@ function AdminEditBlog() {
     updated_at: "",
   });
   const [categories, setCategories] = useState([]);
-
+ let navigate = useNavigate();
   // Fetch the blog details and categories
   useEffect(() => {
     const fetchBlogDetails = async () => {
@@ -51,6 +51,10 @@ function AdminEditBlog() {
       [name]: value,
     }));
   };
+
+  function handleCancel(){
+    navigate("/admin-view-blog")
+  }
 
   // Handle file input change for image upload
   const handleFileChange = (e) => {
@@ -208,7 +212,7 @@ function AdminEditBlog() {
 
       {/* Cancel and Update buttons */}
       <div className="d-flex justify-content-center mt-5 mb-5">
-        <button className="btn btn-outline-dark admin-edit-blog-button">
+        <button className="btn btn-outline-dark admin-edit-blog-button" onClick={handleCancel}>
           Cancel
         </button>
         <button

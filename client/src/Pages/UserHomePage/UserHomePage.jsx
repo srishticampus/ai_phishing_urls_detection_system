@@ -140,7 +140,9 @@ function UserHomePage() {
           </div>
 
           {/* Blogs */}
-          <div className="row">
+         
+          <div className="row mt-5">
+          <p className="user-homepage-our-recent-blogs">Our Recent Blogs</p>
             {blogs.length > 0 ? (
               blogs.map((blog) => (
                 <div key={blog.id} className="card col-sm-2 user-homepage-cardsize">

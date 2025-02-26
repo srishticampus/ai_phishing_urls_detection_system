@@ -1,22 +1,25 @@
-.user-homepage-div1{
+.user-homepage-div1 {
     max-width: 890px;
     height: 483px;
     border-radius: 32px;
-background: linear-gradient(180deg, #FFF 0%, #FCDDB3 100%);
+    background: linear-gradient(180deg, #FFF 0%, #FCDDB3 100%);
 }
-.user-homepage-div1-carousel{
+
+.user-homepage-div1-carousel {
     max-width: 890px;
     height: 483px;
     border-radius: 32px;
     background: #FEF7EC;
 }
-.user-homoepage-div1-carousel3{
+
+.user-homoepage-div1-carousel3 {
     max-width: 890px;
     height: 483px;
     border-radius: 32px;
     overflow: hidden;
     position: relative;
 }
+
 .user-homoepage-div1-carousel3::before {
     content: '';
     position: absolute;
@@ -27,71 +30,82 @@ background: linear-gradient(180deg, #FFF 0%, #FCDDB3 100%);
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1;
 }
+
 .overlay-text {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 2; 
+    z-index: 2;
     text-align: center;
 
 }
 
-.user-homepage-card-size{
+.user-homepage-card-size {
     height: 475px;
     border: none;
 }
-.homepage-card-img-size{
+
+.homepage-card-img-size {
     height: 475px;
+  
+
 }
-.user-homepage-container{
+
+.user-homepage-container {
     margin-top: 50px;
 }
-.user-homepage-div1-head{
+
+.user-homepage-div1-head {
     color: #333;
-font-family: Lato;
-font-size: 40px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
+    font-family: Lato;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
 }
-.user-homepage-div1-para{
+
+.user-homepage-div1-para {
     color: #333;
-font-family: Lato;
-font-size: 14px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
 }
-.user-homepage-div1-bar{
+
+.user-homepage-div1-bar {
     display: flex;
-padding: 20px 40px;
-justify-content: center;
-align-items: center;
-gap: 10px;
-border-radius: 20px;
-background: #F18C00;
-color: white;
-width: 600px;
+    padding: 20px 40px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 20px;
+    background: #F18C00;
+    color: white;
+    width: 600px;
 }
-.user-homepage-div2-head{
-color: #333;
-font-family: Lato;
-font-size: 32px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
-margin-top: 20px;
+
+.user-homepage-div2-head {
+    color: #333;
+    font-family: Lato;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin-top: 20px;
 }
-.user-homepage-cardsize{
+
+.user-homepage-cardsize {
     position: relative;
-    width: 330px;
-    height: 295.312px;
-    flex-shrink: 0;
-    border: none;
+    width: 320px;
+    border: 1px solid; 
+    margin-left: 10px;
+    margin-top: 10px;
     height: auto;
 }
-.user-homepage-cardone-header{
+
+.user-homepage-cardone-header {
     border-radius: 0;
     position: absolute;
     top: 20px;
@@ -107,7 +121,8 @@ margin-top: 20px;
     background: rgba(255, 255, 255, 0.20);
     backdrop-filter: blur(4.218749046325684px);
 }
-.user-homepage-cardone-headerone{
+
+.user-homepage-cardone-headerone {
     position: absolute;
     top: 20px;
     right: 30px;
@@ -123,7 +138,8 @@ margin-top: 20px;
     backdrop-filter: blur(4.218749046325684px);
     border-radius: 25px;
 }
-.user-homepage-cardone-body{
+
+.user-homepage-cardone-body {
     display: flex;
     width: 315px;
     height: 54.844px;
@@ -137,11 +153,22 @@ margin-top: 20px;
     line-height: 28.125px;
 }
 
-.user-homepage-card-profile-img{
+.user-homepage-card-profile-img {
     width: 30px;
     height: 30px;
 }
-.user-homepage-card-profilename{
+
+.user-homepage-our-recent-blogs{
+    color: #333;
+
+font-family: Lato;
+font-size: 32px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+
+.user-homepage-card-profilename {
 
     color: #333;
     font-family: Lato;
@@ -151,14 +178,16 @@ margin-top: 20px;
     line-height: 28.125px;
     margin-left: 10px;
 }
-.user-homepage-profile-rectangle{
+
+.user-homepage-profile-rectangle {
     width: 25.312px;
     height: 0.703px;
     background: #7F7F7F;
     margin-top: 15px;
     margin-left: 10px;
 }
-.user-homepage-profile-textcolor{
+
+.user-homepage-profile-textcolor {
     color: #7F7F7F;
     font-family: Lato;
     font-size: 2px;
@@ -166,20 +195,23 @@ margin-top: 20px;
     font-weight: 400;
     line-height: 28.125px;
 }
-.user-homepage-profile-textcolortwo{
+
+.user-homepage-profile-textcolortwo {
     width: 3px;
     height: 3px;
     fill: #7F7F7F;
 }
-.user-homepage-share-color{
+
+.user-homepage-share-color {
     color: #7F7F7F;
-font-family: Lato;
-font-size: 12px;
-font-style: normal;
-font-weight: 400;
-line-height: 28.125px; 
+    font-family: Lato;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28.125px;
 }
-.user-homepage-cardone-para{
+
+.user-homepage-cardone-para {
     color: #7F7F7F;
     font-family: Lato;
     font-size: 14px;
@@ -188,7 +220,8 @@ line-height: 28.125px;
     line-height: 149.687%;
     text-align: justify;
 }
-.user-homepage-readmore-button{
+
+.user-homepage-readmore-button {
     color: #F18C00;
     font-family: Lato;
     font-size: 16px;
@@ -200,39 +233,45 @@ line-height: 28.125px;
     width: 120px;
 }
 
-.user-homepage-div1-carousel-para{
+.user-homepage-div1-carousel-para {
     color: #333;
-font-family: Lato;
-font-size: 50px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
+    font-family: Lato;
+    font-size: 50px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
 }
-.user-homepage-div1-carousel-personlap{
+
+.user-homepage-div1-carousel-personlap {
     position: relative;
-right: 150px;
-bottom: 50px;
-height: 400px;
+    right: 150px;
+    bottom: 50px;
+    height: 400px;
 }
-.user-homepage-carousel3-img-img-size{
+
+.user-homepage-carousel3-img-img-size {
     width: 300px;
     height: 240px;
-    
+
 }
-.user-homepage-img-border-radius-top-left{
-border-top-left-radius: 32px;
+
+.user-homepage-img-border-radius-top-left {
+    border-top-left-radius: 32px;
 }
-.user-homepage-img-border-radius-top-right{
+
+.user-homepage-img-border-radius-top-right {
     border-top-right-radius: 32px;
 }
-.user-homepage-img-border-radius-bottom-left{
+
+.user-homepage-img-border-radius-bottom-left {
     border-bottom-left-radius: 32px;
 }
-.user-homepage-img-border-radius-bottom-right{
+
+.user-homepage-img-border-radius-bottom-right {
     border-bottom-right-radius: 32px;
 }
 
-.user-homepage-overlay-text-head{
+.user-homepage-overlay-text-head {
     color: #FFF;
     font-family: Lato;
     font-size: 40px;
@@ -240,7 +279,8 @@ border-top-left-radius: 32px;
     font-weight: 700;
     line-height: normal;
 }
-.user-homepage-overlay-text-para{
+
+.user-homepage-overlay-text-para {
     color: #FFF;
     text-align: center;
     text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
@@ -250,44 +290,52 @@ border-top-left-radius: 32px;
     font-weight: 600;
     line-height: normal;
 }
-.user-homepage-div3-head{
+
+.user-homepage-div3-head {
     color: #333;
-text-align: left;
-font-family: Lato;
-font-size: 24px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
+    text-align: left;
+    font-family: Lato;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
 }
-.user-homepage-div3-right-img{
+
+.user-homepage-div3-right-img {
     height: 100px;
 }
-.user-homepage-div3-right-img-sub{
+
+.user-homepage-div3-right-img-sub {
     color: #333;
-font-family: Lato;
-font-size: 16px;
-font-style: normal;
-font-weight: 400;
-line-height: 21.36px; /* 133.503% */
+    font-family: Lato;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 21.36px;
+    /* 133.503% */
 }
-.user-homepage-div3-right-img-sub-two{
+
+.user-homepage-div3-right-img-sub-two {
     color: #7F7F7F;
-font-family: Lato;
-font-size: 13px;
-font-style: normal;
-font-weight: 400;
-line-height: 17.383px; /* 133.714% */
-letter-spacing: 0.261px;
+    font-family: Lato;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 17.383px;
+    /* 133.714% */
+    letter-spacing: 0.261px;
 }
-.user-homepage-div3-sub-1{
+
+.user-homepage-div3-sub-1 {
     color: #7F7F7F;
     font-family: Lato;
     font-size: 13px;
     font-style: normal;
     font-weight: 500;
-    line-height: normal; 
+    line-height: normal;
 }
-.user-homepage-div3-sub-2{
+
+.user-homepage-div3-sub-2 {
     color: #333;
     font-family: Lato;
     font-size: 20px;
@@ -295,19 +343,23 @@ letter-spacing: 0.261px;
     font-weight: 400;
     line-height: normal;
 }
-.user-homepage-div3-sub-3{
+
+.user-homepage-div3-sub-3 {
     color: #7F7F7F;
     font-family: Lato;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 18.252px; /* 130.371% */
+    line-height: 18.252px;
+    /* 130.371% */
 }
-.user-home-page-div-3-sub-container{
+
+.user-home-page-div-3-sub-container {
     position: relative;
     bottom: 190px;
 }
-.user-homepage-above-footer-card{
-    height:600px ;
+
+.user-homepage-above-footer-card {
+    height: 600px;
     margin-bottom: 50px;
 }
