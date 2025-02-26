@@ -58,6 +58,8 @@ function HomePageNavbar() {
 
   const confirmLogout = () => {
     logout();
+    setIsSafeMode(false);
+    localStorage.setItem("safeMode", "false");
     setIsLogoutConfirmOpen(false);
     navigate("/");
   };

@@ -158,6 +158,16 @@
     height: 30px;
 }
 
+.user-homepage-our-recent-blogs{
+    color: #333;
+
+font-family: Lato;
+font-size: 32px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+
 .user-homepage-card-profilename {
 
     color: #333;

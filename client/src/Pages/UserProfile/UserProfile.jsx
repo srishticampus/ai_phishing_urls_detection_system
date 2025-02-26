@@ -167,7 +167,7 @@ function UserProfile() {
           alt="profileImage"
         />
         <button className="btn mt-3">
-          <input type="file" name="image" onChange={handleImageChange} />+ Add
+          <input type="file" name="image" accept="image/*" onChange={handleImageChange} />+ Add
           Image
         </button>
       </div>
