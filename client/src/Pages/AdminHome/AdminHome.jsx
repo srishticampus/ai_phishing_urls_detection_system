@@ -92,8 +92,11 @@ function AdminHome() {
 
   return (
     <div className="admin-home-container">
-      <p className="admin-home-container-head ms-3">View Advertisers Requests</p>
-      <div className="container">
+    <p className="admin-home-container-head ms-3">View Advertisers Requests</p>
+    <div className="container">
+      {advertisers.length === 0 ? (
+        <p>No advertisers available.</p>
+      ) : (
         <table className="admin-home-table-container">
           <thead>
             <tr className="admin-home-table-color">
@@ -129,18 +132,22 @@ function AdminHome() {
             ))}
           </tbody>
         </table>
+      )}
 
-        <div className="d-flex justify-content-end">
-          <button className="btn admin-home-container-viewall" onClick={handleViewALL}>View All &nbsp; &gt;</button>
-        </div>
+      <div className="d-flex justify-content-end">
+        <button className="btn admin-home-container-viewall" onClick={handleViewALL}>View All &nbsp; &gt;</button>
       </div>
+    </div>
 
-      {/* Recent Blogs Section */}
-      <div>
-        <p className="admin-home-container-head ms-3">View Recent Blogs</p>
-        <div className="d-flex justify-content-center">
-          <div className="row">
-            {blogs.map((blog) => (
+    {/* Recent Blogs Section */}
+    <div>
+      <p className="admin-home-container-head ms-3">View Recent Blogs</p>
+      <div className="d-flex justify-content-center">
+        <div className="row">
+          {blogs.length === 0 ? (
+            <p>No blogs available.</p>
+          ) : (
+            blogs.map((blog) => (
               <div className="card col-sm-3 admin-home-cardsize" key={blog.id}>
                 <img className="admin-home-cardone-imgone" src={`${baseUrl}${blog.image}` || LandingPage_Bg} />
                 <div>
@@ -151,7 +158,6 @@ function AdminHome() {
                 </div>
                 <div className="card-body">
                   <p className="admin-home-cardone-body">{blog.title}</p>
-
                   <div className="d-flex">
                     <div className="d-flex landingpage-card-profile-info">
                       <p className="profile-textcolor">{blog.date}</p>
@@ -161,19 +167,100 @@ function AdminHome() {
                 <p className="admin-view-blog-cardone-para">
                   {blog.content} 
                 </p>
-                {/* <button className="btn admin-home-readmore-button">
-                  Read More <span className="greaterthan-symbol">&gt;</span>
-                </button> */}
               </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="d-flex justify-content-end">
-          <button className="btn admin-home-container-viewall" onClick={handleViewALLBlogs}>View All &nbsp; &gt;</button>
+            ))
+          )}
         </div>
       </div>
+
+      <div className="d-flex justify-content-end">
+        <button className="btn admin-home-container-viewall" onClick={handleViewALLBlogs}>View All &nbsp; &gt;</button>
+      </div>
     </div>
+  </div>
+    // <div className="admin-home-container">
+    //   <p className="admin-home-container-head ms-3">View Advertisers Requests</p>
+    //   <div className="container">
+    //     <table className="admin-home-table-container">
+    //       <thead>
+    //         <tr className="admin-home-table-color">
+    //           <th className="admin-home-table-th">S No</th>
+    //           <th className="admin-home-table-th">Name</th>
+    //           <th className="admin-home-table-th">Phone Number</th>
+    //           <th className="admin-home-table-th">Email</th>
+    //           <th className="admin-home-table-th">Company Name</th>
+    //           <th className="admin-home-table-th">Business Category</th>
+    //           <th className="admin-home-table-th">Action</th>
+    //         </tr>
+    //       </thead>
+    //       <tbody>
+    //         {advertisers.map((advertiser, index) => (
+    //           <tr className="admin-home-table-tr" key={advertiser.id}>
+    //             <td className="admin-home-table-td">{index + 1}</td>
+    //             <td className="admin-home-table-td">{advertiser.username}</td>
+    //             <td className="admin-home-table-td">{advertiser.contact_number}</td>
+    //             <td className="admin-home-table-td">{advertiser.email}</td>
+    //             <td className="admin-home-table-td">{advertiser.business_name}</td>
+    //             <td className="admin-home-table-td">{advertiser.business_type}</td>
+    //             <td className="admin-home-table-td">
+    //               <div>
+    //                 <Switch
+    //                   checked={advertiser.is_active}
+    //                   checkedChildren="Active"
+    //                   unCheckedChildren="Inactive"
+    //                   onChange={(checked) => handleSwitchChange(checked, advertiser.id)}
+    //                 />
+    //               </div>
+    //             </td>
+    //           </tr>
+    //         ))}
+    //       </tbody>
+    //     </table>
+
+    //     <div className="d-flex justify-content-end">
+    //       <button className="btn admin-home-container-viewall" onClick={handleViewALL}>View All &nbsp; &gt;</button>
+    //     </div>
+    //   </div>
+
+    //   {/* Recent Blogs Section */}
+    //   <div>
+    //     <p className="admin-home-container-head ms-3">View Recent Blogs</p>
+    //     <div className="d-flex justify-content-center">
+    //       <div className="row">
+    //         {blogs.map((blog) => (
+    //           <div className="card col-sm-3 admin-home-cardsize" key={blog.id}>
+    //             <img className="admin-home-cardone-imgone" src={`${baseUrl}${blog.image}` || LandingPage_Bg} />
+    //             <div>
+    //               <span>
+    //                 <p className="badge p-2 admin-home-cardone-header">{blog.category}</p>
+    //               </span>
+    //               <img className="admin-home-cardone-headerone" src={tabler_photo} alt="tabler" />
+    //             </div>
+    //             <div className="card-body">
+    //               <p className="admin-home-cardone-body">{blog.title}</p>
+
+    //               <div className="d-flex">
+    //                 <div className="d-flex landingpage-card-profile-info">
+    //                   <p className="profile-textcolor">{blog.date}</p>
+    //                 </div>
+    //               </div>
+    //             </div>
+    //             <p className="admin-view-blog-cardone-para">
+    //               {blog.content} 
+    //             </p>
+    //             {/* <button className="btn admin-home-readmore-button">
+    //               Read More <span className="greaterthan-symbol">&gt;</span>
+    //             </button> */}
+    //           </div>
+    //         ))}
+    //       </div>
+    //     </div>
+
+    //     <div className="d-flex justify-content-end">
+    //       <button className="btn admin-home-container-viewall" onClick={handleViewALLBlogs}>View All &nbsp; &gt;</button>
+    //     </div>
+    //   </div>
+    // </div>
   );
 }
 
