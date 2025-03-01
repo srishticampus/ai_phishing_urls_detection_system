@@ -20,14 +20,29 @@ function AdminEditBlog() {
   });
   const [categories, setCategories] = useState([]);
  let navigate = useNavigate();
+
+ const formatDate = (dateString) => {
+  // Strip the time portion of the ISO 8601 string to match the date format (YYYY-MM-DD)
+  return dateString.split("T")[0]; // Get only the date part before 'T'
+};
   // Fetch the blog details and categories
   useEffect(() => {
     const fetchBlogDetails = async () => {
       try {
         const blogResponse = await viewBlogs(id);
-        setBlog(blogResponse.data);
-        setUpdatedBlog(blogResponse.data);
-
+        console.log(blogResponse.data); // Log the API response for debugging
+  
+        const blogData = blogResponse.data;
+  
+        // Set the blog data including category ID from the 'interests' object
+        setBlog(blogData);
+        setUpdatedBlog({
+          ...blogData,
+          category: blogData.interests ? blogData.interests.id : "",  // Correctly set the category ID
+          created_at: formatDate(blogData.created_at),
+          updated_at: formatDate(blogData.updated_at),
+        });
+  
         // Fetch categories after the blog details are loaded
         const categoriesResponse = await getInterests();
         setCategories(categoriesResponse.data);
@@ -35,10 +50,10 @@ function AdminEditBlog() {
         console.error("Error fetching blog details or categories:", error);
       }
     };
-
+  
     fetchBlogDetails();
   }, [id]);
-
+  
   if (!blog || !categories.length) {
     return <div>Loading...</div>;
   }
@@ -83,12 +98,25 @@ function AdminEditBlog() {
       formData.append("title", updatedBlog.title);
       formData.append("content", updatedBlog.content);
       formData.append("category", updatedBlog.category);
-
-      // Only append the image if there's an image selected
+  
+      // Only append the image if a new one is uploaded
       if (updatedBlog.image) {
+        console.log("Appending new image:", updatedBlog.image);
         formData.append("image", updatedBlog.image);
+      } else {
+        // If no image is uploaded, don't append the image field or append `null`
+        // Depending on your backend's expectations, you can either:
+        // - Omit the image field from FormData, or
+        // - Set it as null to indicate no change in the image
+        formData.append("image", null); // If backend expects null when no image is provided
       }
-
+  
+      // Log the FormData content for debugging
+      for (let pair of formData.entries()) {
+        console.log(pair[0] + ": " + pair[1]);
+      }
+  
+      // Call the API to update the blog
       await updateBlog(id, formData);
       toast.success("Blog updated successfully!");
     } catch (error) {
@@ -96,6 +124,11 @@ function AdminEditBlog() {
       toast.error("Failed to update the blog.");
     }
   };
+  
+  
+  
+  
+  
 
   return (
     <div className="admin-edit-blog-container">
@@ -165,7 +198,7 @@ function AdminEditBlog() {
             <hr />
             <div className="admin-edit-blog-text-inside-img">
               <p className="admin-edit-blog-text-inside-img-para">
-                {updatedBlog.description || "No description available"}
+          
               </p>
             </div>
           </div>
