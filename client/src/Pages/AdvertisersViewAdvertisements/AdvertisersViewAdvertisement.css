@@ -19,4 +19,5 @@ place-items: center;
 .advertisers-view-advertisements-cards{
     border: 0;
     background: none;
+    width: 250px;
 }

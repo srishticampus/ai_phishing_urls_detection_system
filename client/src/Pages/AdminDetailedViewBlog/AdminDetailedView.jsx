@@ -26,24 +26,29 @@ function AdminDetailedView() {
         navigate(`/admin-edit-blog/${id}`);  // Navigating to AdminEditBlog page with the blog ID
     }
     const handleDelete = async () => {
-        console.log("Deleting blog with ID:", id); // Log ID to check if it's correct
         const confirmDelete = window.confirm("Are you sure you want to delete this blog?");
         if (confirmDelete) {
-          try {
-            const response = await deleteBlog(id); // Ensure ID is passed here
-            console.log("Delete Blog Response:", response);
-            if (response.success) {
-              alert('Blog deleted successfully!');
-              navigate('/admin-view-blog');
-            } else {
-              alert('Error deleting the blog');
+            try {
+                const response = await deleteBlog(id);  // Make the delete API call
+                console.log("Delete Blog Response:", response); // Check what comes back
+    
+                // Since the deleteBlog function returns only the data (which has the message),
+                // We can check if the message is 'Blog deleted successfully'
+                if (response.message === "Blog deleted successfully") {
+                    alert('Blog deleted successfully!');
+                    navigate('/admin-view-blog');
+                } else {
+                    console.error("Delete failed:", response);
+                    alert('Error deleting the blog');
+                }
+            } catch (error) {
+                console.error("Error deleting the blog:", error);
+                alert('Error deleting the blog');
             }
-          } catch (error) {
-            console.error("Error deleting the blog:", error);
-            alert('Error deleting the blog');
-          }
         }
-      };
+    };
+    
+    
     
 
     if (!blog) {

@@ -95,7 +95,7 @@ function AdvertisersLogin() {
             onChange={(e) => setUsername(e.target.value)}
           />
           {errors.username && (
-            <p className="error-message">{errors.username}</p>
+            <p className="error-message mt-2">{errors.username}</p>
           )}
 
           <div className="password-container">
@@ -112,7 +112,7 @@ function AdvertisersLogin() {
               onClick={togglePasswordVisibility}
             />
             {errors.password && (
-              <p className="error-message">{errors.password}</p>
+              <p className="error-message mt-2">{errors.password}</p>
             )}
           </div>
 
