@@ -8,6 +8,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import 'font-awesome/css/font-awesome.min.css'; // Import FontAwesome for the toggle icon
 
+
+
 function AdvertisersSignup() {
     const fileInputRef = useRef(null);
     const [interests, setInterests] = useState([]);
@@ -24,6 +26,8 @@ function AdvertisersSignup() {
         profile_image: null,
         user_type: "advertiser"
     });
+    const [imagePreview, setImagePreview] = useState(null);  
+    const [imageName, setImageName] = useState("");  
     const [errors, setErrors] = useState({});
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -52,6 +56,8 @@ function AdvertisersSignup() {
         const file = e.target.files[0];
         if (file) {
             setFormData({ ...formData, profile_image: file });
+            setImagePreview(URL.createObjectURL(file));  
+            setImageName(file.name);  
         }
     };
 
@@ -130,16 +136,26 @@ function AdvertisersSignup() {
         <div className="d-flex justify-content-center flex-column">
             <p className="advertisers-signup-head">SignUp!</p>
             <div>
-                <div className="advertisers-signup-img-div">
-                    <img src={useemptyprofile} alt="profileImg" />
-                    <button type="button" className='btn mt-3' onClick={handleButtonClick}>+ Add Image</button>
-                    <input
-                        type="file"
-                        ref={fileInputRef}
-                        style={{ display: 'none' }}
-                        onChange={handleFileChange}
-                    />
-                </div>
+            <div className="advertisers-signup-img-div">
+    <img src={imagePreview || useemptyprofile} alt="profileImg" />
+    <button type="button" className='btn mt-3' onClick={handleButtonClick}>
+        {/* Check if an image is selected */}
+        {imagePreview ? (
+            <div className="image-name-preview mt-2">
+                <p>{imageName}</p> {/* Show image name if an image is selected */}
+            </div>
+        ) : (
+            "Add Image"  // Show "Add Image" button if no image is selected
+        )}
+    </button>
+    <input
+        type="file"
+        ref={fileInputRef}
+        style={{ display: 'none' }}
+        onChange={handleFileChange}
+    />
+</div>
+
                 <div className="row advertisers-signup-name-row">
                     <div className="col-sm-4">
                         <input

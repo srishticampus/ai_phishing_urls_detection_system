@@ -21,7 +21,7 @@ function AdvertiserSidebar() {
 
     
     const handleLogoutConfirm = () => {
-        logout(); // Remove tokens
+        logout(); 
         setIsLoggedIn(false); 
         setShowModal(false); 
         navigate("/advertiser-login"); 

@@ -3,6 +3,7 @@ import { advertisersAddAdvertisement } from "../../Services/apiService";
 import "../../Pages/AdvertisersAddAdvertisements/AdvertisersAddAdvertisement.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // ✅ Import Toastify styles
+import {useNavigate}from "react-router-dom"
 
 function AdvertisersAddAdvertisements() {
   const [formData, setFormData] = useState({
@@ -12,6 +13,9 @@ function AdvertisersAddAdvertisements() {
     start_date: "",
     end_date: "",
   });
+
+
+  const navigate = useNavigate();
 
   const handleButtonClick = () => {
     document.getElementById("fileInput").click();
@@ -55,7 +59,7 @@ function AdvertisersAddAdvertisements() {
       
       if (response.success) {
         toast.success("Advertisement created successfully! 🎉");
-
+        navigate("/advertisers-view-advertisements")
         // ✅ Reset form after success
         setFormData({
           ad_image: null,

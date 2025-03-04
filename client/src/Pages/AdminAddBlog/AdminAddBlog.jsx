@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { addBlog, getInterests } from "../../Services/apiService";
 import "../../Pages/AdminAddBlog/AdminAddBlog.css";
+import { useNavigate } from "react-router";
 
 function AdminAddBlog() {
   const [title, setTitle] = useState("");
@@ -10,6 +11,8 @@ function AdminAddBlog() {
   const [categoryName, setCategoryName] = useState("");
   const [image, setImage] = useState(null);
   const [interests, setInterests] = useState([]);
+  const [imageName, setImageName] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchInterests = async () => {
@@ -38,6 +41,7 @@ function AdminAddBlog() {
         return;
       }
       setImage(file);
+      setImageName(file.name);
     }
   };
   
@@ -64,10 +68,14 @@ function AdminAddBlog() {
     try {
       await addBlog(formData);
       toast.success("Blog added successfully!");
+      if(toast.success){
+        navigate("/admin-view-blog")
+      }
       setTitle("");
       setContent("");
       setCategory("");
       setImage(null);
+      setImageName("");
     } catch (error) {
       toast.error("Error adding blog!");
       console.error(error);
@@ -95,6 +103,9 @@ function AdminAddBlog() {
                         onChange={handleImageChange}
                       />
                       <i className="bi bi-upload ms-5"></i>
+                      {imageName && ( 
+                      <div className="mt-2">{imageName}</div>
+                    )}
                     </label>
                   </div>
 

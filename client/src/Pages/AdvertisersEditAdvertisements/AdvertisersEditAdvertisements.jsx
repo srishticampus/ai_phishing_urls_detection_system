@@ -5,6 +5,7 @@ import "../../Pages/AdvertisersEditAdvertisements/AdvertisersEditAdvertisements.
 import { format } from "date-fns";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const baseUrl = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
@@ -20,7 +21,8 @@ function AdvertisersEditAdvertisements() {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const [imageName, setImageName] = useState("");
+const navigate = useNavigate();
   useEffect(() => {
     const fetchAdvertisementDetails = async () => {
       try {
@@ -61,6 +63,7 @@ function AdvertisersEditAdvertisements() {
         ...prevData,
         ad_image: file,
       }));
+      setImageName(file.name);
     }
   };
 
@@ -84,6 +87,7 @@ function AdvertisersEditAdvertisements() {
       const response = await advertisersEditAdvertisement(id, form);
       console.log("✅ Advertisement updated:", response);
       toast.success("Advertisement updated successfully! 🎉", { position: "top-right", autoClose: 3000 });
+      navigate("/advertisers-view-advertisements")
     } catch (err) {
       setError("❌ Failed to update advertisement.");
       console.error(err.response || err);
@@ -104,7 +108,7 @@ function AdvertisersEditAdvertisements() {
           <div className="card-body">
             {/* Image Upload Section */}
             <div className="advertisers-edit-advertisement-center-button d-flex justify-content-center">
-              <button className="btn btn-light adv-edit-up-img-button" onClick={() => document.getElementById("fileInput").click()}>
+            <label className="btn btn-light adv-edit-up-img-button">
                 Upload Image
                 <input
                   id="fileInput"
@@ -113,7 +117,23 @@ function AdvertisersEditAdvertisements() {
                   style={{ display: "none" }}
                   onChange={handleImageChange}
                 />
-              </button>
+                {/* Display Image Name inside the label if an image is selected */}
+                {imageName && (
+                  <span className="ms-2">({imageName})</span>
+                )}
+              </label>
+              {/* <button className="btn btn-light adv-edit-up-img-button" onClick={() => document.getElementById("fileInput").click()}>
+                Upload Image
+                <input
+                  id="fileInput"
+                  type="file"
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  onChange={handleImageChange}
+                />
+                
+              </button> */}
+              
             </div>
 
             {/* Display Existing Image */}
@@ -122,6 +142,7 @@ function AdvertisersEditAdvertisements() {
                 <img src={formData.ad_image} alt="Advertisement" width="150" />
               </div>
             )}
+         
 
             {/* Form Fields */}
             <div className="card advertisers-edit-advertisement-sec-card">
