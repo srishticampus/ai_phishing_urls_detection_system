@@ -17,6 +17,30 @@ class CustomUserAdmin(UserAdmin):
     list_filter = ('is_active', 'is_staff', 'user_type', 'groups')
     ordering = ('id',)  # Order by ID
 
+    #  Add `user_type` to fieldsets
+    fieldsets = (
+        ('Personal Information', {
+            'fields': ('username', 'email', 'password', 'first_name', 'last_name', 'user_type')
+        }),
+        ('Permissions', {
+            'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')
+        }),
+        ('Important Dates', {
+            'fields': ('last_login', 'date_joined')
+        }),
+    )
+
+    #  Allow user type modification but keep other fields read-only
+    readonly_fields = ('last_login', 'date_joined')
+
+    #  Enable `user_type` field when creating a new user
+    add_fieldsets = (
+        ('User Credentials', {
+            'classes': ('wide',),
+            'fields': ('username', 'email', 'password1', 'password2', 'user_type'),
+        }),
+    )
+
 # Register UserProfile, Interest, and UserInterest models
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
