@@ -1,7 +1,7 @@
 import "../../Pages/UserHomePage/UserHomePage.css";
 import { useEffect, useState } from "react";
 import { advertisementSafetyCheck, advertisementMatchingInterest, viewBlogsMatchingInterests } from "../../Services/apiService";
-
+import { useNavigate } from "react-router-dom";
 import left from "../../assets/Images/left.png";
 import right from "../../assets/Images/right.png";
 import homepage from "../../assets/Images/homapageimg.png";
@@ -22,7 +22,7 @@ function UserHomePage() {
   const [showModal, setShowModal] = useState(false);
   const [safeMode, setSafeMode] = useState(localStorage.getItem("safeMode") === "true");
   const [prediction, setPrediction] = useState("");
-
+  const navigate = useNavigate();
   const baseUrl = import.meta.env.VITE_API_URL;
 
   // ✅ Listen for Safe Mode changes
@@ -79,6 +79,10 @@ function UserHomePage() {
     }, 5000);
     return () => clearInterval(interval);
   }, [matchingAds, currentIndex]);
+
+  const handleBlogClick = (id) => {
+    navigate(`/user-homepage-card-details/${id}`);
+  };
 
   // ✅ Handle advertisement click
   const handleCardClick = async (adId, adLink) => {
@@ -145,7 +149,7 @@ function UserHomePage() {
           <p className="user-homepage-our-recent-blogs">Our Recent Blogs</p>
             {blogs.length > 0 ? (
               blogs.map((blog) => (
-                <div key={blog.id} className="card col-sm-2 user-homepage-cardsize">
+                <div key={blog.id} className="card col-sm-2 user-homepage-cardsize" onClick={() => handleBlogClick(blog.id)} >
                   <img className="user-homepage-cardone-imgone" src={`${baseUrl}${blog.image}` || LandingPage_Bg} alt={blog.title} />
                   <div>
                     <p className="badge p-2 user-homepage-cardone-header">{blog.interests.name || "Unknown Interest"}</p>
